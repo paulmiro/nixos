@@ -22,6 +22,15 @@
       formatter = forAllSystems
         (system: nixpkgsFor.${system}.nixpkgs-fmt);
 
+      # Output all modules in ./modules to flake. Modules should be in
+      # individual subdirectories and contain a default.nix file
+      nixosModules = builtins.listToAttrs (map
+        (x: {
+          name = x;
+          value = import (./modules + "/${x}");
+        })
+        (builtins.attrNames (builtins.readDir ./modules)));
+
       # Each subdirectory in ./machines is a host. Add them all to
       # nixosConfiguratons. Host configurations need a file called
       # configuration.nix that will be read first
@@ -38,6 +47,7 @@
 
             modules = [
               (import "${./.}/machines/${x}/configuration.nix" { inherit self; })
+              { imports = builtins.attrValues self.nixosModules; }
             ];
 
           };

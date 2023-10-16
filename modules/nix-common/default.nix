@@ -1,4 +1,4 @@
-{ config, pkgs, lib, flake-self, ... }:
+{ config, pkgs, lib, flake-self, nixpkgs, ... }:
 with lib;
 let cfg = config.paul.nix-common;
 in
@@ -19,7 +19,7 @@ in
     # and root e.g. `nix-channel --remove nixos`. `nix-channel
     # --list` should be empty for all users afterwards
     nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
-    nixpkgs.overlays = [  ];
+    nixpkgs.overlays = [ ];
 
     # Allow unfree licenced packages
     nixpkgs.config.allowUnfree = true;

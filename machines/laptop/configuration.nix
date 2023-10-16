@@ -6,6 +6,11 @@
 { config, pkgs, ... }:
 
 {
+
+  paul = {
+    nix-common.enable = true;
+  };
+
   imports =
     [
       # Include the results of the hardware scan.
