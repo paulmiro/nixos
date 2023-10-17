@@ -5,6 +5,7 @@ with lib;
 
     paul = {
       programs.git.enable = true;
+      programs.vscode.enable = true;
       programs.zsh.enable = true;
     };
 
