@@ -46,6 +46,7 @@
             specialArgs = { flake-self = self; } // inputs;
 
             modules = [
+              home-manager.nixosModules.home-manager
               (import "${./.}/machines/${x}/configuration.nix" { inherit self; })
               { imports = builtins.attrValues self.nixosModules; }
             ];
@@ -53,6 +54,22 @@
           };
         })
         (builtins.attrNames (builtins.readDir ./machines)));
+
+      homeConfigurations = {
+        laptop = { pkgs, lib, username, ... }: {
+          imports = [
+            ./home-manager/profiles/common.nix
+          ] ++
+          (builtins.attrValues self.homeManagerModules);
+        };
+      };
+
+      homeManagerModules = builtins.listToAttrs (map
+        (name: {
+          inherit name;
+          value = import (./home-manager/modules + "/${name}");
+        })
+        (builtins.attrNames (builtins.readDir ./home-manager/modules)));
 
     };
 }
