@@ -8,9 +8,14 @@
 {
 
   paul = {
+    user = {
+      paulmiro.enable = true;
+      root.enable = true;
+    };
     gnome.enable = true;
     locale.enable = true;
     nix-common.enable = true;
+    openssh.enable = true;
     sound.enable = true;
   };
 
@@ -29,6 +34,8 @@
     };
     users.paulmiro = flake-self.homeConfigurations.laptop;
   };
+
+  programs.zsh.enable = true;
 
   imports = [
     # Include the results of the hardware scan.
@@ -52,13 +59,6 @@
 
   # Configure console keymap
   console.keyMap = "de";
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.paulmiro = {
-    isNormalUser = true;
-    description = "Paul";
-    extraGroups = [ "networkmanager" "wheel" ];
-  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
