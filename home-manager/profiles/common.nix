@@ -19,8 +19,18 @@ with lib;
 
     # Install these packages for my user
     home.packages = with pkgs; [
+      asciinema
+      discord
       firefox
+      glances
+      gparted
+      nil
+      nix-top
+      nvtop
+      signal-desktop
+      thunderbird-bin
       unzip
+      zoom-us
     ];
 
     home.stateVersion = "23.11";
