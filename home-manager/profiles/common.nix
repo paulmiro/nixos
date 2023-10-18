@@ -26,6 +26,7 @@ in
     # Install these packages for my user
     home.packages = with pkgs; [
       asciinema
+      bun
       discord
       dnsutils
       firefox
@@ -35,9 +36,13 @@ in
       nix-top
       nixpkgs-fmt
       nvtop
+      obsidian
+      protonmail-bridge
+      prusa-slicer
       signal-desktop
       thunderbird-bin
       unzip
+      xournalpp
       zoom-us
 
       # My packages
@@ -55,7 +60,6 @@ in
       (writeShellScriptBin "bin-package" ''
         ${hello}/bin/hello
         echo "We can use packages from the nixpkgs collection!"
-        ${geekbench_5}/bin/geekbench5
       '')
     ];
 
