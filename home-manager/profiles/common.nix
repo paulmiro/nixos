@@ -1,5 +1,10 @@
 { config, pkgs, lib, flake-self, ... }:
 with lib;
+let
+  my-package = (pkgs.writeShellScriptBin "my-package" ''
+    echo "I'm a function representing a package!"
+  '');
+in
 {
   config = {
 
@@ -22,16 +27,36 @@ with lib;
     home.packages = with pkgs; [
       asciinema
       discord
+      dnsutils
       firefox
       glances
       gparted
       nil
       nix-top
+      nixpkgs-fmt
       nvtop
       signal-desktop
       thunderbird-bin
       unzip
       zoom-us
+
+      # My packages
+
+      # example for a function representing a package
+      my-package
+
+      # example for a function building python with some packages
+      (python3.withPackages (ps: with ps; [
+        requests
+        numpy
+      ]))
+
+      # example for a function bulding a package from a shell script
+      (writeShellScriptBin "bin-package" ''
+        ${hello}/bin/hello
+        echo "We can use packages from the nixpkgs collection!"
+        ${geekbench_5}/bin/geekbench5
+      '')
     ];
 
     home.stateVersion = "23.11";
