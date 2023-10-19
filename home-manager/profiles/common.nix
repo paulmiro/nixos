@@ -32,18 +32,28 @@ in
       firefox
       glances
       gparted
+      jellyfin-mpv-shim
+      lua
+      # gnomeExtensions.galaxy-buds-battery
+      # gnomeExtensions.battery-health-charging
+      mpv
       nil
       nix-top
       nixpkgs-fmt
       nvtop
       obsidian
+      # p3x-onenote
       protonmail-bridge
       prusa-slicer
+      ripgrep
       signal-desktop
+      stylua
       thunderbird-bin
       unzip
+      usbutils
       xournalpp
       zoom-us
+      gnomeExtensions.gesture-improvements
 
       # My packages
 

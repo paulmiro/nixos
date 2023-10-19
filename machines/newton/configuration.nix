@@ -12,12 +12,14 @@
       paulmiro.enable = true;
       root.enable = true;
     };
-    gnome.enable = true;
+    # gnome.enable = true;
     locale.enable = true;
     nix-common.enable = true;
     openssh.enable = true;
     sound.enable = true;
   };
+
+  # programs.ssh.askPassword = pkgs.lib.mkForce "${pkgs.x11_ssh_askpass}/libexec/x11-ssh-askpass";
 
   home-manager = {
     # DON'T set useGlobalPackages! It's not necessary in newer
@@ -32,7 +34,7 @@
       # so we can access it's values for conditional statements
       system-config = config;
     };
-    users.paulmiro = flake-self.homeConfigurations.laptop;
+    users.paulmiro = flake-self.homeConfigurations.newton;
   };
 
   programs.zsh.enable = true;
@@ -48,7 +50,7 @@
 
   networking = {
     networkmanager.enable = true;
-    hostName = "laptop";
+    hostName = "newton";
   };
 
   # Configure keymap in X11
@@ -60,8 +62,14 @@
   # Configure console keymap
   console.keyMap = "de";
 
-  services.fprintd.enable = true;
-  services.tailscale.enable = true;
+  services.tailscale = {
+    enable = true; #TODO: tailscale up needs to be run manually once to log in
+    useRoutingFeatures = "client";
+    extraUpFlags = [ "--accept-routes" ];
+  };
+  # services.fprintd.enable = true; # does not work yet, no driver available for samsung
+  # services.fprintd.tod.enable = true;
+  # services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget

@@ -25,21 +25,21 @@
       {
         "commands":
           [
-            "nix build '.#nixosConfigurations.laptop.config.system.build.toplevel' -o 'result-laptop'",
+            "nix build '.#nixosConfigurations.newton.config.system.build.toplevel' -o 'result-newton'",
           ],
         "image": "bash",
-        "name": "Build laptop",
+        "name": "Build newton",
       },
       {
         "commands":
-          ["nix path-info --closure-size -h $(readlink -f 'result-laptop')"],
+          ["nix path-info --closure-size -h $(readlink -f 'result-newton')"],
         "image": "bash",
-        "name": "Show laptop info",
+        "name": "Show newton info",
       },
       {
-        "commands": ["attic push lounge-rocks:nix-cache 'result-laptop'"],
+        "commands": ["attic push lounge-rocks:nix-cache 'result-newton'"],
         "image": "bash",
-        "name": "Push laptop to Attic",
+        "name": "Push newton to Attic",
       },
     ],
 }
