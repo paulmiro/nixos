@@ -12,7 +12,7 @@
       paulmiro.enable = true;
       root.enable = true;
     };
-    # gnome.enable = true;
+    gnome.enable = true;
     locale.enable = true;
     nix-common.enable = true;
     openssh.enable = true;
