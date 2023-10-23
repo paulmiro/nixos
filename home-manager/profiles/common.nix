@@ -53,7 +53,9 @@ in
       xournalpp
       zoom-us
       gnomeExtensions.gesture-improvements
-
+      gnomeExtensions.just-perfection
+      gnomeExtensions.blur-my-shell
+      gnomeExtensions.burn-my-windows
       # My packages
 
       # example for a function representing a package
