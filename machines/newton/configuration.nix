@@ -17,6 +17,7 @@
     nix-common.enable = true;
     openssh.enable = true;
     sound.enable = true;
+    nvidia.enable = true;
   };
 
   # programs.ssh.askPassword = pkgs.lib.mkForce "${pkgs.x11_ssh_askpass}/libexec/x11-ssh-askpass";
@@ -42,7 +43,6 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ./nvidia.nix
   ];
 
   # Bootloader.
