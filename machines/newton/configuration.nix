@@ -49,6 +49,9 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # enable all the firmware with a license allowing redistribution
+  hardware.enableRedistributableFirmware = true;
+
   networking = {
     networkmanager.enable = true;
     hostName = "newton";
