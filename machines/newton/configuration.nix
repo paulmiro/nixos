@@ -17,7 +17,7 @@
     nix-common.enable = true;
     openssh.enable = true;
     sound.enable = true;
-    nvidia.enable = true;
+    nvidia = { enable = true; laptop = true; };
   };
 
   # programs.ssh.askPassword = pkgs.lib.mkForce "${pkgs.x11_ssh_askpass}/libexec/x11-ssh-askpass";
