@@ -56,7 +56,7 @@
         (builtins.attrNames (builtins.readDir ./machines)));
 
       homeConfigurations = {
-        newton = { pkgs, lib, username, ... }: {
+        desktop = { pkgs, lib, username, ... }: {
           imports = [
             ./home-manager/profiles/common.nix
           ] ++

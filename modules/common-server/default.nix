@@ -10,7 +10,9 @@ in
 
   config = mkIf cfg.enable {
 
-    paul.common.enable = true;
+    paul = {
+      common.enable = true;
+    };
 
   };
 
