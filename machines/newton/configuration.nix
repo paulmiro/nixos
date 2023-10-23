@@ -39,27 +39,10 @@
 
   programs.zsh.enable = true;
 
-  services.xserver = {
-    videoDrivers = [ "nvidia" ];
-  };
-
-  hardware = {
-
-    opengl = {
-      enable = true;
-      driSupport = true;
-      driSupport32Bit = true;
-    };
-
-    nvidia = {
-      powerManagement.enable = true;
-    };
-
-  };
-
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    ./nvidia.nix
   ];
 
   # Bootloader.
