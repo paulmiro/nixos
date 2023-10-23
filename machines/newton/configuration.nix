@@ -15,9 +15,10 @@
     gnome.enable = true;
     locale.enable = true;
     nix-common.enable = true;
+    nvidia = { enable = true; laptop = true; };
     openssh.enable = true;
     sound.enable = true;
-    nvidia = { enable = true; laptop = true; };
+    systemd-boot.enable = true;
   };
 
   # programs.ssh.askPassword = pkgs.lib.mkForce "${pkgs.x11_ssh_askpass}/libexec/x11-ssh-askpass";
@@ -44,10 +45,6 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
-
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
 
   # enable all the firmware with a license allowing redistribution
   hardware.enableRedistributableFirmware = true;
