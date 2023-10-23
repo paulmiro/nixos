@@ -39,6 +39,24 @@
 
   programs.zsh.enable = true;
 
+  services.xserver = {
+    videoDrivers = [ "nvidia" ];
+  };
+
+  hardware = {
+
+    opengl = {
+      enable = true;
+      driSupport = true;
+      driSupport32Bit = true;
+    };
+
+    nvidia = {
+      powerManagement.enable = true;
+    };
+
+  };
+
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -57,6 +75,7 @@
   services.xserver = {
     layout = "de";
     xkbVariant = "";
+    xkbOptions = "caps:none";
   };
 
   # Configure console keymap
@@ -77,6 +96,8 @@
     git
     wget
   ];
+
+  programs.steam.enable = true;
 
   system.stateVersion = "23.05"; # Did you read the comment?
 
