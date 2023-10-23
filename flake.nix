@@ -59,6 +59,14 @@
         desktop = { pkgs, lib, username, ... }: {
           imports = [
             ./home-manager/profiles/common.nix
+            ./home-manager/profiles/desktop.nix
+          ] ++
+          (builtins.attrValues self.homeManagerModules);
+        };
+        server = { pkgs, lib, username, ... }: {
+          imports = [
+            ./home-manager/profiles/common.nix
+            ./home-manager/profiles/server.nix
           ] ++
           (builtins.attrValues self.homeManagerModules);
         };
