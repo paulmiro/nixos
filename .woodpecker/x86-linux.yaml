@@ -1,0 +1,53 @@
+{
+  "labels": {
+    "backend": "local"
+  },
+  "platform": "linux/amd64",
+  "steps": [
+    {
+      "commands": [
+        "nix flake show"
+      ],
+      "image": "bash",
+      "name": "Nix flake show"
+    },
+    {
+      "commands": [
+        "nix flake check"
+      ],
+      "image": "bash",
+      "name": "Nix flake check"
+    },
+    {
+      "commands": [
+        "attic login lounge-rocks https://cache.lounge.rocks $ATTIC_KEY --set-default"
+      ],
+      "image": "bash",
+      "name": "Setup Attic",
+      "secrets": [
+        "attic_key"
+      ]
+    },
+    {
+      "commands": [
+        "nix build '.#nixosConfigurations.newton.config.system.build.toplevel' -o 'result-newton'"
+      ],
+      "image": "bash",
+      "name": "Build newton"
+    },
+    {
+      "commands": [
+        "nix path-info --closure-size -h $(readlink -f 'result-newton')"
+      ],
+      "image": "bash",
+      "name": "Show newton info"
+    },
+    {
+      "commands": [
+        "attic push lounge-rocks:nix-cache 'result-newton'"
+      ],
+      "image": "bash",
+      "name": "Push newton to Attic"
+    }
+  ]
+}

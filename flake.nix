@@ -24,6 +24,14 @@
       formatter = forAllSystems
         (system: nixpkgsFor.${system}.nixpkgs-fmt);
 
+      packages = forAllSystems (system: {
+        woodpecker-pipeline =
+          nixpkgsFor.${system}.callPackage ./pkgs/woodpecker-pipeline {
+            flake-self = self;
+            inputs = inputs;
+          };
+      });
+
       # Output all modules in ./modules to flake. Modules should be in
       # individual subdirectories and contain a default.nix file
       nixosModules = builtins.listToAttrs (map
