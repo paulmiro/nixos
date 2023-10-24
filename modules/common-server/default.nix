@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, config, flake-self, ... }:
 with lib;
 let cfg = config.paul.common-server;
 in

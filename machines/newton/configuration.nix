@@ -39,6 +39,9 @@
   # Configure console keymap
   console.keyMap = "de";
 
+  # being able to build aarm64 stuff
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
   services.tailscale = {
     enable = true; #TODO: tailscale up needs to be run manually once to log in
     useRoutingFeatures = "client";

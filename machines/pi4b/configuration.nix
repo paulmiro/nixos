@@ -1,0 +1,46 @@
+# to remotely deploy while building on your system:
+# nixos-rebuild switch --flake '.#pi4b' --target-host 'root@192.182.X.X' -L 
+# to build the SD image:
+# nix build .\#nixosConfigurations.pi4b.config.system.build.sdImage
+{ self, ... }:
+{ pkgs, lib, config, modulesPath, flake-self, home-manager, nixos-hardware, nixpkgs, ... }: {
+
+  paul = {
+    common-server.enable = true;
+  };
+
+  imports = [
+    # being able to build the sd-image
+    "${modulesPath}/installer/sd-card/sd-image-aarch64.nix"
+
+    # https://github.com/NixOS/nixos-hardware/tree/master/raspberry-pi/4
+    nixos-hardware.nixosModules.raspberry-pi-4
+  ];
+
+  ### build sd-image
+
+  # nix build .\#nixosConfigurations.pi4b.config.system.build.sdImage
+  # add boot.binfmt.emulatedSystems = [ "aarch64-linux" ]; to your x86 system
+  # to build ARM stuff through qemu
+  sdImage.compressImage = false;
+  sdImage.imageBaseName = "raspi-image";
+
+  # this workaround is currently needed to build the sd-image
+  # basically: there currently is an issue that prevents the sd-image to be built successfully
+  # remove this once the issue is fixed!
+  nixpkgs.overlays = [
+    (final: super: {
+      makeModulesClosure = x:
+        super.makeModulesClosure (x // { allowMissing = true; });
+    })
+  ];
+  ###
+
+  networking = {
+    hostName = "pi4b";
+    networkmanager.enable = true;
+  };
+
+  nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
+
+}

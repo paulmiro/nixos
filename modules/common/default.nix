@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, config, flake-self, ... }:
 with lib;
 let cfg = config.paul.common;
 in
@@ -25,6 +25,7 @@ in
     # List packages installed in system profile. To search, run:
     # $ nix search wget
     environment.systemPackages = with pkgs; [
+      dnsutils
       git
       wget
     ];

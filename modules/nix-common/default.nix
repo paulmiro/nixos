@@ -19,10 +19,15 @@ in
     # and root e.g. `nix-channel --remove nixos`. `nix-channel
     # --list` should be empty for all users afterwards
     nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
-    nixpkgs.overlays = [ ];
 
-    # Allow unfree licenced packages
-    nixpkgs.config.allowUnfree = true;
+    # allow the use of `nix run nixpkgs#hello` instead of nix run 'github:nixos/nixpkgs#hello'
+    nix.registry.nixpkgs.flake = nixpkgs;
+
+    nixpkgs = {
+      overlays = [ ];
+      # Allow unfree licenced packages
+      config.allowUnfree = true;
+    };
 
     nix = {
 
