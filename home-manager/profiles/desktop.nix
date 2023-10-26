@@ -1,9 +1,4 @@
 { pkgs, lib, config, ... }:
-let
-  my-package = (pkgs.writeShellScriptBin "my-package" ''
-    echo "I'm a function representing a package!"
-  '');
-in
 with lib;
 {
   config = {
@@ -19,6 +14,7 @@ with lib;
       firefox
       gparted
       jellyfin-mpv-shim
+      libreoffice
       lua
       # gnomeExtensions.galaxy-buds-battery
       # gnomeExtensions.battery-health-charging
@@ -35,23 +31,15 @@ with lib;
       xournalpp
       zoom-us
       gnomeExtensions.gesture-improvements
-
-      # My packages
-
-      # example for a function representing a package
-      my-package
+      gnomeExtensions.just-perfection
+      gnomeExtensions.blur-my-shell
+      gnomeExtensions.burn-my-windows
 
       # example for a function building python with some packages
       (python3.withPackages (ps: with ps; [
         requests
         numpy
       ]))
-
-      # example for a function bulding a package from a shell script
-      (writeShellScriptBin "bin-package" ''
-        ${hello}/bin/hello
-        echo "We can use packages from the nixpkgs collection!"
-      '')
     ];
 
   };
