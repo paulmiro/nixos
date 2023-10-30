@@ -10,8 +10,10 @@ with lib;
     # Install these packages for my user
     home.packages = with pkgs; [
       bun
+      clang
       discord
       firefox
+      go
       gparted
       jellyfin-mpv-shim
       libreoffice
@@ -39,6 +41,7 @@ with lib;
       (python3.withPackages (ps: with ps; [
         requests
         numpy
+        jupyter
       ]))
     ];
 
