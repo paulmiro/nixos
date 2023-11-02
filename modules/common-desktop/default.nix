@@ -10,8 +10,6 @@ in
 
   config = mkIf cfg.enable {
 
-    programs.steam.enable = true;
-
     paul = {
       common.enable = true;
       sound.enable = true;
