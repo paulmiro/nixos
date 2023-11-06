@@ -1,10 +1,10 @@
 { lib, pkgs, config, ... }:
 with lib;
-let cfg = config.paul.programs.devolopment;
+let cfg = config.paul.programs.development;
 in
 {
-  options.paul.programs.devolopment.enable =
-    mkEnableOption "enable devolopment applications";
+  options.paul.programs.development.enable =
+    mkEnableOption "enable development applications";
 
   config = mkIf cfg.enable {
 
