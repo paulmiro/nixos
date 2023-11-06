@@ -29,13 +29,6 @@ with lib;
       gnomeExtensions.burn-my-windows
       gnomeExtensions.gesture-improvements
       gnomeExtensions.just-perfection
-
-      # example for a function building python with some packages
-      (python3.withPackages (ps: with ps; [
-        requests
-        numpy
-        jupyter
-      ]))
     ];
 
   };

@@ -23,6 +23,11 @@ in
       lua
       # rustc
       # gcc
+      (python3.withPackages (ps: with ps; [
+        requests
+        numpy
+        jupyter
+      ]))
 
       ### Formatter
       # nixfmt
