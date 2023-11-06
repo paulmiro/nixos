@@ -7,6 +7,16 @@ with lib;
       programs.vscode.enable = true;
     };
 
+    programs = {
+      direnv = {
+        enable = true;
+        enableBashIntegration = true;
+        enableZshIntegration = true;
+        nix-direnv.enable = true;
+      };
+      git = { ignores = [ ".direnv/" ]; };
+    };
+
     # Install these packages for my user
     home.packages = with pkgs; [
       bun
