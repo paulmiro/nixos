@@ -5,16 +5,7 @@ with lib;
 
     paul = {
       programs.vscode.enable = true;
-    };
-
-    programs = {
-      direnv = {
-        enable = true;
-        enableBashIntegration = true;
-        enableZshIntegration = true;
-        nix-direnv.enable = true;
-      };
-      git = { ignores = [ ".direnv/" ]; };
+      programs.direnv.enable = true;
     };
 
     # Install these packages for my user
