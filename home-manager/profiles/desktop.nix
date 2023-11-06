@@ -28,12 +28,9 @@ with lib;
       jellyfin-mpv-shim
       libreoffice
       lua
-      # gnomeExtensions.galaxy-buds-battery
-      # gnomeExtensions.battery-health-charging
       mpv
       nvtop
       obsidian
-      # p3x-onenote
       protonmail-bridge
       prusa-slicer
       ripgrep
@@ -42,10 +39,11 @@ with lib;
       thunderbird-bin
       xournalpp
       zoom-us
-      gnomeExtensions.gesture-improvements
-      gnomeExtensions.just-perfection
+
       gnomeExtensions.blur-my-shell
       gnomeExtensions.burn-my-windows
+      gnomeExtensions.gesture-improvements
+      gnomeExtensions.just-perfection
 
       # example for a function building python with some packages
       (python3.withPackages (ps: with ps; [
