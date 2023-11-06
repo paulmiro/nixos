@@ -25,6 +25,8 @@ with lib;
       nil
       nix-top
       nixpkgs-fmt
+      nvtop
+      ripgrep
       unzip
       usbutils
     ];

@@ -17,11 +17,9 @@ with lib;
       jellyfin-mpv-shim
       libreoffice
       mpv
-      nvtop
       obsidian
       protonmail-bridge
       prusa-slicer
-      ripgrep
       signal-desktop
       thunderbird-bin
       xournalpp
