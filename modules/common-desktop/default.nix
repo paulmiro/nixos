@@ -13,6 +13,7 @@ in
     paul = {
       common.enable = true;
       sound.enable = true;
+      fonts.enable = true;
     };
 
     home-manager = {
