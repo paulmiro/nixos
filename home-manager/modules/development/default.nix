@@ -17,19 +17,18 @@ in
     home.packages = with pkgs; [
 
       ### Programming languages / compiler
-      cargo
-      rustc
-      gcc
+      bun
+      # cargo
+      clang
+      lua
+      # rustc
+      # gcc
 
       ### Formatter
-      nixfmt
-      nixpkgs-fmt
-      rustfmt
-
-      ### Jetbrains Software
-      # jetbrains.clion
-      # jetbrains.goland
-      # jetbrains.pycharm-professional
+      # nixfmt
+      # nixpkgs-fmt
+      # rustfmt
+      stylua
 
     ];
 

@@ -6,19 +6,16 @@ with lib;
     paul = {
       programs.vscode.enable = true;
       programs.direnv.enable = true;
+      programs.development.enable = true;
     };
 
     # Install these packages for my user
     home.packages = with pkgs; [
-      bun
-      clang
       discord
       firefox
-      go
       gparted
       jellyfin-mpv-shim
       libreoffice
-      lua
       mpv
       nvtop
       obsidian
@@ -26,7 +23,6 @@ with lib;
       prusa-slicer
       ripgrep
       signal-desktop
-      stylua
       thunderbird-bin
       xournalpp
       zoom-us
