@@ -1,4 +1,4 @@
-{ config, pkgs, lib, flake-self, ... }:
+{ config, pkgs, lib, flake-self, system-config, ... }:
 with lib;
 {
   config = {
@@ -25,10 +25,13 @@ with lib;
       nil
       nix-top
       nixpkgs-fmt
-      nvtop
       ripgrep
       unzip
       usbutils
+    ]
+    # only install these packages on x86_64-linux systems
+    ++ lib.optionals (system-config.nixpkgs.hostPlatform.isx86_64) [
+      nvtop
     ];
 
     # Let Home Manager install and manage itself.
