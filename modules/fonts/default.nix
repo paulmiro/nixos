@@ -12,11 +12,12 @@ in
 
       fontDir.enable = true;
 
-      fonts = with pkgs; [
+      packages = with pkgs; [
         carlito
         dejavu_fonts
         ipafont
         kochi-substitute
+        meslo-lgs-nf
         source-code-pro
         source-sans-pro
         source-serif-pro
@@ -30,7 +31,7 @@ in
         defaultFonts = {
           serif = [ "Recursive Sans Casual Static Medium" ];
           sansSerif = [ "Recursive Sans Linear Static Medium" ];
-          monospace = [ "Recursive Mono Linear Static" ];
+          monospace = [ "MesloLGS NF" ];
           emoji = [ "Noto Color Emoji" ];
         };
       };
