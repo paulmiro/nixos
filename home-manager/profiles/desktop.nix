@@ -21,7 +21,9 @@ with lib;
       protonmail-bridge
       prusa-slicer
       signal-desktop
+      spot
       thunderbird-bin
+      whatsapp-for-linux
       xournalpp
       zoom-us
 
