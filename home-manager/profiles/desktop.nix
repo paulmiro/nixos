@@ -16,6 +16,7 @@ with lib;
       gparted
       jellyfin-mpv-shim
       libreoffice
+      krita
       mpv
       obsidian
       protonmail-bridge
@@ -23,6 +24,7 @@ with lib;
       signal-desktop
       spot
       thunderbird-bin
+      element-desktop
       whatsapp-for-linux
       xournalpp
       zoom-us
