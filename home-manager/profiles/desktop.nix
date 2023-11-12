@@ -35,5 +35,18 @@ with lib;
       gnomeExtensions.just-perfection
     ];
 
+    gtk = {
+      enable = true;
+
+      # cursorTheme = {
+      #   name = "capitaine-cursors";
+      #   package = pkgs.capitaine-cursors;
+      # };
+
+      cursorTheme = {
+        name = "capitaine-cursors";
+        package = pkgs.capitaine-cursors;
+      };
+    };
   };
 }
