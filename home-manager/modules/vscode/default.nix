@@ -7,8 +7,8 @@ in
 
   config = mkIf cfg.enable {
 
-    # Enable Wayland support
-    home.sessionVariables.NIXOS_OZONE_WL = "1";
+    # Enable Wayland support, disabeled for now because it breaks obsidian (and maybe other electron apps)
+    # home.sessionVariables.NIXOS_OZONE_WL = "1";
 
     programs.vscode = {
       enable = true;
