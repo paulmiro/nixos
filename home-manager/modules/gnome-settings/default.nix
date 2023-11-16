@@ -69,6 +69,12 @@ in
         clock-show-weekday = true;
         clock-show-date = true;
         clock-show-seconds = false;
+        enable-hot-corners = false;
+        show-battery-percentage = true;
+
+      };
+      "org/gnome/desktop/notifications" = {
+        show-in-lock-screen = true;
       };
       "org/gnome/desktop/calendar" = {
         show-weekdate = true;
@@ -76,6 +82,28 @@ in
       "org/gnome/desktop/wm/preferences" = {
         action-middle-click-titlebar = "lower";
       };
+      "org/gnome/desktop/peripherals/touchpad" = {
+        touch-to-click = true;
+      };
+      "org/gnome/desktop/search-providers" = {
+        disabled = [ "org.gnome.Epiphany.desktop" "org.gnome.Contacts.desktop" ];
+      };
+      "org/gnome/mutter" = {
+        edge-tiling = true;
+        dynamic-workspaces = true;
+        workspaces-only-on-primary = true;
+      };
+      "org/gnome/shell/app-switcher" = {
+        current-workspace-only = false;
+      };
+      "org/gnome/system/location" = {
+        enabled = true;
+      };
+      "org/gnome/settings-daemon/plugins/color" = {
+        night-light-enabled = true;
+        night-light-schedule-automatic = true;
+      };
     };
   };
 }
+
