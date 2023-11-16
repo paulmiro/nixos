@@ -23,6 +23,7 @@ with lib;
       asciinema
       dnsutils
       glances
+      neofetch
       nil
       nix-top
       nixpkgs-fmt
