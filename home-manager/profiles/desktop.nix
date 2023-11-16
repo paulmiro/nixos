@@ -9,15 +9,22 @@ with lib;
       programs.development.enable = true;
     };
 
+    # temporary fix to suspend the warning from etcher
+    nixpkgs.config.permittedInsecurePackages = [
+      "electron-19.1.9"
+    ];
+
     # Install these packages for my user
     home.packages = with pkgs; [
       discord
+      etcher
       firefox
       gparted
       jellyfin-mpv-shim
       libreoffice
       krita
       mpv
+      obs-studio
       obsidian
       protonmail-bridge
       prusa-slicer
