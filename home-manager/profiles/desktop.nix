@@ -35,7 +35,8 @@ with lib;
       whatsapp-for-linux
       xournalpp
       zoom-us
-
+      sl
+      burpsuite
       oneko
 
       gnomeExtensions.blur-my-shell
