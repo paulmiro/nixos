@@ -37,6 +37,7 @@ with lib;
       gnomeExtensions.burn-my-windows
       gnomeExtensions.gesture-improvements
       gnomeExtensions.just-perfection
+      gnomeExtensions.gsconnect
     ];
   };
 }
