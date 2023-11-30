@@ -35,7 +35,7 @@ with lib;
 
       gnomeExtensions.blur-my-shell
       gnomeExtensions.burn-my-windows
-      gnomeExtensions.clipboard-history
+      gnomeExtensions.clipboard-indicator
       gnomeExtensions.gesture-improvements
       gnomeExtensions.gsconnect
       gnomeExtensions.just-perfection
