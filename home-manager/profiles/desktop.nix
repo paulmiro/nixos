@@ -3,42 +3,42 @@ with lib;
 {
   config = {
     paul = {
-      programs.vscode.enable = true;
-      programs.direnv.enable = true;
       programs.development.enable = true;
+      programs.direnv.enable = true;
       programs.gnome-settings.enable = true;
+      programs.vscode.enable = true;
     };
 
     # Install these packages for my user
     home.packages = with pkgs; [
+      burpsuite
       discord
+      element-desktop
       firefox
       gparted
       jellyfin-mpv-shim
-      libreoffice
       krita
+      libreoffice
       mpv
       obs-studio
       obsidian
+      oneko
       protonmail-bridge
       prusa-slicer
       signal-desktop
+      sl
       spot
       thunderbird-bin
-      element-desktop
       whatsapp-for-linux
       xournalpp
       zoom-us
-      sl
-      burpsuite
-      oneko
 
       gnomeExtensions.blur-my-shell
       gnomeExtensions.burn-my-windows
-      gnomeExtensions.gesture-improvements
-      gnomeExtensions.just-perfection
-      gnomeExtensions.gsconnect
       gnomeExtensions.clipboard-history
+      gnomeExtensions.gesture-improvements
+      gnomeExtensions.gsconnect
+      gnomeExtensions.just-perfection
     ];
   };
 }
