@@ -38,6 +38,7 @@ with lib;
       gnomeExtensions.gesture-improvements
       gnomeExtensions.just-perfection
       gnomeExtensions.gsconnect
+      gnomeExtensions.clipboard-history
     ];
   };
 }
