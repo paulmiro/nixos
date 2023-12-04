@@ -39,6 +39,9 @@ with lib;
       gnomeExtensions.gesture-improvements
       gnomeExtensions.gsconnect
       gnomeExtensions.just-perfection
+      gnomeExtensions.vitals
+      gnomeExtensions.wifi-qrcode
+      gnomeExtensions.window-gestures
     ];
   };
 }
