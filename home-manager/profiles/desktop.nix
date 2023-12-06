@@ -32,16 +32,6 @@ with lib;
       whatsapp-for-linux
       xournalpp
       zoom-us
-
-      gnomeExtensions.blur-my-shell
-      gnomeExtensions.burn-my-windows
-      gnomeExtensions.clipboard-indicator
-      gnomeExtensions.gesture-improvements
-      gnomeExtensions.gsconnect
-      gnomeExtensions.just-perfection
-      gnomeExtensions.vitals
-      gnomeExtensions.wifi-qrcode
-      gnomeExtensions.window-gestures
     ];
   };
 }

@@ -5,28 +5,27 @@ in
 {
   options.paul.programs.gnome-settings.enable =
     mkEnableOption "enamble custom gnome configuration and theme";
-
+  
   config = mkIf cfg.enable {
+
+    home.packages = with pkgs; [
+      gnomeExtensions.blur-my-shell
+      gnomeExtensions.burn-my-windows
+      gnomeExtensions.clipboard-indicator
+      # gnomeExtensions.gesture-improvements # not yet compatible with gnome 45
+      gnomeExtensions.gsconnect
+      gnomeExtensions.just-perfection
+      gnomeExtensions.vitals
+      gnomeExtensions.wifi-qrcode
+      gnomeExtensions.window-gestures
+    ];
 
     gtk = {
       enable = true;
-
-      /*
       theme = {
-        name = "Fluent-round-orange-Dark-compact";
-        package = (pkgs.fluent-gtk-theme.override {
-          themeVariants = [ "all" ];
-          colorVariants = [ "standard" "light" "dark" ];
-          sizeVariants = [ "standard" "compact" ];
-          tweaks = [ "round" "noborder" ];
-        });
-      };
-      */
-      theme = {
-        name = "Orchis-Orange-Dark-Compact";
+        name = "Orchis-Grey-Dark";
         package = (pkgs.orchis-theme).override {
           border-radius = 5;
-          tweaks = [ "compact" ];
         };
       };
       iconTheme = {
@@ -53,13 +52,12 @@ in
 
     };
 
+    /*
     home.sessionVariables = {
-      /*
-      GTK_THEME = "Fluent-round-orange-Dark-compact";
-      */
-      GTK_THEME = "Orchis-Orange-Dark-Compact";
-    };
-
+      GTK_THEME = "Orchis-Grey-Dark";
+      };
+    */
+    
     # Use `dconf watch /` to track stateful changes you are doing, then set them here.
     dconf.settings = {
       "org/gnome/desktop/interface" = {
@@ -103,6 +101,17 @@ in
         night-light-enabled = true;
         night-light-schedule-automatic = true;
       };
+
+      # Extension Settings
+      "org/gnome/shell/extensions/vitals" = { };
+      "org/gnome/shell/extensions/blur-my-shell" = {
+        sigma = 50;
+        brightness = 0.7;
+        noise-amout = 0.8;
+        noise-lightness = 1.2;
+        color-and-noise = true;
+      };
+
     };
   };
 }
