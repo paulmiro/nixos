@@ -12,7 +12,7 @@ in
       matchBlocks = {
         "nas" = {
           hostname = "192.168.178.222";
-          user = "root";
+          user = "admin";
         };
       };
     };
