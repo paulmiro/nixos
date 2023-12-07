@@ -48,7 +48,7 @@
   services.tailscale = {
     enable = true; #TODO: tailscale up needs to be run manually once to log in
     useRoutingFeatures = "client";
-    extraUpFlags = [ "--accept-routes" ];
+    extraUpFlags = [ "--accept-routes" "--operator=paulmiro" ];
   };
   # services.fprintd.enable = true; # does not work yet, no driver available for samsung
   # services.fprintd.tod.enable = true;

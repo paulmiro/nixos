@@ -15,6 +15,7 @@ in
       # gnomeExtensions.gesture-improvements # not yet compatible with gnome 45
       gnomeExtensions.gsconnect
       gnomeExtensions.just-perfection
+      gnomeExtensions.tailscale-qs
       gnomeExtensions.vitals
       gnomeExtensions.wifi-qrcode
       gnomeExtensions.window-gestures
