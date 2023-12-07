@@ -11,8 +11,16 @@ in
       enable = true;
       matchBlocks = {
         "nas" = {
-          hostname = "192.168.178.222";
+          hostname = "truenas";
           user = "admin";
+        };
+        "laptop" = {
+          hostname = "newton";
+          user = "paulmiro";
+        };
+        "apps" = {
+          hostname = "hawking";
+          user = "paulmiro";
         };
       };
     };
