@@ -18,7 +18,7 @@ in
           hostname = "newton";
           user = "paulmiro";
         };
-        "apps" = {
+        "hawking" = {
           hostname = "hawking";
           user = "paulmiro";
         };
