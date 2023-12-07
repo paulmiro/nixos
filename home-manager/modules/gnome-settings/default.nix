@@ -5,7 +5,7 @@ in
 {
   options.paul.programs.gnome-settings.enable =
     mkEnableOption "enamble custom gnome configuration and theme";
-  
+
   config = mkIf cfg.enable {
 
     home.packages = with pkgs; [
@@ -53,11 +53,11 @@ in
     };
 
     /*
-    home.sessionVariables = {
+      home.sessionVariables = {
       GTK_THEME = "Orchis-Grey-Dark";
       };
     */
-    
+
     # Use `dconf watch /` to track stateful changes you are doing, then set them here.
     dconf.settings = {
       "org/gnome/desktop/interface" = {
