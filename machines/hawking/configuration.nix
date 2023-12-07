@@ -27,6 +27,8 @@
   # being able to build aarm64 stuff
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
+  services.tailscale.enable = true;
+
   environment.systemPackages = with pkgs; [ ];
 
 }
