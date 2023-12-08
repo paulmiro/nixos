@@ -11,7 +11,7 @@ in
       enable = true;
       matchBlocks = {
         "nas" = {
-          hostname = "truenas";
+          hostname = "turing";
           user = "admin";
         };
         "laptop" = {
