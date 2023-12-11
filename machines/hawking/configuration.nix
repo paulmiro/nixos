@@ -54,6 +54,14 @@
     extraUpFlags = [ "--accept-dns=false" ];
   };
 
+  # Running fstrim weekly is a good idea for VMs.
+  # Empty blocks are returned to the host, which can then be used for other VMs.
+  # It also reduces the size of the qcow2 image, which is good for backups.
+  services.fstrim = {
+    enable = true;
+    interval = "weekly";
+  };
+
   environment.systemPackages = with pkgs; [ ];
 
 }
