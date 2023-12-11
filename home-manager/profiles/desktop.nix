@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, config, system-config, ... }:
 with lib;
 {
   config = {
@@ -33,7 +33,7 @@ with lib;
       xournalpp
       zoom-us
     ]
-        # only install these packages on x86_64-linux systems
+    # only install these packages on x86_64-linux systems
     ++ lib.optionals (system-config.nixpkgs.hostPlatform.isx86_64) [
       nvtop
     ];
