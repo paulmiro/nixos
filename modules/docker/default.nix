@@ -22,8 +22,7 @@ in
       backend = "docker";
     };
 
-    users.extraUsers.${config.paulmiro.var.mainUser}.extraGroups =
-      [ "docker" ];
+    users.extraGroups.docker.members = [ "paulmiro" ];
 
   };
 }
