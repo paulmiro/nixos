@@ -6,6 +6,7 @@
   paul = {
     common-server.enable = true;
     systemd-boot.enable = true;
+    docker.enable = true;
   };
 
   imports = [
@@ -32,11 +33,9 @@
 
   services.tailscale = {
     enable = true;
-    enableRoutingFeatures = "server";
+    useRoutingFeatures = "server";
     extraUpFlags = [ "--accept-dns=false" ];
   };
-
-  virtualisation.docker.enable = true;
 
   environment.systemPackages = with pkgs; [ ];
 
