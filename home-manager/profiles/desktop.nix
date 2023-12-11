@@ -27,7 +27,7 @@ with lib;
       prusa-slicer
       signal-desktop
       sl
-      spot
+      spotify
       thunderbird-bin
       whatsapp-for-linux
       xournalpp
