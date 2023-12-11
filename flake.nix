@@ -9,6 +9,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # https://github.com/pinpox/lollypops/
+    # NixOS Deployment Tool
+    lollypops = {
+      url = "github:pinpox/lollypops";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
@@ -30,6 +37,10 @@
             flake-self = self;
             inputs = inputs;
           };
+      });
+
+      apps = forAllSystems (system: {
+        lollypops = lollypops.apps.${system}.default { configFlake = self; };
       });
 
       # Output all modules in ./modules to flake. Modules should be in
@@ -57,6 +68,7 @@
 
             modules = [
               home-manager.nixosModules.home-manager
+              lollypops.nixosModules.lollypops
               (import "${./.}/machines/${x}/configuration.nix" { inherit self; })
               { imports = builtins.attrValues self.nixosModules; }
             ];
