@@ -19,6 +19,9 @@
   networking = {
     networkmanager.enable = true;
     hostName = "hawking";
+    firewall = {
+      allowedTCPPorts = [ 8096 ];
+    };
   };
 
   # Configure console keymap
@@ -27,7 +30,11 @@
   # being able to build aarm64 stuff
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
-  services.tailscale.enable = true;
+  services.tailscale = {
+    enable = true;
+    enableRoutingFeatures = "server";
+    extraUpFlags = [ "--accept-dns=false" ];
+  };
 
   virtualisation.docker.enable = true;
 
