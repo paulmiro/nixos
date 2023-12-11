@@ -5,21 +5,26 @@
 
 {
   imports =
-    [ (modulesPath + "/profiles/qemu-guest.nix")
+    [
+      (modulesPath + "/profiles/qemu-guest.nix")
     ];
 
   boot.initrd.availableKernelModules = [ "ata_piix" "xhci_pci" "ahci" "virtio_pci" "sr_mod" "virtio_blk" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
-
+  boot.growPartition = true;
+  
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/2b88223d-9cd2-4d69-b122-1fa91482b00c";
+    {
+      device = "/dev/disk/by-uuid/2b88223d-9cd2-4d69-b122-1fa91482b00c";
       fsType = "ext4";
+      autoResize = true;
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/F456-E14C";
+    {
+      device = "/dev/disk/by-uuid/F456-E14C";
       fsType = "vfat";
     };
 
