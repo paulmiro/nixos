@@ -38,9 +38,11 @@ in
       ports = [ "${cfg.port}:${cfg.port}/tcp" ];
     };
 
-    systemd.services.docker-librespeedtest = {
+    /*
+      systemd.services.docker-librespeedtest = {
       preStop = "${pkgs.docker}/bin/docker kill librespeedtest";
-    };
+      };
+    */
 
     services.nginx.virtualHosts."***REMOVED***" = mkIf cfg.enableNginx {
       enableACME = true;
