@@ -24,7 +24,7 @@ in
     };
   };
 
-  config = mkIf cfg.enable
+  config = mkIf cfg.enable (mkMerge [
     {
       paul.docker.enable = true;
 
@@ -40,8 +40,9 @@ in
         ports = [ "${cfg.port}:${cfg.port}/tcp" ];
       };
 
-    } // mkIf (cfg.enableNginx && cfg.enable)
-    {
+    }
+
+    (mkIf cfg.enableNginx {
       paul.nginx.enable = true;
 
       services.nginx.virtualHosts."***REMOVED***" = {
@@ -57,6 +58,8 @@ in
       '';
         */
       };
+    })
 
-    };
+  ]);
+
 }
