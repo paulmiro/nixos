@@ -24,7 +24,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    virtualisation.docker.enable = true;
+    paul.docker.enable = true;
 
     virtualisation.oci-containers.containers.flaresolverr = {
       autoStart = true;
