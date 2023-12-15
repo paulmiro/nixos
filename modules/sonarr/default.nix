@@ -11,6 +11,8 @@ in
 
   config = mkIf cfg.enable {
     paul.group.arr.enable = true;
+    paul.prowlarr.enable = true;
+
     services.sonarr = {
       enable = true;
       user = "sonarr";
