@@ -25,7 +25,8 @@ in
 
   config = mkIf cfg.enable
     {
-      virtualisation.docker.enable = true;
+      paul.docker.enable = true;
+
       systemd.services.jellyfin = {
         description = "Jellyfin media server docker-compose service";
         wantedBy = [ "multi-user.target" ];
@@ -38,8 +39,8 @@ in
       networking.firewall.allowedTCPPorts = mkIf cfg.openFirewall [ 8096 ];
     } // mkIf (cfg.enableNginx && cfg.enable)
     {
-      # if nginx for jellyfin is enabled, our common nginx module needs to be enabled
       paul.nginx.enable = true;
+
       services.nginx.virtualHosts."jellyfin.pamiro.net" = {
         enableACME = true;
         forceSSL = true;
