@@ -19,14 +19,13 @@ in
 
   options.paul.jellyfin = {
     enable = mkEnableOption "activate jellyifn";
-    openFirewall = mkEnableOption "open firewall for jellyfin";
     enableNginx = mkEnableOption "activate nginx proxy";
   };
 
-  config = mkIf cfg.enable
-    {
-      paul.docker.enable = true;
+  config = mkIf cfg.enable (mkMerge [
 
+    {
+      virtualisation.docker.enable = true;
       systemd.services.jellyfin = {
         description = "Jellyfin media server docker-compose service";
         wantedBy = [ "multi-user.target" ];
@@ -36,11 +35,12 @@ in
           Restart = "on-failure";
         };
       };
-      networking.firewall.allowedTCPPorts = mkIf cfg.openFirewall [ 8096 ];
-    } // mkIf (cfg.enableNginx && cfg.enable)
-    {
-      paul.nginx.enable = true;
+      networking.firewall.allowedTCPPorts = mkIf (!cfg.enableNginx) [ 8096 ];
+    }
 
+    (mkIf cfg.enableNginx {
+      # if nginx for jellyfin is enabled, our common nginx module needs to be enabled
+      paul.nginx.enable = true;
       services.nginx.virtualHosts."jellyfin.pamiro.net" = {
         enableACME = true;
         forceSSL = true;
@@ -48,6 +48,8 @@ in
           proxyPass = "http://127.0.0.1:8096";
         };
       };
-    };
+    })
+
+  ]);
 
 }
