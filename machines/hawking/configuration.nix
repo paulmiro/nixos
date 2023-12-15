@@ -25,7 +25,10 @@
       enable = true;
       openFirewall = true;
     };
-
+    jellyseerr = {
+      enable = true;
+      enableNginx = true;
+    };
   };
 
   imports = [
