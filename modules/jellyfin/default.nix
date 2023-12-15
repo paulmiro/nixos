@@ -1,6 +1,16 @@
 # It might make sense to migrate to OCI:
 # https://search.nixos.org/options?channel=unstable&type=packages&query=virtualisation.oci-containers.containers
 # Would require us to mount NFS shares manually though.
+# OCI implementation would look like this (NFS mounts seperate):
+# oci-containers.containers.jellyfin = {
+#   image = "jellyfin/jellyfin";
+#   user = "4001:4001";
+#   volumes = [
+#     "volume_name:/path/inside/container"
+#     "/path/on/host:/path/inside/container"
+#   ];
+#   extraOptions = [ "--network=host" ];
+# };
 { pkgs, lib, config, ... }:
 with lib;
 let cfg = config.paul.jellyfin;
