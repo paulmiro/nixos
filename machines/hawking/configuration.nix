@@ -17,6 +17,10 @@
       enable = true;
       enableNginx = true;
     };
+    sonarr = {
+      enable = true;
+      openFirewall = true;
+    };
 
   };
 
@@ -61,6 +65,17 @@
     enable = true;
     interval = "weekly";
   };
+
+
+  fileSystems."/mnt/TANK1/data" = {
+    device = "turing:/mnt/TANK1/data";
+    fsType = "nfs";
+  };
+  fileSystems."/mnt/TANK1/playground" = {
+    device = "turing:/mnt/TANK1/playground";
+    fsType = "nfs";
+  };
+
 
   environment.systemPackages = with pkgs; [ ];
 
