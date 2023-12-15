@@ -1,8 +1,6 @@
 { lib, pkgs, config, ... }:
 with lib;
-let
-  cfg = config.paul.radarr;
-  dataDir = "/var/lib/radarr/.config/Radarr";
+let cfg = config.paul.radarr;
 in
 {
 
@@ -19,7 +17,6 @@ in
       enable = true;
       user = "radarr";
       group = "arr";
-      dataDir = dataDir;
       openFirewall = cfg.openFirewall;
     };
   };
