@@ -6,7 +6,7 @@
   paul = {
     common-server.enable = true;
     systemd-boot.enable = true;
-    docker.enable = true;
+
     nginx.enable = true;
 
     librespeedtest = {
@@ -18,6 +18,10 @@
       enableNginx = true;
     };
     sonarr = {
+      enable = true;
+      openFirewall = true;
+    };
+    radarr = {
       enable = true;
       openFirewall = true;
     };
@@ -67,11 +71,11 @@
   };
 
 
-  fileSystems."/mnt/TANK1/data" = {
+  fileSystems."/mnt/nfs/data" = {
     device = "turing:/mnt/TANK1/data";
     fsType = "nfs";
   };
-  fileSystems."/mnt/TANK1/playground" = {
+  fileSystems."/mnt/nfs/playground" = {
     device = "turing:/mnt/TANK1/playground";
     fsType = "nfs";
   };
