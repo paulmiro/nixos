@@ -17,7 +17,6 @@ in
       enable = true;
       user = "sonarr";
       group = "arr";
-      dataDir = "/var/lib/sonarr/.config/NzbDrone";
       openFirewall = cfg.openFirewall;
     };
   };
