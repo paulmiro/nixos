@@ -23,7 +23,7 @@ in
     enableNginx = mkEnableOption "activate nginx proxy";
   };
 
-  config = mkIf cfg.enable
+  config = mkIf cfg.enable (mkMerge [
     {
       paul.docker.enable = true;
 
@@ -37,8 +37,9 @@ in
         };
       };
       networking.firewall.allowedTCPPorts = mkIf cfg.openFirewall [ 8096 ];
-    } // mkIf (cfg.enableNginx && cfg.enable)
-    {
+    }
+
+    (mkIf cfg.enableNginx {
       paul.nginx.enable = true;
 
       services.nginx.virtualHosts."jellyfin.pamiro.net" = {
@@ -48,6 +49,8 @@ in
           proxyPass = "http://127.0.0.1:8096";
         };
       };
-    };
+    })
+    
+  ]);
 
 }
