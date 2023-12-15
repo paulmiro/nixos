@@ -28,7 +28,7 @@ in
 
     virtualisation.oci-containers.containers.flaresolverr = {
       autoStart = true;
-      image = "flaresolverr/flaresolverr:latest";
+      image = "flaresolverr/flaresolverr";
       ports = [ "8191:${cfg.port}/tcp" ];
     };
 
