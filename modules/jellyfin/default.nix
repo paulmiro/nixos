@@ -18,8 +18,6 @@ in
         wantedBy = [ "multi-user.target" ];
         after = [ "docker.service" "docker.socket" ];
         serviceConfig = {
-          User = "root";
-          Group = "root";
           ExecStart = "${pkgs.docker}/bin/docker compose -f ${./docker-compose.yml} up";
           Restart = "on-failure";
         };
