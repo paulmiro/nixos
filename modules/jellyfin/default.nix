@@ -1,3 +1,6 @@
+# It might make sense to migrate to OCI:
+# https://search.nixos.org/options?channel=unstable&type=packages&query=virtualisation.oci-containers.containers
+# Would require us to mount NFS shares manually though.
 { pkgs, lib, config, ... }:
 with lib;
 let cfg = config.paul.jellyfin;
