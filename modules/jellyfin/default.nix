@@ -12,6 +12,7 @@ in
 
   config = mkIf cfg.enable
     {
+      virtualisation.docker.enable = true;
       systemd.services.jellyfin = {
         description = "Jellyfin media server docker-compose service";
         wantedBy = [ "multi-user.target" ];
