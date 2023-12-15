@@ -24,39 +24,39 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf cfg.enable
+    {
+      paul.docker.enable = true;
 
-    virtualisation.oci-containers.containers.librespeedtest = {
-      autoStart = true;
-      image = "adolfintel/speedtest";
-      environment = {
-        TITLE = "${cfg.title}";
-        ENABLE_ID_OBFUSCATION = "true";
-        WEBPORT = "${cfg.port}";
-        MODE = "standalone";
+      virtualisation.oci-containers.containers.librespeedtest = {
+        autoStart = true;
+        image = "adolfintel/speedtest";
+        environment = {
+          TITLE = "${cfg.title}";
+          ENABLE_ID_OBFUSCATION = "true";
+          WEBPORT = "${cfg.port}";
+          MODE = "standalone";
+        };
+        ports = [ "${cfg.port}:${cfg.port}/tcp" ];
       };
-      ports = [ "${cfg.port}:${cfg.port}/tcp" ];
-    };
 
-    /*
-      systemd.services.docker-librespeedtest = {
-      preStop = "${pkgs.docker}/bin/docker kill librespeedtest";
-      };
-    */
+    } // mkIf (cfg.enableNginx && cfg.enable)
+    {
+      paul.nginx.enable = true;
 
-    services.nginx.virtualHosts."***REMOVED***" = mkIf cfg.enableNginx {
-      enableACME = true;
-      forceSSL = true;
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:${cfg.port}";
-      };
-      /*
+      services.nginx.virtualHosts."***REMOVED***" = {
+        enableACME = true;
+        forceSSL = true;
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:${cfg.port}";
+        };
+        /*
       extraConfig = ''
         allow 131.220.0.0/16; # Uni-Netz
         deny all; # deny all remaining ips
       '';
-      */
-    };
+        */
+      };
 
-  };
+    };
 }
