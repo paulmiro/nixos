@@ -73,17 +73,6 @@
     interval = "weekly";
   };
 
-
-  fileSystems."/mnt/nfs/data" = {
-    device = "turing:/mnt/TANK1/data";
-    fsType = "nfs";
-  };
-  fileSystems."/mnt/nfs/playground" = {
-    device = "turing:/mnt/TANK1/playground";
-    fsType = "nfs";
-  };
-
-
   environment.systemPackages = with pkgs; [ ];
 
 }
