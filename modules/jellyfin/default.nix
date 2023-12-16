@@ -1,16 +1,3 @@
-# It might make sense to migrate to OCI:
-# https://search.nixos.org/options?channel=unstable&type=packages&query=virtualisation.oci-containers.containers
-# Would require us to mount NFS shares manually though.
-# OCI implementation would look like this (NFS mounts seperate):
-# oci-containers.containers.jellyfin = {
-#   image = "jellyfin/jellyfin";
-#   user = "4001:4001";
-#   volumes = [
-#     "volume_name:/path/inside/container"
-#     "/path/on/host:/path/inside/container"
-#   ];
-#   extraOptions = [ "--network=host" ];
-# };
 { pkgs, lib, config, ... }:
 with lib;
 let cfg = config.paul.jellyfin;
@@ -24,18 +11,26 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
+
     {
       paul.docker.enable = true;
 
-      systemd.services.jellyfin = {
-        description = "Jellyfin media server docker-compose service";
-        wantedBy = [ "multi-user.target" ];
-        after = [ "docker.service" "docker.socket" ];
-        serviceConfig = {
-          ExecStart = "${pkgs.docker}/bin/docker compose -f ${./docker-compose.yml} up";
-          Restart = "on-failure";
-        };
+      paul.nfs-mounts = {
+        enableJellyfin = true;
+        enableData = true;
       };
+
+      virtualisation.oci-containers.containers.jellyfin = {
+        image = "jellyfin/jellyfin:10.8.13-1";
+        user = "4001:4001";
+        volumes = [
+          "/mnt/nfs/jellyfin/config:/config"
+          "/mnt/nfs/jellyfin/cache:/cache"
+          "/mnt/nfs/data/media:/data/media:ro"
+        ];
+        extraOptions = [ "--network=host" ];
+      };
+
       networking.firewall.allowedTCPPorts = mkIf cfg.openFirewall [ 8096 ];
     }
 
@@ -50,7 +45,7 @@ in
         };
       };
     })
-    
+
   ]);
 
 }
