@@ -1,36 +1,19 @@
-version: '3.5'
+version: "3.5"
 services:
   jellyfin:
     image: jellyfin/jellyfin:10.8.13-1
     container_name: jellyfin
     user: 4001:4001
-    network_mode: 'host'
+    network_mode: "host"
     volumes:
-      - nfs-jellyfin-config:/config
-      - nfs-jellyfin-cache:/cache
-      - nfs-media:/data/media:ro
-    restart: 'unless-stopped'
-    
+      - /mnt/nfs/jellyfin/config:/config
+      - /mnt/nfs/jellyfin/cache:/cache
+      - /mnt/nfs/data/media:/data/media:ro
+    restart: "unless-stopped"
+
     # Optional - alternative address used for autodiscovery
     # environment:
     #   - JELLYFIN_PublishedServerUrl=http://example.com
     # Optional - may be necessary for docker healthcheck to pass if running in host network mode
     # extra_hosts:
     #   - "host.docker.internal:host-gateway"
-
-volumes:
-  nfs-media:
-    driver_opts:
-      type: "nfs"
-      o: "addr=turing,nolock,soft,nfsvers=4"
-      device: ":/mnt/TANK1/data/media"
-  nfs-jellyfin-config:
-    driver_opts:
-      type: "nfs"
-      o: "addr=turing,nolock,soft,nfsvers=4"
-      device: ":/mnt/BLITZ1/jellyfin/config"
-  nfs-jellyfin-cache:
-    driver_opts:
-      type: "nfs"
-      o: "addr=turing,nolock,soft,nfsvers=4"
-      device: ":/mnt/BLITZ1/jellyfin/cache"
