@@ -13,13 +13,12 @@ in
   config = mkIf cfg.enable (mkMerge [
 
     {
-      paul.docker.enable = true;
-
       paul.nfs-mounts = {
         enableJellyfin = true;
         enableData = true;
       };
 
+      virtualisation.oci-containers.backend = "docker";
       virtualisation.oci-containers.containers.jellyfin = {
         image = "jellyfin/jellyfin:10.8.13-1";
         user = "4001:4001";
