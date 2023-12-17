@@ -2,15 +2,35 @@
   description = "My NixOS infrastructure";
 
   inputs = {
+
+    ### Essential inputs
+
+    # Nix Packages collection & NixOS
+    # https://github.com/nixos/nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    # A collection of NixOS modules covering hardware quirks.
+    # https://github.com/NixOS/nixos-hardware
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
+    # Manage a user environment using Nix 
+    # https://github.com/nix-community/home-manager
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # https://github.com/pinpox/lollypops/
+    ### Tools for managing NixOS infrastructure
+
+    # Format disks with nix-config
+    # https://github.com/nix-community/disko
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # NixOS Deployment Tool
+    # https://github.com/pinpox/lollypops/
     lollypops = {
       url = "github:pinpox/lollypops";
       inputs.nixpkgs.follows = "nixpkgs";
