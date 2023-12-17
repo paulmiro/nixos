@@ -36,7 +36,20 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    ### Packages outside of nixpkgs
+
+    # MayNiklas - used for build_outputs
+    mayniklas = {
+      url = "github:MayNiklas/nixos";
+      inputs = {
+        disko.follows = "disko";
+        home-manager.follows = "home-manager";
+        lollypops.follows = "lollypops";
+        nixos-hardware.follows = "nixos-hardware";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
+
   };
 
   outputs = { self, ... }@inputs:
@@ -51,13 +64,22 @@
       formatter = forAllSystems
         (system: nixpkgsFor.${system}.nixpkgs-fmt);
 
-      packages = forAllSystems (system: {
-        woodpecker-pipeline =
-          nixpkgsFor.${system}.callPackage ./pkgs/woodpecker-pipeline {
-            flake-self = self;
-            inputs = inputs;
-          };
-      });
+      packages = forAllSystems (system:
+        let pkgs = nixpkgsFor.${system}; in {
+
+          woodpecker-pipeline =
+            pkgs.callPackage ./pkgs/woodpecker-pipeline {
+              flake-self = self;
+              inputs = inputs;
+            };
+
+          build_outputs =
+            pkgs.callPackage mayniklas.packages.${system}.build_outputs.override {
+              inherit self;
+              output_path = "~/.keep-nix-outputs-paulmiro";
+            };
+
+        });
 
       apps = forAllSystems (system: {
         lollypops = lollypops.apps.${system}.default { configFlake = self; };
