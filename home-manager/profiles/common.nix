@@ -27,6 +27,7 @@ with lib;
       neofetch
       nil
       nix-top
+      nix-tree
       nixpkgs-fmt
       ripgrep
       unzip
