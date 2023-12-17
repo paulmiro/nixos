@@ -9,6 +9,10 @@ with lib;
       programs.vscode.enable = true;
     };
 
+    nixpkgs.config.permittedInsecurePackages = [
+      "electron-25.9.0" # Temporary fix for Obsidian
+    ];
+
     # Install these packages for my user
     home.packages = with pkgs; [
       burpsuite
