@@ -15,11 +15,11 @@ in
       device = "turing:/mnt/TANK1/data";
       fsType = "nfs";
     };
-    fileSystems."/mnt/nfs/jellyfin" = mkIf cfg.enableData {
+    fileSystems."/mnt/nfs/jellyfin" = mkIf cfg.enableJellyfin {
       device = "turing:/mnt/BLITZ1/jellyfin";
       fsType = "nfs";
     };
-    fileSystems."/mnt/nfs/playground" = mkIf cfg.enableData {
+    fileSystems."/mnt/nfs/playground" = mkIf cfg.enablePlayground {
       device = "turing:/mnt/TANK1/playground";
       fsType = "nfs";
     };
