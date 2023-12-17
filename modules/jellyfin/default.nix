@@ -8,6 +8,7 @@ in
     enable = mkEnableOption "activate jellyifn";
     openFirewall = mkEnableOption "open firewall for jellyfin";
     enableNginx = mkEnableOption "activate nginx proxy";
+    enableQuickSync = mkEnableOption "enable quicksync";
   };
 
   config = mkIf cfg.enable (mkMerge [
@@ -27,7 +28,13 @@ in
           "/mnt/nfs/jellyfin/cache:/cache"
           "/mnt/nfs/data/media:/data/media:ro"
         ];
-        extraOptions = [ "--network=host" ];
+        extraOptions = [
+          "--network=host"
+        ] ++ lib.optionals (cfg.enableQuickSync) [
+          # get group ID with: `getent group render | cut -d: -f3`
+          "--group-add=\"303\""
+          "--device=/dev/dri/renderD128:/dev/dri/renderD128"
+        ];
       };
 
       systemd.services.docker-jellyfin = {
