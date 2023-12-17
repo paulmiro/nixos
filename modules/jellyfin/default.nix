@@ -30,6 +30,14 @@ in
         extraOptions = [ "--network=host" ];
       };
 
+      systemd.services.docker-jellyfin = {
+        after = [
+          "mnt-nfs-data.mount"
+          "mnt-nfs-jellyfin.mount"
+          "remote-fs.target"
+        ];
+      };
+
       networking.firewall.allowedTCPPorts = mkIf cfg.openFirewall [ 8096 ];
     }
 
