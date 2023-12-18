@@ -24,7 +24,6 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-
     {
       paul.nfs-mounts = {
         enableJellyfin = true;
