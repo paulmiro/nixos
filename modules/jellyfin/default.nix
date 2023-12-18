@@ -8,6 +8,18 @@ in
     enable = mkEnableOption "activate jellyfin";
     openFirewall = mkEnableOption "open firewall for jellyfin";
     enableNginx = mkEnableOption "activate nginx proxy";
+    enableDyndns = mkOption {
+      type = types.bool;
+      default = true;
+      description = "enable dyndns";
+    };
+
+    domain = mkOption {
+      type = types.str;
+      default = "jellyfin.pamiro.net";
+      description = "domain name for jellyfin";
+    };
+
     enableQuickSync = mkEnableOption "enable quicksync";
   };
 
@@ -50,8 +62,12 @@ in
 
     (mkIf cfg.enableNginx {
       paul.nginx.enable = true;
+      paul.dyndns = mkIf cfg.enableDyndns {
+        enable = true;
+        domains = [ cfg.domain ];
+      };
 
-      services.nginx.virtualHosts."jellyfin.pamiro.net" = {
+      services.nginx.virtualHosts."${cfg.domain}" = {
         enableACME = true;
         forceSSL = true;
         locations."/" = {
