@@ -304,11 +304,11 @@
         "wallpaper-generator": "wallpaper-generator"
       },
       "locked": {
-        "lastModified": 1702820628,
-        "narHash": "sha256-rp1r9qs4KpYgNPlVuox8kvUPwTfsQi2i668PDcx55lI=",
+        "lastModified": 1702891612,
+        "narHash": "sha256-gDI3anDfPd1OHkbiMIQI0ASCo4U19X6kYQhykhHS1d0=",
         "owner": "MayNiklas",
         "repo": "nixos",
-        "rev": "701fb59c57496243096b4332140267a4adb1795a",
+        "rev": "27f2cc38c0f849290018978d04c27c3f8c9e644b",
         "type": "github"
       },
       "original": {
