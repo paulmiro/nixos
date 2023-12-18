@@ -22,7 +22,7 @@ in
       backend = "docker";
     };
 
-    users.extraGroups.docker.members = [ "paulmiro" ];
+    users.extraGroups.docker.members = mkIf config.paul.user.paulmiro.enable[ "paulmiro" ];
 
   };
 }
