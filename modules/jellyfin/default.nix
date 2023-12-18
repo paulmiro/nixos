@@ -5,7 +5,7 @@ in
 {
 
   options.paul.jellyfin = {
-    enable = mkEnableOption "activate jellyifn";
+    enable = mkEnableOption "activate jellyfin";
     openFirewall = mkEnableOption "open firewall for jellyfin";
     enableNginx = mkEnableOption "activate nginx proxy";
     enableQuickSync = mkEnableOption "enable quicksync";
