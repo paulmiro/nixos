@@ -8,6 +8,11 @@ in
     enable = mkEnableOption "activate jellyseerr";
     openFirewall = mkEnableOption "allow jellyseerr port in firewall";
     enableNginx = mkEnableOption "activate nginx proxy";
+    enableDyndns = mkOption {
+      type = types.bool;
+      default = true;
+      description = "enable dyndns";
+    };
 
     port = mkOption {
       type = types.port;
@@ -15,6 +20,11 @@ in
       description = "Port to listen on";
     };
 
+    domain = mkOption {
+      type = types.str;
+      default = "***REMOVED***";
+      description = "domain name for jellyseerr";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -29,7 +39,12 @@ in
 
     paul.nginx.enable = mkIf cfg.enableNginx true;
 
-    services.nginx.virtualHosts."***REMOVED***" = mkIf cfg.enableNginx {
+    paul.dyndns = mkIf cfg.enableDyndns {
+      enable = true;
+      domains = [ cfg.domain ];
+    };
+
+    services.nginx.virtualHosts."${cfg.domain}" = mkIf cfg.enableNginx {
       enableACME = true;
       forceSSL = true;
       locations."/" = {

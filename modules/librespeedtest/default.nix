@@ -7,13 +7,24 @@ in
   options.paul.librespeedtest = {
     enable = mkEnableOption "activate librespeedtest";
     enableNginx = mkEnableOption "activate nginx proxy";
+    enableDyndns = mkOption {
+      type = types.bool;
+      default = true;
+      description = "enable dyndns";
+    };
 
     port = mkOption {
       type = types.port;
       default = 5894;
       description = "port to listen on";
-
     };
+
+    domain = mkOption {
+      type = types.str;
+      default = "***REMOVED***";
+      description = "domain name for jellyfin";
+    };
+
     title = mkOption {
       type = types.str;
       default = "LibreSpeed";
@@ -41,8 +52,12 @@ in
 
     (mkIf cfg.enableNginx {
       paul.nginx.enable = true;
+      paul.dyndns = mkIf cfg.enableDyndns {
+        enable = true;
+        domains = [ cfg.domain ];
+      };
 
-      services.nginx.virtualHosts."***REMOVED***" = {
+      services.nginx.virtualHosts."${cfg.domain}" = {
         enableACME = true;
         forceSSL = true;
         locations."/" = {
