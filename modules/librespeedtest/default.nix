@@ -9,18 +9,15 @@ in
     enableNginx = mkEnableOption "activate nginx proxy";
 
     port = mkOption {
-      type = types.str;
-      default = "5894";
-      description = ''
-        Documentation placeholder
-      '';
+      type = types.port;
+      default = 5894;
+      description = "port to listen on";
+
     };
     title = mkOption {
       type = types.str;
       default = "LibreSpeed";
-      description = ''
-        Documentation placeholder
-      '';
+      description = "title to display";
     };
   };
 
@@ -34,10 +31,10 @@ in
         environment = {
           TITLE = "${cfg.title}";
           ENABLE_ID_OBFUSCATION = "true";
-          WEBPORT = "${cfg.port}";
+          WEBPORT = builtins.toString cfg.port;
           MODE = "standalone";
         };
-        ports = [ "${cfg.port}:${cfg.port}/tcp" ];
+        ports = [ "${builtins.toString cfg.port}:${builtins.toString cfg.port}/tcp" ];
       };
 
     }
@@ -49,7 +46,7 @@ in
         enableACME = true;
         forceSSL = true;
         locations."/" = {
-          proxyPass = "http://127.0.0.1:${cfg.port}";
+          proxyPass = "http://127.0.0.1:${builtins.toString cfg.port}";
         };
         /*
       extraConfig = ''

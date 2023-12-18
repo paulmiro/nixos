@@ -10,7 +10,7 @@ in
     enableNginx = mkEnableOption "activate nginx proxy";
 
     port = mkOption {
-      type = types.int;
+      type = types.port;
       default = 5055;
       description = "Port to listen on";
     };
