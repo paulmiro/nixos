@@ -9,17 +9,13 @@ in
     openFirewall = mkOption {
       type = types.bool;
       default = true;
-      description = ''
-        Documentation placeholder
-      '';
+      description = "open the firewall for flaresolverr";
     };
 
     port = mkOption {
-      type = types.str;
-      default = "8191";
-      description = ''
-        Documentation placeholder
-      '';
+      type = types.port;
+      default = 8191;
+      description = "port to listen on";
     };
   };
 
@@ -29,7 +25,7 @@ in
     virtualisation.oci-containers.containers.flaresolverr = {
       autoStart = true;
       image = "flaresolverr/flaresolverr";
-      ports = [ "8191:${cfg.port}/tcp" ];
+      ports = [ "8191:${builtins.toString cfg.port}/tcp" ];
     };
 
   };
