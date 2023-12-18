@@ -8,18 +8,18 @@ in
     enable = mkEnableOption "activate jellyifn";
     openFirewall = mkEnableOption "open firewall for jellyfin";
     enableNginx = mkEnableOption "activate nginx proxy";
+    enableQuickSync = mkEnableOption "enable quicksync";
   };
 
   config = mkIf cfg.enable (mkMerge [
 
     {
-      paul.docker.enable = true;
-
       paul.nfs-mounts = {
         enableJellyfin = true;
         enableData = true;
       };
 
+      virtualisation.oci-containers.backend = "docker";
       virtualisation.oci-containers.containers.jellyfin = {
         image = "jellyfin/jellyfin:10.8.13-1";
         user = "4001:4001";
@@ -28,7 +28,21 @@ in
           "/mnt/nfs/jellyfin/cache:/cache"
           "/mnt/nfs/data/media:/data/media:ro"
         ];
-        extraOptions = [ "--network=host" ];
+        extraOptions = [
+          "--network=host"
+        ] ++ lib.optionals (cfg.enableQuickSync) [
+          # get group ID with: `getent group render | cut -d: -f3`
+          "--group-add=\"303\""
+          "--device=/dev/dri/renderD128:/dev/dri/renderD128"
+        ];
+      };
+
+      systemd.services.docker-jellyfin = {
+        after = [
+          "mnt-nfs-data.mount"
+          "mnt-nfs-jellyfin.mount"
+          "remote-fs.target"
+        ];
       };
 
       networking.firewall.allowedTCPPorts = mkIf cfg.openFirewall [ 8096 ];
