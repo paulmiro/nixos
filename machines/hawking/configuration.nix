@@ -46,7 +46,6 @@
   hardware.enableRedistributableFirmware = true;
 
   networking = {
-    networkmanager.enable = true;
     hostName = "hawking";
     firewall = {
       allowedTCPPorts = [
