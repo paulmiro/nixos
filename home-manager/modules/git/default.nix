@@ -42,7 +42,10 @@ in
         userName = "paulmiro";
       };
     };
-    home.packages = [ pkgs.pre-commit ];
+    home.packages = with pkgs; [
+      pre-commit
+      git-crypt
+    ];
 
   };
 }
