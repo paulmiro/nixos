@@ -72,6 +72,9 @@ let cfg = config.paul.programs.zsh; in
         # switching within a flake repository
         frb = "${pkgs.nixos-rebuild}/bin/nixos-rebuild --use-remote-sudo switch --flake";
 
+        # switch another machine from within a flake repository
+        lolly = "${pkgs.nix}/bin/nix run .\#lollypops --";
+
         # always execute nixos-rebuild with sudo for switching
         nixos-rebuild = "${pkgs.nixos-rebuild}/bin/nixos-rebuild --use-remote-sudo";
 
