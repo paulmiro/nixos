@@ -27,30 +27,37 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
-    paul.sonarr.enable = true;
-    paul.radarr.enable = true;
 
-    services.jellyseerr = {
-      enable = true;
-      port = cfg.port;
-      openFirewall = cfg.openFirewall;
-    };
+  config = mkIf cfg.enable (mkMerge [
+    {
+      paul.sonarr.enable = true;
+      paul.radarr.enable = true;
 
-    paul.nginx.enable = mkIf cfg.enableNginx true;
-
-    paul.dyndns = mkIf cfg.enableDyndns {
-      enable = true;
-      domains = [ cfg.domain ];
-    };
-
-    services.nginx.virtualHosts."${cfg.domain}" = mkIf cfg.enableNginx {
-      enableACME = true;
-      forceSSL = true;
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:${builtins.toString cfg.port}";
+      services.jellyseerr = {
+        enable = true;
+        port = cfg.port;
+        openFirewall = cfg.openFirewall;
       };
-    };
-  };
+
+    }
+
+    (mkIf cfg.enableNginx {
+      paul.nginx.enable = true;
+
+      paul.dyndns = mkIf cfg.enableDyndns {
+        enable = true;
+        domains = [ cfg.domain ];
+      };
+
+      services.nginx.virtualHosts."${cfg.domain}" = {
+        enableACME = true;
+        forceSSL = true;
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:${builtins.toString cfg.port}";
+        };
+      };
+    })
+
+  ]);
 
 }
