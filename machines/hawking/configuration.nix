@@ -29,6 +29,10 @@
       enable = true;
       enableNginx = true;
     };
+    homepage = {
+      enable = true;
+      openFirewall = true;
+    };
   };
 
   imports = [
