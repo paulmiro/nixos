@@ -17,6 +17,8 @@ in
     services.cloudflare-dyndns = {
       enable = true;
       apiTokenFile = "${"${self}/secrets/cloudflare-token"}";
+      ipv4 = true;
+      ipv6 = true;
       domains = cfg.domains;
     };
   };
