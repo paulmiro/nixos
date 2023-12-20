@@ -63,12 +63,13 @@ in
         locations."/" = {
           proxyPass = "http://127.0.0.1:${builtins.toString cfg.port}";
         };
-        /*
-      extraConfig = ''
-        allow 131.220.0.0/16; # Uni-Netz
-        deny all; # deny all remaining ips
-      '';
-        */
+        extraConfig = toString (
+          optional config.paul.nginx.geoIP ''
+            if ($allowed_country = no) {
+                return 444;
+            }
+          ''
+        );
       };
     })
 
