@@ -69,7 +69,7 @@
   services.tailscale = {
     enable = true;
     useRoutingFeatures = "server";
-    extraUpFlags = [ "--accept-dns=false" ];
+    extraUpFlags = [ "--accept-dns=false" "--advertise-exit-node" ];
   };
 
   # Running fstrim weekly is a good idea for VMs.
