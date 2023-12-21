@@ -84,6 +84,11 @@ let cfg = config.paul.programs.zsh; in
         # Other
         lsblk = "${pkgs.util-linux}/bin/lsblk -o name,mountpoint,label,size,type,uuid";
 
+        # fun stuff
+        
+        # mensa
+        mensa = "${pkgs.nix}/bin/nix run 'github:alexanderwallau/bonn-mensa' --";
+
       };
     };
 
