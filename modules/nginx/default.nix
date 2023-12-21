@@ -24,10 +24,20 @@ in
         forceSSL = true;
         default = true;
         locations."/" = {
-          return = "301 https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+          return = "302 https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+        };
+      };
+      virtualHosts."easteregg.pamiro.net" = {
+        enableACME = true;
+        forceSSL = true;
+        locations."/" = {
+          return = "302 https://www.youtube.com/watch?v=dQw4w9WgXcQ";
         };
       };
     };
-
+    systemd.services.nginx.serviceConfig = mkIf config.paul.dyndns.enable {
+      after = [ "cloudflare-dyndns.service" ];
+    };
+    paul.dyndns.domains = [ "pamiro.net" "easteregg.pamiro.net" ];
   };
 }
