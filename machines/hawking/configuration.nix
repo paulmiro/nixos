@@ -51,6 +51,7 @@
 
   networking = {
     hostName = "hawking";
+    tempAddresses = "disabled";
     firewall = {
       allowedTCPPorts = [
         80 # http
