@@ -55,6 +55,13 @@ in
         locations."/" = {
           proxyPass = "http://127.0.0.1:${builtins.toString cfg.port}";
         };
+        extraConfig = toString (
+          optional config.paul.nginx.geoIP ''
+            if ($allowed_country = no) {
+                return 444;
+            }
+          ''
+        );
       };
     })
 
