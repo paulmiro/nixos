@@ -8,6 +8,7 @@
     systemd-boot.enable = true;
 
     nginx.enable = true;
+    nginx.enableGeoIP = true;
 
     librespeedtest = {
       enable = true;

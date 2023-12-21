@@ -4,10 +4,10 @@ let cfg = config.paul.nginx; in
 {
 
   options.paul.nginx = {
-    geoIP = mkEnableOption "enable GeoIP";
+    enableGeoIP = mkEnableOption "enable GeoIP";
   };
 
-  config = mkIf cfg.geoIP {
+  config = mkIf cfg.enableGeoIP {
 
     # when Nginx is enabled, enable the GeoIP updater service
     services.geoipupdate = mkIf cfg.enable {
@@ -15,9 +15,8 @@ let cfg = config.paul.nginx; in
       interval = "weekly";
       settings = {
         EditionIDs = [ "GeoLite2-Country" ];
-        # TODO: set AccountID and create a license key file
-        AccountID = 12345;
-        LicenseKey = "/var/maxmind_license_key";
+        AccountID = 767585;
+        LicenseKey = "/var/keys/maxmind_license_key";
         DatabaseDirectory = "/var/lib/GeoIP";
       };
     };
@@ -48,6 +47,7 @@ let cfg = config.paul.nginx; in
               GB yes;
               IT yes;
               NL yes;
+              JP yes;
             }
           ''
         ]
