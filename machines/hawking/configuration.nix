@@ -10,6 +10,7 @@
     nginx.enable = true;
     nginx.enableGeoIP = true;
 
+    # Exposed Services
     librespeedtest = {
       enable = true;
       enableNginx = true;
@@ -18,6 +19,12 @@
       enable = true;
       enableNginx = true;
     };
+    jellyseerr = {
+      enable = true;
+      enableNginx = true;
+    };
+
+    # Local Services
     sonarr = {
       enable = true;
       openFirewall = true;
@@ -25,10 +32,6 @@
     radarr = {
       enable = true;
       openFirewall = true;
-    };
-    jellyseerr = {
-      enable = true;
-      enableNginx = true;
     };
     homepage = {
       enable = true;
