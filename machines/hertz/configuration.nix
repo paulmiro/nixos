@@ -1,5 +1,5 @@
 { self, ... }:
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
 
@@ -14,6 +14,7 @@
     ./hardware-configuration.nix
     ];
   */
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux"; # only here temporarily as long as there is no hardware-configuration.nix
 
   # enable all the firmware with a license allowing redistribution
   hardware.enableRedistributableFirmware = true;
