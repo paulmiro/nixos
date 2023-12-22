@@ -18,7 +18,7 @@ in
       enable = true;
       apiTokenFile = "${"${self}/secrets/cloudflare-token"}";
       ipv4 = true;
-      ipv6 = true;
+      ipv6 = false;
       domains = cfg.domains;
     };
   };
