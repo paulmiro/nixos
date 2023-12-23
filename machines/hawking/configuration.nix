@@ -37,6 +37,10 @@
       enable = true;
       openFirewall = true;
     };
+    thelounge = {
+      enable = true;
+      openFirewall = true;
+    };
   };
 
   imports = [
