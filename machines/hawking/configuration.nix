@@ -1,5 +1,5 @@
 { self, ... }:
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
 
@@ -38,6 +38,10 @@
       openFirewall = true;
     };
     thelounge = {
+      enable = true;
+      openFirewall = true;
+    };
+    plex = {
       enable = true;
       openFirewall = true;
     };
@@ -86,5 +90,30 @@
   };
 
   environment.systemPackages = with pkgs; [ ];
+
+  ### Temporary stuff (will be removed or moved to modules) ###
+  services.nginx.virtualHosts."***REMOVED***" = {
+    enableACME = true;
+    forceSSL = true;
+    locations."/" = {
+      return = "302 https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+    };
+  };
+  paul.dyndns.domains = [ "***REMOVED***" "***REMOVED***" ];
+
+  services.nginx.virtualHosts."***REMOVED***" = {
+    enableACME = true;
+    forceSSL = true;
+    locations."/" = {
+      proxyPass = "http://192.168.178.222:30044";
+    };
+    extraConfig = toString (
+      lib.optional config.paul.nginx.enableGeoIP ''
+        if ($allowed_country = no) {
+            return 444;
+        }
+      ''
+    );
+  };
 
 }
