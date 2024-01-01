@@ -48,6 +48,27 @@
       ],
       "image": "bash",
       "name": "Push newton to Attic"
+    },
+    {
+      "commands": [
+        "nix build '.#nixosConfigurations.hawking.config.system.build.toplevel' -o 'result-hawking'"
+      ],
+      "image": "bash",
+      "name": "Build hawking"
+    },
+    {
+      "commands": [
+        "nix path-info --closure-size -h $(readlink -f 'result-hawking')"
+      ],
+      "image": "bash",
+      "name": "Show hawking info"
+    },
+    {
+      "commands": [
+        "attic push lounge-rocks:nix-cache 'result-hawking'"
+      ],
+      "image": "bash",
+      "name": "Push hawking to Attic"
     }
   ]
 }
