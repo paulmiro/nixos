@@ -23,6 +23,10 @@
       enable = true;
       enableNginx = true;
     };
+    # immich = {
+    #  enable = true;
+    #  openFirewall = true;
+    #};
 
     # Local Services
     sonarr = {
