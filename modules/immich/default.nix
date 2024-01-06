@@ -49,7 +49,7 @@ in
         serviceConfig =
           let
             content = lib.strings.fileContents ./docker-compose.yml;
-            replaced = builtins.replaceStrings [ ".env" "${./.env}" ] content;
+            replaced = builtins.replaceStrings [ ".env" ] [ "${./.env}" ] content;
             compose-file = pkgs.writeText "docker-compose.yml" replaced;
           in
           {
