@@ -48,11 +48,9 @@ in
         ];
         serviceConfig =
           let
-            compose-file = writeText "docker-compose.yml" (
-              builtins.replaceStrings [ ".env" "${./.env}" ] (
-                lib.strings.fileContents ./docker-compose.yml
-              )
-            );
+            content = lib.strings.fileContents ./docker-compose.yml;
+            replaced = builtins.replaceStrings [ ".env" "${./.env}" ] content;
+            compose-file = pkgs.writeText "docker-compose.yml" replaced;
           in
           {
             ExecStart = "${pkgs.docker}/bin/docker compose -f ${compose-file} up --build";
