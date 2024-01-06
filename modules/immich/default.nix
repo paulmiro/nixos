@@ -55,7 +55,7 @@ in
             );
           in
           {
-            ExecStart = "${pkgs.docker}/bin/docker compose -f ${compose-file} up --build";
+            ExecStart = "${pkgs.docker}/bin/docker compose -f ${compose-file} --env-file ${./.env} up --build";
             Restart = "on-failure";
           };
       };
