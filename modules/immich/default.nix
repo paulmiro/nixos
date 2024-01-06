@@ -46,16 +46,10 @@ in
           "mnt-nfs-immich.mount"
           "remote-fs.target"
         ];
-        serviceConfig =
-          let
-            content = lib.strings.fileContents ./docker-compose.yml;
-            replaced = builtins.replaceStrings [ ".env" ] [ "${./.env}" ] content;
-            compose-file = pkgs.writeText "docker-compose.yml" replaced;
-          in
-          {
-            ExecStart = "${pkgs.docker}/bin/docker compose -f ${compose-file} up --build";
-            Restart = "on-failure";
-          };
+        serviceConfig = {
+          ExecStart = "${pkgs.docker}/bin/docker compose -f ${(pkgs.writeText "docker-compose.yml" (builtins.replaceStrings [ ".env" ] [ "${./.env}" ] (lib.strings.fileContents ./docker-compose.yml)))} up --build";
+          Restart = "on-failure";
+        };
       };
 
       networking.firewall.allowedTCPPorts = mkIf cfg.openFirewall [ cfg.port ];
