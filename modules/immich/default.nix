@@ -49,7 +49,7 @@ in
         serviceConfig =
           let
             compose-file = pkgs.writeText "docker-compose.yml" (
-              builtins.replaceStrings [ ".env" ] [ "${./.env}" ] (
+              builtins.replaceStrings [ ".env" "hwaccel.yml" ] [ "${./.env}" "${./hwaccel.yml}" ] (
                 lib.strings.fileContents ./docker-compose.yml
               )
             );
