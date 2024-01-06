@@ -33,6 +33,7 @@ with lib;
       sl
       spotify
       thunderbird-bin
+      tor-browser
       whatsapp-for-linux
       xournalpp
       zoom-us
