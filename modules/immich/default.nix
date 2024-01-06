@@ -47,7 +47,7 @@ in
           "remote-fs.target"
         ];
         serviceConfig = {
-          ExecStart = "${pkgs.docker}/bin/docker compose -f ${./docker-compose.yml} --env-file ${./.env} up";
+          ExecStart = "${pkgs.docker}/bin/docker compose -f ${./docker-compose.yml} --env-file ${./.env} up --build";
           Restart = "on-failure";
         };
       };
