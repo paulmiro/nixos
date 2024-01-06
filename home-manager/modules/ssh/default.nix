@@ -22,6 +22,10 @@ in
           hostname = "hawking";
           user = "paulmiro";
         };
+        "morse" = {
+          hostname = "morse-ssh.duckdns.org";
+          user = "root";
+        };
       };
     };
   };
