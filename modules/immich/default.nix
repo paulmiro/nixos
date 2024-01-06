@@ -46,16 +46,9 @@ in
           "mnt-nfs-immich.mount"
           "remote-fs.target"
         ];
-        serviceConfig =
-          let
-            compose-file = pkgs.writeText "docker-compose.yml" (
-              builtins.replaceStrings [ ".env" "hwaccel.yml" ] [ "${./.env}" "${./hwaccel.yml}" ] (
-                lib.strings.fileContents ./docker-compose.yml
-              )
-            );
-          in
-          {
-            ExecStart = "${pkgs.docker}/bin/docker compose -f ${compose-file} --env-file ${./.env} up --build";
+        serviceConfig = {
+            WorkingDirectory = "${./.}";
+            ExecStart = "${pkgs.docker}/bin/docker compose up --build";
             Restart = "on-failure";
           };
       };
