@@ -1,8 +1,25 @@
 { config, lib, pkgs, ... }:
 with lib;
-let cfg = config.paul.nginx; in
+let
+  cfg = config.paul.nginx;
+  vhostOptions = { config, ... }: {
+    options = {
+      enableGeoBlocking = mkEnableOption "Enable GeoIP2";
+    };
+    config =
+      mkIf config.enableGeoBlocking { # TODO: make sure this module is enabled when a vhost is using it
+        extraConfig = ''
+          if ($allowed_country = no) {
+              return 444;
+          }
+        '';
+      };
+  };
+in
 {
-
+  options.services.nginx.virtualHosts = mkOption {
+    type = types.attrsOf (types.submodule vhostOptions);
+  };
   options.paul.nginx = {
     enableGeoIP = mkEnableOption "enable GeoIP";
   };
