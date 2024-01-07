@@ -9,7 +9,7 @@ in
     openFirewall = mkEnableOption "allow thelounge port in firewall";
     port = mkOption {
       type = types.port;
-      default = 9000;
+      default = 9337;
       description = "port to listen on";
     };
   };
