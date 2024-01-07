@@ -10,7 +10,7 @@ in
     programs.ssh = {
       enable = true;
       matchBlocks = {
-        "nas" = {
+        "turing" = {
           hostname = "turing";
           user = "admin";
         };
