@@ -106,7 +106,7 @@ in
         };
       };
 
-      networking.firewall.allowedTCPPorts = mkIf cfg.openFirewall [ cfg.port cfg.httpsPort ];
+      networking.firewall.allowedTCPPorts = mkIf cfg.openFirewall [ cfg.port cfg.httpsPort 389 636 ];
     }
 
     (mkIf cfg.enableNginx {
