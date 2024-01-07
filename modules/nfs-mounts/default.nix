@@ -9,6 +9,7 @@ in
     enablePhotos = mkEnableOption "activate TANK1/photos";
     enableJellyfin = mkEnableOption "activate BLITZ1/jellyfin";
     enableImmich = mkEnableOption "activate BLITZ1/immich";
+    enableAuthentik = mkEnableOption "activate BLITZ1/authentik";
     enablePlayground = mkEnableOption "activate TANK1/playground";
   };
 
@@ -27,6 +28,10 @@ in
     };
     fileSystems."/mnt/nfs/immich" = mkIf cfg.enableImmich {
       device = "turing:/mnt/BLITZ1/immich";
+      fsType = "nfs";
+    };
+    fileSystems."/mnt/nfs/authentik" = mkIf cfg.enableAuthentik {
+      device = "turing:/mnt/BLITZ1/authentik";
       fsType = "nfs";
     };
     fileSystems."/mnt/nfs/playground" = mkIf cfg.enablePlayground {

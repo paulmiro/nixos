@@ -27,6 +27,11 @@
       enable = true;
       enableNginx = true;
     };
+    authentik = {
+      enable = true;
+      openFirewall = true;
+      enableNginx = true;
+    };
 
     # Local Services
     sonarr = {
@@ -111,13 +116,7 @@
     locations."/" = {
       proxyPass = "http://192.168.178.222:30044";
     };
-    extraConfig = toString (
-      lib.optional config.paul.nginx.enableGeoIP ''
-        if ($allowed_country = no) {
-            return 444;
-        }
-      ''
-    );
+    enableGeoBlocking = true;
   };
 
 }

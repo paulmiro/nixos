@@ -1,6 +1,8 @@
 ---
 version: "3.4"
 
+name: authentik
+
 services:
   postgresql:
     image: docker.io/library/postgres:12-alpine
@@ -11,8 +13,9 @@ services:
       interval: 30s
       retries: 5
       timeout: 5s
+    user: 4100:4100
     volumes:
-      - database:/var/lib/postgresql/data
+      - /mnt/nfs/authentik/postgres:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: ${PG_PASS:?database password required}
       POSTGRES_USER: ${PG_USER:-authentik}
@@ -41,9 +44,10 @@ services:
       AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
       AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
       AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
+    user: 4100:4100
     volumes:
-      - ./media:/media
-      - ./custom-templates:/templates
+      - /mnt/nfs/authentik/media:/media
+      - /mnt/nfs/authentik/custom-templates:/templates
     env_file:
       - .env
     ports:
@@ -68,12 +72,13 @@ services:
     # Removing `user: root` also prevents the worker from fixing the permissions
     # on the mounted folders, so when removing this make sure the folders have the correct UID/GID
     # (1000:1000 by default)
-    user: root
+    #user: root
+    user: 4100:4100
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./media:/media
-      - ./certs:/certs
-      - ./custom-templates:/templates
+      #- /var/run/docker.sock:/var/run/docker.sock
+      - /mnt/nfs/authentik/media:/media
+      - /mnt/nfs/authentik/certs:/certs
+      - /mnt/nfs/authentik/custom-templates:/templates
     env_file:
       - .env
     depends_on:
@@ -81,7 +86,5 @@ services:
       - redis
 
 volumes:
-  database:
-    driver: local
   redis:
     driver: local
