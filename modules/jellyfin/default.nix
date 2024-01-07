@@ -72,13 +72,7 @@ in
         locations."/" = {
           proxyPass = "http://127.0.0.1:8096";
         };
-        extraConfig = toString (
-          optional config.paul.nginx.enableGeoIP ''
-            if ($allowed_country = no) {
-                return 444;
-            }
-          ''
-        );
+        enableGeoBlocking = true;
       };
     })
 
