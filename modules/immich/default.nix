@@ -47,7 +47,7 @@ in
           "remote-fs.target"
         ];
         serviceConfig = {
-            WorkingDirectory = "${./.}";
+            WorkingDirectory = "${./compose}";
             ExecStart = "${pkgs.docker}/bin/docker compose up --build";
             Restart = "on-failure";
           };
