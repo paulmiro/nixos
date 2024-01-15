@@ -108,13 +108,22 @@
       return = "302 https://www.youtube.com/watch?v=dQw4w9WgXcQ";
     };
   };
-  paul.dyndns.domains = [ "easteregg.pamiro.net" "filebrowser.pamiro.net" ];
+  paul.dyndns.domains = [ "easteregg.pamiro.net" "filebrowser.pamiro.net" "nextcloud.pamiro.net" ];
 
   services.nginx.virtualHosts."filebrowser.pamiro.net" = {
     enableACME = true;
     forceSSL = true;
     locations."/" = {
       proxyPass = "http://192.168.178.222:30044";
+    };
+    enableGeoBlocking = true;
+  };
+
+  services.nginx.virtualHosts."nextcloud.pamiro.net" = {
+    enableACME = true;
+    forceSSL = true;
+    locations."/" = {
+      proxyPass = "http://192.168.178.222:9001";
     };
     enableGeoBlocking = true;
   };
