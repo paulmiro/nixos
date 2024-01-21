@@ -116,7 +116,7 @@
     locations."/" = {
       proxyPass = "http://192.168.178.222:30044";
     };
-    enableGeoBlocking = true;
+    geo-ip = true;
   };
 
   services.nginx.virtualHosts."***REMOVED***" = {
@@ -125,7 +125,7 @@
     locations."/" = {
       proxyPass = "http://192.168.178.222:9001";
     };
-    enableGeoBlocking = true;
+    geo-ip = true;
   };
 
 }
