@@ -47,10 +47,10 @@ in
           "remote-fs.target"
         ];
         serviceConfig = {
-            WorkingDirectory = "${./compose}";
-            ExecStart = "${pkgs.docker}/bin/docker compose up --build";
-            Restart = "on-failure";
-          };
+          WorkingDirectory = "${./compose}";
+          ExecStart = "${pkgs.docker}/bin/docker compose up --build";
+          Restart = "on-failure";
+        };
       };
 
       networking.firewall.allowedTCPPorts = mkIf cfg.openFirewall [ cfg.port ];
@@ -69,7 +69,7 @@ in
         locations."/" = {
           proxyPass = "http://127.0.0.1:${toString cfg.port}";
         };
-        enableGeoBlocking = true;
+        geo-ip = true;
       };
     })
 

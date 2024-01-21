@@ -12,27 +12,27 @@
 Append the following to your virtual host configuration:
 
 ```nix
-    services.nginx.virtualHosts."${cfg.domain}".extraConfig = toString (
-      optional config.paul.nginx.enableGeoIP ''
-        if ($allowed_country = no) {
-            return 444;
-        }
-      ''
-    );
+services.nginx.virtualHosts."${cfg.domain}".geo-ip = true;
+```
+
+or
+
+```nix
+services.nginx.virtualHosts."${cfg.domain}".locations."/".geo-ip = true;
 ```
 
 ### When checking against multiple criteria
 
 ```nix
-    services.nginx.virtualHosts."${cfg.domain}".extraConfig = toString (
-      optional config.paul.nginx.enableGeoIP ''
-        set $allowed 0;
-        if ($allowed_country = yes) {
-            set $allowed 1;
-        }
-        if ($allowed = 0) {
-            return 403;
-        }
-      ''
-    );
+services.nginx.virtualHosts."${cfg.domain}".extraConfig = toString (
+  optional config.paul.nginx.enableGeoIP ''
+    set $allowed 0;
+    if ($allowed_country = yes) {
+        set $allowed 1;
+    }
+    if ($allowed = 0) {
+        return 403;
+    }
+  ''
+);
 ```

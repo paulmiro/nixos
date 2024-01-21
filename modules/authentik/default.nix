@@ -128,7 +128,7 @@ in
               proxy_set_header Connection $connection_upgrade_keepalive;
             '';
           };
-          enableGeoBlocking = true;
+          geo-ip = true;
         };
         appendHttpConfig = ''
           upstream authentik {
