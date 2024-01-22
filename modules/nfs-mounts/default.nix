@@ -35,7 +35,7 @@ in
       fsType = "nfs";
     };
     fileSystems."/mnt/nfs/playground" = mkIf cfg.enablePlayground {
-      device = "turing:/mnt/TANK1/playground";
+      device = "turing:/mnt/BLITZ1/playground";
       fsType = "nfs";
     };
   };
