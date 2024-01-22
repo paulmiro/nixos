@@ -10,4 +10,5 @@
 * [Blog post about different Nix commands](https://mayniklas.de/posts/linux/nixos/2023-07-22-nix-commands/)
 
 ## Commands
- - `nix run .\#lollypops -- hawking`
+- `nix run .\#lollypops -- hawking`
+- `nix-tree $(nix build --print-out-paths .\#nixosConfigurations.hawking.config.system.build.toplevel)`
