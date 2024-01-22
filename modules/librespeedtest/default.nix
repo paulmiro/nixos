@@ -65,6 +65,10 @@ in
           geo-ip = true;
         };
       };
+
+      systemd.services.docker-librespeedtest = {
+        preStop = "${pkgs.docker}/bin/docker kill librespeedtest";
+      };
     })
 
   ]);
