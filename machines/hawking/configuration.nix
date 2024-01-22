@@ -115,8 +115,8 @@
     forceSSL = true;
     locations."/" = {
       proxyPass = "http://192.168.178.222:30044";
+      geo-ip = true;
     };
-    geo-ip = true;
   };
 
   services.nginx.virtualHosts."***REMOVED***" = {
@@ -124,8 +124,8 @@
     forceSSL = true;
     locations."/" = {
       proxyPass = "http://192.168.178.222:9001";
+      geo-ip = true;
     };
-    geo-ip = true;
   };
 
 }
