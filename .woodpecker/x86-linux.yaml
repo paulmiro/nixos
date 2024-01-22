@@ -1,8 +1,8 @@
 {
   "labels": {
-    "backend": "local"
+    "backend": "local",
+    "platform": "linux/amd64"
   },
-  "platform": "linux/amd64",
   "steps": [
     {
       "commands": [
@@ -30,28 +30,7 @@
     },
     {
       "commands": [
-        "nix build '.#nixosConfigurations.newton.config.system.build.toplevel' -o 'result-newton'"
-      ],
-      "image": "bash",
-      "name": "Build newton"
-    },
-    {
-      "commands": [
-        "nix path-info --closure-size -h $(readlink -f 'result-newton')"
-      ],
-      "image": "bash",
-      "name": "Show newton info"
-    },
-    {
-      "commands": [
-        "attic push lounge-rocks:nix-cache 'result-newton'"
-      ],
-      "image": "bash",
-      "name": "Push newton to Attic"
-    },
-    {
-      "commands": [
-        "nix build '.#nixosConfigurations.hawking.config.system.build.toplevel' -o 'result-hawking'"
+        "nix build --print-out-paths '.#nixosConfigurations.hawking.config.system.build.toplevel' -o 'result-hawking'"
       ],
       "image": "bash",
       "name": "Build hawking"
@@ -69,6 +48,27 @@
       ],
       "image": "bash",
       "name": "Push hawking to Attic"
+    },
+    {
+      "commands": [
+        "nix build --print-out-paths '.#nixosConfigurations.newton.config.system.build.toplevel' -o 'result-newton'"
+      ],
+      "image": "bash",
+      "name": "Build newton"
+    },
+    {
+      "commands": [
+        "nix path-info --closure-size -h $(readlink -f 'result-newton')"
+      ],
+      "image": "bash",
+      "name": "Show newton info"
+    },
+    {
+      "commands": [
+        "attic push lounge-rocks:nix-cache 'result-newton'"
+      ],
+      "image": "bash",
+      "name": "Push newton to Attic"
     }
   ]
 }
