@@ -45,6 +45,9 @@ in
           # get group ID with: `getent group render | cut -d: -f3`
           "--group-add=\"303\""
           "--device=/dev/dri/renderD128:/dev/dri/renderD128"
+        ] ++ lib.optionals (config.paul.nvidia.enable) [
+          "--gpus"
+          "all"
         ];
       };
 

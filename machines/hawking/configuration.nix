@@ -2,10 +2,12 @@
 { config, pkgs, lib, ... }:
 
 {
+  services.qemuGuest.enable = true;
 
   paul = {
     common-server.enable = true;
     systemd-boot.enable = true;
+    nvidia.enable = true;
 
     nginx.enable = true;
     nginx.enableGeoIP = true;
