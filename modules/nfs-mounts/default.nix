@@ -23,15 +23,15 @@ in
       fsType = "nfs";
     };
     fileSystems."/mnt/nfs/jellyfin" = mkIf cfg.enableJellyfin {
-      device = "turing:/mnt/BLITZ1/jellyfin";
+      device = "turing:/mnt/BLITZ1/apps/jellyfin";
       fsType = "nfs";
     };
     fileSystems."/mnt/nfs/immich" = mkIf cfg.enableImmich {
-      device = "turing:/mnt/BLITZ1/immich";
+      device = "turing:/mnt/BLITZ1/apps/immich";
       fsType = "nfs";
     };
     fileSystems."/mnt/nfs/authentik" = mkIf cfg.enableAuthentik {
-      device = "turing:/mnt/BLITZ1/authentik";
+      device = "turing:/mnt/BLITZ1/apps/authentik";
       fsType = "nfs";
     };
     fileSystems."/mnt/nfs/playground" = mkIf cfg.enablePlayground {
