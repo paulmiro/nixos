@@ -26,6 +26,10 @@ in
           hostname = "morse-ssh.duckdns.org";
           user = "root";
         };
+        "uni" = {
+          hostname = "login-stud.informatik.uni-bonn.de";
+          user = "rohdep0";
+        };
       };
     };
   };
