@@ -14,6 +14,8 @@ in
     paul.prowlarr.enable = true;
     paul.nfs-mounts.enableData = true;
 
+    users.users.readarr.uid = 8787;
+
     services.readarr = {
       enable = true;
       user = "readarr";
