@@ -14,6 +14,10 @@ in
     paul.prowlarr.enable = true;
     paul.nfs-mounts.enableData = true;
 
+    ids.uids.sonarr = mkForce 8989;
+
+    users.users.sonarr.isSystemUser = true; # this should be set in the services.sonarr module, bit it isn't
+
     services.sonarr = {
       enable = true;
       user = "sonarr";

@@ -14,6 +14,10 @@ in
     paul.prowlarr.enable = true;
     paul.nfs-mounts.enableData = true;
 
+    ids.uids.radarr = mkForce 7878;
+
+    users.users.radarr.isSystemUser = true; # this should be set in the services.radarr module, bit it isn't
+
     services.radarr = {
       enable = true;
       user = "radarr";
