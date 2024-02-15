@@ -48,6 +48,10 @@
       enable = true;
       openFirewall = true;
     };
+    readarr = {
+      enable = true;
+      openFirewall = true;
+    };
     homepage = {
       enable = true;
       openFirewall = true;
