@@ -34,6 +34,10 @@
       openFirewall = true;
       enableNginx = true;
     };
+    audiobookshelf = {
+      enable = true;
+      enableNginx = true;
+    };
 
     # Local Services
     sonarr = {
