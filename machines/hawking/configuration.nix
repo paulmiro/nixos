@@ -35,7 +35,7 @@
       enableNginx = true;
     };
     audiobookshelf = {
-      enable = true;
+      #enable = true;
       enableNginx = true;
     };
 
@@ -49,7 +49,7 @@
       openFirewall = true;
     };
     readarr = {
-      enable = true;
+      #enable = true;
       openFirewall = true;
     };
     homepage = {
