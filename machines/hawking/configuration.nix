@@ -53,7 +53,7 @@
       openFirewall = true;
     };
     homepage = {
-      enable = true;
+      #enable = true;
       openFirewall = true;
     };
     thelounge = {
