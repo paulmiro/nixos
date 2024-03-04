@@ -18,7 +18,7 @@ in
 
     # Maximum number of latest generations in the boot menu.
     # Useful to prevent boot partition running out of disk space.
-    boot.loader.systemd-boot.configurationLimit = 8;
+    boot.loader.systemd-boot.configurationLimit = 3;
 
     # Why not have memtest86 ready to go?
     boot.loader.systemd-boot.memtest86.enable = true;
