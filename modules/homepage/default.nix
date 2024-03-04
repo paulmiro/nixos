@@ -18,5 +18,6 @@ in
       enable = true;
       openFirewall = cfg.openFirewall;
     };
+    #systemd.services.homepage-dashboard.environment.HOMEPAGE_CONFIG_DIR = mkForce "/home/paulmiro/homepage-dashboard";
   };
 }
