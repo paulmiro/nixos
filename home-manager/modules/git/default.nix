@@ -37,7 +37,10 @@ in
           "develop-eggs/"
           "dist/"
         ];
-        extraConfig = { pull.rebase = false; };
+        extraConfig = {
+          pull.rebase = false;
+          init.defaultBranch = "main";
+        };
         userEmail = "30203227+paulmiro@users.noreply.github.com";
         userName = "paulmiro";
       };
