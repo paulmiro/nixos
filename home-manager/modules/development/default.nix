@@ -5,9 +5,10 @@ in
 {
   options.paul.programs.development.enable =
     mkEnableOption "enable development applications";
-
+  
   config = mkIf cfg.enable {
 
+    ## Go
     programs.go = {
       enable = true;
       # https://rycee.gitlab.io/home-manager/options.html#opt-programs.go.packages
@@ -15,25 +16,30 @@ in
     };
 
     home.packages = with pkgs; [
+      ## Android
+      android-studio
+      android-tools
 
-      ### Programming languages / compiler
-      bun
-      # cargo
+      ## C/C++
       clang
+
+      ## Java
+      jdk21
+
+      ## JavaScript
+      bun
+      nodejs_21
+
+      ## Lua
       lua
-      # rustc
-      # gcc
+      stylua
+
+      ## Python
       (python3.withPackages (ps: with ps; [
         requests
         numpy
         jupyter
       ]))
-
-      ### Formatter
-      # nixfmt
-      # nixpkgs-fmt
-      # rustfmt
-      stylua
 
     ];
 
