@@ -33,10 +33,10 @@
   programs.steam.enable = true;
 
   # Configure keymap in X11
-  services.xserver = {
+  services.xserver.xkb = {
     layout = "de";
-    xkbVariant = "";
-    xkbOptions = "caps:none";
+    variant = "";
+    options = "caps:none";
   };
 
   # Configure console keymap
