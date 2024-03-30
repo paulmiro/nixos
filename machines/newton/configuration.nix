@@ -13,6 +13,7 @@
     nvidia = { enable = true; laptop = true; };
     systemd-boot.enable = true;
     syncthing.enable = true;
+    adb.enable = true;
   };
 
   # programs.ssh.askPassword = pkgs.lib.mkForce "${pkgs.x11_ssh_askpass}/libexec/x11-ssh-askpass";
