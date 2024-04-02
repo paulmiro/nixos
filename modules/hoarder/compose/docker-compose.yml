@@ -1,0 +1,62 @@
+# unchanged except for the port and data volume
+version: "3.8"
+services:
+  web:
+    image: ghcr.io/mohamedbassem/hoarder-web:${HOARDER_VERSION:-release}
+    restart: unless-stopped
+    volumes:
+      - data:/data
+    ports:
+      - 3000:2284
+    env_file:
+      - .env
+    environment:
+      REDIS_HOST: redis
+      MEILI_ADDR: http://meilisearch:7700
+      DATA_DIR: /data
+  redis:
+    image: redis:7.2-alpine
+    restart: unless-stopped
+    volumes:
+      - redis:/data
+  chrome:
+    image: gcr.io/zenika-hub/alpine-chrome:123
+    restart: unless-stopped
+    command:
+      - --no-sandbox
+      - --disable-gpu
+      - --remote-debugging-address=0.0.0.0
+      - --remote-debugging-port=9222
+  meilisearch:
+    image: getmeili/meilisearch:v1.6
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - meilisearch:/meili_data
+  workers:
+    image: ghcr.io/mohamedbassem/hoarder-workers:${HOARDER_VERSION:-release}
+    restart: unless-stopped
+    volumes:
+      - data:/data
+    env_file:
+      - .env
+    environment:
+      REDIS_HOST: redis
+      MEILI_ADDR: http://meilisearch:7700
+      BROWSER_WEB_URL: http://chrome:9222
+      DATA_DIR: /data
+      # OPENAI_API_KEY: ...
+    depends_on:
+      web:
+        condition: service_started
+
+volumes:
+  redis:
+  meilisearch:
+  data: 
+    driver: local
+    driver_opts:
+      type: none
+      device: /mnt/nfs/hoarder/data
+      o: bind
