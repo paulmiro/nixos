@@ -33,6 +33,7 @@ in
         enableHoarder = true;
       };
 
+      /*
       systemd.services.docker-hoarder = {
         description = "hoarder docker-compose service";
         wantedBy = [ "multi-user.target" ];
@@ -48,6 +49,7 @@ in
           Restart = "on-failure";
         };
       };
+      */
 
       networking.firewall.allowedTCPPorts = mkIf cfg.openFirewall [ cfg.port ];
     }
