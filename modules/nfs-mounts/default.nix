@@ -10,6 +10,7 @@ in
     enableJellyfin = mkEnableOption "activate BLITZ1/jellyfin";
     enableImmich = mkEnableOption "activate BLITZ1/immich";
     enableAuthentik = mkEnableOption "activate BLITZ1/authentik";
+    enableHoarder = mkEnableOption "activate BLITZ1/hoarder";
     enablePlayground = mkEnableOption "activate TANK1/playground";
   };
 
@@ -36,6 +37,10 @@ in
     };
     fileSystems."/mnt/nfs/playground" = mkIf cfg.enablePlayground {
       device = "turing:/mnt/BLITZ1/playground";
+      fsType = "nfs";
+    };
+    fileSystems."/mnt/nfs/hoarder" = mkIf cfg.enableHoarder {
+      device = "turing:/mnt/BLITZ1/apps/hoarder";
       fsType = "nfs";
     };
   };
