@@ -16,7 +16,7 @@ in
 
     port = mkOption {
       type = types.port;
-      default = 2284; # THIS IS NOT A DEFAULT, IT'S JUST IMMICH+1
+      default = 3000; # TODO: this is not a good default
       description = "port to listen on";
     };
 
@@ -33,7 +33,6 @@ in
         enableHoarder = true;
       };
 
-      
       systemd.services.docker-hoarder = {
         description = "hoarder docker-compose service";
         wantedBy = [ "multi-user.target" ];
