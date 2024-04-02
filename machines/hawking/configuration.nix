@@ -38,6 +38,11 @@
       #enable = true;
       enableNginx = true;
     };
+    hoarder = {
+      #enable = true;
+      #enableNginx = true;
+      #openFirewall = true;
+    };
 
     # Local Services
     sonarr = {
