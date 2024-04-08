@@ -39,9 +39,9 @@
       enableNginx = true;
     };
     hoarder = {
-      enable = true;
-      enableNginx = true;
-      openFirewall = true;
+      #enable = true;
+      #enableNginx = true;
+      #openFirewall = true;
     };
 
     # Local Services
