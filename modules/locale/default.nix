@@ -6,6 +6,10 @@ in
 
   options.paul.locale = {
     enable = mkEnableOption "activate locale";
+    hardwareClockInLocalTime = mkOption {
+      type = types.bool;
+      default = false;
+    };
   };
 
   config = mkIf cfg.enable {
@@ -13,7 +17,7 @@ in
     # Set your time zone.
     time = {
       timeZone = "Europe/Berlin";
-      hardwareClockInLocalTime = true;
+      hardwareClockInLocalTime = cfg.hardwareClockInLocalTime;
     };
 
     # Select internationalisation properties.

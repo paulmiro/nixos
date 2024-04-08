@@ -14,6 +14,7 @@ in
       common.enable = true;
       sound.enable = true;
       fonts.enable = true;
+      locale.hardwareClockInLocalTime = true;
     };
 
     home-manager = {
