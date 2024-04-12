@@ -43,6 +43,10 @@
       #enableNginx = true;
       #openFirewall = true;
     };
+    auth = {
+      #enable = true;
+      #openFirewall = true;
+    };
 
     # Local Services
     sonarr = {
