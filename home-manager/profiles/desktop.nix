@@ -15,6 +15,7 @@ with lib;
 
     # Install these packages for my user
     home.packages = with pkgs; [
+      bitwarden-cli
       burpsuite
       discord
       element-desktop
