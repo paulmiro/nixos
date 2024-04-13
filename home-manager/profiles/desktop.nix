@@ -40,7 +40,7 @@ with lib;
     ]
     # only install these packages on x86_64-linux systems
     ++ lib.optionals (system-config.nixpkgs.hostPlatform.isx86_64) [
-      nvtop
+      nvtopPackages.full
     ];
   };
 }
