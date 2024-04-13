@@ -27,7 +27,7 @@ in
     {
       paul.nfs-mounts = {
         enableJellyfin = true;
-        enableData = true;
+        enableArr = true;
       };
 
       virtualisation.oci-containers.backend = "docker";
@@ -37,7 +37,7 @@ in
         volumes = [
           "/mnt/nfs/jellyfin/config:/config"
           "/mnt/nfs/jellyfin/cache:/cache"
-          "/mnt/nfs/data/media:/data/media:ro"
+          "/mnt/nfs/arr/media:/data/media:ro"
         ];
         extraOptions = [
           "--network=host"
@@ -53,7 +53,7 @@ in
 
       systemd.services.docker-jellyfin = {
         after = [
-          "mnt-nfs-data.mount"
+          "mnt-nfs-arr.mount"
           "mnt-nfs-jellyfin.mount"
           "remote-fs.target"
         ];
