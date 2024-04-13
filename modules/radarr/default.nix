@@ -12,7 +12,7 @@ in
   config = mkIf cfg.enable {
     paul.group.arr.enable = true;
     paul.prowlarr.enable = true;
-    paul.nfs-mounts.enableData = true;
+    paul.nfs-mounts.enableArr = true;
 
     ids.uids.radarr = mkForce 7878;
 

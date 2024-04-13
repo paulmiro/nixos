@@ -5,8 +5,8 @@ in
 {
 
   options.paul.nfs-mounts = {
-    enableData = mkEnableOption "activate TANK1/data";
-    enablePhotos = mkEnableOption "activate TANK1/photos";
+    enableArr = mkEnableOption "activate TANK2/arr";
+    enablePhotos = mkEnableOption "activate TANK2/photos";
     enableJellyfin = mkEnableOption "activate BLITZ1/jellyfin";
     enableImmich = mkEnableOption "activate BLITZ1/immich";
     enableAuthentik = mkEnableOption "activate BLITZ1/authentik";
@@ -15,12 +15,12 @@ in
   };
 
   config = {
-    fileSystems."/mnt/nfs/data" = mkIf cfg.enableData {
-      device = "turing:/mnt/TANK1/data";
+    fileSystems."/mnt/nfs/arr" = mkIf cfg.enableArr {
+      device = "turing:/mnt/TANK2/arr";
       fsType = "nfs";
     };
     fileSystems."/mnt/nfs/photos" = mkIf cfg.enablePhotos {
-      device = "turing:/mnt/TANK1/photos";
+      device = "turing:/mnt/TANK2/photos";
       fsType = "nfs";
     };
     fileSystems."/mnt/nfs/jellyfin" = mkIf cfg.enableJellyfin {
