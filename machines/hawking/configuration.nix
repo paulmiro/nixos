@@ -36,7 +36,7 @@
     };
     audiobookshelf = {
       #enable = true;
-      enableNginx = true;
+      #enableNginx = true;
     };
     hoarder = {
       #enable = true;
@@ -59,11 +59,11 @@
     };
     readarr = {
       #enable = true;
-      openFirewall = true;
+      #openFirewall = true;
     };
     homepage = {
       #enable = true;
-      openFirewall = true;
+      #openFirewall = true;
     };
     thelounge = {
       enable = true;
@@ -127,7 +127,11 @@
       return = "302 https://www.youtube.com/watch?v=dQw4w9WgXcQ";
     };
   };
-  paul.dyndns.domains = [ "***REMOVED***" "***REMOVED***" "***REMOVED***" ];
+  paul.dyndns.domains = [
+    "***REMOVED***"
+    "***REMOVED***"
+    #"***REMOVED***"
+  ];
 
   services.nginx.virtualHosts."***REMOVED***" = {
     enableACME = true;
@@ -138,13 +142,14 @@
     };
   };
 
-  services.nginx.virtualHosts."***REMOVED***" = {
+  /*
+    services.nginx.virtualHosts."***REMOVED***" = {
     enableACME = true;
     forceSSL = true;
     locations."/" = {
       proxyPass = "http://192.168.178.222:9001";
       geo-ip = true;
     };
-  };
-
+    };
+  */
 }
