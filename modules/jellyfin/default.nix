@@ -30,6 +30,29 @@ in
         enableArr = true;
       };
 
+      /*
+      // This needs some really complicated migration
+      // https://jellyfin.org/docs/general/administration/migrate/
+      // the script only works on windows, so this will propably be way too much work to be worth it
+
+      services.jellyfin = {
+        enable = true;
+        dataDir = "/mnt/nfs/jellyfin";
+        openFirewall = cfg.openFirewall;
+      };
+
+      users.users."jellyfin".uid = 4001;
+      users.groups."jellyfin".gid = 4001;
+
+      systemd.services.jellyfin = {
+        after = [
+          "mnt-nfs-arr.mount"
+          "mnt-nfs-jellyfin.mount"
+          "remote-fs.target"
+        ];
+      };
+      */
+      
       virtualisation.oci-containers.backend = "docker";
       virtualisation.oci-containers.containers.jellyfin = {
         image = "jellyfin/jellyfin:10.8.13-1";
