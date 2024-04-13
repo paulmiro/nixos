@@ -38,11 +38,6 @@
       #enable = true;
       #enableNginx = true;
     };
-    hoarder = {
-      #enable = true;
-      #enableNginx = true;
-      #openFirewall = true;
-    };
     auth = {
       #enable = true;
       #openFirewall = true;
