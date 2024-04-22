@@ -29,6 +29,7 @@ with lib;
       nix-top
       nix-tree
       nixpkgs-fmt
+      openssl
       pwgen
       ripgrep
       unzip
