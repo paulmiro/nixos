@@ -5,7 +5,7 @@ in
 {
   options.paul.programs.development.enable =
     mkEnableOption "enable development applications";
-  
+
   config = mkIf cfg.enable {
 
     ## Go
@@ -22,6 +22,7 @@ in
 
       ## C/C++
       clang
+      cmake
 
       ## Java
       jdk21
@@ -29,6 +30,7 @@ in
       ## JavaScript
       bun
       nodejs_21
+      nodePackages.pnpm
 
       ## Lua
       lua
