@@ -13,6 +13,7 @@ with lib;
     home.packages = with pkgs; [
       bitwarden-cli
       burpsuite
+      ungoogled-chromium
       discord
       element-desktop
       firefox
