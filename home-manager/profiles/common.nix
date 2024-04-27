@@ -23,17 +23,18 @@ with lib;
       asciinema
       dnsutils
       glances
-      psmisc
       neofetch
       nil
       nix-top
       nix-tree
       nixpkgs-fmt
       openssl
+      psmisc
       pwgen
       ripgrep
       unzip
       usbutils
+      zellij
     ];
 
     # Let Home Manager install and manage itself.
