@@ -36,6 +36,9 @@ in
           "build/"
           "develop-eggs/"
           "dist/"
+          # Web
+          "node_modules/"
+          "bun.lockb"
         ];
         extraConfig = {
           pull.rebase = false;
