@@ -29,7 +29,7 @@ in
 
       ## JavaScript
       bun
-      nodejs_21
+      nodejs
       nodePackages.pnpm
 
       ## Lua
