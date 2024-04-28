@@ -11,6 +11,7 @@ in
       git = {
         enable = true;
         ignores = [
+          ".vscode/"
           "tags"
           "*.swp"
           # Nix builds
