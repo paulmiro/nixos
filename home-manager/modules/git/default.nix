@@ -12,11 +12,16 @@ in
         enable = true;
         ignores = [
           ".vscode/"
+          /*
           "tags"
+          */
           "*.swp"
           # Nix builds
+          /*
           "result"
+          */
           # Core latex/pdflatex auxiliary files
+          /*
           "*.aux"
           "*.lof"
           "*.log"
@@ -28,15 +33,18 @@ in
           "*.fot"
           "*.cb"
           "*.cb2"
+          */
           ".*.lb"
           # Python
           "__pycache__/"
           "*.py[cod]"
           "*$py.class"
           ".Python"
+          /*
           "build/"
           "develop-eggs/"
           "dist/"
+          */
           # Web
           "node_modules/"
           "bun.lockb"
