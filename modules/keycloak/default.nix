@@ -4,6 +4,10 @@ let cfg = config.paul.keycloak;
 in
 {
 
+  imports = [
+    ./theme
+  ];
+
   options.paul.keycloak = {
     enable = mkEnableOption "activate keycloak";
     httpPort = mkOption {
@@ -27,6 +31,11 @@ in
       type = types.str;
       default = "/run/keys/keycloak-db-password";
       description = "Path to database password file";
+    };
+    enableCustomTheme = mkOption {
+      type = types.bool;
+      default = true;
+      description = "enable custom theme";
     };
 
   };
@@ -92,6 +101,11 @@ in
       };
     })
 
+    (mkIf cfg.enableCustomTheme {
+      services.keycloak.themes = with pkgs ; {
+        keywind = custom_keycloak_themes.keywind;
+      };
+    })
   ]);
 
 }
