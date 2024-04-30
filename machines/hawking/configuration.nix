@@ -5,6 +5,14 @@
   services.qemuGuest.enable = true;
 
   paul = {
+
+    sso = {
+      enable = true;
+      keycloak = {
+        enableNginx = true;
+      };
+    };
+
     common-server.enable = true;
     systemd-boot.enable = true;
     nvidia.enable = true;
@@ -38,7 +46,7 @@
       #enable = true;
       #enableNginx = true;
     };
-    auth = {
+    sso = {
       #enable = true;
       #openFirewall = true;
     };
@@ -136,15 +144,4 @@
       geo-ip = true;
     };
   };
-
-  /*
-    services.nginx.virtualHosts."***REMOVED***" = {
-    enableACME = true;
-    forceSSL = true;
-    locations."/" = {
-      proxyPass = "http://192.168.178.222:9001";
-      geo-ip = true;
-    };
-    };
-  */
 }
