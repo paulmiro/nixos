@@ -14,7 +14,12 @@ in
   };
 
   config = mkIf cfg.enable {
-    paul.keycloak.enable = true;
+    paul.keycloak = {
+      enable = true;
+      openFirewall = cfg.keycloak.openFirewall;
+      enableNginx = cfg.keycloak.enableNginx;
+    };
+
   };
 
 }
