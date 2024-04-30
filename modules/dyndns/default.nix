@@ -31,7 +31,6 @@ in
     lollypops.secrets.files."cloudflare-api-token" = {
       cmd = "echo \"CLOUDFLARE_API_TOKEN=$(bw get item cloudflare | jq -r '.fields[] | select(.name == \"api-token-edit-dns-all\") | .value')\"";
       path = cfg.apiTokenFile;
-      mode = "0444";
     };
   };
 }
