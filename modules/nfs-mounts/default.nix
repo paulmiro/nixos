@@ -7,11 +7,11 @@ in
   options.paul.nfs-mounts = {
     enableArr = mkEnableOption "activate TANK2/arr";
     enablePhotos = mkEnableOption "activate TANK2/photos";
-    enableJellyfin = mkEnableOption "activate BLITZ1/jellyfin";
-    enableImmich = mkEnableOption "activate BLITZ1/immich";
-    enableAuthentik = mkEnableOption "activate BLITZ1/authentik";
-    enableHoarder = mkEnableOption "activate BLITZ1/hoarder";
-    enablePlayground = mkEnableOption "activate TANK1/playground";
+    enableJellyfin = mkEnableOption "activate BLITZ1/apps/jellyfin";
+    enableImmich = mkEnableOption "activate BLITZ1/apps/immich";
+    enableAuthentik = mkEnableOption "activate BLITZ1/apps/authentik";
+    enablePostgresBackup = mkEnableOption "activate TANK2/postgres-backup";
+    enablePlayground = mkEnableOption "activate BLITZ1/playground";
   };
 
   config = {
@@ -39,8 +39,8 @@ in
       device = "turing:/mnt/BLITZ1/playground";
       fsType = "nfs";
     };
-    fileSystems."/mnt/nfs/hoarder" = mkIf cfg.enableHoarder {
-      device = "turing:/mnt/BLITZ1/apps/hoarder";
+    fileSystems."/mnt/nfs/postgres_backup" = mkIf cfg.enablePostgresBackup {
+      device = "turing:/mnt/TANK2/backups/postgres";
       fsType = "nfs";
     };
   };
