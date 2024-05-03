@@ -28,8 +28,13 @@ in
         };
       };
     };
-    systemd.services.nginx.serviceConfig = mkIf config.paul.dyndns.enable {
-      after = [ "cloudflare-dyndns.service" ];
+    systemd.services.nginx = mkIf config.paul.dyndns.enable {
+      after = [
+        "network.target"
+        "cloudflare-dyndns.service"
+      ];
+      # Wait for 10 seconds to have the dns record up by the time the acme service runs
+      serviceConfig.ExecStartPre = "${pkgs.coreutils}/bin/sleep 10";
     };
     paul.dyndns.domains = [ "***REMOVED***" ];
   };
