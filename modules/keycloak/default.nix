@@ -73,7 +73,7 @@ in
       networking.firewall.allowedTCPPorts = mkIf cfg.openFirewall [ cfg.httpPort ];
 
       lollypops.secrets.files."keycloak-db-password" = {
-        cmd = "bw get item keycloak | jq -r '.fields[] | select(.name == \"database-password\") | .value'";
+        cmd = "rbw get keycloak --field=database-password";
         path = cfg.dbPasswordFilePath;
       };
     }

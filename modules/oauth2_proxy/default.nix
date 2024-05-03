@@ -89,7 +89,7 @@ in
 
     lollypops.secrets.files."oauth2_proxy-keys" = {
       # it's... beautiful
-      cmd = "echo \"OAUTH2_PROXY_CLIENT_SECRET=$(bw get item keycloak | jq -r '.fields[] | select(.name == \"oauth2_proxy-client-secret\") | .value')\nOAUTH2_PROXY_COOKIE_SECRET=$(bw get item keycloak | jq -r '.fields[] | select(.name == \"oauth2_proxy-cookie-secret\") | .value')\"";
+      cmd = "echo \"OAUTH2_PROXY_CLIENT_SECRET=$(rbw get keycloak --field=oauth2_proxy-client-secret)\nOAUTH2_PROXY_COOKIE_SECRET=$(rbw get keycloak --field=oauth2_proxy-cookie-secret)\"";
       path = cfg.keysFilePath;
     };
   };

@@ -10,7 +10,7 @@ in
       enable = true;
       settings = {
         email = builtins.readFile ../../../secrets/rbw-email; # TODO: make this realative to flake-self instead of this folder
-        pinentry = pkgs.pinentry-gnome3;
+        pinentry = pkgs.pinentry-tty;
       };
     };
   };
