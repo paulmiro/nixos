@@ -12,6 +12,16 @@ in
 
   options.paul.nginx = {
     enableGeoIP = mkEnableOption "enable GeoIP";
+    licenseKeyFile = mkOption {
+      type = types.path;
+      default = "/run/keys/maxmind-license-key";
+      description = "Path to the MaxMind license key file";
+    };
+    databaseDirectory = mkOption {
+      type = types.path;
+      default = "/var/lib/GeoIP";
+      description = "Directory where the GeoIP database is stored";
+    };
   };
 
   config = mkIf cfg.enableGeoIP {
@@ -23,9 +33,25 @@ in
       settings = {
         EditionIDs = [ "GeoLite2-Country" ];
         AccountID = 767585;
-        LicenseKey = "/var/keys/maxmind_license_key";
-        DatabaseDirectory = "/var/lib/GeoIP";
+        LicenseKey = cfg.licenseKeyFile;
+        DatabaseDirectory = cfg.databaseDirectory;
       };
+    };
+
+    # this user only exists to give the user the keys group for acacess to /run/keys
+    users.users.geoip = {
+      uid = 63606;
+      group = "geoip";
+      isSystemUser = true;
+      home = cfg.databaseDirectory;
+      extraGroups = [ "keys" ];
+    };
+
+    users.groups.geoip = { };
+
+    lollypops.secrets.files."maxmind-license-key" = {
+      cmd = "rbw get maxmind --field=license-key";
+      path = cfg.licenseKeyFile;
     };
 
     # build nginx with geoip2 module
