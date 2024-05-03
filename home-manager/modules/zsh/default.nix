@@ -73,7 +73,7 @@ let cfg = config.paul.programs.zsh; in
         frb = "${pkgs.nixos-rebuild}/bin/nixos-rebuild --use-remote-sudo switch --flake";
 
         # switch another machine from within a flake repository
-        lolly = "bwu; ${pkgs.nix}/bin/nix run .\#lollypops --";
+        lolly = "${pkgs.nix}/bin/nix run .\#lollypops --";
 
         # always execute nixos-rebuild with sudo for switching
         nixos-rebuild = "${pkgs.nixos-rebuild}/bin/nixos-rebuild --use-remote-sudo";
@@ -84,13 +84,8 @@ let cfg = config.paul.programs.zsh; in
         # Other
         lsblk = "${pkgs.util-linux}/bin/lsblk -o name,mountpoint,label,size,type,uuid";
 
-        # bitwarden-cli
-        bwu = "if [[ \"$(${pkgs.bitwarden-cli}/bin/bw unlock --check)\" != 'Vault is unlocked!' ]]; then export BW_SESSION=$(${pkgs.bitwarden-cli}/bin/bw unlock --raw); fi";
-
-        bwl = "${pkgs.bitwarden-cli}/bin/bw lock";
-
         # fun stuff
-        
+
         # mensa
         mensa = "${pkgs.nix}/bin/nix run 'github:alexanderwallau/bonn-mensa' --";
 
