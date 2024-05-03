@@ -32,7 +32,7 @@ in
       description = "The base domain to use for the oauth2 proxy";
     };
 
-    keysFilePath = mkOption {
+    keyFile = mkOption {
       type = types.str;
       default = "/run/keys/oauth2_proxy-keys";
       description = "The path to the file containing the oauth2 proxy keys";
@@ -67,7 +67,7 @@ in
         allowed-group = "admins";
       };
 
-      keyFile = cfg.keysFilePath;
+      keyFile = cfg.keyFile;
 
       nginx.virtualHosts = cfg.virtualHosts;
       nginx.domain = cfg.domain;
@@ -90,7 +90,7 @@ in
     lollypops.secrets.files."oauth2_proxy-keys" = {
       # it's... beautiful
       cmd = "echo \"OAUTH2_PROXY_CLIENT_SECRET=$(rbw get keycloak --field=oauth2_proxy-client-secret)\nOAUTH2_PROXY_COOKIE_SECRET=$(rbw get keycloak --field=oauth2_proxy-cookie-secret)\"";
-      path = cfg.keysFilePath;
+      path = cfg.keyFile;
     };
   };
 }
