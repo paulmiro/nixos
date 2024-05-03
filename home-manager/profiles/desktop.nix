@@ -7,11 +7,12 @@ with lib;
       programs.direnv.enable = true;
       programs.gnome-settings.enable = true;
       programs.vscode.enable = true;
+      programs.rbw.enable = true;
     };
 
     # Install these packages for my user
     home.packages = with pkgs; [
-      bitwarden-cli
+      bitwarden-cli # TODO: remove
       burpsuite
       ungoogled-chromium
       discord
