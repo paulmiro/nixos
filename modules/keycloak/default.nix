@@ -52,7 +52,7 @@ in
           enable = true;
           settings = {
             hostname = cfg.domain;
-            #hostname-strict-backchannel = true;
+            hostname-strict-backchannel = true;
 
             proxy = "edge";
 
