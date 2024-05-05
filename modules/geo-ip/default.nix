@@ -38,7 +38,7 @@ in
       };
     };
 
-    # this user only exists to give the user the keys group for acacess to /run/keys
+    # this user only exists to give the user the keys group for access to /run/keys
     users.users.geoip = {
       uid = 63606;
       group = "geoip";
@@ -49,9 +49,15 @@ in
 
     users.groups.geoip = { };
 
+    # this breaks on first deploy, because the user does not exist yet
+    # to fix this, three steps are needed:
+    # 1. delploy only the user config
+    # 2. deploy only the secret (perhaps by activating this module entirely and using {hostname}:deploy-secrets)
+    # 3. deploy the full config
     lollypops.secrets.files."maxmind-license-key" = {
       cmd = "rbw get maxmind --field=license-key";
       path = cfg.licenseKeyFile;
+      owner = "geoip";
     };
 
     # build nginx with geoip2 module
