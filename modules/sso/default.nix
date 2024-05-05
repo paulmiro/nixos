@@ -25,11 +25,11 @@ in
     };
 
     # TODO: Does this option even make sense?
-    oauth2_proxy = {
+    oauth2-proxy = {
       enable = mkOption {
         type = types.bool;
         default = true;
-        description = "activate oauth2_proxy";
+        description = "activate oauth2-proxy";
       };
     };
   };
@@ -42,8 +42,8 @@ in
       domain = "${cfg.subDomain}.${cfg.baseDomain}";
     };
 
-    paul.oauth2_proxy = {
-      enable = cfg.oauth2_proxy.enable;
+    paul.oauth2-proxy = {
+      enable = cfg.oauth2-proxy.enable;
       domain = "${cfg.subDomain}.${cfg.baseDomain}";
       baseDomain = cfg.baseDomain;
     };
