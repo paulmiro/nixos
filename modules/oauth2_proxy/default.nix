@@ -1,24 +1,22 @@
 { lib, pkgs, config, ... }:
 with lib;
-let cfg = config.paul.oauth2_proxy;
+let cfg = config.paul.oauth2-proxy;
 in
 {
 
   # for now, simply add
-  # paul.oauth2_proxy.virtualHosts = [ cfg.domain ];
+  #
+  # services.oauth2-proxy.nginx.virtualHosts."${cfg.domain}" = {
+  #   allowed_groups = [ cfg.allowedGroup ];
+  # };
+  #
   # to the config of the module that should be protected by the oauth2 proxy
 
   # TODO: create a nice way to have this as part of the nginx config, like with geo-ip
 
-  options.paul.oauth2_proxy = {
+  options.paul.oauth2-proxy = {
 
-    enable = mkEnableOption "activate oauth2_proxy";
-
-    virtualHosts = mkOption {
-      type = types.listOf types.str;
-      default = [ ];
-      description = "A list of nginx virtual hosts to put behind the oauth2 proxy";
-    };
+    enable = mkEnableOption "activate oauth2-proxy";
 
     domain = mkOption {
       type = types.str;
@@ -34,7 +32,7 @@ in
 
     keyFile = mkOption {
       type = types.str;
-      default = "/run/keys/oauth2_proxy-keys";
+      default = "/run/keys/oauth2-proxy-keys";
       description = "The path to the file containing the oauth2 proxy keys";
     };
 
@@ -42,7 +40,7 @@ in
 
   config = mkIf cfg.enable {
 
-    services.oauth2_proxy = {
+    services.oauth2-proxy = {
 
       # https://oauth2-proxy.github.io/oauth2-proxy/configuration/providers/keycloak_oidc/
 
@@ -56,7 +54,7 @@ in
       # important:
       # needs audience mapper!
       # https://github.com/oauth2-proxy/oauth2-proxy/issues/1931#issuecomment-1374875310
-      clientID = "oauth2_proxy";
+      clientID = "oauth2-proxy";
       cookie.domain = ".${cfg.baseDomain}";
       cookie.expire = "336h0m0s";
 
@@ -69,14 +67,14 @@ in
 
       keyFile = cfg.keyFile;
 
-      nginx.virtualHosts = cfg.virtualHosts;
+      #nginx.virtualHosts = cfg.virtualHosts;
       nginx.domain = cfg.domain;
 
     };
 
-    # start oauth2_proxy after Keycloak is up
+    # start oauth2-proxy after Keycloak is up
     # otherwise it will fail to start because it can't resolve the keycloak host
-    systemd.services.oauth2_proxy = {
+    systemd.services.oauth2-proxy = {
       after = [
         "network.target"
         (mkIf config.services.keycloak.enable "keycloak.service")
@@ -87,9 +85,9 @@ in
       };
     };
 
-    lollypops.secrets.files."oauth2_proxy-keys" = {
+    lollypops.secrets.files."oauth2-proxy-keys" = {
       # it's... beautiful
-      cmd = "echo \"OAUTH2_PROXY_CLIENT_SECRET=$(rbw get keycloak --field=oauth2_proxy-client-secret)\nOAUTH2_PROXY_COOKIE_SECRET=$(rbw get keycloak --field=oauth2_proxy-cookie-secret)\"";
+      cmd = "echo \"OAUTH2_PROXY_CLIENT_SECRET=$(rbw get keycloak --field=oauth2-proxy-client-secret)\nOAUTH2_PROXY_COOKIE_SECRET=$(rbw get keycloak --field=oauth2-proxy-cookie-secret)\"";
       path = cfg.keyFile;
     };
   };
