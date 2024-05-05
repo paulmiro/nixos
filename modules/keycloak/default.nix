@@ -27,7 +27,7 @@ in
       default = true;
       description = "enable dyndns";
     };
-    dbPasswordFilePath = mkOption {
+    dbPasswordFile = mkOption {
       type = types.str;
       default = "/run/keys/keycloak-db-password";
       description = "Path to database password file";
@@ -65,7 +65,7 @@ in
             createLocally = true;
 
             username = "keycloak";
-            passwordFile = cfg.dbPasswordFilePath;
+            passwordFile = cfg.dbPasswordFile;
           };
           initialAdminPassword = "CHANGEME---074b2f14b546e6718a589ca0d7ec8a47b48f2fceb7df5f7bf0655982d62399a2";
         };
@@ -74,7 +74,17 @@ in
 
       lollypops.secrets.files."keycloak-db-password" = {
         cmd = "rbw get keycloak --field=database-password";
-        path = cfg.dbPasswordFilePath;
+        path = cfg.dbPasswordFile;
+      };
+
+      systemd.services.keycloak = {
+        after = [
+          "network.target"
+          (mkIf config.services.openldap.enable "openldap.service")
+        ];
+        serviceConfig = {
+          ExecStartPre = mkIf config.services.openldap.enable "${pkgs.coreutils}/bin/sleep 2"; # TODO: test if this is needed / enough
+        };
       };
     }
 
