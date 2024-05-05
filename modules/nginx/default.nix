@@ -10,7 +10,7 @@ in
 
   config = mkIf cfg.enable {
 
-    security.acme.defaults.email = "paul.mika.rohde@pm.me";
+    security.acme.defaults.email = builtins.readFile ../../secrets/nginx-acme-email;
     security.acme.acceptTerms = true;
 
     services.nginx = {
