@@ -4,6 +4,8 @@ let cfg = config.paul.openldap;
 in
 {
 
+  # TODO: anonymous bind aus machen, das ist sonst eine viel zu große lücke
+
   #########################################################################
   # WARNING: This module is NOT enterely stateless
   # The following setup is needed:
