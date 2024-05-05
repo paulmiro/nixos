@@ -1,0 +1,32 @@
+# Create organization
+dn: dc=kiste,dc=dev
+objectclass: dcObject
+objectclass: organization
+o: kiste.dev
+dc: kiste
+
+# Create admin user
+dn: cn=ldapadmin,dc=kiste,dc=dev
+objectclass: organizationalRole
+cn: ldapadmin
+
+# Create user and group units
+dn: ou=users,dc=kiste,dc=dev
+objectclass: organizationalUnit
+ou: users
+
+dn: ou=groups,dc=kiste,dc=dev
+objectclass: organizationalUnit
+ou: groups
+
+## only allow authenticated users to bind
+## the admin user doesn't seem to have the rights to modify cn=config and I don't know how to fix that
+#dn: cn=config
+#changetype: modify
+#add: olcDisallows
+#olcDisallows: bind_anon
+#
+#dn: cn=config
+#changetype: modify
+#add: olcRequires
+#olcRequires: authc

@@ -48,6 +48,10 @@ in
       baseDomain = cfg.baseDomain;
     };
 
+    paul.openldap = {
+      enable = true;
+    };
+
   };
 
 }
