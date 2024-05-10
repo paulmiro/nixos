@@ -62,7 +62,7 @@ in
         session-cookie-minimal = "true";
         whitelist-domain = "*.${cfg.baseDomain}";
         oidc-issuer-url = "https://${cfg.domain}/realms/master";
-        allowed-group = "admins";
+        # allowed-group = "admins"; # setting this breaks per-vhost allowed_groups
       };
 
       keyFile = cfg.keyFile;
@@ -87,7 +87,11 @@ in
 
     lollypops.secrets.files."oauth2-proxy-keys" = {
       # it's... beautiful
-      cmd = "echo \"OAUTH2_PROXY_CLIENT_SECRET=$(rbw get keycloak --field=oauth2-proxy-client-secret)\nOAUTH2_PROXY_COOKIE_SECRET=$(rbw get keycloak --field=oauth2-proxy-cookie-secret)\"";
+      cmd = ''
+        echo "
+        OAUTH2_PROXY_CLIENT_SECRET=$(rbw get keycloak --field=oauth2-proxy-client-secret)
+        OAUTH2_PROXY_COOKIE_SECRET=$(rbw get keycloak --field=oauth2-proxy-cookie-secret)
+        "'';
       path = cfg.keyFile;
     };
   };
