@@ -55,7 +55,7 @@ in
 
       virtualisation.oci-containers.backend = "docker";
       virtualisation.oci-containers.containers.jellyfin = {
-        image = "jellyfin/jellyfin:10.8.13-1";
+        image = "jellyfin/jellyfin:10.9.0";
         user = "4001:4001";
         volumes = [
           "/mnt/nfs/jellyfin/config:/config"
