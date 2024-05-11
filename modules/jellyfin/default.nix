@@ -52,7 +52,7 @@ in
         ];
       };
       */
-      
+
       virtualisation.oci-containers.backend = "docker";
       virtualisation.oci-containers.containers.jellyfin = {
         image = "jellyfin/jellyfin:10.8.13-1";
@@ -89,10 +89,19 @@ in
       paul.nginx.enable = true;
       paul.dyndns = mkIf cfg.enableDyndns {
         enable = true;
-        domains = [ cfg.domain ];
+        domains = [ cfg.domain "kino.kiste.dev" ];
       };
 
       services.nginx.virtualHosts."${cfg.domain}" = {
+        enableACME = true;
+        forceSSL = true;
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:8096";
+          geo-ip = true;
+        };
+      };
+
+      services.nginx.virtualHosts."kino.kiste.dev" = {
         enableACME = true;
         forceSSL = true;
         locations."/" = {
