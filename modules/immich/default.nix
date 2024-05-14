@@ -26,6 +26,11 @@ in
       description = "domain name for immich";
     };
 
+    environmentFile = mkOption {
+      type = types.str;
+      default = "/run/keys/immich.env";
+      description = "path to the secrets environment file";
+    };
     # enableQuickSync = mkEnableOption "enable quicksync";
   };
 
@@ -54,6 +59,14 @@ in
       };
 
       networking.firewall.allowedTCPPorts = mkIf cfg.openFirewall [ cfg.port ];
+
+      lollypops.secrets.files."immich-environment" = {
+        cmd = ''
+          echo "
+          DB_PASSWORD="$(rbw get immich --field=db-password)"
+          "'';
+        path = cfg.environmentFile;
+      };
     }
 
     (mkIf cfg.enableNginx {
