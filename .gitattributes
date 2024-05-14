@@ -1,2 +1,1 @@
 secrets/** filter=crypt diff=crypt merge=crypt
-modules/authentik/compose/** filter=crypt diff=crypt merge=crypt
