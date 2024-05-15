@@ -113,7 +113,6 @@
 
   environment.systemPackages = with pkgs; [ ];
 
-  ### Temporary stuff (will be removed or moved to modules) ###
   services.nginx.virtualHosts."***REMOVED***" = {
     enableACME = true;
     forceSSL = true;
@@ -121,11 +120,6 @@
       return = "302 https://www.youtube.com/watch?v=dQw4w9WgXcQ";
     };
   };
-  paul.dyndns.domains = [
-    "***REMOVED***"
-    "***REMOVED***"
-    #"***REMOVED***"
-  ];
 
   services.nginx.virtualHosts."***REMOVED***" = {
     enableACME = true;
@@ -135,4 +129,9 @@
       geo-ip = true;
     };
   };
+
+  paul.dyndns.domains = [
+    "***REMOVED***"
+    "***REMOVED***"
+  ];
 }

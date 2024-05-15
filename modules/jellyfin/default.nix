@@ -101,6 +101,7 @@ in
         };
       };
 
+      # this domain is deprecated and only kept here to give my users some time to switch over
       services.nginx.virtualHosts."***REMOVED***" = {
         enableACME = true;
         forceSSL = true;

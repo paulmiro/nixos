@@ -6,6 +6,11 @@ in
 
   options.paul.nginx = {
     enable = mkEnableOption "activate nginx";
+    defaultDomain = mkOption {
+      type = types.str;
+      default = "***REMOVED***";
+      description = "The default domain to use for the nginx configuration";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -19,17 +24,10 @@ in
       recommendedOptimisation = true;
       recommendedProxySettings = true;
       recommendedTlsSettings = true;
-      virtualHosts."***REMOVED***" = {
+      virtualHosts."${cfg.defaultDomain}" = {
         enableACME = true;
         forceSSL = true;
         default = true;
-        locations."/" = {
-          return = "418"; # I'm a teapot
-        };
-      };
-      virtualHosts."***REMOVED***" = {
-        enableACME = true;
-        forceSSL = true;
         locations."/" = {
           return = "418"; # I'm a teapot
         };
@@ -43,6 +41,6 @@ in
       # Wait for 10 seconds to have the dns record up by the time the acme service runs
       serviceConfig.ExecStartPre = "${pkgs.coreutils}/bin/sleep 10";
     };
-    paul.dyndns.domains = [ "***REMOVED***" "***REMOVED***" ];
+    paul.dyndns.domains = [ cfg.defaultDomain ];
   };
 }

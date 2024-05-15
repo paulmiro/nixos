@@ -46,7 +46,7 @@ in
 
       paul.dyndns = mkIf cfg.enableDyndns {
         enable = true;
-        domains = [ cfg.domain ];
+        domains = [ cfg.domain "***REMOVED***" ];
       };
 
       services.nginx.virtualHosts."${cfg.domain}" = {
@@ -54,6 +54,16 @@ in
         forceSSL = true;
         locations."/" = {
           proxyPass = "http://127.0.0.1:${builtins.toString cfg.port}";
+          geo-ip = true;
+        };
+      };
+
+      # this domain is deprecated and only kept here to give my users some time to switch over
+      services.nginx.virtualHosts."***REMOVED***" = {
+        enableACME = true;
+        forceSSL = true;
+        locations."/" = {
+          return = "301 https://${cfg.domain}";
           geo-ip = true;
         };
       };
