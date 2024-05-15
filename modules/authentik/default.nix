@@ -1,3 +1,8 @@
+###################################################
+# ⚠️ WARNING ⚠️
+# This module is old and not maintained anymore.
+# Some parts of this never worked and my fix for that was to disable the whole thing and use Keycloak instead.
+###################################################
 { pkgs, lib, config, ... }:
 with lib;
 let

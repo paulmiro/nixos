@@ -37,18 +37,9 @@
       enable = true;
       enableNginx = true;
     };
-    authentik = {
-      enable = true;
-      openFirewall = true;
-      enableNginx = true;
-    };
     audiobookshelf = {
       #enable = true;
       #enableNginx = true;
-    };
-    sso = {
-      #enable = true;
-      #openFirewall = true;
     };
 
     # Local Services
