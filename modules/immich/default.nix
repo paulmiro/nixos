@@ -53,7 +53,8 @@ in
         ];
         serviceConfig = {
           WorkingDirectory = "${./compose}";
-          ExecStart = "${pkgs.docker}/bin/docker compose up --build";
+          ExecStart = "${pkgs.docker}/bin/docker compose --env-file .env --env-file ${cfg.environmentFile} up --build";
+          ExecStop = "${pkgs.docker}/bin/docker compose down";
           Restart = "on-failure";
         };
       };
