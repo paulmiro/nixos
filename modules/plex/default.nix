@@ -16,7 +16,7 @@ in
 
     domain = mkOption {
       type = types.str;
-      default = "plex.pamiro.net";
+      default = "plex.kiste.dev";
       description = "domain name for plex";
     };
   };

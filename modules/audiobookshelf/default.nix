@@ -22,7 +22,7 @@ in
 
     domain = mkOption {
       type = types.str;
-      default = "abs.pamiro.net";
+      default = "abs.kiste.dev";
       description = "domain name for audiobookshelf";
     };
   };

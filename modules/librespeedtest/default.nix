@@ -21,7 +21,7 @@ in
 
     domain = mkOption {
       type = types.str;
-      default = "speedtest.pamiro.net";
+      default = "speed.kiste.dev";
       description = "domain name for jellyfin";
     };
 

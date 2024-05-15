@@ -16,7 +16,7 @@ in
 
     domain = mkOption {
       type = types.str;
-      default = "jellyfin.pamiro.net";
+      default = "kino.kiste.dev";
       description = "domain name for jellyfin";
     };
 
@@ -89,7 +89,7 @@ in
       paul.nginx.enable = true;
       paul.dyndns = mkIf cfg.enableDyndns {
         enable = true;
-        domains = [ cfg.domain "kino.kiste.dev" ];
+        domains = [ cfg.domain "jellyfin.pamiro.net" ];
       };
 
       services.nginx.virtualHosts."${cfg.domain}" = {
@@ -101,7 +101,8 @@ in
         };
       };
 
-      services.nginx.virtualHosts."kino.kiste.dev" = {
+      # this domain is deprecated and only kept here to give my users some time to switch over
+      services.nginx.virtualHosts."jellyfin.pamiro.net" = {
         enableACME = true;
         forceSSL = true;
         locations."/" = {

@@ -113,21 +113,15 @@
 
   environment.systemPackages = with pkgs; [ ];
 
-  ### Temporary stuff (will be removed or moved to modules) ###
-  services.nginx.virtualHosts."easteregg.pamiro.net" = {
+  services.nginx.virtualHosts."egg.kiste.dev" = {
     enableACME = true;
     forceSSL = true;
     locations."/" = {
       return = "302 https://www.youtube.com/watch?v=dQw4w9WgXcQ";
     };
   };
-  paul.dyndns.domains = [
-    "easteregg.pamiro.net"
-    "filebrowser.pamiro.net"
-    #"nextcloud.pamiro.net"
-  ];
 
-  services.nginx.virtualHosts."filebrowser.pamiro.net" = {
+  services.nginx.virtualHosts."fb.kiste.dev" = {
     enableACME = true;
     forceSSL = true;
     locations."/" = {
@@ -135,4 +129,9 @@
       geo-ip = true;
     };
   };
+
+  paul.dyndns.domains = [
+    "egg.kiste.dev"
+    "fb.kiste.dev"
+  ];
 }
