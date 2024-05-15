@@ -55,9 +55,9 @@
       #enable = true;
       #openFirewall = true;
     };
-    homepage = {
-      #enable = true;
-      #openFirewall = true;
+    homepage-dashboard = {
+      enable = true;
+      enableNginx = true;
     };
     thelounge = {
       enable = true;
