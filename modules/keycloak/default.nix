@@ -5,7 +5,7 @@ in
 {
 
   imports = [
-    ./theme
+    ./themes
   ];
 
   options.paul.keycloak = {
