@@ -67,6 +67,9 @@ in
             username = "keycloak";
             passwordFile = cfg.dbPasswordFile;
           };
+          plugins = with pkgs; [
+            keycloak.plugins.keycloak-restrict-client-auth
+          ];
           initialAdminPassword = "CHANGEME---074b2f14b546e6718a589ca0d7ec8a47b48f2fceb7df5f7bf0655982d62399a2";
         };
 
