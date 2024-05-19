@@ -12,7 +12,6 @@ with lib;
 
     # Install these packages for my user
     home.packages = with pkgs; [
-      burpsuite
       ungoogled-chromium
       discord
       element-desktop
