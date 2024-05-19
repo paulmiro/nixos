@@ -58,8 +58,15 @@ in
             hideVersion = true;
             layout = [
               {
-                Main = {
+                Calendar = {
                   header = false;
+                  style = "column";
+                };
+              }
+              {
+                MainBookmarks = {
+                  header = false;
+                  style = "column";
                 };
               }
               {
@@ -100,9 +107,24 @@ in
             */
           ];
 
+          bookmarks = [
+            {
+              MainBookmarks = [
+                {
+                  "File Browser" = {
+                    abbr = "FB";
+                    icon = "filebrowser.png";
+                    href = "https://fb.kiste.dev";
+                    description = "File Browser";
+                  };
+                }
+              ];
+            }
+          ];
+
           services = [
             {
-              Main = [
+              Calendar = [
                 {
                   Calendar = {
                     widget = {
@@ -128,6 +150,17 @@ in
                     };
                   };
                 }
+                /*
+                {
+                  UptimeKuma = {
+                    widget = {
+                      type = "uptimekuma";
+                      url = "http://uptime-kuma:3001";
+                      slug = "homepage-dashboard";
+                    };
+                  };
+                }
+                */
               ];
             }
             {
