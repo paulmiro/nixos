@@ -126,7 +126,7 @@ in
       # 3. deploy the full config
 
       lollypops.secrets.files."openldap-admin-password" = {
-      cmd = "rbw get keycloak --field=openldap-admin-password";
+      cmd = "rbw get openldap-admin-password";
       path = cfg.adminPasswordFile;
       owner = "openldap";
       };

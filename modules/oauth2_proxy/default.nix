@@ -89,8 +89,8 @@ in
       # it's... beautiful
       cmd = ''
         echo "
-        OAUTH2_PROXY_CLIENT_SECRET=$(rbw get keycloak --field=oauth2-proxy-client-secret)
-        OAUTH2_PROXY_COOKIE_SECRET=$(rbw get keycloak --field=oauth2-proxy-cookie-secret)
+        OAUTH2_PROXY_CLIENT_SECRET=$(rbw get oauth2-proxy-client-secret)
+        OAUTH2_PROXY_COOKIE_SECRET=$(rbw get oauth2-proxy-cookie-secret)
         "'';
       path = cfg.keyFile;
     };

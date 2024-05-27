@@ -64,7 +64,7 @@ in
       lollypops.secrets.files."immich-environment" = {
         cmd = ''
           echo "
-          DB_PASSWORD="$(rbw get immich --field=db-password)"
+          DB_PASSWORD="$(rbw get immich-database-password)"
           "'';
         path = cfg.environmentFile;
       };

@@ -55,7 +55,7 @@ in
     # 2. deploy only the secret (perhaps by activating this module entirely and using {hostname}:deploy-secrets)
     # 3. deploy the full config
     lollypops.secrets.files."maxmind-license-key" = {
-      cmd = "rbw get maxmind --field=license-key";
+      cmd = "rbw get maxmind-license-key";
       path = cfg.licenseKeyFile;
       owner = "geoip";
     };

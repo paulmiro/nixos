@@ -316,13 +316,13 @@ in
       lollypops.secrets.files."homepage-environment" = {
         cmd = ''
           echo "
-          HOMEPAGE_VAR_JELLYFIN_API_KEY=$(rbw get homepage-dashboard --field=jellyfin-api-key)
-          HOMEPAGE_VAR_JELLYSEERR_API_KEY=$(rbw get homepage-dashboard --field=jellyseerr-api-key)
-          HOMEPAGE_VAR_SONARR_API_KEY=$(rbw get homepage-dashboard --field=sonarr-api-key)
-          HOMEPAGE_VAR_RADARR_API_KEY=$(rbw get homepage-dashboard --field=radarr-api-key)
-          HOMEPAGE_VAR_PROWLARR_API_KEY=$(rbw get homepage-dashboard --field=prowlarr-api-key)
-          HOMEPAGE_VAR_IMMICH_API_KEY=$(rbw get homepage-dashboard --field=immich-api-key)
-          HOMEPAGE_VAR_TRUENAS_API_KEY=$(rbw get homepage-dashboard --field=truenas-api-key)
+          HOMEPAGE_VAR_JELLYFIN_API_KEY=$(rbw get jellyfin-api-key-homepage)
+          HOMEPAGE_VAR_JELLYSEERR_API_KEY=$(rbw get jellyseerr-api-key)
+          HOMEPAGE_VAR_SONARR_API_KEY=$(rbw get sonarr-api-key)
+          HOMEPAGE_VAR_RADARR_API_KEY=$(rbw get radarr-api-key)
+          HOMEPAGE_VAR_PROWLARR_API_KEY=$(rbw get prowlarr-api-key)
+          HOMEPAGE_VAR_IMMICH_API_KEY=$(rbw get immich-api-key-homepage)
+          HOMEPAGE_VAR_TRUENAS_API_KEY=$(rbw get truenas-api-key-homepage)
           "'';
         path = cfg.environmentFile;
         owner = "homepage-dashboard";
