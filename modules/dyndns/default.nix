@@ -29,7 +29,7 @@ in
     };
 
     lollypops.secrets.files."cloudflare-api-token" = {
-      cmd = "echo \"CLOUDFLARE_API_TOKEN=$(rbw get cloudflare --field=api-token-edit-dns-all)\"";
+      cmd = "echo \"CLOUDFLARE_API_TOKEN=$(rbw get cloudflare-api-token-edit-dns-all)\"";
       path = cfg.apiTokenFile;
     };
   };
