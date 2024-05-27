@@ -111,12 +111,36 @@ in
             {
               MainBookmarks = [
                 {
-                  "File Browser" = {
+                  "File Browser" = [{
                     abbr = "FB";
                     icon = "filebrowser.png";
                     href = "https://***REMOVED***";
                     description = "File Browser";
-                  };
+                  }];
+                }
+                {
+                  "Speedtest" = [{
+                    abbr = "ST";
+                    icon = "openspeedtest.png";
+                    href = "https://***REMOVED***";
+                    description = "Speedtest";
+                  }];
+                }
+                {
+                  "TheLounge" = [{
+                    abbr = "TL";
+                    icon = "thelounge.png";
+                    href = "http://hawking:9337";
+                    description = "IRC";
+                  }];
+                }
+                {
+                  "Uptime Kuma" = [{
+                    abbr = "UK";
+                    icon = "uptime-kuma.png";
+                    href = "http://uptime-kuma:3001";
+                    description = "Uptime Kuma";
+                  }];
                 }
               ];
             }
