@@ -13,9 +13,13 @@ with lib;
     # Install these packages for my user
     home.packages = with pkgs; [
       ungoogled-chromium
+      diebahn
       discord
       element-desktop
+      errands
       firefox
+      gnome-graphs
+      #gnome.decibels # TODO: add when it's in nixpkgs
       gparted
       jellyfin-mpv-shim
       krita
@@ -29,6 +33,7 @@ with lib;
       signal-desktop
       sl
       spotify
+      switcheroo
       thunderbird-bin
       tor-browser
       whatsapp-for-linux
