@@ -58,6 +58,16 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [ ];
+  environment.systemPackages = with pkgs; [
+    via
+    vial
+  ];
+  services.udev.packages = with pkgs; [
+    via
+    vial
+    qmk-udev-rules
+  ];
+
+  hardware.keyboard.qmk.enable = true;
 
 }
