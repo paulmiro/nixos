@@ -16,7 +16,7 @@ in
 
     domain = mkOption {
       type = types.str;
-      default = "plex.kiste.dev";
+      default = "plex.${builtins.readFile ../../secrets/domains/_base}";
       description = "domain name for plex";
     };
   };

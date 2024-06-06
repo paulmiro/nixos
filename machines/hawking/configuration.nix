@@ -113,7 +113,7 @@
 
   environment.systemPackages = with pkgs; [ ];
 
-  services.nginx.virtualHosts."egg.kiste.dev" = {
+  services.nginx.virtualHosts."egg.${builtins.readFile ../../secrets/domains/_base}" = {
     enableACME = true;
     forceSSL = true;
     locations."/" = {
@@ -121,7 +121,7 @@
     };
   };
 
-  services.nginx.virtualHosts."fb.kiste.dev" = {
+  services.nginx.virtualHosts."fb.${builtins.readFile ../../secrets/domains/_base}" = {
     enableACME = true;
     forceSSL = true;
     locations."/" = {
@@ -131,7 +131,7 @@
   };
 
   paul.dyndns.domains = [
-    "egg.kiste.dev"
-    "fb.kiste.dev"
+    "egg.${builtins.readFile ../../secrets/domains/_base}"
+    "fb.${builtins.readFile ../../secrets/domains/_base}"
   ];
 }

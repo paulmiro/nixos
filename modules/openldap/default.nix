@@ -10,7 +10,7 @@ in
   # WARNING: This module is NOT enterely stateless
   # The following setup is needed:
   # 1. place setup.ldif on the host machine
-  # 2. run ldapadd -x -D "cn=ldapadmin,dc=kiste,dc=dev" -W -f setup.ldif
+  # 2. run ldapadd -x -D "cn=ldapadmin,[baseDN]" -W -f setup.ldif
   #
   # This could potentially be avoided by automating this somehow, but I
   # don't know how to do that 🤷
@@ -28,7 +28,7 @@ in
 
     rootDN = mkOption {
       type = types.str;
-      default = "dc=kiste,dc=dev";
+      default = "${builtins.readFile ../../secrets/domains/_baseDN}";
       description = "The root DN for the LDAP server";
     };
 

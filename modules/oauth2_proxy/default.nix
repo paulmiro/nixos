@@ -20,13 +20,13 @@ in
 
     domain = mkOption {
       type = types.str;
-      default = "auth.kiste.dev";
+      default = "auth.${builtins.readFile ../../secrets/domains/_base}";
       description = "The domain to use for the oauth2 proxy";
     };
 
     baseDomain = mkOption {
       type = types.str;
-      default = "kiste.dev";
+      default = "${builtins.readFile ../../secrets/domains/_base}";
       description = "The base domain to use for the oauth2 proxy";
     };
 
