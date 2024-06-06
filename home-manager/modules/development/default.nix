@@ -15,6 +15,10 @@ in
       packages = { };
     };
 
+    home.sessionVariables = {
+      ANDROID_HOME = "~/.android/sdk"; # because fuck whoever decided to name that folder "Android" instead of ".android"
+    };
+
     home.packages = with pkgs; [
       ## Android
       android-studio
@@ -31,6 +35,7 @@ in
       bun
       nodejs
       nodePackages.pnpm
+      nodePackages.eas-cli
 
       ## Lua
       lua
