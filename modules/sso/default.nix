@@ -9,7 +9,7 @@ in
 
     baseDomain = mkOption {
       type = types.str;
-      default = "***REMOVED***";
+      default = "${builtins.readFile ../../secrets/domains/_base}";
       description = "The base domain for the sso stack";
     };
 

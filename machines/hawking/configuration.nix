@@ -113,7 +113,7 @@
 
   environment.systemPackages = with pkgs; [ ];
 
-  services.nginx.virtualHosts."***REMOVED***" = {
+  services.nginx.virtualHosts."egg.${builtins.readFile ../../secrets/domains/_base}" = {
     enableACME = true;
     forceSSL = true;
     locations."/" = {
@@ -121,7 +121,7 @@
     };
   };
 
-  services.nginx.virtualHosts."***REMOVED***" = {
+  services.nginx.virtualHosts."fb.${builtins.readFile ../../secrets/domains/_base}" = {
     enableACME = true;
     forceSSL = true;
     locations."/" = {
@@ -131,7 +131,7 @@
   };
 
   paul.dyndns.domains = [
-    "***REMOVED***"
-    "***REMOVED***"
+    "egg.${builtins.readFile ../../secrets/domains/_base}"
+    "fb.${builtins.readFile ../../secrets/domains/_base}"
   ];
 }

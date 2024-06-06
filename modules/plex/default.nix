@@ -16,7 +16,7 @@ in
 
     domain = mkOption {
       type = types.str;
-      default = "***REMOVED***";
+      default = "plex.${builtins.readFile ../../secrets/domains/_base}";
       description = "domain name for plex";
     };
   };

@@ -1,21 +1,23 @@
+## WARNING: you have to fill in the {{placeholders}} with your own values
+
 # Create organization
-dn: ***REMOVED***
+dn: {{baseDN}}
 objectclass: dcObject
 objectclass: organization
-o: ***REMOVED***
-***REMOVED***
+o: {{organization}}
+dc: {{last value of baseDN}}
 
 # Create admin user
-dn: cn=ldapadmin,***REMOVED***
+dn: cn=ldapadmin,{{baseDN}}
 objectclass: organizationalRole
 cn: ldapadmin
 
 # Create user and group units
-dn: ou=users,***REMOVED***
+dn: ou=users,{{baseDN}}
 objectclass: organizationalUnit
 ou: users
 
-dn: ou=groups,***REMOVED***
+dn: ou=groups,{{baseDN}}
 objectclass: organizationalUnit
 ou: groups
 

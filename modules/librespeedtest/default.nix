@@ -21,7 +21,7 @@ in
 
     domain = mkOption {
       type = types.str;
-      default = "***REMOVED***";
+      default = "speed.${builtins.readFile ../../secrets/domains/_base}";
       description = "domain name for jellyfin";
     };
 

@@ -16,7 +16,7 @@ in
 
     domain = mkOption {
       type = types.str;
-      default = "***REMOVED***";
+      default = "${builtins.readFile ../../secrets/domains/jellyfin}";
       description = "domain name for jellyfin";
     };
 
@@ -95,7 +95,7 @@ in
       paul.nginx.enable = true;
       paul.dyndns = mkIf cfg.enableDyndns {
         enable = true;
-        domains = [ cfg.domain "***REMOVED***" ];
+        domains = [ cfg.domain "${builtins.readFile ../../secrets/domains/jellyfin_old}" ];
       };
 
       services.nginx.virtualHosts."${cfg.domain}" = {
@@ -108,7 +108,7 @@ in
       };
 
       # this domain is deprecated and only kept here to give my users some time to switch over
-      services.nginx.virtualHosts."***REMOVED***" = {
+      services.nginx.virtualHosts."${builtins.readFile ../../secrets/domains/jellyfin_old}" = {
         enableACME = true;
         forceSSL = true;
         locations."/" = {
