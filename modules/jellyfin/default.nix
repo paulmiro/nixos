@@ -21,6 +21,12 @@ in
     };
 
     enableQuickSync = mkEnableOption "enable quicksync";
+
+    containerVersion = mkOption {
+      type = types.str;
+      default = "10.9.5";
+      description = "jellyfin version";
+    };
   };
 
   config = mkIf cfg.enable (mkMerge [
@@ -55,7 +61,7 @@ in
 
       virtualisation.oci-containers.backend = "docker";
       virtualisation.oci-containers.containers.jellyfin = {
-        image = "jellyfin/jellyfin:10.9.4";
+        image = "jellyfin/jellyfin:${cfg.containerVersion}";
         user = "4001:4001";
         volumes = [
           "/mnt/nfs/jellyfin/config:/config"
