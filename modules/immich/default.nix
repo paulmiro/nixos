@@ -40,6 +40,7 @@ in
         enableImmich = true;
         enablePhotos = true;
       };
+      paul.docker.enable = true;
 
       systemd.services.docker-immich = {
         description = "Immich docker-compose service";
