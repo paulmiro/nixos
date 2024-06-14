@@ -6,11 +6,14 @@
 
   paul = {
 
-    sso = {
+    authentik = {
       enable = true;
-      keycloak = {
-        enableNginx = true;
-      };
+      enableNginx = true;
+      #enableLdap = true;
+    };
+
+    openldap = {
+      enable = true;
     };
 
     common-server.enable = true;
