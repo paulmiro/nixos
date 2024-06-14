@@ -6,7 +6,7 @@
 { pkgs, lib, config, ... }:
 with lib;
 let
-  cfg = config.paul.authentik;
+  cfg = config.paul.authentik-docker;
   vhostOptions = { config, ... }: {
     options = {
       enableAuthentik = lib.mkEnableOption "Enable Authentik Proxy"; # TODO: this currently doesn't work causes tons of 500 errors in the NGINX log
@@ -60,7 +60,7 @@ in
     type = lib.types.attrsOf (lib.types.submodule vhostOptions);
   };
 
-  options.paul.authentik = {
+  options.paul.authentik-docker = {
     enable = mkEnableOption "activate authentik";
     openFirewall = mkEnableOption "open firewall for authentik";
     enableNginx = mkEnableOption "activate nginx proxy";
