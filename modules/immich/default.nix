@@ -22,7 +22,7 @@ in
 
     domain = mkOption {
       type = types.str;
-      default = "${builtins.readFile ../../secrets/domains/immich}";
+      default = "${builtins.readFile ../../domains/immich}";
       description = "domain name for immich";
     };
 

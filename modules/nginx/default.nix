@@ -8,7 +8,7 @@ in
     enable = mkEnableOption "activate nginx";
     defaultDomain = mkOption {
       type = types.str;
-      default = "teapot.${builtins.readFile ../../secrets/domains/_base}";
+      default = "teapot.${builtins.readFile ../../domains/_base}";
       description = "The default domain to use for the nginx configuration";
     };
   };
