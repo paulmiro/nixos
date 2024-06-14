@@ -6,6 +6,13 @@
 
   paul = {
 
+
+    #TODO:  ⚠️ REMOVE THIS BEFORE DEPLOYING ⚠️
+    authentik = {
+      enable = true;
+      enableLdap = true;
+    };
+
     sso = {
       enable = true;
       keycloak = {
