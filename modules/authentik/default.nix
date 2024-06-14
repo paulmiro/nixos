@@ -42,6 +42,7 @@ in
     {
       services.authentik = {
         enable = true;
+        environmentFile = "/run/keys/authentik.env";
       };
 
       paul.nfs-mounts = {
