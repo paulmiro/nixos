@@ -119,6 +119,7 @@
             modules = [
               home-manager.nixosModules.home-manager
               lollypops.nixosModules.lollypops
+              authentik-nix.nixosModules.default
               (import "${./.}/machines/${x}/configuration.nix" { inherit self; })
               { imports = builtins.attrValues self.nixosModules; }
             ];
