@@ -28,7 +28,7 @@ in
 
     rootDN = mkOption {
       type = types.str;
-      default = "${builtins.readFile ../../secrets/domains/_baseDN}";
+      default = "${builtins.readFile ../../domains/_baseDN}";
       description = "The root DN for the LDAP server";
     };
 
