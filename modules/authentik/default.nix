@@ -37,6 +37,12 @@ in
       description = "path to the secrets environment file";
     };
 
+    environmentFileLdap = mkOption {
+      type = types.str;
+      default = "/run/keys/authentik-ldap.env";
+      description = "path to the ldap environment file";
+    };
+
   };
 
   config = mkIf cfg.enable (mkMerge [
@@ -79,6 +85,7 @@ in
     (mkIf cfg.enableLdap {
       services.authentik-ldap = {
         enable = true;
+        environmentFile = cfg.environmentFileLdap;
       };
 
       networking.firewall.allowedTCPPorts = mkIf cfg.openFirewall [
@@ -89,9 +96,11 @@ in
       lollypops.secrets.files."authentik-ldap-environment" = {
         cmd = ''
           echo "
+          AUTHENTIK_HOST="https://${cfg.domain}"
           AUTHENTIK_TOKEN="$(rbw get authentik-ldap-token)"
+          AUTHENTIK_INSECURE="false"
           "'';
-        path = cfg.environmentFile;
+        path = cfg.environmentFileLdap;
       };
     })
 
