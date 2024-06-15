@@ -9,11 +9,11 @@
     authentik = {
       enable = true;
       enableNginx = true;
-      #enableLdap = true;
+      enableLdap = true;
     };
 
     openldap = {
-      enable = true;
+      #enable = true;
     };
 
     common-server.enable = true;
