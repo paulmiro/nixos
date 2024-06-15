@@ -37,6 +37,7 @@ in
         desc = "Rebuild without deloying secrets";
         cmds = [ ];
         deps = [
+          "check-vars"
           "deploy-flake"
           "rebuild"
         ];
