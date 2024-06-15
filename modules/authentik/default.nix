@@ -80,6 +80,8 @@ in
           "'';
         path = cfg.environmentFile;
       };
+
+      paul.postgres.enable = true; # this enables database backups
     }
 
     (mkIf cfg.enableLdap {
