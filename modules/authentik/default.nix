@@ -54,7 +54,7 @@ in
           email = {
             host = "mail.smtp2go.com";
             port = 2525;
-            username = cfg.emailAdress;
+            username = builtins.readFile ../../secrets/smtp2go-username-authentik;
             use_tls = true;
             use_ssl = false;
             from = cfg.emailAdress;
