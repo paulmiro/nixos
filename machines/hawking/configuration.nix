@@ -60,7 +60,7 @@
     };
     homepage-dashboard = {
       enable = true;
-      enableNginx = true;
+      #enableNginx = true;
     };
     thelounge = {
       enable = true;
