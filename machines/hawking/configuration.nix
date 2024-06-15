@@ -12,10 +12,6 @@
       enableLdap = true;
     };
 
-    openldap = {
-      #enable = true;
-    };
-
     common-server.enable = true;
     systemd-boot.enable = true;
     nvidia.enable = true;
