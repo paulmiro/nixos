@@ -331,6 +331,7 @@ in
     }
     (mkIf cfg.enableNginx {
       services.nginx.virtualHosts."${cfg.domain}" = {
+        enableAuthentik = true;
         enableACME = true;
         forceSSL = true;
         locations."/" = {
@@ -342,9 +343,9 @@ in
         enable = true;
         domains = [ cfg.domain ];
       };
-      services.oauth2-proxy.nginx.virtualHosts."${cfg.domain}" = {
-        allowed_groups = [ "homepage_users" ];
-      };
+      #services.oauth2-proxy.nginx.virtualHosts."${cfg.domain}" = {
+      #  allowed_groups = [ "homepage_users" ];
+      #};
     })
 
   ]);
