@@ -1,12 +1,10 @@
-###################################################
-# ⚠️ WARNING ⚠️
-# This module is VERY unfinished. the current version only exists to let the CI build it
-###################################################
 { pkgs, lib, config, ... }:
 with lib;
 let cfg = config.paul.authentik;
 in
 {
+  imports = [ ./vhostOptions.nix ];
+
   options.paul.authentik = {
     enable = mkEnableOption "activate authentik";
     enableLdap = mkEnableOption "activate ldap";

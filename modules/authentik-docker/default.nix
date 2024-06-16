@@ -9,10 +9,10 @@ let
   cfg = config.paul.authentik-docker;
   vhostOptions = { config, ... }: {
     options = {
-      enableAuthentik = lib.mkEnableOption "Enable Authentik Proxy"; # TODO: this currently doesn't work causes tons of 500 errors in the NGINX log
+      enableAuthentikDocker = lib.mkEnableOption "Enable Authentik Proxy"; # TODO: this currently doesn't work causes tons of 500 errors in the NGINX log
     };
     config =
-      lib.mkIf config.enableAuthentik {
+      lib.mkIf config.enableAuthentikDocker {
         locations."/".extraConfig = ''
           auth_request     /outpost.goauthentik.io/auth/nginx;
           error_page       401 = @goauthentik_proxy_signin;

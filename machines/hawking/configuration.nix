@@ -6,11 +6,7 @@
 
   paul = {
 
-    authentik = {
-      enable = true;
-      enableNginx = true;
-      enableLdap = true;
-    };
+
 
     common-server.enable = true;
     systemd-boot.enable = true;
@@ -20,6 +16,12 @@
     nginx.enableGeoIP = true;
 
     # Exposed Services
+    authentik = {
+      enable = true;
+      enableNginx = true;
+      enableLdap = true;
+      openFirewall = true;
+    };
     librespeedtest = {
       enable = true;
       enableNginx = true;
@@ -56,7 +58,7 @@
     };
     homepage-dashboard = {
       enable = true;
-      #enableNginx = true;
+      enableNginx = true;
     };
     thelounge = {
       enable = true;
