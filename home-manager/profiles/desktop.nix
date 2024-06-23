@@ -3,11 +3,19 @@ with lib;
 {
   config = {
     paul = {
-      programs.development.enable = true;
       programs.direnv.enable = true;
       programs.gnome-settings.enable = true;
       programs.vscode.enable = true;
       programs.rbw.enable = true;
+
+      programs.development = {
+        android = true;
+        c_cpp = true;
+        go = true;
+        godot = true;
+        javascript = true;
+        python = true;
+      };
     };
 
     # Install these packages for my user
