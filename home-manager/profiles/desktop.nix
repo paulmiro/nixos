@@ -18,6 +18,13 @@ with lib;
       };
     };
 
+    programs = {
+      firefox = {
+        enable = true;
+        package = (pkgs.wrapFirefox (pkgs.firefox-unwrapped.override { pipewireSupport = true; }) { });
+      };
+    };
+
     # Install these packages for my user
     home.packages = with pkgs; [
       ungoogled-chromium
