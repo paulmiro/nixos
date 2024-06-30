@@ -25,7 +25,6 @@ with lib;
       glances
       neofetch
       nil
-      nix-top
       nix-tree
       nixpkgs-fmt
       openssl
