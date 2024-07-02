@@ -14,17 +14,22 @@ in
   };
 
   config = mkIf cfg.enable {
-    boot.loader = {
-      efi = {
-        canTouchEfiVariables = true;
-        efiSysMountPoint = "/boot/efi";
-      };
+    boot = {
+      loader = {
+        efi = {
+          canTouchEfiVariables = true;
+          efiSysMountPoint = "/boot/efi";
+        };
 
-      grub = {
-        enable = true;
-        efiSupport = true;
-        device = "nodev";
+        grub = {
+          enable = true;
+          device = "nodev";
+          efiSupport = true;
+          efiInstallAsRemovable = true;
+          useOSProber = true;
+        };
       };
+      tmp.cleanOnBoot = true;
     };
   };
 }
