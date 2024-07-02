@@ -43,7 +43,7 @@ in
           settings = {
             # todo use something like for a different image every time "https://source.unsplash.com/1920x1080/?nature,water";
             background = {
-              image = "https://source.unsplash.com/PvgqqicSLvA";
+              image = "https://images.unsplash.com/photo-1651870364199-fc5f9f46ac85?w=1920";
               blur = "sm";
               brightness = 90;
               opacity = 80;
@@ -77,6 +77,12 @@ in
               }
               {
                 "Arr Stack" = {
+                  style = "row";
+                  columns = 4;
+                };
+              }
+              {
+                Other = {
                   style = "row";
                   columns = 4;
                 };
@@ -299,7 +305,22 @@ in
                 }
               ];
             }
-
+            {
+              Other = [
+                {
+                  Authentik = {
+                    icon = "authentik.png";
+                    href = "https://${config.paul.authentik.domain}";
+                    description = "Authentik";
+                    widget = {
+                      type = "authentik";
+                      url = "https://${config.paul.authentik.domain}";
+                      key = "{{HOMEPAGE_VAR_AUTHENTIK_API_TOKEN}}";
+                    };
+                  };
+                }
+              ];
+            }
           ];
         };
 
@@ -323,6 +344,7 @@ in
           HOMEPAGE_VAR_PROWLARR_API_KEY=$(rbw get prowlarr-api-key)
           HOMEPAGE_VAR_IMMICH_API_KEY=$(rbw get immich-api-key-homepage)
           HOMEPAGE_VAR_TRUENAS_API_KEY=$(rbw get truenas-api-key-homepage)
+          HOMEPAGE_VAR_AUTHENTIK_API_TOKEN=$(rbw get authentik-api-token-homepage)
           "'';
         path = cfg.environmentFile;
         owner = "homepage-dashboard";
