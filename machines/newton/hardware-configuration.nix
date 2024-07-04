@@ -13,16 +13,7 @@
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
-  boot.loader.grub.extraEntries = ''
-    menuentry "Windows" {
-      insmod part_gpt
-      insmod fat
-      insmod search_fs_uuid
-      insmod chain
-      search --fs-uuid --set=root 4CDF-639C
-      chainloader /EFI/Microsoft/Boot/bootmgfw.efi
-    }
-  '';
+
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/858fdbe7-faa1-4612-9d82-9a7cb8dc542f";
