@@ -17,10 +17,9 @@ in
     boot = {
       loader = {
         efi = {
-          canTouchEfiVariables = true;
-          efiSysMountPoint = "/boot";
+          #canTouchEfiVariables = true;
+          efiSysMountPoint = "/boot/efi";
         };
-
         grub = {
           enable = true;
           device = "nodev";
