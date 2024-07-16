@@ -34,7 +34,6 @@ with lib;
       errands
       firefox
       gnome-graphs
-      #gnome.decibels # TODO: add when it's in nixpkgs
       gparted
       jellyfin-mpv-shim
       krita
