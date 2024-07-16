@@ -43,6 +43,7 @@ with lib;
       obs-studio
       obsidian
       oneko
+      pomodoro-gtk
       protonmail-bridge
       prusa-slicer
       signal-desktop
