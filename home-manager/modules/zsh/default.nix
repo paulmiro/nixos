@@ -55,6 +55,11 @@ let cfg = config.paul.programs.zsh; in
           file = "nix-shell.plugin.zsh";
           src = "${pkgs.zsh-nix-shell}/share/zsh-nix-shell";
         }
+        {
+          name = "zsh-bd";
+          file = "bd.plugin.zsh";
+          src = "${pkgs.zsh-bd}/share/zsh-bd";
+        }
       ];
 
       shellAliases = rec {
@@ -80,6 +85,9 @@ let cfg = config.paul.programs.zsh; in
 
         # list syslinks into nix-store
         nix-list = "${pkgs.nix}/bin/nix-store --gc --print-roots";
+
+        # nix-shell
+        ns = "nix-shell -p";
 
         # Other
         lsblk = "${pkgs.util-linux}/bin/lsblk -o name,mountpoint,label,size,type,uuid";
