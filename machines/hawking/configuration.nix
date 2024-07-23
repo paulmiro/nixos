@@ -10,7 +10,7 @@
 
     common-server.enable = true;
     systemd-boot.enable = true;
-    nvidia.enable = true;
+    #nvidia.enable = true;
 
     nginx.enable = true;
     nginx.enableGeoIP = true;
