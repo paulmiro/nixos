@@ -123,5 +123,9 @@ let cfg = config.paul.programs.zsh; in
 
     programs.jq.enable = true;
 
+    programs.zoxide = {
+      enable = true;
+      enableZshIntegration = true;
+    };
   };
 }
