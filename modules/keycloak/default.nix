@@ -3,10 +3,11 @@ with lib;
 let cfg = config.paul.keycloak;
 in
 {
-
-  imports = [
-    ./themes
-  ];
+  /*
+    imports = [
+      ./themes
+    ];
+  */
 
   options.paul.keycloak = {
     enable = mkEnableOption "activate keycloak";
@@ -114,11 +115,17 @@ in
       };
     })
 
-    (mkIf cfg.enableCustomTheme {
-      services.keycloak.themes = with pkgs ; {
-        keywind = custom_keycloak_themes.keywind;
-      };
-    })
+
+    # I used to have a custom theme but I removed it from this repo because I don't use keycloak anymore
+    # If you are reading this because you want to use a custom theme, you can view the history of this file 
+    # to find the commit in wich I removed the custom themes folder
+    /*
+      (mkIf cfg.enableCustomTheme {
+        services.keycloak.themes = with pkgs ; {
+          keywind = custom_keycloak_themes.keywind;
+        };
+      })
+    */
   ]);
 
 }
