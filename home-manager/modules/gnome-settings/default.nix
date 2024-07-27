@@ -9,6 +9,7 @@ in
   config = mkIf cfg.enable {
 
     home.packages = with pkgs; [
+      gnomeExtensions.activate_gnome
       gnomeExtensions.blur-my-shell
       gnomeExtensions.burn-my-windows
       gnomeExtensions.clipboard-indicator
