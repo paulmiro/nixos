@@ -32,6 +32,11 @@
     hostName = "newton";
   };
 
+  # disable NetworkManager wait-online
+  # https://github.com/NixOS/nixpkgs/issues/180175
+  systemd.services.NetworkManager-wait-online.enable = pkgs.lib.mkForce false;
+  systemd.services.systemd-networkd-wait-online.enable = pkgs.lib.mkForce false;
+
   programs.steam.enable = true;
 
   # Configure keymap in X11
@@ -69,5 +74,6 @@
   ];
 
   hardware.keyboard.qmk.enable = true;
+
 
 }
