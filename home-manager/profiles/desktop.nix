@@ -27,7 +27,6 @@ with lib;
 
     # Install these packages for my user
     home.packages = with pkgs; [
-      ungoogled-chromium
       diebahn
       discord
       element-desktop
@@ -45,14 +44,18 @@ with lib;
       pomodoro-gtk
       protonmail-bridge
       prusa-slicer
+      rnote
       signal-desktop
       sl
       spotify
       switcheroo
+      textpieces
       thunderbird-bin
       tor-browser
+      ungoogled-chromium
       whatsapp-for-linux
       xournalpp
+      zed-editor
       zoom-us
     ]
     # only install these packages on x86_64-linux systems
