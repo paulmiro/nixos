@@ -24,7 +24,7 @@ in
 
     containerVersion = mkOption {
       type = types.str;
-      default = "10.9.8";
+      default = "10.9.9";
       description = "jellyfin version";
     };
   };
