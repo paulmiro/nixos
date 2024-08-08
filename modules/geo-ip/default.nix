@@ -87,6 +87,7 @@ in
               IT yes;
               NL yes;
               JP yes;
+              LU yes;
               PE yes; # Peru, für Joshua
             }
           ''
