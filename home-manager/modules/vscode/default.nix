@@ -12,7 +12,7 @@ in
 
     programs.vscode = {
       enable = true;
-      package = pkgs.vscode.fhs;
+      package = pkgs.vscode;
       # enableExtensionUpdateCheck = false;
       # enableUpdateCheck = false;
 
