@@ -54,6 +54,7 @@ with lib;
       tor-browser
       ungoogled-chromium
       whatsapp-for-linux
+      vdhcoapp
       xournalpp
       zed-editor
       zoom-us
