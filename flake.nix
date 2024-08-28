@@ -58,6 +58,8 @@
       # inputs.flake-parts.follows = "flake-parts"
     };
 
+    zen-browser.url = "github:MarceColl/zen-browser-flake";
+
   };
 
   outputs = { self, ... }@inputs:

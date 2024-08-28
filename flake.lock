@@ -664,6 +664,22 @@
         "type": "github"
       }
     },
+    "nixpkgs_8": {
+      "locked": {
+        "lastModified": 1724479785,
+        "narHash": "sha256-pP3Azj5d6M5nmG68Fu4JqZmdGt4S4vqI5f8te+E/FTw=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "d0e1602ddde669d5beb01aec49d71a51937ed7be",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "ondsel": {
       "inputs": {
         "nixpkgs": "nixpkgs_4",
@@ -761,7 +777,8 @@
         "lollypops": "lollypops",
         "mayniklas": "mayniklas",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs_7"
+        "nixpkgs": "nixpkgs_7",
+        "zen-browser": "zen-browser"
       }
     },
     "shelly-exporter": {
@@ -969,6 +986,24 @@
         "owner": "pinpox",
         "repo": "wallpaper-generator",
         "rev": "6461fa794745fb18f2b04f58015e9a2871ca7099",
+        "type": "github"
+      }
+    },
+    "zen-browser": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_8"
+      },
+      "locked": {
+        "lastModified": 1724856811,
+        "narHash": "sha256-M5aWax0KbB8moT3KpnHewN0c3brVUoz5CLK12O668bo=",
+        "owner": "MarceColl",
+        "repo": "zen-browser-flake",
+        "rev": "e1313b2db7d3cd6c21d3dd2ecf8e5a0b5eebacde",
+        "type": "github"
+      },
+      "original": {
+        "owner": "MarceColl",
+        "repo": "zen-browser-flake",
         "type": "github"
       }
     }
