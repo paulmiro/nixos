@@ -994,11 +994,11 @@
         "nixpkgs": "nixpkgs_8"
       },
       "locked": {
-        "lastModified": 1724856811,
-        "narHash": "sha256-M5aWax0KbB8moT3KpnHewN0c3brVUoz5CLK12O668bo=",
+        "lastModified": 1724901719,
+        "narHash": "sha256-HXyeu2wwjQcymelWZs/7V7nHl/cvrt/bBKP+jpVa/YQ=",
         "owner": "MarceColl",
         "repo": "zen-browser-flake",
-        "rev": "e1313b2db7d3cd6c21d3dd2ecf8e5a0b5eebacde",
+        "rev": "bc16bbb32255566db797124065785eafd6e746a8",
         "type": "github"
       },
       "original": {
