@@ -20,18 +20,17 @@ in
 
     services.xserver.desktopManager.gnome.enable = true;
     environment.gnome.excludePackages = (with pkgs; [
+      atomix # puzzle game
+      epiphany
+      geary
+      gnome-initial-setup
+      gnome-music
       gnome-photos
       gnome-tour
-      epiphany
-      yelp
-      geary
-    ]) ++ (with pkgs.gnome; [
-      gnome-music
-      tali # poker game
-      iagno # go game
       hitori # sudoku game
-      atomix # puzzle game
-      gnome-initial-setup
+      iagno # go game
+      tali # poker game
+      yelp
     ]);
     programs.dconf.enable = true;
     environment.systemPackages = with pkgs; [
