@@ -44,6 +44,7 @@ with lib;
       pomodoro-gtk
       protonmail-bridge
       prusa-slicer
+      orca-slicer
       rnote
       signal-desktop
       sl
