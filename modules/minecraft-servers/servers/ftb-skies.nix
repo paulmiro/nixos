@@ -4,8 +4,17 @@ let
   cfg = config.paul.minecraft-servers.ftb-skies;
 in
 {
-  # This Modpack uses a lot of stateful stuff, so i chose to just write my own systemd-service
-  # instead of hacking around one of the many ways to do it the nix way
+  /*
+    This Modpack uses a lot of stateful stuff, so i chose to just write my own systemd-service
+    instead of hacking around one of the many ways to do it the nix way
+
+    my solution to install it was this:
+    - use `nix-shell -p jdk17` to run the install script
+    - `echo "eula=true" > eula.txt` to accept the eula
+    - remove the eula stuff ftom the start script (optional)
+    - replace the hardcoded jvm path in the start script with "java"
+
+   */
 
   options.paul.minecraft-servers.ftb-skies = {
     enable = mkEnableOption "activate FTB Skies Minecraft Server";
@@ -19,14 +28,10 @@ in
 
       path = with pkgs; [ temurin-bin-17 bash ];
 
-      environment = {
-        JVMOPTS = "-Xms2G -Xmx8G"; # use min 2GB and max 8GB of memory
-      };
-
       serviceConfig =
         {
           Restart = "always";
-          ExecStart = "/var/lib/mc-ftb-skies/start.sh";
+          ExecStart = "${pkgs.bash}/bin/bash /var/lib/mc-ftb-skies/start.sh";
           ExecStop = ''
             ${pkgs.mcrcon}/bin/mcrcon stop
           '';
@@ -36,10 +41,6 @@ in
           WorkingDirectory = "/var/lib/mc-ftb-skies";
         };
 
-      preStart = ''
-        # Ensure EULA is accepted
-        echo "eula=true" > eula.txt
-      '';
     };
 
     users.users.mc-ftb-skies = {
