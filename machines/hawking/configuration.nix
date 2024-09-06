@@ -29,6 +29,7 @@
     jellyfin = {
       enable = true;
       enableNginx = true;
+      enableQuickSync = true;
     };
     jellyseerr = {
       enable = true;
