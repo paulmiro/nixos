@@ -69,6 +69,10 @@
       enable = true;
       openFirewall = true;
     };
+
+    minecraft-servers = {
+      ftb-skies.enable = true;
+    };
   };
 
   imports = [
