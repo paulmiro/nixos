@@ -71,7 +71,10 @@
     };
 
     minecraft-servers = {
-      ftb-skies.enable = true;
+      ftb-skies = {
+        enable = true;
+        enableDyndns = true;
+      };
     };
   };
 

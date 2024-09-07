@@ -18,6 +18,12 @@ in
 
   options.paul.minecraft-servers.ftb-skies = {
     enable = mkEnableOption "activate FTB Skies Minecraft Server";
+    enableDyndns = mkEnableOption "enable dyndns";
+    domain = mkOption {
+      type = types.str;
+      default = "ftb-skies.${builtins.readFile ../../../domains/_base}";
+      description = "domain name for FTB Skies Minecraft Server";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -57,6 +63,11 @@ in
     networking.firewall = {
       allowedUDPPorts = [ 25565 ];
       allowedTCPPorts = [ 25565 ];
+    };
+
+    paul.dyndns = mkIf cfg.enableDyndns {
+      enable = true;
+      domains = [ cfg.domain ];
     };
   };
 }
