@@ -26,7 +26,7 @@ in
           efiSupport = true;
           efiInstallAsRemovable = true;
           useOSProber = true;
-          configurationLimit = 3;
+          configurationLimit = 2;
         };
       };
       tmp.cleanOnBoot = true;
