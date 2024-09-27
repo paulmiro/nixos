@@ -31,7 +31,6 @@ with lib;
       discord
       element-desktop
       errands
-      firefox
       gnome-graphs
       gparted
       jellyfin-mpv-shim
