@@ -52,6 +52,7 @@ with lib;
       textpieces
       thunderbird-bin
       tor-browser
+      transgui
       ungoogled-chromium
       whatsapp-for-linux
       vdhcoapp
