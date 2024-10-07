@@ -36,6 +36,7 @@ with lib;
       jellyfin-mpv-shim
       krita
       libreoffice
+      mattermost-desktop
       mpv
       obs-studio
       obsidian
