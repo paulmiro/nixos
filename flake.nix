@@ -58,7 +58,7 @@
       # inputs.flake-parts.follows = "flake-parts"
     };
 
-    zen-browser.url = "github:MarceColl/zen-browser-flake";
+    zen-browser.url = "github:ch4og/zen-browser-flake";
 
   };
 
