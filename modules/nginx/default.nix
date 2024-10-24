@@ -4,6 +4,8 @@ let cfg = config.paul.nginx;
 in
 {
 
+  imports = [ ./wwwSubdomainOption.nix ];
+
   options.paul.nginx = {
     enable = mkEnableOption "activate nginx";
     defaultDomain = mkOption {
