@@ -88,7 +88,7 @@ in
               NL yes;
               JP yes;
               LU yes;
-              PE yes; # Peru, für Joshua
+              NA yes; # Namibia, für Joshua
             }
           ''
         ]
