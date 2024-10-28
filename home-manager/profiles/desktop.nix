@@ -3,7 +3,6 @@ with lib;
 {
   config = {
     paul = {
-      programs.direnv.enable = true;
       programs.gnome-settings.enable = true;
       programs.vscode.enable = true;
       programs.rbw.enable = true;

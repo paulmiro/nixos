@@ -4,6 +4,7 @@ with lib;
   config = {
 
     paul = {
+      programs.direnv.enable = true;
       programs.git.enable = true;
       programs.ssh.enable = true;
       programs.zsh.enable = true;
