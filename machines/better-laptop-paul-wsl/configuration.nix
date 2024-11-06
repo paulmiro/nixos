@@ -12,12 +12,14 @@
   wsl = {
     enable = true;
     defaultUser = "paulmiro";
-    interop.includePath = false;
+    #interop.includePath = false;
   };
   
   networking.hostName = "better-laptop-paul-wsl";
 
   paul.common-server.enable = true;
+
+  programs.nix-ld.enable = true; # to allow VSCode-server to run
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
