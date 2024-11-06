@@ -36,6 +36,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # NixOS on the Windows Subsystem for Linux
+    # https://github.com/nix-community/NixOS-WSL
+    nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
+    
     ### Packages outside of nixpkgs
 
     # MayNiklas - used for build_outputs
@@ -122,6 +126,7 @@
               home-manager.nixosModules.home-manager
               lollypops.nixosModules.lollypops
               authentik-nix.nixosModules.default
+              nixos-wsl.nixosModules.default
               (import "${./.}/machines/${x}/configuration.nix" { inherit self; })
               { imports = builtins.attrValues self.nixosModules; }
             ];
