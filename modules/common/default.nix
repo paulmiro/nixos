@@ -30,8 +30,6 @@ in
       wget
     ];
 
-    system.stateVersion = "23.05";
-
     lollypops.extraTasks = {
       rebuild-nosecrets = {
         desc = "Rebuild without deloying secrets";
