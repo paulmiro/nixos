@@ -1,4 +1,4 @@
-{ lib, pkgs, config, ... }:
+{ lib, pkgs, config, system-config, ... }:
 with lib;
 let cfg = config.paul.programs.gnome-settings;
 in
@@ -24,6 +24,7 @@ in
 
     gtk = {
       enable = true;
+      /*
       theme = {
         name = "Orchis-Grey-Dark";
         package = (pkgs.orchis-theme).override {
@@ -34,86 +35,71 @@ in
         name = "Tela-orange-dark";
         package = pkgs.tela-icon-theme;
       };
-
+      */
       cursorTheme = {
         name = "capitaine-cursors";
         package = pkgs.capitaine-cursors;
       };
-
-      gtk3.extraConfig = {
-        Settings = ''
-          gtk-application-prefer-dark-theme=1
-        '';
-      };
-
-      gtk4.extraConfig = {
-        Settings = ''
-          gtk-application-prefer-dark-theme=1
-        '';
-      };
-
     };
-
-    /*
-      home.sessionVariables = {
-      GTK_THEME = "Orchis-Grey-Dark";
-      };
-    */
 
     # Use `dconf watch /` to track stateful changes you are doing, then set them here.
     dconf.settings = {
-      "org/gnome/desktop/interface" = {
-        color-scheme = "prefer-dark";
-        monospace-font-name = "MesloLGS NF 10";
-        gtk-enable-primary-paste = false;
-        clock-show-weekday = true;
-        clock-show-date = true;
-        clock-show-seconds = false;
-        enable-hot-corners = false;
-        show-battery-percentage = true;
+      "org/gnome/shell" = {
+        favorite-apps = [ "zen.desktop" "code.desktop" "org.gnome.Console.desktop" "org.gnome.Nautilus.desktop" ];
+        # TODO: enable all extensions and nixify their settings
+        enabled-extensions = [ "blur-my-shell@aunetx" "clipboard-indicator@tudmotu.com" "burn-my-windows@schneegans.github.com" "gsconnect@andyholmes.github.io" "drive-menu@gnome-shell-extensions.gcampax.github.com" "wifiqrcode@glerro.pm.me" "windowgestures@extension.amarullz.com" "tailscale@joaophi.github.com" ];
+      };
 
+      "org/gnome/desktop/interface" = {
+        accent-color = "yellow";
+        gtk-enable-primary-paste = false;
+        monospace-font-name = mkIf system-config.paul.fonts.enable "MesloLGS NF 10";
+        show-battery-percentage = true;
+        enable-hot-corners = false;
+        clock-show-weekday = true;
+        color-scheme = "prefer-dark";
       };
-      "org/gnome/desktop/notifications" = {
-        show-in-lock-screen = true;
-      };
-      "org/gnome/desktop/calendar" = {
-        show-weekdate = true;
-      };
-      "org/gnome/desktop/wm/preferences" = {
-        action-middle-click-titlebar = "lower";
-      };
-      "org/gnome/desktop/peripherals/touchpad" = {
-        touch-to-click = true;
-      };
-      "org/gnome/desktop/search-providers" = {
-        disabled = [ "org.gnome.Epiphany.desktop" "org.gnome.Contacts.desktop" ];
-      };
+
       "org/gnome/mutter" = {
         edge-tiling = true;
         dynamic-workspaces = true;
         workspaces-only-on-primary = true;
       };
+
+      "org/gnome/desktop/wm/preferences" = {
+        action-middle-click-titlebar = "lower";
+        resize-with-right-button = true;
+      };
+
       "org/gnome/shell/app-switcher" = {
         current-workspace-only = false;
       };
-      "org/gnome/system/location" = {
-        enabled = true;
-      };
-      "org/gnome/settings-daemon/plugins/color" = {
-        night-light-enabled = true;
-        night-light-schedule-automatic = true;
+
+      "org/gnome/desktop/background" = {
+        picture-uri = "file://${./wallpapers/dino-falin.jpg}";
+        picture-uri-dark = "file://${./wallpapers/dino-falin.jpg}";
       };
 
-      # Extension Settings
-      "org/gnome/shell/extensions/vitals" = { };
-      "org/gnome/shell/extensions/blur-my-shell" = {
-        sigma = 50;
-        brightness = 0.7;
-        noise-amout = 0.8;
-        noise-lightness = 1.2;
-        color-and-noise = true;
+      "org/gnome/desktop/screensaver" = {
+        picture-uri = "file://${./wallpapers/dino-falin.jpg}";
       };
 
+      "org/gnome/desktop/session" = {
+        idle-delay = lib.gvariant.mkUint32 300;
+      };
+
+      "org/gnome/settings-daemon/plugins/power" = {
+        sleep-inactive-ac-timeout = 7200;
+        sleep-inactive-battery-timeout = 1800;
+      };
+
+      "org/gnome/desktop/input-sources" = {
+        sources = [ (lib.gvariant.mkTuple [ "xkb" "us" ]) (lib.gvariant.mkTuple [ "xkb" "de" ]) ];
+      };
+
+      "org/gnome/desktop/peripherals/mouse" = {
+        accel-profile = "flat";
+      };
     };
   };
 }
