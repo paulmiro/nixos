@@ -146,7 +146,7 @@ in
 
       # app settings
 
-      "/org/gnome/Console" = {
+      "org/gnome/Console" = {
         font-scale = 1.4;
       };
     };
