@@ -46,8 +46,18 @@ in
     dconf.settings = {
       "org/gnome/shell" = {
         favorite-apps = [ "zen.desktop" "code.desktop" "org.gnome.Console.desktop" "org.gnome.Nautilus.desktop" ];
-        # TODO: enable all extensions and nixify their settings
-        enabled-extensions = [ "blur-my-shell@aunetx" "clipboard-indicator@tudmotu.com" "burn-my-windows@schneegans.github.com" "gsconnect@andyholmes.github.io" "drive-menu@gnome-shell-extensions.gcampax.github.com" "wifiqrcode@glerro.pm.me" "windowgestures@extension.amarullz.com" "tailscale@joaophi.github.com" ];
+        enabled-extensions = [
+          "blur-my-shell@aunetx"
+          "burn-my-windows@schneegans.github.com"
+          "clipboard-indicator@tudmotu.com"
+          "drive-menu@gnome-shell-extensions.gcampax.github.com"
+          "gsconnect@andyholmes.github.io"
+          "just-perfection-desktop@just-perfection"
+          "tailscale@joaophi.github.com"
+          "Vitals@CoreCoding.com"
+          "wifiqrcode@glerro.pm.me"
+          "windowgestures@extension.amarullz.com"
+        ];
       };
 
       "org/gnome/desktop/interface" = {
@@ -99,6 +109,45 @@ in
 
       "org/gnome/desktop/peripherals/mouse" = {
         accel-profile = "flat";
+      };
+
+      # extension settings
+      "org/gnome/shell/extensions/vitals" = {
+        hot-sensors = [ "_processor_usage_" "_memory_usage_" "__temperature_max__" ];
+        show-temperature = true;
+        show-voltage = false;
+        show-fan = false;
+        show-memory = true;
+        show-processor = true;
+        show-system = false;
+        show-network = false;
+        show-storage = false;
+        show-battery = false;
+        show-gpu = false;
+        position-in-panel = 0;
+      };
+
+      "org/gnome/shell/extensions/just-perfection" = {
+        workspace-wrap-around = true;
+        workspace-switcher-should-show = true;
+        window-demands-attention-focus = true;
+        switcher-popup-delay = false;
+        startup-status = 0;
+        search = false;
+        window-preview-caption = false;
+        world-clock = false;
+        workspace-switcher-size = 10;
+        animation = 5;
+      };
+
+      "org/gnome/shell/extensions/burn-my-windows" = {
+        active-profile = "${./burn-my-windows-config.conf}";
+      };
+
+      # app settings
+
+      "/org/gnome/Console" = {
+        font-scale = 1.4;
       };
     };
   };
