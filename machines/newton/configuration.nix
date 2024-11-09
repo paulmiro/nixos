@@ -28,10 +28,21 @@
   hardware.enableRedistributableFirmware = true;
 
   networking = {
-    networkmanager.enable = true;
+    networkmanager = {
+      enable = true;
+      plugins = with pkgs; [ networkmanager-openvpn ];
+    };
     hostName = "newton";
   };
 
+  /*
+    services.openvpn.servers = {
+    infoBonnVPN = {
+      config = '' config /root/nixos/openvpn/officeVPN.conf '';
+      autoStart = false;
+    };
+    };
+  */
   # disable NetworkManager wait-online
   # https://github.com/NixOS/nixpkgs/issues/180175
   systemd.services.NetworkManager-wait-online.enable = pkgs.lib.mkForce false;
@@ -51,6 +62,7 @@
 
   # being able to build aarm64 stuff
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+  boot.supportedFilesystems = [ "ntfs" ];
 
   services.tailscale = {
     enable = true; #TODO: tailscale up needs to be run manually once to log in
@@ -80,5 +92,5 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.05"; # Did you read the comment?
+  system.stateVersion = "24.05"; # Did you read the comment?
 }
