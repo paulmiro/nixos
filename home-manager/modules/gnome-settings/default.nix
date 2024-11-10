@@ -144,6 +144,20 @@ in
         active-profile = "${./burn-my-windows-config.conf}";
       };
 
+      "org/gnome/shell/extensions/windowgestures" = {
+        three-finger = true;
+        use-active-window = false;
+        swipe4-left = 9;
+        swipe4-right = 8;
+        swipe3-down = 0;
+        swipe3-left = 0;
+        swipe3-right = 0;
+        fn-resize = false;
+        fn-move = false;
+        fn-fullscreen = false;
+        fn-maximized-snap = false;
+        fn-move-snap = false;
+      };
       # app settings
 
       "org/gnome/Console" = {
