@@ -89,6 +89,7 @@ in
               JP yes;
               LU yes;
               NA yes; # Namibia, für Joshua
+              US yes;
             }
           ''
         ]
