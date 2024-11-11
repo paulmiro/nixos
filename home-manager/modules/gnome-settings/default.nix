@@ -53,6 +53,8 @@ in
           "drive-menu@gnome-shell-extensions.gcampax.github.com"
           "gsconnect@andyholmes.github.io"
           "just-perfection-desktop@just-perfection"
+          "native-window-placement@gnome-shell-extensions.gcampax.github.com"
+          "status-icons@gnome-shell-extensions.gcampax.github.com"
           "tailscale@joaophi.github.com"
           "Vitals@CoreCoding.com"
           "wifiqrcode@glerro.pm.me"
@@ -104,11 +106,19 @@ in
       };
 
       "org/gnome/desktop/input-sources" = {
-        sources = [ (lib.gvariant.mkTuple [ "xkb" "us" ]) (lib.gvariant.mkTuple [ "xkb" "de" ]) ];
+        sources = [
+          (lib.gvariant.mkTuple [ "xkb" "de" ])
+          (lib.gvariant.mkTuple [ "xkb" "us" ])
+        ];
       };
 
       "org/gnome/desktop/peripherals/mouse" = {
         accel-profile = "flat";
+      };
+
+      # keybindings
+      "org/gnome/shell/keybindings" = {
+        toggle-message-tray = [ "<Super>w" ]; # defaults to <Super>v, but i need that for the clipboard-indicator
       };
 
       # extension settings
@@ -158,10 +168,28 @@ in
         fn-maximized-snap = false;
         fn-move-snap = false;
       };
+
+      "org/gnome/shell/extensions/clipboard-indicator" = {
+        move-item-first = true;
+        clear-on-boot = true;
+        confirm-clear = false;
+        enable-keybindings = true;
+        # this seems to be the only way to disable the keybindings individually
+        private-mode-binding = lib.gvariant.mkEmptyArray (lib.gvariant.type.string);
+        toggle-menu = [ "<Super>v" ];
+        clear-history = lib.gvariant.mkEmptyArray (lib.gvariant.type.string);
+        next-entry = lib.gvariant.mkEmptyArray (lib.gvariant.type.string);
+        prev-entry = lib.gvariant.mkEmptyArray (lib.gvariant.type.string);
+      };
+
       # app settings
 
       "org/gnome/Console" = {
         font-scale = 1.4;
+      };
+
+      "org/gnome/tweaks" = {
+        show-extensions-notice = false; # annoying popup
       };
     };
   };
