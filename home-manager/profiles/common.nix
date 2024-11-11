@@ -32,6 +32,7 @@ with lib;
       psmisc
       pwgen
       ripgrep
+      sops
       unzip
       usbutils
       zellij
