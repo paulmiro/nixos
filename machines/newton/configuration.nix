@@ -35,14 +35,14 @@
     hostName = "newton";
   };
 
-  /*
-    services.openvpn.servers = {
+
+  services.openvpn.servers = {
     infoBonnVPN = {
-      config = '' config /root/nixos/openvpn/officeVPN.conf '';
+      config = '' config /home/paulmiro/Downloads/openvpn/uni-info.ovpn '';
       autoStart = false;
     };
-    };
-  */
+  };
+
   # disable NetworkManager wait-online
   # https://github.com/NixOS/nixpkgs/issues/180175
   systemd.services.NetworkManager-wait-online.enable = pkgs.lib.mkForce false;
