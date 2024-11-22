@@ -30,6 +30,10 @@ in
           hostname = "login-stud.informatik.uni-bonn.de";
           user = "rohdep0";
         };
+        "vci1" = {
+          hostname = "vci-gpu1.cs.uni-bonn.de";
+          user = "student_rohde";
+        };
       };
     };
   };
