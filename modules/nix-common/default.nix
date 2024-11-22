@@ -57,6 +57,7 @@ in
         substituters = mkIf (cfg.disable-cache != true) [
           "https://cache.lounge.rocks/nix-cache"
         ];
+        trusted-users = [ "root" "@wheel" ];
 
         # Users allowed to run nix
         allowed-users = [ "root" ];
