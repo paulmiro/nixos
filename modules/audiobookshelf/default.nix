@@ -22,7 +22,7 @@ in
 
     domain = mkOption {
       type = types.str;
-      default = "abs.${builtins.readFile ../../domains/_base}";
+      default = config.paul.private.domains.audiobookshelf;
       description = "domain name for audiobookshelf";
     };
   };

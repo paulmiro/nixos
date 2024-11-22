@@ -9,7 +9,7 @@ in
 
     baseDomain = mkOption {
       type = types.str;
-      default = "${builtins.readFile ../../domains/_base}";
+      default = config.paul.private.domains.base;
       description = "The base domain for the sso stack";
     };
 

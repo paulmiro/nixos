@@ -15,7 +15,7 @@ in
     enableNginx = mkEnableOption "activate nginx";
     domain = mkOption {
       type = types.str;
-      default = "dash.${builtins.readFile ../../domains/_base}";
+      default = config.paul.private.domains.homepage-dashboard;
       description = "domain for homepage";
     };
     port = mkOption {
@@ -120,7 +120,7 @@ in
                   "File Browser" = [{
                     abbr = "FB";
                     icon = "filebrowser.png";
-                    href = "https://fb.${builtins.readFile ../../domains/_base}";
+                    href = "https://${config.paul.private.domains.filebrowser}";
                     description = "File Browser";
                   }];
                 }
@@ -128,7 +128,7 @@ in
                   "Speedtest" = [{
                     abbr = "ST";
                     icon = "openspeedtest.png";
-                    href = "https://speed.${builtins.readFile ../../domains/_base}";
+                    href = "https://${config.paul.private.domains.librespeedtest}";
                     description = "Speedtest";
                   }];
                 }

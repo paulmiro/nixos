@@ -19,13 +19,13 @@ in
 
     domain = mkOption {
       type = types.str;
-      default = "auth.${builtins.readFile ../../domains/_base}";
+      default = config.paul.private.domains.authentik;
       description = "domain name for authentik";
     };
 
     emailAdress = mkOption {
       type = types.str;
-      default = "account@${builtins.readFile ../../domains/_base}";
+      default = "account@" + config.paul.private.domains.authentik;
       description = "email adress for authentik";
     };
 
@@ -52,7 +52,7 @@ in
           email = {
             host = "mail.smtp2go.com";
             port = 2525;
-            username = builtins.readFile ../../secrets/smtp2go-username-authentik;
+            username = config.paul.private.smtp2go_username_authentik;
             use_tls = true;
             use_ssl = false;
             from = cfg.emailAdress;

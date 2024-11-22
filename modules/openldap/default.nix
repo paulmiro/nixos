@@ -28,7 +28,7 @@ in
 
     rootDN = mkOption {
       type = types.str;
-      default = "${builtins.readFile ../../domains/_baseDN}";
+      default = "DC=example,DC=com";
       description = "The root DN for the LDAP server";
     };
 
@@ -73,7 +73,7 @@ in
               /* your admin account, do not use writeText on a production system */
               olcRootDN = "cn=ldapadmin,${cfg.rootDN}";
               #TODO: for some reason using olcRootPW.path does not work, that's why it's hardcoded for now
-              olcRootPW = builtins.readFile ../../secrets/openldap-admin-password-hashed;
+              olcRootPW = "changeme";
 
               olcAccess = [
                 /* custom access rules for userPassword attributes */

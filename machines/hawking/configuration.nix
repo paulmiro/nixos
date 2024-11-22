@@ -120,9 +120,7 @@
     interval = "weekly";
   };
 
-  environment.systemPackages = with pkgs; [ ];
-
-  services.nginx.virtualHosts."egg.${builtins.readFile ../../domains/_base}" = {
+  services.nginx.virtualHosts."${config.paul.private.domains.egg}" = {
     enableACME = true;
     forceSSL = true;
     locations."/" = {
@@ -130,7 +128,7 @@
     };
   };
 
-  services.nginx.virtualHosts."fb.${builtins.readFile ../../domains/_base}" = {
+  services.nginx.virtualHosts."${config.paul.private.domains.filebrowser}" = {
     enableACME = true;
     forceSSL = true;
     locations."/" = {
@@ -140,10 +138,10 @@
   };
 
   paul.dyndns.domains = [
-    "egg.${builtins.readFile ../../domains/_base}"
-    "fb.${builtins.readFile ../../domains/_base}"
+    config.paul.private.domains.egg
+    config.paul.private.domains.filebrowser
   ];
-  
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It's perfectly fine and recommended to leave

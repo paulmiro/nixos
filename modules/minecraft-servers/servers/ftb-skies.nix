@@ -21,7 +21,7 @@ in
     enableDyndns = mkEnableOption "enable dyndns";
     domain = mkOption {
       type = types.str;
-      default = "ftb-skies.${builtins.readFile ../../../domains/_base}";
+      default = "ftb-skies.${config.paul.private.domains.base}";
       description = "domain name for FTB Skies Minecraft Server";
     };
   };

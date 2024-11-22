@@ -33,7 +33,7 @@ let
           proxy_set_header X-authentik-uid $authentik_uid;
         '';
         locations."/outpost.goauthentik.io".extraConfig = ''
-          proxy_pass              https://auth.${builtins.readFile ../../domains/_base_old}/outpost.goauthentik.io;
+          proxy_pass              https://${config.paul.private.domains.authentik}/outpost.goauthentik.io;
           # ensure the host of this vserver matches your external URL you've configured
           # in authentik
           proxy_set_header        Host $host;
@@ -50,7 +50,7 @@ let
           add_header Set-Cookie $auth_cookie;
           return 302 /outpost.goauthentik.io/start?rd=$request_uri;
           # For domain level, use the below error_page to redirect to your authentik server with the full redirect path
-          # return 302 https://auth.${builtins.readFile ../../domains/_base_old}/outpost.goauthentik.io/start?rd=$scheme://$http_host$request_uri;
+          # return 302 https://${config.paul.private.domains.authentik}/outpost.goauthentik.io/start?rd=$scheme://$http_host$request_uri;
         '';
       };
   };
@@ -84,7 +84,7 @@ in
 
     domain = mkOption {
       type = types.str;
-      default = "auth.${builtins.readFile ../../domains/_base_old}";
+      default = config.paul.private.domains.authentik;
       description = "domain name for authentik";
     };
   };

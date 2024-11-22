@@ -22,7 +22,7 @@ in
 
     domain = mkOption {
       type = types.str;
-      default = "${builtins.readFile ../../domains/jellyseerr}";
+      default = config.paul.private.domains.jellyseerr;
       description = "domain name for jellyseerr";
     };
   };
@@ -46,7 +46,7 @@ in
 
       paul.dyndns = mkIf cfg.enableDyndns {
         enable = true;
-        domains = [ cfg.domain "${builtins.readFile ../../domains/jellyseerr_old}" ];
+        domains = [ cfg.domain config.paul.private.domains.jellyseerr_old ];
       };
 
       services.nginx.virtualHosts."${cfg.domain}" = {
@@ -59,7 +59,7 @@ in
       };
 
       # this domain is deprecated and only kept here to give my users some time to switch over
-      services.nginx.virtualHosts."${builtins.readFile ../../domains/jellyseerr_old}" = {
+      services.nginx.virtualHosts."${config.paul.private.domains.jellyseerr_old}" = {
         enableACME = true;
         forceSSL = true;
         locations."/" = {

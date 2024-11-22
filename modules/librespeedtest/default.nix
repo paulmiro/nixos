@@ -21,7 +21,7 @@ in
 
     domain = mkOption {
       type = types.str;
-      default = "speed.${builtins.readFile ../../domains/_base}";
+      default = config.paul.private.domains.librespeedtest;
       description = "domain name for jellyfin";
     };
 

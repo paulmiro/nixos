@@ -9,7 +9,7 @@ in
 
     baseUrl = lib.mkOption {
       type = lib.types.str;
-      default = "http://mealie.${builtins.readFile ../../domains/_base}";
+      default = "http://mealie.${config.paul.private.domains.base}";
       description = "Base URL of the Mealie service.";
     };
 

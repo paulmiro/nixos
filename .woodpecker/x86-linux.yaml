@@ -1,74 +1,48 @@
-{
-  "labels": {
-    "backend": "local",
-    "platform": "linux/amd64"
-  },
-  "steps": [
-    {
-      "commands": [
-        "nix flake show"
-      ],
-      "image": "bash",
-      "name": "Nix flake show"
-    },
-    {
-      "commands": [
-        "nix flake check"
-      ],
-      "image": "bash",
-      "name": "Nix flake check"
-    },
-    {
-      "commands": [
-        "attic login lounge-rocks https://cache.lounge.rocks $ATTIC_KEY --set-default"
-      ],
-      "image": "bash",
-      "name": "Setup Attic",
-      "secrets": [
-        "attic_key"
-      ]
-    },
-    {
-      "commands": [
-        "nix build --print-out-paths '.#nixosConfigurations.hawking.config.system.build.toplevel' -o 'result-hawking'"
-      ],
-      "image": "bash",
-      "name": "Build hawking"
-    },
-    {
-      "commands": [
-        "nix path-info --closure-size -h $(readlink -f 'result-hawking')"
-      ],
-      "image": "bash",
-      "name": "Show hawking info"
-    },
-    {
-      "commands": [
-        "attic push lounge-rocks:nix-cache 'result-hawking'"
-      ],
-      "image": "bash",
-      "name": "Push hawking to Attic"
-    },
-    {
-      "commands": [
-        "nix build --print-out-paths '.#nixosConfigurations.newton.config.system.build.toplevel' -o 'result-newton'"
-      ],
-      "image": "bash",
-      "name": "Build newton"
-    },
-    {
-      "commands": [
-        "nix path-info --closure-size -h $(readlink -f 'result-newton')"
-      ],
-      "image": "bash",
-      "name": "Show newton info"
-    },
-    {
-      "commands": [
-        "attic push lounge-rocks:nix-cache 'result-newton'"
-      ],
-      "image": "bash",
-      "name": "Push newton to Attic"
-    }
-  ]
-}
+labels:
+  backend: local
+  platform: linux/amd64
+steps:
+  - name: Decrypt Private Data
+    image: mozilla/sops
+    commands:
+      - sops decrypt --in-place modules/private/private.json
+    secrets:
+      - SOPS_AGE_KEY
+  - name: Nix flake show
+    image: bash
+    commands:
+      - nix flake show
+  - name: Nix flake check
+    image: bash
+    commands:
+      - nix flake check
+  - name: Setup Attic
+    image: bash
+    commands:
+      - attic login lounge-rocks https://cache.lounge.rocks $ATTIC_KEY --set-default
+    secrets:
+      - attic_key
+  - name: Build hawking
+    image: bash
+    commands:
+      - nix build --print-out-paths '.#nixosConfigurations.hawking.config.system.build.toplevel' -o 'result-hawking'
+  - name: Show hawking info
+    image: bash
+    commands:
+      - nix path-info --closure-size -h $(readlink -f 'result-hawking')
+  - name: Push hawking to Attic
+    image: bash
+    commands:
+      - attic push lounge-rocks:nix-cache 'result-hawking'
+  - name: Build newton
+    image: bash
+    commands:
+      - nix build --print-out-paths '.#nixosConfigurations.newton.config.system.build.toplevel' -o 'result-newton'
+  - name: Show newton info
+    image: bash
+    commands:
+      - nix path-info --closure-size -h $(readlink -f 'result-newton')
+  - name: Push newton to Attic
+    image: bash
+    commands:
+      - attic push lounge-rocks:nix-cache 'result-newton'

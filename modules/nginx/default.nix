@@ -8,14 +8,14 @@ in
     enable = mkEnableOption "activate nginx";
     defaultDomain = mkOption {
       type = types.str;
-      default = "teapot.${builtins.readFile ../../domains/_base}";
+      default = "teapot.${config.paul.private.domains.base}";
       description = "The default domain to use for the nginx configuration";
     };
   };
 
   config = mkIf cfg.enable {
 
-    security.acme.defaults.email = builtins.readFile ../../secrets/nginx-acme-email;
+    security.acme.defaults.email = config.paul.private.emails.proton;
     security.acme.acceptTerms = true;
 
     services.nginx = {

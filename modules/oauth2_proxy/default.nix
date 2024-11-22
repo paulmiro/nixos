@@ -20,13 +20,13 @@ in
 
     domain = mkOption {
       type = types.str;
-      default = "auth.${builtins.readFile ../../domains/_base}";
+      default = "auth.${config.paul.private.domains.base}";
       description = "The domain to use for the oauth2 proxy";
     };
 
     baseDomain = mkOption {
       type = types.str;
-      default = "${builtins.readFile ../../domains/_base}";
+      default = config.paul.private.domains.base;
       description = "The base domain to use for the oauth2 proxy";
     };
 

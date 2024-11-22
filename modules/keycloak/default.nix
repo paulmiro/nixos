@@ -18,7 +18,7 @@ in
     };
     domain = mkOption {
       type = types.str;
-      default = "auth.${builtins.readFile ../../domains/_base}";
+      default = "auth.${config.paul.private.domains.base}";
       description = "Domain to use for keycloak";
     };
     openFirewall = mkEnableOption "allow keycloak port in firewall";

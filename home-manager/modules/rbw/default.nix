@@ -1,4 +1,4 @@
-{ lib, pkgs, config, ... }:
+{ lib, pkgs, config, system-config, ... }:
 with lib;
 let cfg = config.paul.programs.rbw;
 in
@@ -9,7 +9,7 @@ in
     programs.rbw = {
       enable = true;
       settings = {
-        email = builtins.readFile ../../../secrets/rbw-email; # TODO: make this realative to flake-self instead of this folder
+        email = system-config.paul.private.emails.gmail;
         pinentry = pkgs.pinentry-tty;
       };
     };
