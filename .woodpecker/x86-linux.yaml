@@ -3,7 +3,7 @@ labels:
   platform: linux/amd64
 steps:
   - name: Decrypt Private Data
-    image: mozilla/sops
+    image: bash
     commands:
       - sops decrypt --in-place modules/private/private.json
     secrets:
