@@ -14,7 +14,7 @@ in
       openssh.authorizedKeys.keyFiles = [
         (pkgs.fetchurl {
           url = "https://github.com/paulmiro.keys";
-          hash = "sha256-M/be0Omzl5kwKfQwUD0IhrBAek13DF3T/Zypd/IYKPY=";
+          hash = "sha256-r0JNTy4SYiy058vBVuTT87bNlQ7ozJ2tRa9wXBStQMM=";
         })
       ];
     };
