@@ -5,7 +5,7 @@ steps:
   - name: Decrypt Private Data
     image: bash
     commands:
-      - nix-shell -p sops --run "sops decrypt --in-place modules/private/private.json"
+      - nix shell nixpkgs#sops --run "sops decrypt --in-place modules/private/private.json"
     secrets:
       - SOPS_AGE_KEY
   - name: Nix flake show
