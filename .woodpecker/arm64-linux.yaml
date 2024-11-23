@@ -3,7 +3,7 @@ labels:
   platform: linux/arm64
 steps:
   - name: Decrypt Private Data
-    image: mozilla/sops
+    image: bash
     commands:
       - nix shell nixpkgs#sops --command sops decrypt --in-place modules/private/private.json
     secrets:
