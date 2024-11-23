@@ -72,6 +72,9 @@ let cfg = config.paul.programs.zsh; in
         # systemd / systemctl
         failed = "${pkgs.systemd}/bin/systemctl --failed";
 
+        # ssh
+        ssj = "${pkgs.openssh}/bin/ssh -J";
+
         # nix
 
         # switching within a flake repository
