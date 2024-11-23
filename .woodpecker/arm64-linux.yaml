@@ -5,7 +5,7 @@ steps:
   - name: Decrypt Private Data
     image: mozilla/sops
     commands:
-      - sops decrypt --in-place modules/private/private.json
+      - nix shell nixpkgs#sops --command sops decrypt --in-place modules/private/private.json
     secrets:
       - SOPS_AGE_KEY
   - name: Nix flake show
