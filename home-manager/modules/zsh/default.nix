@@ -17,24 +17,6 @@ let cfg = config.paul.programs.zsh; in
       initExtra = ''
         bindkey "^[[1;5C" forward-word
         bindkey "^[[1;5D" backward-word
-
-        # revert last n commits
-        grv() {
-          ${pkgs.git}/bin/git reset --soft HEAD~$1
-        }
-
-        # get github url of current repository
-        gh() {
-          echo $(${pkgs.git}/bin/git config --get remote.origin.url | sed -e 's/\(.*\)git@\(.*\):[0-9\/]*/https:\/\/\2\//g')
-        }
-
-        flake_update() {
-          ${pkgs.nix}/bin/nix flake update
-          ${pkgs.git}/bin/git add flake.lock
-          ${pkgs.git}/bin/git commit -m "❅ flake.lock: update"
-        }
-
-        eval "$(${pkgs.h}/bin/h --setup ~/code)"
       '';
 
       history = {
@@ -62,16 +44,7 @@ let cfg = config.paul.programs.zsh; in
         }
       ];
 
-      shellAliases = rec {
-        # git
-
-        # clean up repository
-        clean = "${pkgs.git}/bin/git clean -xdn";
-        destroy = "${pkgs.git}/bin/git clean -xdf";
-
-        # systemd / systemctl
-        failed = "${pkgs.systemd}/bin/systemctl --failed";
-
+      shellAliases = {
         # ssh
         ssj = "${pkgs.openssh}/bin/ssh -J";
 
@@ -94,12 +67,6 @@ let cfg = config.paul.programs.zsh; in
 
         # Other
         lsblk = "${pkgs.util-linux}/bin/lsblk -o name,mountpoint,label,size,type,uuid";
-
-        # fun stuff
-
-        # mensa
-        mensa = "${pkgs.nix}/bin/nix run 'github:alexanderwallau/bonn-mensa' --";
-
       };
     };
 
