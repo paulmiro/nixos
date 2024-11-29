@@ -8,11 +8,11 @@ with lib;
       programs.git.enable = true;
       programs.ssh.enable = true;
       programs.zsh.enable = true;
+      nixpkgs-config.enable = true;
     };
 
     # Home-manager nixpkgs config
     nixpkgs = {
-      config = { allowUnfree = true; };
       overlays = [ ];
     };
 
