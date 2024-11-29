@@ -45,9 +45,6 @@ let cfg = config.paul.programs.zsh; in
       ];
 
       shellAliases = {
-        # ssh
-        ssj = "${pkgs.openssh}/bin/ssh -J";
-
         # nix
 
         # switching within a flake repository
