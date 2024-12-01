@@ -24,5 +24,13 @@ in
       group = "arr";
       openFirewall = cfg.openFirewall;
     };
+
+    #TODO: remove this once Sonarr supports .NET 8 (https://github.com/Sonarr/Sonarr/issues/7442)
+    nixpkgs.config.permittedInsecurePackages = [
+      "aspnetcore-runtime-wrapped-6.0.36"
+      "aspnetcore-runtime-6.0.36"
+      "dotnet-sdk-wrapped-6.0.428"
+      "dotnet-sdk-6.0.428"
+    ];
   };
 }
