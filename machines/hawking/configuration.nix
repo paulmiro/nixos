@@ -137,15 +137,6 @@
     };
   };
 
-  services.nginx.virtualHosts."${config.paul.private.domains.shark_base}" = {
-    enableACME = true;
-    forceSSL = true;
-    locations."/" = {
-      return = "302 https://www.youtube.com/watch?v=ys6yIhWwEyI";
-    };
-  };
-
-
   paul.dyndns.domains = [
     config.paul.private.domains.egg
     config.paul.private.domains.filebrowser
