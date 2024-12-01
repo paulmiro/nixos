@@ -137,7 +137,7 @@
     };
   };
 
-  service.nginx.virtualHosts."${config.paul.private.domains.shark_base}" = {
+  services.nginx.virtualHosts."${config.paul.private.domains.shark_base}" = {
     enableACME = true;
     forceSSL = true;
     locations."/" = {
