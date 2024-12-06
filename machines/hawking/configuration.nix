@@ -70,12 +70,12 @@
       openFirewall = true;
     };
 
-    minecraft-servers = {
-      ftb-skies = {
-        enable = true;
-        enableDyndns = true;
-      };
-    };
+    # minecraft-servers = {
+    #   ftb-skies = {
+    #     enable = true;
+    #     enableDyndns = true;
+    #   };
+    # };
   };
 
   imports = [
