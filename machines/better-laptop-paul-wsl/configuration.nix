@@ -14,12 +14,10 @@
     defaultUser = "paulmiro";
     #interop.includePath = false;
   };
-  
+
   networking.hostName = "better-laptop-paul-wsl";
 
   paul.common-server.enable = true;
-
-  programs.steam.enable = true;
 
   programs.nix-ld.enable = true; # to allow VSCode-server to run
 
