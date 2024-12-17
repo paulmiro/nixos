@@ -60,7 +60,7 @@ with lib;
       zed-editor
       zoom-us
 
-      flake-self.inputs.zen-browser.packages.x86_64-linux.specific
+      flake-self.inputs.zen-browser.packages.${system}.default
     ]
     # only install these packages on x86_64-linux systems
     ++ lib.optionals (system-config.nixpkgs.hostPlatform.isx86_64) [

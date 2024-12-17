@@ -39,7 +39,7 @@
     # NixOS on the Windows Subsystem for Linux
     # https://github.com/nix-community/NixOS-WSL
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
-    
+
     ### Packages outside of nixpkgs
 
     # MayNiklas - used for build_outputs
@@ -62,7 +62,7 @@
       # inputs.flake-parts.follows = "flake-parts"
     };
 
-    zen-browser.url = "github:ch4og/zen-browser-flake";
+    zen-browser.url = "github:youwen5/zen-browser-flake";
 
   };
 
