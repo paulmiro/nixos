@@ -15,6 +15,7 @@
     syncthing.enable = true;
     adb.enable = true;
     docker.enable = true;
+    gaming.enable = true;
   };
 
   # programs.ssh.askPassword = pkgs.lib.mkForce "${pkgs.x11_ssh_askpass}/libexec/x11-ssh-askpass";
@@ -47,8 +48,6 @@
   # https://github.com/NixOS/nixpkgs/issues/180175
   systemd.services.NetworkManager-wait-online.enable = pkgs.lib.mkForce false;
   systemd.services.systemd-networkd-wait-online.enable = pkgs.lib.mkForce false;
-
-  programs.steam.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
