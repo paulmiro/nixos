@@ -36,6 +36,7 @@ with lib;
       krita
       libreoffice
       mattermost-desktop
+      mixxx
       mpv
       obs-studio
       obsidian
