@@ -28,6 +28,11 @@ in
           useOSProber = true;
           configurationLimit = 100;
         };
+        grub2-theme = {
+          enable = true;
+          theme = "stylish";
+          footer = true;
+        };
       };
       tmp.cleanOnBoot = true;
     };

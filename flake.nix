@@ -64,6 +64,10 @@
 
     zen-browser.url = "github:youwen5/zen-browser-flake";
 
+    grub2-themes = {
+      url = "github:vinceliuice/grub2-themes";
+    };
+
   };
 
   outputs = { self, ... }@inputs:
@@ -127,6 +131,7 @@
               lollypops.nixosModules.lollypops
               authentik-nix.nixosModules.default
               nixos-wsl.nixosModules.default
+              grub2-themes.nixosModules.default
               (import "${./.}/machines/${x}/configuration.nix" { inherit self; })
               { imports = builtins.attrValues self.nixosModules; }
             ];
