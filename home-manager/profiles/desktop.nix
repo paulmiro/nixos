@@ -32,6 +32,7 @@ with lib;
       errands
       gnome-graphs
       gparted
+      inkscape
       #jellyfin-mpv-shim # build broken currently
       krita
       libreoffice
