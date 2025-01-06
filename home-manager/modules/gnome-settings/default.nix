@@ -53,7 +53,7 @@ in
           "drive-menu@gnome-shell-extensions.gcampax.github.com"
           "gsconnect@andyholmes.github.io"
           "just-perfection-desktop@just-perfection"
-          "native-window-placement@gnome-shell-extensions.gcampax.github.com"
+          # "native-window-placement@gnome-shell-extensions.gcampax.github.com" # is glitchy sometimes
           "status-icons@gnome-shell-extensions.gcampax.github.com"
           "tailscale@joaophi.github.com"
           "Vitals@CoreCoding.com"
