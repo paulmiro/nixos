@@ -45,7 +45,12 @@ in
     # Use `dconf watch /` to track stateful changes you are doing, then set them here.
     dconf.settings = {
       "org/gnome/shell" = {
-        favorite-apps = [ "zen.desktop" "code.desktop" "org.gnome.Console.desktop" "org.gnome.Nautilus.desktop" ];
+        favorite-apps = [
+          "zen.desktop"
+          "code.desktop"
+          (if config.paul.programs.ghostty.enable then "com.mitchellh.ghostty.desktop" else "org.gnome.Console.desktop")
+          "org.gnome.Nautilus.desktop"
+        ];
         enabled-extensions = [
           "blur-my-shell@aunetx"
           "burn-my-windows@schneegans.github.com"
