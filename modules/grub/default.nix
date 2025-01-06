@@ -30,7 +30,7 @@ in
         };
         grub2-theme = {
           enable = true;
-          theme = "stylish";
+          theme = "sicher";
           footer = true;
         };
       };

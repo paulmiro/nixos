@@ -65,7 +65,8 @@
     zen-browser.url = "github:youwen5/zen-browser-flake";
 
     grub2-themes = {
-      url = "github:vinceliuice/grub2-themes";
+      url = "github:paulmiro/grub2-themes";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
   };

@@ -300,6 +300,26 @@
         "type": "github"
       }
     },
+    "grub2-themes": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1736122611,
+        "narHash": "sha256-6TWu0bGBsUXXEf9t9+CrZnYur+XvA0aRs9YZh5zIqvE=",
+        "owner": "paulmiro",
+        "repo": "grub2-themes",
+        "rev": "82e24d8c1ce2926a5552e710beef73bd6fd07c86",
+        "type": "github"
+      },
+      "original": {
+        "owner": "paulmiro",
+        "repo": "grub2-themes",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -736,6 +756,7 @@
       "inputs": {
         "authentik-nix": "authentik-nix",
         "disko": "disko",
+        "grub2-themes": "grub2-themes",
         "home-manager": "home-manager",
         "lollypops": "lollypops",
         "mayniklas": "mayniklas",
