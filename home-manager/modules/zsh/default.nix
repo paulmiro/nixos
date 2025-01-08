@@ -62,6 +62,11 @@ let cfg = config.paul.programs.zsh; in
         # nix-shell
         ns = "nix-shell -p";
 
+        # systemd
+
+        # show journalctl logs for a service
+        logs = "${pkgs.systemd}/bin/journalctl -feau";
+
         # Other
         lsblk = "${pkgs.util-linux}/bin/lsblk -o name,mountpoint,label,size,type,uuid";
       };
