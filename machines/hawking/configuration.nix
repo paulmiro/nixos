@@ -70,6 +70,13 @@
       openFirewall = true;
     };
 
+    ersatztv = {
+      enable = true;
+      version = "v25.1.0";
+      openFirewall = true;
+      hardwareTranscoding = "vaapi";
+    };
+
     # minecraft-servers = {
     #   ftb-skies = {
     #     enable = true;
