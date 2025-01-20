@@ -56,7 +56,6 @@ in
           "/mnt/nfs/arr/media:/media:ro"
         ];
         extraOptions = [
-          "--network=host"
           "-e TZ=America/Chicago"
         ] ++ lib.optionals (cfg.hardwareTranscoding == "qsv") [
           # get group ID with: `getent group render | cut -d: -f3`
