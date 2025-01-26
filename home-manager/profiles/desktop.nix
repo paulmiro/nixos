@@ -27,6 +27,7 @@ with lib;
 
     # Install these packages for my user
     home.packages = with pkgs; [
+      audacity
       diebahn
       discord
       element-desktop
