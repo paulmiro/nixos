@@ -39,10 +39,10 @@
       enable = true;
       enableNginx = true;
     };
-    audiobookshelf = {
-      #enable = true;
-      #enableNginx = true;
-    };
+    # audiobookshelf = {
+    #   enable = true;
+    #   enableNginx = true;
+    # };
 
     # Local Services
     sonarr = {
@@ -53,18 +53,18 @@
       enable = true;
       openFirewall = true;
     };
-    readarr = {
-      #enable = true;
-      #openFirewall = true;
-    };
+    # readarr = {
+    #   enable = true;
+    #   openFirewall = true;
+    # };
     homepage-dashboard = {
       enable = true;
       enableNginx = true;
     };
-    thelounge = {
-      enable = true;
-      openFirewall = true;
-    };
+    # thelounge = {
+    #   enable = true;
+    #   openFirewall = true;
+    # };
     plex = {
       enable = true;
       openFirewall = true;
