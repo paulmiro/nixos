@@ -54,7 +54,6 @@ in
         bun
         nodejs
         nodePackages.pnpm
-        nodePackages.eas-cli
       ];
     })
     (mkIf cfg.lua {
