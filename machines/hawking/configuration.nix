@@ -77,12 +77,16 @@
       hardwareTranscoding = "vaapi";
     };
 
-    # minecraft-servers = {
-    #   ftb-skies = {
-    #     enable = true;
-    #     enableDyndns = true;
-    #   };
-    # };
+    minecraft-servers = {
+      # ftb-skies = {
+      #   enable = true;
+      #   enableDyndns = true;
+      # };
+      vanilla = {
+        enable = true;
+        enableDyndns = true;
+      };
+    };
   };
 
   imports = [

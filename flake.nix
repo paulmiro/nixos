@@ -70,6 +70,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-minecraft.url = "github:Infinidoge/nix-minecraft";
+
   };
 
   outputs = { self, ... }@inputs:
@@ -134,6 +136,7 @@
               authentik-nix.nixosModules.default
               nixos-wsl.nixosModules.default
               grub2-themes.nixosModules.default
+              nix-minecraft.nixosModules.minecraft-servers
               (import "${./.}/machines/${x}/configuration.nix" { inherit self; })
               { imports = builtins.attrValues self.nixosModules; }
             ];
