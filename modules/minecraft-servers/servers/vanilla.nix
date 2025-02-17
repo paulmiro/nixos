@@ -32,7 +32,12 @@ let cfg = config.paul.minecraft-servers.vanilla; in
           openFirewall = true;
           autoStart = true;
 
-          #serverProperties = { /* */ };
+          serverProperties = {
+            enforce-secure-profile = false; # turns off message signing
+            enforce-whitelist = true;
+            spawn-protection = 0;
+          };
+
           #whitelist = { /* */ };
 
         };
