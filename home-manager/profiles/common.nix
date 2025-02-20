@@ -33,6 +33,7 @@ with lib;
       pwgen
       ripgrep
       sops
+      tmux
       unzip
       usbutils
       zellij
