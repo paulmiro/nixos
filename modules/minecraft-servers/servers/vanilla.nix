@@ -22,8 +22,6 @@ let cfg = config.paul.minecraft-servers.vanilla; in
     services.minecraft-servers = {
       enable = true;
       eula = true;
-
-      # package = pkgs.minecraft-server-1-12;
       dataDir = "/var/lib/minecraft-servers";
 
       servers = {
