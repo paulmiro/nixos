@@ -13,6 +13,7 @@ let cfg = config.paul.minecraft-servers.vanilla; in
   };
 
   config = mkIf cfg.enable {
+    users.users.paulmiro.extraGroups = [ "minecraft" ];
     nixpkgs.overlays = [ nix-minecraft.overlay ];
     paul.dyndns = mkIf cfg.enableDyndns {
       enable = true;
