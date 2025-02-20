@@ -32,10 +32,6 @@ let cfg = config.paul.minecraft-servers.vanilla; in
           package = pkgs.paperServers.paper-1_21_4;
           openFirewall = true;
           autoStart = true;
-
-
-          #whitelist = { /* */ };
-
         };
       };
     };
