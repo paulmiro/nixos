@@ -148,9 +148,19 @@
     };
   };
 
+  services.nginx.virtualHosts."drop.${config.paul.private.domains.base}" = {
+    enableACME = true;
+    forceSSL = true;
+    locations."/" = {
+      proxyPass = "http://192.168.178.222:45301";
+      geo-ip = true;
+    };
+  };
+
   paul.dyndns.domains = [
     config.paul.private.domains.egg
     config.paul.private.domains.filebrowser
+    "drop.${config.paul.private.domains.base}"
   ];
 
   # This value determines the NixOS release from which the default
