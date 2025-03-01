@@ -40,6 +40,7 @@ let cfg = config.paul.minecraft-servers.vanilla; in
           package = pkgs.paperServers.paper-1_21_4;
           openFirewall = true;
           autoStart = true;
+          jvmOpts = "-Xms4G -Xmx5G";
 
           symlinks = {
             "plugins/bluemap-5.5-paper.jar" = pkgs.fetchurl {
