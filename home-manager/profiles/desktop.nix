@@ -27,6 +27,7 @@ with lib;
 
     # Install these packages for my user
     home.packages = with pkgs; [
+      anki
       audacity
       diebahn
       discord
@@ -44,6 +45,7 @@ with lib;
       obs-studio
       obsidian
       oneko
+      onlyoffice-bin
       pomodoro-gtk
       protonmail-bridge
       prusa-slicer
