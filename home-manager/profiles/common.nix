@@ -22,6 +22,7 @@ with lib;
     # Install these packages for my user
     home.packages = with pkgs; [
       asciinema
+      croc
       dnsutils
       glances
       neofetch
