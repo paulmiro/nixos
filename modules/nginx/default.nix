@@ -24,6 +24,12 @@ in
       recommendedOptimisation = true;
       recommendedProxySettings = true;
       recommendedTlsSettings = true;
+      commonHttpConfig = ''
+        map $scheme $hsts_header {
+          https "max-age=31536000; includeSubdomains; -preload";
+        }
+        add_header Strict-Transport-Security $hsts_header;
+      '';
       virtualHosts."${cfg.defaultDomain}" = {
         enableACME = true;
         forceSSL = true;
