@@ -36,7 +36,7 @@ with lib;
       gnome-graphs
       gparted
       inkscape
-      #jellyfin-mpv-shim # build broken currently
+      jellyfin-mpv-shim
       krita
       libreoffice
       mattermost-desktop
@@ -49,7 +49,7 @@ with lib;
       pomodoro-gtk
       protonmail-bridge
       prusa-slicer
-      #orca-slicer # build broken currently
+      orca-slicer
       rnote
       signal-desktop
       sl
