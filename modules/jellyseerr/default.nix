@@ -34,18 +34,6 @@ in
       paul.radarr.enable = true;
 
 
-      # TODO: remove when 380532 is merged
-      nixpkgs.overlays = [
-        (final: prev: {
-          jellyseerr = prev.jellyseerr.overrideAttrs {
-            postBuild = ''
-              # Clean up broken symlinks left behind by `pnpm prune`
-              find node_modules -type l ! -exec test -e {} \; -delete
-            '';
-          };
-        })
-      ];
-
       services.jellyseerr = {
         enable = true;
         port = cfg.port;
