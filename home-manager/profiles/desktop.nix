@@ -32,7 +32,7 @@ with lib;
       diebahn
       discord
       element-desktop
-      errands
+      #errands
       gnome-graphs
       gparted
       inkscape
