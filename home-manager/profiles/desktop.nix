@@ -32,7 +32,7 @@ with lib;
       diebahn
       discord
       element-desktop
-      #errands
+      #errands # TODO build temporarily broken
       gnome-graphs
       gparted
       inkscape

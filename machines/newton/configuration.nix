@@ -64,7 +64,7 @@
   boot.supportedFilesystems = [ "ntfs" ];
 
   services.tailscale = {
-    enable = true; #TODO: tailscale up needs to be run manually once to log in
+    enable = true;
     useRoutingFeatures = "client";
     extraUpFlags = [ "--accept-routes" "--operator=paulmiro" ];
   };

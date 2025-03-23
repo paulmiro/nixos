@@ -38,7 +38,7 @@ in
         enable = true;
         port = cfg.port;
         openFirewall = cfg.openFirewall;
-        configDir = "/var/lib/jellyseerr"; # TODO: remove when it's the default again (373533)
+        configDir = "/var/lib/jellyseerr"; # TODO remove when it's the default again (373533)
       };
 
     }
