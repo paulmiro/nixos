@@ -31,7 +31,6 @@ in
         grub2-theme = {
           enable = true;
           theme = "sicher";
-          footer = true;
         };
       };
       tmp.cleanOnBoot = true;
