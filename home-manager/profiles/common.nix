@@ -35,6 +35,7 @@ with lib;
       ripgrep
       sops
       tmux
+      unixtools.xxd
       unzip
       usbutils
       zellij

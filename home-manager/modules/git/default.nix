@@ -26,7 +26,6 @@ in
       pre-commit
       git-crypt
       transcrypt
-      unixtools.xxd
     ];
 
   };
