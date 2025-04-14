@@ -15,7 +15,7 @@ let cfg = config.paul.programs.zsh; in
       enableCompletion = true;
       dotDir = ".config/zsh";
 
-      sessionVariables = { ZDOTDIR = "/home/paulmiro/.config/zsh"; };
+      sessionVariables = { ZDOTDIR = "$HOME/.config/zsh"; };
 
       initExtra = ''
         bindkey "^[[1;5C" forward-word

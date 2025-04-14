@@ -29,6 +29,7 @@ in
         system-config = config;
       };
       users.paulmiro = flake-self.homeConfigurations.server;
+      users.root = flake-self.homeConfigurations.server;
     };
 
   };
