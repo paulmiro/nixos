@@ -5,6 +5,9 @@ let cfg = config.paul.programs.zsh; in
   options.paul.programs.zsh.enable = mkEnableOption "enable zsh";
 
   config = mkIf cfg.enable {
+    paul.programs.starship.enable = true;
+
+    home.shell.enableZshIntegration = true;
 
     programs.zsh = {
       enable = true;
@@ -72,15 +75,7 @@ let cfg = config.paul.programs.zsh; in
       };
     };
 
-    programs.zsh.oh-my-zsh = {
-      enable = true;
-      theme = "agnoster";
-    };
-
-    programs.dircolors = {
-      enable = true;
-      enableZshIntegration = true;
-    };
+    programs.dircolors.enable = true;
 
     programs.htop = {
       enable = true;
@@ -97,7 +92,6 @@ let cfg = config.paul.programs.zsh; in
 
     programs.zoxide = {
       enable = true;
-      enableZshIntegration = true;
       options = [ "--cmd cd" ];
     };
   };
