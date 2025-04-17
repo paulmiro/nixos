@@ -29,10 +29,8 @@ with lib;
     home.packages = with pkgs; [
       anki
       audacity
-      diebahn
       discord
       element-desktop
-      #errands # TODO build temporarily broken
       gnome-graphs
       gparted
       inkscape
@@ -47,7 +45,6 @@ with lib;
       oneko
       onlyoffice-bin
       pomodoro-gtk
-      protonmail-bridge
       prusa-slicer
       orca-slicer
       rnote
@@ -58,12 +55,10 @@ with lib;
       textpieces
       thunderbird-bin
       tor-browser
-      transgui
       ungoogled-chromium
       whatsapp-for-linux
       vdhcoapp
       xournalpp
-      zed-editor
       zoom-us
 
       flake-self.inputs.zen-browser.packages.${system}.default
