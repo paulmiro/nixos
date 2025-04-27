@@ -22,6 +22,9 @@ let cfg = config.paul.programs.starship; in
           directory = {
             truncation_length = 10;
             truncation_symbol = "⋯/";
+            substitutions = {
+              "/run/media/${config.home.username}" = "󰕓";
+            };
           };
         };
     };
