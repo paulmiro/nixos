@@ -10,7 +10,7 @@ let cfg = config.paul.programs.starship; in
       settings =
         (builtins.fromTOML (builtins.readFile (pkgs.fetchurl {
           url = "https://starship.rs/presets/toml/no-runtime-versions.toml";
-          sha256 = "1s0503g44phc1lh9f804ppkgvh9xlvnqjizy1nlx5dm8igw9kfqp";
+          hash = "sha256-eUOdNK/941Kf5frs6G2TntRAcAisN8v1PrbVGMP11oY=";
         }))) //
         {
           hostname = {
