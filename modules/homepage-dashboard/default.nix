@@ -143,7 +143,7 @@ in
                 "Uptime Kuma" = [{
                   abbr = "UK";
                   icon = "uptime-kuma.png";
-                  href = "http://uptime-kuma:3001";
+                  href = "https://morse:3001";
                   description = "Uptime Kuma";
                 }];
               }
