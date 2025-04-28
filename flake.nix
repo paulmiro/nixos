@@ -137,6 +137,7 @@
               nixos-wsl.nixosModules.default
               grub2-themes.nixosModules.default
               nix-minecraft.nixosModules.minecraft-servers
+              disko.nixosModules.disko
               (import "${./.}/machines/${x}/configuration.nix" { inherit self; })
               { imports = builtins.attrValues self.nixosModules; }
             ];
