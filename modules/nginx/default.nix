@@ -1,6 +1,8 @@
 { lib, pkgs, config, ... }:
 with lib;
-let cfg = config.paul.nginx;
+let
+  cfg = config.paul.nginx;
+  hasDefaultDomain = (cfg.defaultDomain != "default");
 in
 {
 
@@ -8,7 +10,7 @@ in
     enable = mkEnableOption "activate nginx";
     defaultDomain = mkOption {
       type = types.str;
-      default = "teapot.${config.paul.private.domains.base}";
+      default = "default";
       description = "The default domain to use for the nginx configuration";
     };
   };
@@ -31,8 +33,8 @@ in
         add_header Strict-Transport-Security $hsts_header;
       '';
       virtualHosts."${cfg.defaultDomain}" = {
-        enableACME = true;
-        forceSSL = true;
+        enableACME = mkIf hasDefaultDomain true;
+        forceSSL = mkIf hasDefaultDomain true;
         default = true;
         locations."/" = {
           return = "418"; # I'm a teapot
@@ -47,6 +49,6 @@ in
       # Wait for 10 seconds to have the dns record up by the time the acme service runs
       serviceConfig.ExecStartPre = "${pkgs.coreutils}/bin/sleep 10";
     };
-    paul.dyndns.domains = [ cfg.defaultDomain ];
+    paul.dyndns.domains = mkIf hasDefaultDomain [ cfg.defaultDomain ];
   };
 }

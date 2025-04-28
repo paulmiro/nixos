@@ -12,8 +12,11 @@
     systemd-boot.enable = true;
     #nvidia.enable = true;
 
-    nginx.enable = true;
-    nginx.enableGeoIP = true;
+    nginx = {
+      enable = true;
+      enableGeoIP = true;
+      defaultDomain = "teapot.${config.paul.private.domains.base}";
+    };
 
     # Exposed Services
     authentik = {
