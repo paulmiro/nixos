@@ -65,9 +65,6 @@ in
       allowedTCPPorts = [ 25565 ];
     };
 
-    paul.dyndns = mkIf cfg.enableDyndns {
-      enable = true;
-      domains = [ cfg.domain ];
-    };
+    paul.dyndns.domains = mkIf cfg.enableDyndns [ cfg.domain ];
   };
 }

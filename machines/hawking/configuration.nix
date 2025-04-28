@@ -5,12 +5,8 @@
   services.qemuGuest.enable = true;
 
   paul = {
-
-
-
     common-server.enable = true;
     systemd-boot.enable = true;
-    #nvidia.enable = true;
 
     nginx = {
       enable = true;
@@ -107,8 +103,6 @@
     tempAddresses = "disabled";
     firewall = {
       allowedTCPPorts = [
-        80 # http
-        443 # https
         19999 # netdata
       ];
     };

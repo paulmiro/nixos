@@ -73,10 +73,7 @@ in
 
     (mkIf cfg.enableNginx {
       paul.nginx.enable = true;
-      paul.dyndns = mkIf cfg.enableDyndns {
-        enable = true;
-        domains = [ cfg.domain ];
-      };
+      paul.dyndns.domains = mkIf cfg.enableDyndns [ cfg.domain ];
 
       services.nginx.virtualHosts."${cfg.domain}" = {
         enableACME = true;

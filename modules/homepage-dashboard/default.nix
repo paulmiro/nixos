@@ -369,10 +369,9 @@ in
           geo-ip = true;
         };
       };
-      paul.dyndns = {
-        enable = true;
-        domains = [ cfg.domain ];
-      };
+
+      paul.dyndns.domains = [ cfg.domain ];
+
     })]);
 
 }

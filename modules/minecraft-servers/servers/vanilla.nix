@@ -15,10 +15,7 @@ let cfg = config.paul.minecraft-servers.vanilla; in
   config = mkIf cfg.enable {
     users.users.paulmiro.extraGroups = [ "minecraft" ];
     nixpkgs.overlays = [ nix-minecraft.overlay ];
-    paul.dyndns = mkIf cfg.enableDyndns {
-      enable = true;
-      domains = [ cfg.domain ];
-    };
+    paul.dyndns.domains = mkIf cfg.enableDyndns [ cfg.domain ];
 
     services.nginx.virtualHosts."${cfg.domain}" = {
       enableACME = true;

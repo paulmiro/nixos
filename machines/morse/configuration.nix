@@ -22,10 +22,7 @@
     hostName = "morse";
     tempAddresses = "disabled";
     firewall = {
-      allowedTCPPorts = [
-        #80 # http
-        #443 # https
-      ];
+      allowedTCPPorts = [ ];
     };
   };
 
