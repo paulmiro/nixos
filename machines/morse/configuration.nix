@@ -4,10 +4,18 @@
   paul = {
     common-server.enable = true;
 
+    nginx = {
+      enable = true;
+    };
+
     uptime-kuma = {
       enable = true;
       openFirewall = true;
     };
+
+    microsocks.enable = true;
+    microsocks.openFirewall = true;
+
   };
 
   imports = [
