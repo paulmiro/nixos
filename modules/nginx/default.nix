@@ -26,7 +26,7 @@ in
     security.acme.defaults.email = config.paul.private.emails.proton;
     security.acme.acceptTerms = true;
 
-    networking.firewall.allowedTCPPorts = mkIf cfg.openFirewall [ 80 433 ];
+    networking.firewall.allowedTCPPorts = mkIf cfg.openFirewall [ 80 443 ];
 
     services.nginx = {
       enable = true;
