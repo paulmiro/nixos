@@ -81,6 +81,7 @@ in
             map $geoip2_data_country_iso_code $allowed_country {
               default no;
               DE yes;
+              AT yes; # for some reason morse gets identified as austria
               ES yes;
               FR yes;
               GB yes;
@@ -88,7 +89,6 @@ in
               NL yes;
               JP yes;
               LU yes;
-              NA yes; # Namibia, für Joshua
               US yes;
             }
           ''
