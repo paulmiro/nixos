@@ -3,6 +3,11 @@
 {
   paul = {
     common-server.enable = true;
+
+    uptime-kuma = {
+      enable = true;
+      openFirewall = true;
+    };
   };
 
   imports = [
