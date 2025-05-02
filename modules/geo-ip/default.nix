@@ -51,9 +51,8 @@ in
 
     # this breaks on first deploy, because the user does not exist yet
     # to fix this, three steps are needed:
-    # 1. delploy only the user config
-    # 2. deploy only the secret (perhaps by activating this module entirely and using {hostname}:deploy-secrets)
-    # 3. deploy the full config
+    # 1. comment out this secrets block and deploy, ignore the error
+    # 2. uncomment and deploy again
     lollypops.secrets.files."maxmind-license-key" = {
       cmd = "rbw get maxmind-license-key";
       path = cfg.licenseKeyFile;
