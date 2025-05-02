@@ -26,11 +26,6 @@ in
           hostname = "morse";
           user = "paulmiro";
         };
-        "morse-old" = {
-          # TODO remove
-          hostname = "morse-ssh.duckdns.org";
-          user = "root";
-        };
         "uni" = {
           hostname = "login-stud.informatik.uni-bonn.de";
           user = "rohdep0";
