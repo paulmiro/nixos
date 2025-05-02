@@ -6,11 +6,12 @@
 
     nginx = {
       enable = true;
+      enableGeoIP = true;
     };
 
     uptime-kuma = {
       enable = true;
-      openFirewall = true;
+      enableNginx = true;
     };
 
     microsocks.enable = true;
