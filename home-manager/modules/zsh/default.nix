@@ -72,6 +72,10 @@ let cfg = config.paul.programs.zsh; in
 
         # Other
         lsblk = "${pkgs.util-linux}/bin/lsblk -o name,mountpoint,label,size,type,uuid";
+
+        # important
+
+        uwu = "sudo";
       };
     };
 
@@ -93,6 +97,17 @@ let cfg = config.paul.programs.zsh; in
     programs.zoxide = {
       enable = true;
       options = [ "--cmd cd" ];
+    };
+
+    programs.lsd = {
+      enable = true;
+      # enableAliases = true;
+      settings = {
+        blocks = [ "permission" "links" "user" "group" "size" "date" "git" "name" ];
+        date = "+%Y-%m-%d %H:%M";
+        indicators = true;
+        hyperlink = "auto";
+      };
     };
   };
 }
