@@ -73,9 +73,16 @@ let cfg = config.paul.programs.zsh; in
         # Other
         lsblk = "${pkgs.util-linux}/bin/lsblk -o name,mountpoint,label,size,type,uuid";
 
+        # general
+
+        q = "exit";
+        r = "${pkgs.trashy}/bin/trashy";
+
         # important
 
         uwu = "sudo";
+        please = "sudo";
+        cope = "code";
       };
     };
 
