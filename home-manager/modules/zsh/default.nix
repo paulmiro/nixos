@@ -106,6 +106,10 @@ let cfg = config.paul.programs.zsh; in
       options = [ "--cmd cd" ];
     };
 
+    programs.bat.enable = true;
+
+    programs.btop.enable = true;
+
     programs.lsd = {
       enable = true;
       # enableAliases = true;
