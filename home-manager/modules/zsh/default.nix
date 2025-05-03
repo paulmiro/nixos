@@ -70,6 +70,15 @@ let cfg = config.paul.programs.zsh; in
         # show journalctl logs for a service
         logs = "${pkgs.systemd}/bin/journalctl -feau";
 
+        ## lsd
+
+        l = "lsd -1";
+        ll = "lsd -l";
+        la = "lsd -lA";
+        lla = "lsd -lA";
+        lt = "lsd --tree";
+        lta = "lsd -A --tree";
+
         ## Default Parameters
 
         lsblk = "${pkgs.util-linux}/bin/lsblk -o name,mountpoint,label,size,type,uuid";
@@ -116,7 +125,6 @@ let cfg = config.paul.programs.zsh; in
       # cooler ls
       lsd = {
         enable = true;
-        # enableAliases = true;
         settings = {
           blocks = [ "permission" "links" "user" "group" "size" "date" "git" "name" ];
           date = "+%Y-%m-%d %H:%M";
