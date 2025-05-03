@@ -78,7 +78,7 @@ let cfg = config.paul.programs.zsh; in
 
         c = "code .";
         q = "exit";
-        r = "${pkgs.trashy}/bin/trashy";
+        r = "${pkgs.trashy}/bin/trash";
 
         ## Important
 
