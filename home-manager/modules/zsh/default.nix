@@ -48,7 +48,7 @@ let cfg = config.paul.programs.zsh; in
       ];
 
       shellAliases = {
-        # nix
+        ## Nix
 
         # switching within a flake repository
         frb = "${pkgs.nixos-rebuild}/bin/nixos-rebuild --use-remote-sudo switch --flake";
@@ -65,20 +65,21 @@ let cfg = config.paul.programs.zsh; in
         # nix-shell
         ns = "nix-shell -p";
 
-        # systemd
+        ## Systemd
 
         # show journalctl logs for a service
         logs = "${pkgs.systemd}/bin/journalctl -feau";
 
-        # Other
+        ## Default Parameters
+
         lsblk = "${pkgs.util-linux}/bin/lsblk -o name,mountpoint,label,size,type,uuid";
 
-        # general
+        # General Purpose
 
         q = "exit";
         r = "${pkgs.trashy}/bin/trashy";
 
-        # important
+        ## Important
 
         uwu = "sudo";
         please = "sudo";
@@ -86,38 +87,47 @@ let cfg = config.paul.programs.zsh; in
       };
     };
 
-    programs.dircolors.enable = true;
+    programs = {
+      # cooler cat
+      bat.enable = true;
 
-    programs.htop = {
-      enable = true;
-      settings = {
-        show_cpu_frequency = true;
-        show_cpu_temperature = true;
-        show_cpu_usage = true;
-        show_program_path = true;
-        tree_view = false;
+      # cooler htop
+      btop.enable = true;
+
+      # dir colors for ls and lsd
+      dircolors.enable = true;
+
+      # cooler top
+      htop = {
+        enable = true;
+        settings = {
+          show_cpu_frequency = true;
+          show_cpu_temperature = true;
+          show_cpu_usage = true;
+          show_program_path = true;
+          tree_view = false;
+        };
       };
-    };
 
-    programs.jq.enable = true;
+      # json processor
+      jq.enable = true;
 
-    programs.zoxide = {
-      enable = true;
-      options = [ "--cmd cd" ];
-    };
+      # cooler ls
+      lsd = {
+        enable = true;
+        # enableAliases = true;
+        settings = {
+          blocks = [ "permission" "links" "user" "group" "size" "date" "git" "name" ];
+          date = "+%Y-%m-%d %H:%M";
+          indicators = true;
+          hyperlink = "auto";
+        };
+      };
 
-    programs.bat.enable = true;
-
-    programs.btop.enable = true;
-
-    programs.lsd = {
-      enable = true;
-      # enableAliases = true;
-      settings = {
-        blocks = [ "permission" "links" "user" "group" "size" "date" "git" "name" ];
-        date = "+%Y-%m-%d %H:%M";
-        indicators = true;
-        hyperlink = "auto";
+      # cooler cd
+      zoxide = {
+        enable = true;
+        options = [ "--cmd cd" ];
       };
     };
   };
