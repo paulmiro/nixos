@@ -130,6 +130,7 @@ let cfg = config.paul.programs.zsh; in
         # and I prefer different shortcuts for some functions
         enableZshIntegration = false;
         settings = {
+          icons.when = "never";
           blocks = [ "permission" "links" "user" "group" "size" "date" "git" "name" ];
           date = "+%Y-%m-%d %H:%M";
           indicators = true;
