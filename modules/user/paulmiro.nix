@@ -14,6 +14,7 @@ in
       description = "Paul";
       extraGroups = [ "networkmanager" "wheel" ];
       shell = mkIf config.programs.zsh.enable pkgs.zsh;
+      initialHashedPassword = config.paul.private.hashed-password-paulmiro;
       openssh.authorizedKeys.keyFiles = [
         (pkgs.fetchurl {
           url = "https://github.com/paulmiro.keys";
