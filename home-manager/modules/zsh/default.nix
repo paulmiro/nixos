@@ -17,7 +17,7 @@ let cfg = config.paul.programs.zsh; in
 
       sessionVariables = { ZDOTDIR = "$HOME/.config/zsh"; };
 
-      initExtra = ''
+      initContent = ''
         bindkey "^[[1;5C" forward-word
         bindkey "^[[1;5D" backward-word
       '';
