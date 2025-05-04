@@ -125,6 +125,10 @@ let cfg = config.paul.programs.zsh; in
       # cooler ls
       lsd = {
         enable = true;
+        # currently this option only sets default aliases
+        # I'm turning it off because I don't want to override "ls"
+        # and I prefer different shortcuts for some functions
+        enableZshIntegration = false;
         settings = {
           blocks = [ "permission" "links" "user" "group" "size" "date" "git" "name" ];
           date = "+%Y-%m-%d %H:%M";
