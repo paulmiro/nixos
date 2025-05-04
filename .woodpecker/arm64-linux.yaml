@@ -18,6 +18,7 @@ steps:
       - attic login lounge-rocks https://cache.lounge.rocks $ATTIC_KEY --set-default
     secrets:
       - attic_key
+
   - name: Build pi4b
     image: bash
     commands:
@@ -30,3 +31,16 @@ steps:
     image: bash
     commands:
       - attic push lounge-rocks:nix-cache 'result-pi4b'
+
+  - name: Build pi3a
+    image: bash
+    commands:
+      - nix build --print-out-paths '.#nixosConfigurations.pi3a.config.system.build.toplevel' -o 'result-pi3a'
+  - name: Show pi3a info
+    image: bash
+    commands:
+      - nix path-info --closure-size -h $(readlink -f 'result-pi3a')
+  - name: Push pi3a to Attic
+    image: bash
+    commands:
+      - attic push lounge-rocks:nix-cache 'result-pi3a'
