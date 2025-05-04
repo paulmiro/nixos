@@ -3,7 +3,9 @@
 # to build the SD image:
 # nix build .\#nixosConfigurations.pi3a.config.system.build.sdImage
 { self, ... }:
-{ pkgs, lib, config, modulesPath, flake-self, home-manager, nixos-hardware, nixpkgs, ... }: {
+{ pkgs, lib, config, modulesPath, flake-self, home-manager, nixos-hardware, nixpkgs, ... }:
+let private = config.paul.private; in
+{
 
   paul = {
     common-server.enable = true;
@@ -29,7 +31,10 @@
 
   networking = {
     hostName = "pi3a";
-    networkmanager.enable = true;
+    networkmanager.enable = false;
+    wireless.networks = {
+      "${private.networks.gndv.ssid}".psk = private.networks.gndv.psk;
+    };
   };
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
