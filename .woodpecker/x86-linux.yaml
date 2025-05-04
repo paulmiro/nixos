@@ -22,6 +22,7 @@ steps:
       - attic login lounge-rocks https://cache.lounge.rocks $ATTIC_KEY --set-default
     secrets:
       - attic_key
+
   - name: Build hawking
     image: bash
     commands:
@@ -34,6 +35,7 @@ steps:
     image: bash
     commands:
       - attic push lounge-rocks:nix-cache 'result-hawking'
+
   - name: Build newton
     image: bash
     commands:
@@ -46,3 +48,16 @@ steps:
     image: bash
     commands:
       - attic push lounge-rocks:nix-cache 'result-newton'
+
+  - name: Build morse
+    image: bash
+    commands:
+      - nix build --print-out-paths '.#nixosConfigurations.morse.config.system.build.toplevel' -o 'result-morse'
+  - name: Show morse info
+    image: bash
+    commands:
+      - nix path-info --closure-size -h $(readlink -f 'result-morse')
+  - name: Push morse to Attic
+    image: bash
+    commands:
+      - attic push lounge-rocks:nix-cache 'result-morse'
