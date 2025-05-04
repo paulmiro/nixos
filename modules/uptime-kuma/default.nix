@@ -36,11 +36,11 @@ let cfg = config.paul.uptime-kuma; in
       networking.firewall.interfaces.tailscale0.allowedTCPPorts = lib.mkIf cfg.openTailscaleFirewall [ cfg.port ];
     }
 
-    (lib.mkIf cfg.enablePublicNginx {
+    (lib.mkIf cfg.enableNginx {
       paul.nginx.enable = true;
-      paul.dyndns.domains = [ cfg.publicDomain ];
+      paul.dyndns.domains = [ cfg.domain ];
 
-      services.nginx.virtualHosts."${cfg.publicDomain}" = {
+      services.nginx.virtualHosts."${cfg.domain}" = {
         enableACME = true;
         forceSSL = true;
         locations."/" = {
