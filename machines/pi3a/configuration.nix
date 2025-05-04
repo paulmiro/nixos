@@ -1,7 +1,3 @@
-# to remotely deploy while building on your system:
-# nixos-rebuild switch --flake '.#pi3a' --target-host 'root@192.182.X.X' -L 
-# to build the SD image:
-# nix build .\#nixosConfigurations.pi3a.config.system.build.sdImage
 { self, ... }:
 { pkgs, lib, config, modulesPath, flake-self, home-manager, nixos-hardware, nixpkgs, ... }:
 let private = config.paul.private; in
@@ -15,11 +11,9 @@ let private = config.paul.private; in
     # being able to build the sd-image
     "${modulesPath}/installer/sd-card/sd-image-aarch64.nix"
 
-    # https://github.com/NixOS/nixos-hardware/tree/master/raspberry-pi/4
+    # https://github.com/NixOS/nixos-hardware/tree/master/raspberry-pi/3
     nixos-hardware.nixosModules.raspberry-pi-3
   ];
-
-  ### build sd-image
 
   # nix build .\#nixosConfigurations.pi3a.config.system.build.sdImage
   # add boot.binfmt.emulatedSystems = [ "aarch64-linux" ]; to your x86 system
@@ -27,15 +21,17 @@ let private = config.paul.private; in
   sdImage.compressImage = false;
   sdImage.imageBaseName = "raspi-image";
 
-
-
   networking = {
     hostName = "pi3a";
     networkmanager.enable = false;
+    wireless.enable = true;
     wireless.networks = {
       "${private.networks.gndv.ssid}".psk = private.networks.gndv.psk;
     };
   };
+
+  # Configure console keymap
+  console.keyMap = "de";
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 
