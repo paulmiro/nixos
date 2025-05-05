@@ -26,6 +26,15 @@ in
       ipv4 = true;
       ipv6 = false;
       domains = cfg.domains;
+      # TODO remove this when kissgyorgy/cloudflare-dyndns/pull/41 is merged
+      package = (pkgs.cloudflare-dyndns.overrideAttrs (old: {
+        src = pkgs.fetchFromGitHub {
+          owner = "paulmiro";
+          repo = "cloudflare-dyndns";
+          rev = "df8240502db79c54564e01a25e468189a2494d06";
+          sha256 = "sha256-jLmGPwCcIJLNw+XgjYfkFhHfzIRtLArjt8WiHKqYR2s=";
+        };
+      }));
     };
 
     lollypops.secrets.files."cloudflare-api-token" = {
