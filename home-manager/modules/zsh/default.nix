@@ -84,8 +84,9 @@ let cfg = config.paul.programs.zsh; in
         lsblk = "${pkgs.util-linux}/bin/lsblk -o name,mountpoint,label,size,type,uuid";
 
         # General Purpose
-
-        c = "code .";
+	
+	c = "clear";
+        v = "code .";
         q = "exit";
         r = "${pkgs.trashy}/bin/trash";
 
