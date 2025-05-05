@@ -5,7 +5,6 @@ with lib;
     paul = {
       programs.gnome-settings.enable = true;
       programs.vscode.enable = true;
-      programs.rbw.enable = true;
       programs.ghostty.enable = true;
 
       programs.development = {

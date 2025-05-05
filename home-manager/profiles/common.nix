@@ -8,6 +8,7 @@ with lib;
       programs.git.enable = true;
       programs.ssh.enable = true;
       programs.zsh.enable = true;
+      programs.rbw.enable = true;
       nixpkgs-config.enable = true;
     };
 
