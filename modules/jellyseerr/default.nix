@@ -56,15 +56,43 @@ in
         };
       };
 
-      # this domain is deprecated and only kept here to give my users some time to switch over
-      services.nginx.virtualHosts."${config.paul.private.domains.jellyseerr_old}" = {
-        enableACME = true;
-        forceSSL = true;
-        locations."/" = {
-          return = "301 https://${cfg.domain}";
-          geo-ip = true;
+      # TODO: remove (changed from 301 to 410 on 2025-05-06)
+      services.nginx.virtualHosts."${config.paul.private.domains.jellyseerr_old}" =
+        let
+          web-root-dir = pkgs.writeTextFile {
+            name = "web-root";
+            text = ''
+              <!DOCTYPE html>
+              <html>
+              <head><meta charset="utf-8"/></head>
+              <body style="font-family: sans-serif; color: #ddd; background-color: #111">
+                <div style="text-align: center; margin-top: 20%">
+                  <p style="font-size: 5em; margin: 0">🚧</p>
+                  <h1>Page has been moved</h1>
+                  <p>The page you are looking for is now accessible at <a style="color: #a75ebd" href="https://${cfg.domain}">${cfg.domain}</a></p>
+                  <p>Please update your bookmarks.</p>
+                  <p style="font-size: 5em; margin: 0">🚧</p>
+                </div>
+              </body>
+              </html>
+            '';
+            destination = "/errors/410.html";
+          };
+        in
+        {
+          enableACME = true;
+          forceSSL = true;
+          root = "${web-root-dir}";
+          extraConfig = ''
+            error_page 410 /errors/410.html;
+          '';
+          locations."/" = {
+            return = "410";
+          };
+          locations."/errors/" = {
+            root = "${web-root-dir}";
+          };
         };
-      };
     })
 
   ]);
