@@ -26,12 +26,12 @@ in
       ipv4 = true;
       ipv6 = false;
       domains = cfg.domains;
-      # TODO remove this when kissgyorgy/cloudflare-dyndns/pull/41 is merged
+      # TODO remove this when a new release (>5.3) is released on nixpkgs-unstable
       package = (pkgs.cloudflare-dyndns.overrideAttrs (old: {
         src = pkgs.fetchFromGitHub {
-          owner = "paulmiro";
+          owner = "kissgyorgy";
           repo = "cloudflare-dyndns";
-          rev = "df8240502db79c54564e01a25e468189a2494d06";
+          rev = "ad970df12e235c7fd473a922f663d912ba7107fc";
           sha256 = "sha256-jLmGPwCcIJLNw+XgjYfkFhHfzIRtLArjt8WiHKqYR2s=";
         };
       }));
