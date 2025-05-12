@@ -85,8 +85,7 @@ let cfg = config.paul.programs.zsh; in
 
         # General Purpose
 	
-	c = "clear";
-        v = "code .";
+        c = "code .";
         q = "exit";
         r = "${pkgs.trashy}/bin/trash";
 
