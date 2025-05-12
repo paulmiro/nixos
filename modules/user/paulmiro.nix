@@ -15,12 +15,7 @@ in
       extraGroups = [ "networkmanager" "wheel" ];
       shell = mkIf config.programs.zsh.enable pkgs.zsh;
       initialHashedPassword = config.paul.private.hashed-password-paulmiro;
-      openssh.authorizedKeys.keyFiles = [
-        (pkgs.fetchurl {
-          url = "https://github.com/paulmiro.keys";
-          hash = "sha256-v+pYtIUN/hXvkWD+eEW1g8iL9DelIQXnDmmCZnvK15g=";
-        })
-      ];
+      openssh.authorizedKeys.keys = config.users.users.root.openssh.authorizedKeys.keys; # looks stupid but does the job
     };
 
     nix.settings = {
