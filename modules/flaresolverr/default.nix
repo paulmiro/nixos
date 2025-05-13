@@ -6,11 +6,7 @@ in
 
   options.paul.flaresolverr = {
     enable = mkEnableOption "activate flaresolverr";
-    openFirewall = mkOption {
-      type = types.bool;
-      default = true;
-      description = "open the firewall for flaresolverr";
-    };
+    openFirewall = mkEnableOption "open the firewall for flaresolverr";
 
     port = mkOption {
       type = types.port;
@@ -19,14 +15,11 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
-    paul.docker.enable = true;
-
-    virtualisation.oci-containers.containers.flaresolverr = {
-      autoStart = true;
-      image = "flaresolverr/flaresolverr";
-      ports = [ "8191:${builtins.toString cfg.port}/tcp" ];
+    config = mkIf cfg.enable {
+    services.flaresolverr = {
+      enable = true;
+      openFirewall = cfg.openFirewall;
+      port = cfg.port;
     };
-
   };
 }
