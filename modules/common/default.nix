@@ -30,18 +30,6 @@ in
       wget
     ];
 
-    lollypops.extraTasks = {
-      rebuild-nosecrets = {
-        desc = "Rebuild without deloying secrets";
-        cmds = [ ];
-        deps = [
-          "check-vars"
-          "deploy-flake"
-          "rebuild"
-        ];
-      };
-    };
-
   };
 
 }

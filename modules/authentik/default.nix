@@ -60,13 +60,8 @@ in
           disable_startup_analytics = true;
           error_reporting.enabled = false;
           avatars = "initials";
-          #storage.media.file.path = "/mnt/nfs/authentik/media"; # defaults to /var/lib/authentik/media
         };
       };
-
-      #paul.nfs-mounts = {
-      #  enableAuthentik = true;
-      #};
 
       networking.firewall.allowedTCPPorts = mkIf cfg.openFirewall [ 9443 ];
 

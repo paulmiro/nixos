@@ -18,8 +18,6 @@
     gaming.enable = true;
   };
 
-  # programs.ssh.askPassword = pkgs.lib.mkForce "${pkgs.x11_ssh_askpass}/libexec/x11-ssh-askpass";
-
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -34,14 +32,6 @@
       plugins = with pkgs; [ networkmanager-openvpn ];
     };
     hostName = "newton";
-  };
-
-
-  services.openvpn.servers = {
-    infoBonnVPN = {
-      config = '' config /home/paulmiro/Downloads/openvpn/uni-info.ovpn '';
-      autoStart = false;
-    };
   };
 
   # disable NetworkManager wait-online
@@ -68,10 +58,7 @@
     useRoutingFeatures = "client";
     extraUpFlags = [ "--accept-routes" "--operator=paulmiro" ];
   };
-  # services.fprintd.enable = true; # does not work yet, no driver available for samsung
-  # services.fprintd.tod.enable = true;
-  # services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix;
-
+  
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
