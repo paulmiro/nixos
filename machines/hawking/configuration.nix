@@ -64,10 +64,6 @@
     #   enable = true;
     #   openFirewall = true;
     # };
-    plex = {
-      enable = true;
-      openFirewall = true;
-    };
 
     # ersatztv = {
     #   enable = true;
