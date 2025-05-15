@@ -17,10 +17,47 @@ let cfg = config.paul.programs.zsh; in
 
       sessionVariables = { ZDOTDIR = "$HOME/.config/zsh"; };
 
-      initContent = ''
-        bindkey "^[[1;5C" forward-word
-        bindkey "^[[1;5D" backward-word
-      '';
+      initContent =
+        let
+          repo-script = pkgs.writeShellScript "repo-script" ''
+            set -euo pipefail
+            if [ -z $1 ]; then
+              >&2 echo "error"
+              echo .
+              exit 1
+            fi
+            if [ $1 == "clone" ]; then
+              if [ -z $2 ]; then
+                >&2 echo "Please specify a repository"
+                echo .
+                exit 1
+              fi
+              REPO_FULL_NAME=$2
+              REPO_OWNER_PATH=~/repos/$(dirname $REPO_FULL_NAME)
+              REPO_FULL_PATH=~/repos/$2
+              mkdir -p $REPO_OWNER_PATH
+              if [ -e $REPO_FULL_PATH ]; then
+                >&2 echo "Path already taken, still cd'ing there..."
+                echo $REPO_FULL_PATH
+                exit 1
+              fi
+              git clone git@github.com:$REPO_FULL_NAME.git $REPO_FULL_PATH
+              echo $REPO_FULL_PATH
+              exit 0
+            fi
+            >&2 echo "Unknown command: " $1
+            echo .
+            exit 1
+          '';
+        in
+        ''
+          bindkey "^[[1;5C" forward-word
+          bindkey "^[[1;5D" backward-word
+
+          function repo () {
+            cd $(${repo-script} $@)
+          }
+        '';
 
       history = {
         expireDuplicatesFirst = true;
@@ -84,7 +121,7 @@ let cfg = config.paul.programs.zsh; in
         lsblk = "${pkgs.util-linux}/bin/lsblk -o name,mountpoint,label,size,type,uuid";
 
         # General Purpose
-	
+
         c = "code .";
         q = "exit";
         r = "${pkgs.trashy}/bin/trash";
