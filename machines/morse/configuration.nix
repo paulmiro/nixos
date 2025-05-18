@@ -14,6 +14,11 @@
       enableNginx = true;
     };
 
+    gotify = {
+      enable = true;
+      enableNginx = true;
+    };
+
     microsocks.enable = true;
     microsocks.openFirewall = true;
 
