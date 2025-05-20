@@ -130,6 +130,8 @@ let cfg = config.paul.programs.zsh; in
 
         uwu = "sudo";
         please = "sudo";
+        sduo = "sudo";
+        suod = "sudo";
         cope = "code";
       };
     };
