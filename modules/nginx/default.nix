@@ -62,7 +62,7 @@ in
     paul.dyndns = mkIf cfg.openFirewall {
       # dyndns is pretty much useless without the opened ports
       enable = true;
-      domains = [ cfg.defaultDomain ];
+      domains = [ cfg.defaultDomain "*.${cfg.defaultDomain}" ];
     };
   };
 }
