@@ -1,7 +1,6 @@
 {
-  lib,
-  pkgs,
   config,
+  lib,
   ...
 }:
 let
@@ -15,10 +14,8 @@ let
       "";
 in
 {
-
   options.paul.ersatztv = with lib; {
     enable = mkEnableOption "activate ersatztv";
-
     openFirewall = mkOption {
       type = types.bool;
       default = true;

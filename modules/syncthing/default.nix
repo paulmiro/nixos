@@ -3,7 +3,6 @@ let
   cfg = config.paul.syncthing;
 in
 {
-
   options.paul.syncthing = {
     enable = lib.mkEnableOption "Enable Syncthing";
   };
@@ -18,7 +17,6 @@ in
       overrideFolders = true; # overrides any folders added or deleted through the WebUI
       openDefaultPorts = true;
       settings = {
-
         devices = {
           "bell" = {
             id = "A7SHOWS-TWZ44IH-IHTFLKW-S6VXXYM-G5PVEHJ-RSMBZIB-O5AFW6B-3QCFHQL";
@@ -27,6 +25,7 @@ in
             id = "GO53PCT-CGJPNMT-NWTGQ5D-REHZFXK-V4P4FRA-EUCLMA7-GB33L5T-ESJLDAQ";
           };
         };
+
         folders = {
           "Obsidian" = {
             # Name of folder in Syncthing, also the folder ID

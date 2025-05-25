@@ -1,14 +1,12 @@
 {
-  lib,
-  pkgs,
   config,
+  lib,
   ...
 }:
 let
   cfg = config.paul.uptime-kuma;
 in
 {
-
   options.paul.uptime-kuma = with lib; {
     enable = mkEnableOption "activate uptime-kuma";
 
@@ -63,5 +61,4 @@ in
 
     ]
   );
-
 }

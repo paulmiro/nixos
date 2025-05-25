@@ -1,17 +1,17 @@
 {
-  lib,
-  pkgs,
   config,
+  lib,
   ...
 }:
 let
   cfg = config.paul.programs.ssh;
 in
 {
-  options.paul.programs.ssh.enable = lib.mkEnableOption "enable ssh";
+  options.paul.programs.ssh = {
+    enable = lib.mkEnableOption "enable ssh";
+  };
 
   config = lib.mkIf cfg.enable {
-
     programs.ssh = {
       enable = true;
       matchBlocks = {

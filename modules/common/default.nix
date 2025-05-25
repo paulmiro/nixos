@@ -1,21 +1,18 @@
 {
-  pkgs,
-  lib,
   config,
-  flake-self,
+  lib,
+  pkgs,
   ...
 }:
 let
   cfg = config.paul.common;
 in
 {
-
   options.paul.common = {
     enable = lib.mkEnableOption "contains configuration that is common to all systems";
   };
 
   config = lib.mkIf cfg.enable {
-
     programs.zsh.enable = true;
 
     paul = {
@@ -28,14 +25,10 @@ in
       };
     };
 
-    # List packages installed in system profile. To search, run:
-    # $ nix search wget
     environment.systemPackages = with pkgs; [
       dnsutils
       git
       wget
     ];
-
   };
-
 }

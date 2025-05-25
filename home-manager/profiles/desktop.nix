@@ -1,9 +1,8 @@
 {
-  pkgs,
-  lib,
-  config,
-  system-config,
   flake-self,
+  lib,
+  pkgs,
+  system-config,
   ...
 }:
 {

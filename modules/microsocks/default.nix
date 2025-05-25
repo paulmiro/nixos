@@ -1,7 +1,6 @@
 {
-  lib,
-  pkgs,
   config,
+  lib,
   ...
 }:
 let
@@ -9,10 +8,8 @@ let
   authPasswordFile = "/run/keys/microsocks-auth-password";
 in
 {
-
   options.paul.microsocks = with lib; {
     enable = mkEnableOption "activate microsocks";
-
     openFirewall = mkEnableOption "open the firewall for microsocks";
 
     port = mkOption {
@@ -50,6 +47,5 @@ in
       path = cfg.authPasswordFile;
       owner = "microsocks";
     };
-
   };
 }

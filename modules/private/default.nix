@@ -9,6 +9,7 @@ in
       is_decrypted = "no";
     };
   };
+
   config.paul.private = lib.mkForce (
     assert lib.assertMsg (data.is_decrypted == "yes") ''
       private.json has not been decrypted!

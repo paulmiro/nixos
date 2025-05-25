@@ -4,14 +4,14 @@
 # nix build .\#nixosConfigurations.pi4b.config.system.build.sdImage
 { self, ... }:
 {
-  pkgs,
-  lib,
   config,
-  modulesPath,
   flake-self,
   home-manager,
+  lib,
+  modulesPath,
   nixos-hardware,
   nixpkgs,
+  pkgs,
   ...
 }:
 {

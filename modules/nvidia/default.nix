@@ -1,7 +1,7 @@
 {
-  pkgs,
   config,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -22,15 +22,14 @@ in
       description = "Bus ID of the Nvidia GPU";
     };
   };
-  config = lib.mkIf cfg.enable {
 
+  config = lib.mkIf cfg.enable {
     # Load nvidia driver for Xorg and Wayland
     services.xserver.videoDrivers = [ "nvidia" ];
 
     environment.systemPackages = with pkgs; [ nvtopPackages.full ];
 
     hardware = {
-
       # Enable OpenGL
       graphics = {
         enable = true;

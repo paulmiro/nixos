@@ -1,14 +1,12 @@
 {
-  lib,
-  pkgs,
   config,
+  lib,
   ...
 }:
 let
   cfg = config.paul.homepage-dashboard;
 in
 {
-
   options.paul.homepage-dashboard = with lib; {
     enable = mkEnableOption "activate homepage";
     openFirewall = mkOption {
@@ -42,6 +40,7 @@ in
           openFirewall = cfg.openFirewall;
           listenPort = cfg.port;
           environmentFile = cfg.environmentFile;
+          allowedHosts = "localhost:8082,127.0.0.1:8082,${cfg.domain}";
 
           settings = {
             # todo use something like for a different image every time "https://source.unsplash.com/1920x1080/?nature,water";

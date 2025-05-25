@@ -1,14 +1,16 @@
 {
+  config,
   lib,
   pkgs,
-  config,
   ...
 }:
 let
   cfg = config.paul.programs.zsh;
 in
 {
-  options.paul.programs.zsh.enable = lib.mkEnableOption "enable zsh";
+  options.paul.programs.zsh = {
+    enable = lib.mkEnableOption "enable zsh configuration";
+  };
 
   config = lib.mkIf cfg.enable {
     paul.programs.starship.enable = true;

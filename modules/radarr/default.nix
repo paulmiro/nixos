@@ -1,14 +1,12 @@
 {
-  lib,
-  pkgs,
   config,
+  lib,
   ...
 }:
 let
   cfg = config.paul.radarr;
 in
 {
-
   options.paul.radarr = {
     enable = lib.mkEnableOption "activate radarr";
     openFirewall = lib.mkEnableOption "allow radarr port in firewall";

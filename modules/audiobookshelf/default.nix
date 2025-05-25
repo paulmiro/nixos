@@ -1,14 +1,12 @@
 {
-  lib,
-  pkgs,
   config,
+  lib,
   ...
 }:
 let
   cfg = config.paul.audiobookshelf;
 in
 {
-
   options.paul.audiobookshelf = with lib; {
     enable = mkEnableOption "activate audiobookshelf";
     openFirewall = mkEnableOption "allow audiobookshelf port in firewall";
@@ -60,8 +58,6 @@ in
 
         };
       })
-
     ]
   );
-
 }

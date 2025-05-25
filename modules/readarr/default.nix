@@ -1,14 +1,12 @@
 {
-  lib,
-  pkgs,
   config,
+  lib,
   ...
 }:
 let
   cfg = config.paul.readarr;
 in
 {
-
   options.paul.readarr = {
     enable = lib.mkEnableOption "activate readarr";
     openFirewall = lib.mkEnableOption "allow readarr port in firewall";

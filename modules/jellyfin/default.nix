@@ -1,17 +1,23 @@
 {
-  pkgs,
-  lib,
   config,
+  lib,
+  pkgs,
   ...
 }:
 let
   cfg = config.paul.jellyfin;
 in
 {
-
   options.paul.jellyfin = with lib; {
     enable = mkEnableOption "activate jellyfin";
+    containerVersion = mkOption {
+      type = types.str;
+      default = "10.10.7";
+      description = "jellyfin version";
+    };
+
     openFirewall = mkEnableOption "open firewall for jellyfin";
+
     enableNginx = mkEnableOption "activate nginx proxy";
     enableDyndns = mkOption {
       type = types.bool;
@@ -26,12 +32,6 @@ in
     };
 
     enableQuickSync = mkEnableOption "enable quicksync";
-
-    containerVersion = mkOption {
-      type = types.str;
-      default = "10.10.7";
-      description = "jellyfin version";
-    };
   };
 
   config = lib.mkIf cfg.enable (
@@ -160,5 +160,4 @@ in
 
     ]
   );
-
 }

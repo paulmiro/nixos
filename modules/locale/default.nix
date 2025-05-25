@@ -1,6 +1,5 @@
 {
   config,
-  pkgs,
   lib,
   ...
 }:
@@ -8,7 +7,6 @@ let
   cfg = config.paul.locale;
 in
 {
-
   options.paul.locale = {
     enable = lib.mkEnableOption "activate locale";
     hardwareClockInLocalTime = lib.mkOption {
@@ -18,14 +16,11 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-
-    # Set your time zone.
     time = {
       timeZone = "Europe/Berlin";
       hardwareClockInLocalTime = cfg.hardwareClockInLocalTime;
     };
 
-    # Select internationalisation properties.
     i18n.defaultLocale = "en_US.UTF-8";
 
     i18n.extraLocaleSettings = {
@@ -39,7 +34,5 @@ in
       LC_TELEPHONE = "de_DE.UTF-8";
       LC_TIME = "de_DE.UTF-8";
     };
-
   };
-
 }

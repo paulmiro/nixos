@@ -1,20 +1,18 @@
 {
   config,
-  pkgs,
   lib,
+  pkgs,
   ...
 }:
 let
   cfg = config.paul.gnome;
 in
 {
-
   options.paul.gnome = {
     enable = lib.mkEnableOption "activate gnome";
   };
 
   config = lib.mkIf cfg.enable {
-
     # Enable the X11 windowing system.
     services.xserver.enable = true;
 
@@ -40,7 +38,9 @@ in
         yelp
       ]
     );
+
     programs.dconf.enable = true;
+
     environment.systemPackages = with pkgs; [
       gnome-tweaks
     ];
@@ -55,7 +55,5 @@ in
 
     # Enable touchpad support (enabled default in most desktopManager).
     # services.xserver.libinput.enable = true;
-
   };
-
 }

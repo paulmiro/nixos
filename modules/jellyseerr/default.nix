@@ -1,14 +1,13 @@
 {
+  config,
   lib,
   pkgs,
-  config,
   ...
 }:
 let
   cfg = config.paul.jellyseerr;
 in
 {
-
   options.paul.jellyseerr = with lib; {
     enable = mkEnableOption "activate jellyseerr";
     openFirewall = mkEnableOption "allow jellyseerr port in firewall";
@@ -104,5 +103,4 @@ in
 
     ]
   );
-
 }

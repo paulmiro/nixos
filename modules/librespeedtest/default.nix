@@ -1,14 +1,13 @@
 {
+  config,
   lib,
   pkgs,
-  config,
   ...
 }:
 let
   cfg = config.paul.librespeedtest;
 in
 {
-
   options.paul.librespeedtest = with lib; {
     enable = mkEnableOption "activate librespeedtest";
     enableNginx = mkEnableOption "activate nginx proxy";
@@ -53,7 +52,6 @@ in
           };
           ports = [ "${builtins.toString cfg.port}:${builtins.toString cfg.port}/tcp" ];
         };
-
       }
 
       (lib.mkIf cfg.enableNginx {
@@ -76,5 +74,4 @@ in
 
     ]
   );
-
 }

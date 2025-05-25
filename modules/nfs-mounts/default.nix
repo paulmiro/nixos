@@ -1,14 +1,12 @@
 {
-  lib,
-  pkgs,
   config,
+  lib,
   ...
 }:
 let
   cfg = config.paul.nfs-mounts;
 in
 {
-
   options.paul.nfs-mounts = with lib; {
     enableArr = mkEnableOption "activate TANK2/arr";
     enablePhotos = mkEnableOption "activate TANK2/photos";
@@ -56,5 +54,4 @@ in
       options = [ "x-systemd.requires=tailscaled.service" ];
     };
   };
-
 }

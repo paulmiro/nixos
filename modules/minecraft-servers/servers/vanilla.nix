@@ -1,8 +1,8 @@
 {
-  lib,
-  pkgs,
   config,
+  lib,
   nix-minecraft,
+  pkgs,
   ...
 }:
 let
@@ -55,5 +55,6 @@ in
         };
       };
     };
+
   };
 }

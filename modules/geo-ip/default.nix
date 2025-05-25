@@ -8,7 +8,6 @@ let
   cfg = config.paul.nginx;
 in
 {
-
   imports = [
     ./locationOptions.nix
     ./vhostOptions.nix
@@ -29,7 +28,6 @@ in
   };
 
   config = lib.mkIf cfg.enableGeoIP {
-
     # when Nginx is enabled, enable the GeoIP updater service
     services.geoipupdate = lib.mkIf cfg.enable {
       enable = true;

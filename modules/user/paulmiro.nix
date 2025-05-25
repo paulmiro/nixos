@@ -1,20 +1,18 @@
 {
+  config,
   lib,
   pkgs,
-  config,
   ...
 }:
 let
   cfg = config.paul.user.paulmiro;
 in
 {
-
   options.paul.user.paulmiro = {
     enable = lib.mkEnableOption "activate user paulmiro";
   };
 
   config = lib.mkIf cfg.enable {
-
     # Define a user account. Don't forget to set a password with ‘passwd’.
     users.users.paulmiro = {
       isNormalUser = true;
@@ -31,6 +29,5 @@ in
     nix.settings = {
       allowed-users = [ "paulmiro" ];
     };
-
   };
 }

@@ -1,14 +1,13 @@
 {
-  pkgs,
-  lib,
   config,
+  lib,
+  pkgs,
   ...
 }:
 let
   cfg = config.paul.gaming;
 in
 {
-
   options.paul.gaming = {
     enable = lib.mkEnableOption "activate gaming programs and options";
   };

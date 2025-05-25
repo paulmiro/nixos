@@ -1,4 +1,8 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  ...
+}:
 {
   options = {
     paul.nixpkgs-config.enable = lib.mkEnableOption "nixpkgs config";

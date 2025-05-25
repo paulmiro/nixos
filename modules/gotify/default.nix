@@ -1,4 +1,8 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  ...
+}:
 let
   cfg = config.paul.gotify;
   environmentFile = "/run/keys/gotify.env";

@@ -1,15 +1,13 @@
 {
+  config,
   lib,
   pkgs,
-  config,
-  self,
   ...
 }:
 let
   cfg = config.paul.dyndns;
 in
 {
-
   options.paul.dyndns = with lib; {
     enable = mkEnableOption "activate dyndns";
     domains = mkOption {

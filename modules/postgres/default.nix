@@ -1,14 +1,12 @@
 {
-  lib,
-  pkgs,
   config,
+  lib,
   ...
 }:
 let
   cfg = config.paul.postgres;
 in
 {
-
   options.paul.postgres = {
     enable = lib.mkEnableOption "activate postgres";
   };

@@ -1,14 +1,13 @@
 {
+  config,
   lib,
   pkgs,
-  config,
   ...
 }:
 let
   cfg = config.paul.thelounge;
 in
 {
-
   options.paul.thelounge = with lib; {
     enable = mkEnableOption "activate thelounge";
     openFirewall = mkEnableOption "allow thelounge port in firewall";
@@ -20,7 +19,6 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-
     services.thelounge = {
       enable = true;
       port = cfg.port;

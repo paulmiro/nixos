@@ -3,10 +3,12 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { self, ... }:
-{ config, pkgs, ... }:
-
 {
-
+  config,
+  pkgs,
+  ...
+}:
+{
   paul = {
     common-desktop.enable = true;
     gnome.enable = true;

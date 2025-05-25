@@ -10,7 +10,6 @@ in
 {
   options.paul.mealie = {
     enable = lib.mkEnableOption "Mealie, a recipe manager and meal planner";
-
     package = lib.mkPackageOption pkgs "mealie" { };
 
     baseUrl = lib.mkOption {

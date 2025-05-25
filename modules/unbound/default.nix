@@ -1,7 +1,6 @@
 {
-  pkgs,
-  lib,
   config,
+  lib,
   ...
 }:
 let
@@ -16,7 +15,6 @@ let
   );
 in
 {
-
   options.paul.unbound = with lib; {
     enable = mkEnableOption "activate unbound";
     A-records = mkOption {
@@ -32,7 +30,6 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-
     services.unbound = {
       enable = true;
       settings = {
@@ -61,7 +58,5 @@ in
         ];
       };
     };
-
   };
-
 }

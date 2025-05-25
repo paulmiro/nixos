@@ -1,4 +1,8 @@
-{ lib, config, ... }:
+{
+  config,
+  lib,
+  ...
+}:
 let
   cfg = config.paul.adb;
 in

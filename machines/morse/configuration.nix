@@ -1,8 +1,8 @@
 { self, ... }:
 {
   config,
-  pkgs,
   lib,
+  pkgs,
   ...
 }:
 {
@@ -24,8 +24,10 @@
       enableNginx = true;
     };
 
-    microsocks.enable = true;
-    microsocks.openFirewall = true;
+    microsocks = {
+      enable = true;
+      openFirewall = true;
+    };
 
   };
 

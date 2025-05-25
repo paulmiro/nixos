@@ -1,14 +1,13 @@
 {
-  pkgs,
-  lib,
   config,
+  lib,
+  pkgs,
   ...
 }:
 let
   cfg = config.paul.immich;
 in
 {
-
   options.paul.immich = with lib; {
     enable = mkEnableOption "activate immich";
     openFirewall = mkEnableOption "open firewall for immich";
@@ -36,7 +35,6 @@ in
       default = "/run/keys/immich.env";
       description = "path to the secrets environment file";
     };
-    # enableQuickSync = mkEnableOption "enable quicksync";
   };
 
   config = lib.mkIf cfg.enable (
@@ -94,5 +92,4 @@ in
 
     ]
   );
-
 }

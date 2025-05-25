@@ -1,22 +1,19 @@
 {
+  config,
   lib,
   pkgs,
-  config,
   ...
 }:
 let
   cfg = config.paul.fonts;
 in
 {
-
   options.paul.fonts = {
     enable = lib.mkEnableOption "activate fonts";
   };
 
   config = lib.mkIf cfg.enable {
-
     fonts = {
-
       fontDir.enable = true;
 
       packages = with pkgs; [

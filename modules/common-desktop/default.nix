@@ -1,21 +1,18 @@
 {
-  pkgs,
-  lib,
   config,
   flake-self,
+  lib,
   ...
 }:
 let
   cfg = config.paul.common-desktop;
 in
 {
-
   options.paul.common-desktop = {
     enable = lib.mkEnableOption "contains configuration that is common to all systems with a desktop environment";
   };
 
   config = lib.mkIf cfg.enable {
-
     paul = {
       common.enable = true;
       sound.enable = true;
@@ -39,7 +36,5 @@ in
       users.paulmiro = flake-self.homeConfigurations.desktop;
       users.root = flake-self.homeConfigurations.server;
     };
-
   };
-
 }

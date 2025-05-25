@@ -1,14 +1,12 @@
 {
-  lib,
-  pkgs,
   config,
+  lib,
   ...
 }:
 let
   cfg = config.paul.sonarr;
 in
 {
-
   options.paul.sonarr = {
     enable = lib.mkEnableOption "activate sonarr";
     openFirewall = lib.mkEnableOption "allow sonarr port in firewall";

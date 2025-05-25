@@ -1,8 +1,8 @@
 # nix run .\#woodpecker-pipeline
 {
-  pkgs,
-  lib,
   flake-self,
+  lib,
+  pkgs,
   ...
 }:
 with pkgs;

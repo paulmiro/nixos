@@ -1,6 +1,5 @@
 {
   config,
-  pkgs,
   lib,
   ...
 }:
@@ -8,14 +7,11 @@ let
   cfg = config.paul.sound;
 in
 {
-
   options.paul.sound = {
     enable = lib.mkEnableOption "activate sound";
   };
 
   config = lib.mkIf cfg.enable {
-
-    # Enable sound with pipewire.
     services.pulseaudio.enable = false;
     security.rtkit.enable = true;
     services.pipewire = {
@@ -30,7 +26,5 @@ in
       # no need to redefine it in your config for now)
       #media-session.enable = true;
     };
-
   };
-
 }

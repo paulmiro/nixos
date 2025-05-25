@@ -1,14 +1,12 @@
 {
-  lib,
-  pkgs,
   config,
+  lib,
   ...
 }:
 let
   cfg = config.paul.flaresolverr;
 in
 {
-
   options.paul.flaresolverr = with lib; {
     enable = mkEnableOption "activate flaresolverr";
     openFirewall = mkEnableOption "open the firewall for flaresolverr";

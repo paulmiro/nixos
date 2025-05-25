@@ -1,9 +1,12 @@
-{ lib, config, ... }:
+{
+  config,
+  lib,
+  ...
+}:
 let
   cfg = config.paul.paperless;
 in
 {
-
   options.paul.paperless = with lib; {
     enable = mkEnableOption "activate paperless";
     openFirewall = mkOption {

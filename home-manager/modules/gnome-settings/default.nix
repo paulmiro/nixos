@@ -1,7 +1,7 @@
 {
+  config,
   lib,
   pkgs,
-  config,
   system-config,
   ...
 }:
@@ -13,7 +13,6 @@ in
     lib.mkEnableOption "enamble custom gnome configuration and theme";
 
   config = lib.mkIf cfg.enable {
-
     home.packages = with pkgs; [
       gnomeExtensions.activate_gnome
       gnomeExtensions.blur-my-shell
@@ -216,5 +215,6 @@ in
         show-extensions-notice = false; # annoying popup
       };
     };
+
   };
 }

@@ -1,17 +1,18 @@
 {
+  config,
   lib,
   pkgs,
-  config,
   ...
 }:
 let
   cfg = config.paul.programs.vscode;
 in
 {
-  options.paul.programs.vscode.enable = lib.mkEnableOption "enable vscode";
+  options.paul.programs.vscode = {
+    enable = lib.mkEnableOption "enable vscode";
+  };
 
   config = lib.mkIf cfg.enable {
-
     # Enable Wayland support, disabeled for now because it breaks obsidian (and maybe other electron apps)
     # home.sessionVariables.NIXOS_OZONE_WL = "1";
 
