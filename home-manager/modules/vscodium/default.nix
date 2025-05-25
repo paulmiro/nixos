@@ -4,14 +4,13 @@
   config,
   ...
 }:
-with lib;
 let
   cfg = config.paul.programs.vscodium;
 in
 {
-  options.paul.programs.vscodium.enable = mkEnableOption "enable vscodium";
+  options.paul.programs.vscodium.enable = lib.mkEnableOption "enable vscodium";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
 
     # Enable Wayland support, disabeled for now because it breaks obsidian (and maybe other electron apps)
     # home.sessionVariables.NIXOS_OZONE_WL = "1";

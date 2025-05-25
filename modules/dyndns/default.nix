@@ -5,13 +5,12 @@
   self,
   ...
 }:
-with lib;
 let
   cfg = config.paul.dyndns;
 in
 {
 
-  options.paul.dyndns = {
+  options.paul.dyndns = with lib; {
     enable = mkEnableOption "activate dyndns";
     domains = mkOption {
       type = types.listOf types.str;
@@ -26,7 +25,7 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     services.cloudflare-dyndns = {
       enable = true;
       apiTokenFile = cfg.apiTokenFile;

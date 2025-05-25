@@ -4,17 +4,16 @@
   lib,
   ...
 }:
-with lib;
 let
   cfg = config.paul.gnome;
 in
 {
 
   options.paul.gnome = {
-    enable = mkEnableOption "activate gnome";
+    enable = lib.mkEnableOption "activate gnome";
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
 
     # Enable the X11 windowing system.
     services.xserver.enable = true;

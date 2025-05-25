@@ -4,17 +4,16 @@
   config,
   ...
 }:
-with lib;
 let
   cfg = config.paul.systemd-boot;
 in
 {
 
   options.paul.systemd-boot = {
-    enable = mkEnableOption "activate systemd-boot";
+    enable = lib.mkEnableOption "activate systemd-boot";
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
 
     # Use systemd-boot as the bootloader.
     boot.loader.systemd-boot.enable = true;

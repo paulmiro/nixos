@@ -4,17 +4,16 @@
   config,
   ...
 }:
-with lib;
 let
   cfg = config.paul.docker;
 in
 {
 
   options.paul.docker = {
-    enable = mkEnableOption "activate docker";
+    enable = lib.mkEnableOption "activate docker";
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
 
     environment.systemPackages = with pkgs; [ docker-compose ];
 
@@ -31,7 +30,7 @@ in
       backend = "docker";
     };
 
-    users.extraGroups.docker.members = mkIf config.paul.user.paulmiro.enable [ "paulmiro" ];
+    users.extraGroups.docker.members = lib.mkIf config.paul.user.paulmiro.enable [ "paulmiro" ];
 
   };
 }

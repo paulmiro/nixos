@@ -4,17 +4,16 @@
   lib,
   ...
 }:
-with lib;
 let
   cfg = config.paul.sound;
 in
 {
 
   options.paul.sound = {
-    enable = mkEnableOption "activate sound";
+    enable = lib.mkEnableOption "activate sound";
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
 
     # Enable sound with pipewire.
     services.pulseaudio.enable = false;

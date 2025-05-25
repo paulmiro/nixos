@@ -6,7 +6,6 @@
   flake-self,
   ...
 }:
-with lib;
 {
   config = {
     paul = {

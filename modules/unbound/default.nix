@@ -4,21 +4,20 @@
   config,
   ...
 }:
-with lib;
 let
   cfg = config.paul.unbound;
   dns-overwrites-config = builtins.toFile "dns-overwrites.conf" (
     ''
       # DNS overwrites
     ''
-    + concatStringsSep "\n" (
-      mapAttrsToList (n: v: "local-data: \"${n} A ${toString v}\"") cfg.A-records
+    + lib.concatStringsSep "\n" (
+      lib.mapAttrsToList (n: v: "local-data: \"${n} A ${toString v}\"") cfg.A-records
     )
   );
 in
 {
 
-  options.paul.unbound = {
+  options.paul.unbound = with lib; {
     enable = mkEnableOption "activate unbound";
     A-records = mkOption {
       type = types.attrs;
@@ -32,7 +31,7 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
 
     services.unbound = {
       enable = true;

@@ -5,17 +5,16 @@
   flake-self,
   ...
 }:
-with lib;
 let
   cfg = config.paul.common;
 in
 {
 
   options.paul.common = {
-    enable = mkEnableOption "contains configuration that is common to all systems";
+    enable = lib.mkEnableOption "contains configuration that is common to all systems";
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
 
     programs.zsh.enable = true;
 

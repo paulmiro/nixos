@@ -4,16 +4,15 @@
   config,
   ...
 }:
-with lib;
 let
   cfg = config.paul.grub;
 in
 {
   options.paul.grub = {
-    enable = mkEnableOption "activate grub";
+    enable = lib.mkEnableOption "activate grub";
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     boot = {
       loader = {
         grub = {

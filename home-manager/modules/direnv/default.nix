@@ -4,17 +4,16 @@
   config,
   ...
 }:
-with lib;
 let
   cfg = config.paul.programs.direnv;
 in
 {
 
   options.paul.programs.direnv = {
-    enable = mkEnableOption "activate direnv";
+    enable = lib.mkEnableOption "activate direnv";
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
 
     programs = {
       direnv = {

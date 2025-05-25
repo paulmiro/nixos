@@ -4,13 +4,12 @@
   config,
   ...
 }:
-with lib;
 let
   cfg = config.paul.thelounge;
 in
 {
 
-  options.paul.thelounge = {
+  options.paul.thelounge = with lib; {
     enable = mkEnableOption "activate thelounge";
     openFirewall = mkEnableOption "allow thelounge port in firewall";
     port = mkOption {
@@ -20,7 +19,7 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
 
     services.thelounge = {
       enable = true;
@@ -32,6 +31,6 @@ in
       };
     };
 
-    networking.firewall.allowedTCPPorts = mkIf cfg.openFirewall [ cfg.port ];
+    networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [ cfg.port ];
   };
 }

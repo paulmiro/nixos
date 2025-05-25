@@ -4,13 +4,12 @@
   config,
   ...
 }:
-with lib;
 let
   cfg = config.paul.audiobookshelf;
 in
 {
 
-  options.paul.audiobookshelf = {
+  options.paul.audiobookshelf = with lib; {
     enable = mkEnableOption "activate audiobookshelf";
     openFirewall = mkEnableOption "allow audiobookshelf port in firewall";
     enableNginx = mkEnableOption "activate nginx proxy";
@@ -33,34 +32,36 @@ in
     };
   };
 
-  config = mkIf cfg.enable (mkMerge [
-    {
-      services.audiobookshelf = {
-        enable = true;
-        port = cfg.port;
-        openFirewall = cfg.openFirewall;
-        host = if cfg.openFirewall then "0.0.0.0" else "127.0.0.1";
-      };
-
-    }
-
-    (mkIf cfg.enableNginx {
-      paul.nginx.enable = true;
-
-      paul.dyndns.domains = mkIf cfg.enableDyndns [ cfg.domain ];
-
-      services.nginx.virtualHosts."${cfg.domain}" = {
-        enableACME = true;
-        forceSSL = true;
-        locations."/" = {
-          proxyPass = "http://127.0.0.1:${builtins.toString cfg.port}";
-          proxyWebsockets = true;
-          geo-ip = true;
+  config = lib.mkIf cfg.enable (
+    lib.mkMerge [
+      {
+        services.audiobookshelf = {
+          enable = true;
+          port = cfg.port;
+          openFirewall = cfg.openFirewall;
+          host = if cfg.openFirewall then "0.0.0.0" else "127.0.0.1";
         };
 
-      };
-    })
+      }
 
-  ]);
+      (lib.mkIf cfg.enableNginx {
+        paul.nginx.enable = true;
+
+        paul.dyndns.domains = lib.mkIf cfg.enableDyndns [ cfg.domain ];
+
+        services.nginx.virtualHosts."${cfg.domain}" = {
+          enableACME = true;
+          forceSSL = true;
+          locations."/" = {
+            proxyPass = "http://127.0.0.1:${builtins.toString cfg.port}";
+            proxyWebsockets = true;
+            geo-ip = true;
+          };
+
+        };
+      })
+
+    ]
+  );
 
 }

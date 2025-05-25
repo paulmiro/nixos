@@ -4,14 +4,13 @@
   config,
   ...
 }:
-with lib;
 let
   cfg = config.paul.programs.zsh;
 in
 {
-  options.paul.programs.zsh.enable = mkEnableOption "enable zsh";
+  options.paul.programs.zsh.enable = lib.mkEnableOption "enable zsh";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     paul.programs.starship.enable = true;
 
     home.shell.enableZshIntegration = true;

@@ -6,7 +6,6 @@
   system-config,
   ...
 }:
-with lib;
 {
   config = {
 

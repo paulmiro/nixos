@@ -5,17 +5,16 @@
   flake-self,
   ...
 }:
-with lib;
 let
   cfg = config.paul.common-server;
 in
 {
 
   options.paul.common-server = {
-    enable = mkEnableOption "contains configuration that is common to all server machines";
+    enable = lib.mkEnableOption "contains configuration that is common to all server machines";
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
 
     paul = {
       common.enable = true;

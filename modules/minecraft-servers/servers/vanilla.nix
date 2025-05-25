@@ -5,12 +5,11 @@
   nix-minecraft,
   ...
 }:
-with lib;
 let
   cfg = config.paul.minecraft-servers.vanilla;
 in
 {
-  options.paul.minecraft-servers.vanilla = {
+  options.paul.minecraft-servers.vanilla = with lib; {
     enable = mkEnableOption "activate Vanilla Minecraft Server";
     enableDyndns = mkEnableOption "enable dyndns";
     domain = mkOption {
@@ -20,10 +19,10 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     users.users.paulmiro.extraGroups = [ "minecraft" ];
     nixpkgs.overlays = [ nix-minecraft.overlay ];
-    paul.dyndns.domains = mkIf cfg.enableDyndns [ cfg.domain ];
+    paul.dyndns.domains = lib.mkIf cfg.enableDyndns [ cfg.domain ];
 
     services.nginx.virtualHosts."${cfg.domain}" = {
       enableACME = true;

@@ -4,12 +4,11 @@
   lib,
   ...
 }:
-with lib;
 let
   cfg = config.paul.nvidia;
 in
 {
-  options.paul.nvidia = {
+  options.paul.nvidia = with lib; {
     enable = mkEnableOption "activate nvidia";
     laptop = mkEnableOption "activate nvidia laptop mode";
     intelBusId = mkOption {
@@ -23,7 +22,7 @@ in
       description = "Bus ID of the Nvidia GPU";
     };
   };
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
 
     # Load nvidia driver for Xorg and Wayland
     services.xserver.videoDrivers = [ "nvidia" ];
@@ -36,19 +35,20 @@ in
       graphics = {
         enable = true;
         enable32Bit = true;
-        extraPackages =
+        extraPackages = lib.mkIf cfg.laptop (
           with pkgs;
-          mkIf cfg.laptop [
+          [
             vaapiVdpau
-          ];
+          ]
+        );
       };
 
       nvidia = {
         # Modesetting is required.
-        modesetting.enable = mkIf cfg.laptop true;
+        modesetting.enable = lib.mkIf cfg.laptop true;
 
         # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
-        powerManagement.enable = mkIf cfg.laptop false;
+        powerManagement.enable = lib.mkIf cfg.laptop false;
 
         # Fine-grained power management. Turns off GPU when not in use.
         # Experimental and only works on modern Nvidia GPUs (Turing or newer).
@@ -65,17 +65,16 @@ in
 
         # Enable the Nvidia settings menu,
         # accessible via `nvidia-settings`.
-        nvidiaSettings = mkIf cfg.laptop true;
+        nvidiaSettings = lib.mkIf cfg.laptop true;
 
         # Optionally, you may need to select the appropriate driver version for your specific GPU.
         package = config.boot.kernelPackages.nvidiaPackages.beta;
       };
 
-      nvidia-container-toolkit.enable = mkIf config.virtualisation.docker.enable true;
-
+      nvidia-container-toolkit.enable = lib.mkIf config.virtualisation.docker.enable true;
     };
 
-    hardware.nvidia.prime = mkIf cfg.laptop {
+    hardware.nvidia.prime = lib.mkIf cfg.laptop {
       intelBusId = cfg.intelBusId;
       nvidiaBusId = cfg.nvidiaBusId;
       offload.enable = true;

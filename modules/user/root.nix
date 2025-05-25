@@ -4,17 +4,16 @@
   config,
   ...
 }:
-with lib;
 let
   cfg = config.paul.user.root;
 in
 {
 
   options.paul.user.root = {
-    enable = mkEnableOption "activate user root";
+    enable = lib.mkEnableOption "activate user root";
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
 
     users.users.root = {
       openssh.authorizedKeys.keys = [

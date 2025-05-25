@@ -4,17 +4,16 @@
   config,
   ...
 }:
-with lib;
 let
   cfg = config.paul.gaming;
 in
 {
 
   options.paul.gaming = {
-    enable = mkEnableOption "activate gaming programs and options";
+    enable = lib.mkEnableOption "activate gaming programs and options";
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     programs.steam.enable = true;
     environment.systemPackages = with pkgs; [
       (lutris.override {

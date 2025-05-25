@@ -4,25 +4,23 @@
   config,
   ...
 }:
-with lib;
 let
   cfg = config.paul.programs.development;
 in
 {
   options.paul.programs.development = {
-    android = mkEnableOption "enable Android";
-    c_cpp = mkEnableOption "enable C/C++";
-    go = mkEnableOption "enable Go";
-    godot = mkEnableOption "enable Godot";
-    java = mkEnableOption "enable Java";
-    javascript = mkEnableOption "enable JavaScript";
-    lua = mkEnableOption "enable Lua";
-    python = mkEnableOption "enable Python";
-
+    android = lib.mkEnableOption "enable Android";
+    c_cpp = lib.mkEnableOption "enable C/C++";
+    go = lib.mkEnableOption "enable Go";
+    godot = lib.mkEnableOption "enable Godot";
+    java = lib.mkEnableOption "enable Java";
+    javascript = lib.mkEnableOption "enable JavaScript";
+    lua = lib.mkEnableOption "enable Lua";
+    python = lib.mkEnableOption "enable Python";
   };
 
-  config = mkMerge [
-    (mkIf cfg.android {
+  config = lib.mkMerge [
+    (lib.mkIf cfg.android {
       home.sessionVariables = {
         ANDROID_HOME = "~/.android/sdk"; # because fuck whoever decided to name that folder "Android" instead of ".android"
       };
@@ -32,43 +30,43 @@ in
         android-tools
       ];
     })
-    (mkIf cfg.c_cpp {
+    (lib.mkIf cfg.c_cpp {
       home.packages = with pkgs; [
         clang
         cmake
       ];
     })
-    (mkIf cfg.go {
+    (lib.mkIf cfg.go {
       programs.go = {
         enable = true;
         # https://rycee.gitlab.io/home-manager/options.html#opt-programs.go.packages
         packages = { };
       };
     })
-    (mkIf cfg.godot {
+    (lib.mkIf cfg.godot {
       home.packages = with pkgs; [
         godot_4
       ];
     })
-    (mkIf cfg.java {
+    (lib.mkIf cfg.java {
       home.packages = with pkgs; [
         jdk21
       ];
     })
-    (mkIf cfg.javascript {
+    (lib.mkIf cfg.javascript {
       home.packages = with pkgs; [
         bun
         nodejs
         nodePackages.pnpm
       ];
     })
-    (mkIf cfg.lua {
+    (lib.mkIf cfg.lua {
       home.packages = with pkgs; [
         lua
         stylua
       ];
     })
-    (mkIf cfg.python {
+    (lib.mkIf cfg.python {
       home.packages = with pkgs; [
         (python3.withPackages (
           ps: with ps; [

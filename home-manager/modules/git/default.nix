@@ -4,14 +4,13 @@
   config,
   ...
 }:
-with lib;
 let
   cfg = config.paul.programs.git;
 in
 {
-  options.paul.programs.git.enable = mkEnableOption "enable git";
+  options.paul.programs.git.enable = lib.mkEnableOption "enable git";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
 
     programs = {
       git = {

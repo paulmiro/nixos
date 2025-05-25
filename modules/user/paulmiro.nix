@@ -4,17 +4,16 @@
   config,
   ...
 }:
-with lib;
 let
   cfg = config.paul.user.paulmiro;
 in
 {
 
   options.paul.user.paulmiro = {
-    enable = mkEnableOption "activate user paulmiro";
+    enable = lib.mkEnableOption "activate user paulmiro";
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
 
     # Define a user account. Don't forget to set a password with ‘passwd’.
     users.users.paulmiro = {
@@ -24,7 +23,7 @@ in
         "networkmanager"
         "wheel"
       ];
-      shell = mkIf config.programs.zsh.enable pkgs.zsh;
+      shell = lib.mkIf config.programs.zsh.enable pkgs.zsh;
       initialHashedPassword = config.paul.private.hashed-password-paulmiro;
       openssh.authorizedKeys.keys = config.users.users.root.openssh.authorizedKeys.keys; # looks stupid but does the job
     };

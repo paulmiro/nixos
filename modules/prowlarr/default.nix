@@ -4,13 +4,12 @@
   config,
   ...
 }:
-with lib;
 let
   cfg = config.paul.prowlarr;
 in
 {
 
-  options.paul.prowlarr = {
+  options.paul.prowlarr = with lib; {
     enable = mkEnableOption "activate prowlarr";
     openFirewall = mkOption {
       type = types.bool;
@@ -19,7 +18,7 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     paul.flaresolverr.enable = true;
 
     services.prowlarr = {

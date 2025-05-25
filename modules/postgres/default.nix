@@ -4,17 +4,16 @@
   config,
   ...
 }:
-with lib;
 let
   cfg = config.paul.postgres;
 in
 {
 
   options.paul.postgres = {
-    enable = mkEnableOption "activate postgres";
+    enable = lib.mkEnableOption "activate postgres";
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     services.postgresql = {
       enable = true;
     };

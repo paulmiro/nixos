@@ -6,18 +6,17 @@
   nixpkgs,
   ...
 }:
-with lib;
 let
   cfg = config.paul.nix-common;
 in
 {
 
   options.paul.nix-common = {
-    enable = mkEnableOption "activate nix-common";
-    disable-cache = mkEnableOption "not use binary-cache";
+    enable = lib.mkEnableOption "activate nix-common";
+    disable-cache = lib.mkEnableOption "not use binary-cache";
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
 
     # Set the $NIX_PATH entry for nixpkgs. This is necessary in
     # this setup with flakes, otherwise commands like `nix-shell
@@ -59,10 +58,10 @@ in
       '';
 
       settings = {
-        trusted-public-keys = mkIf (cfg.disable-cache != true) [
+        trusted-public-keys = lib.mkIf (cfg.disable-cache != true) [
           "nix-cache:4FILs79Adxn/798F8qk2PC1U8HaTlaPqptwNJrXNA1g="
         ];
-        substituters = mkIf (cfg.disable-cache != true) [
+        substituters = lib.mkIf (cfg.disable-cache != true) [
           "https://cache.lounge.rocks/nix-cache"
         ];
         trusted-users = [

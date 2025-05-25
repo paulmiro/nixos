@@ -4,17 +4,16 @@
   lib,
   ...
 }:
-with lib;
 let
   cfg = config.paul.kde;
 in
 {
 
   options.paul.kde = {
-    enable = mkEnableOption "activate kde";
+    enable = lib.mkEnableOption "activate kde";
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
 
     # Enable the Plasma 5 Desktop Environment.
     services.xserver = {

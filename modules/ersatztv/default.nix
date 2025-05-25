@@ -4,7 +4,6 @@
   config,
   ...
 }:
-with lib;
 let
   cfg = config.paul.ersatztv;
   hardwareVersion =
@@ -17,7 +16,7 @@ let
 in
 {
 
-  options.paul.ersatztv = {
+  options.paul.ersatztv = with lib; {
     enable = mkEnableOption "activate ersatztv";
 
     openFirewall = mkOption {
@@ -56,7 +55,7 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     paul.docker.enable = true;
 
     virtualisation.oci-containers.containers.ersatztv = {
@@ -82,6 +81,6 @@ in
         ];
     };
 
-    networking.firewall.allowedTCPPorts = mkIf cfg.openFirewall [ cfg.port ];
+    networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [ cfg.port ];
   };
 }

@@ -4,14 +4,13 @@
   config,
   ...
 }:
-with lib;
 let
   cfg = config.paul.programs.starship;
 in
 {
-  options.paul.programs.starship.enable = mkEnableOption "enable starship";
+  options.paul.programs.starship.enable = lib.mkEnableOption "enable starship";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     programs.starship = {
       enable = true;
       settings =

@@ -1,15 +1,14 @@
 { lib, config, ... }:
-with lib;
 let
   cfg = config.paul.syncthing;
 in
 {
 
   options.paul.syncthing = {
-    enable = mkEnableOption "Enable Syncthing";
+    enable = lib.mkEnableOption "Enable Syncthing";
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     services.syncthing = {
       enable = true;
       user = "paulmiro";

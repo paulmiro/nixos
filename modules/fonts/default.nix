@@ -4,17 +4,16 @@
   config,
   ...
 }:
-with lib;
 let
   cfg = config.paul.fonts;
 in
 {
 
   options.paul.fonts = {
-    enable = mkEnableOption "activate fonts";
+    enable = lib.mkEnableOption "activate fonts";
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
 
     fonts = {
 

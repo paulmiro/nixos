@@ -5,15 +5,14 @@
   system-config,
   ...
 }:
-with lib;
 let
   cfg = config.paul.programs.gnome-settings;
 in
 {
   options.paul.programs.gnome-settings.enable =
-    mkEnableOption "enamble custom gnome configuration and theme";
+    lib.mkEnableOption "enamble custom gnome configuration and theme";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
 
     home.packages = with pkgs; [
       gnomeExtensions.activate_gnome
@@ -80,7 +79,7 @@ in
       "org/gnome/desktop/interface" = {
         accent-color = "yellow";
         gtk-enable-primary-paste = false;
-        monospace-font-name = mkIf system-config.paul.fonts.enable "MesloLGS NF 10";
+        monospace-font-name = lib.mkIf system-config.paul.fonts.enable "MesloLGS NF 10";
         show-battery-percentage = true;
         enable-hot-corners = false;
         clock-show-weekday = true;

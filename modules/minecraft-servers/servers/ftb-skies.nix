@@ -4,7 +4,6 @@
   config,
   ...
 }:
-with lib;
 let
   cfg = config.paul.minecraft-servers.ftb-skies;
 in
@@ -20,7 +19,7 @@ in
     - replace the hardcoded jvm path in the start script with "java"
   */
 
-  options.paul.minecraft-servers.ftb-skies = {
+  options.paul.minecraft-servers.ftb-skies = with lib; {
     enable = mkEnableOption "activate FTB Skies Minecraft Server";
     enableDyndns = mkEnableOption "enable dyndns";
     domain = mkOption {
@@ -30,7 +29,7 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     systemd.services.mc-ftb-skies = {
       description = "Minecraft Server FTB Skies";
       wantedBy = [ "multi-user.target" ];
@@ -71,6 +70,6 @@ in
       allowedTCPPorts = [ 25565 ];
     };
 
-    paul.dyndns.domains = mkIf cfg.enableDyndns [ cfg.domain ];
+    paul.dyndns.domains = lib.mkIf cfg.enableDyndns [ cfg.domain ];
   };
 }

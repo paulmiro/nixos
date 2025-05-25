@@ -4,13 +4,12 @@
   config,
   ...
 }:
-with lib;
 let
   cfg = config.paul.flaresolverr;
 in
 {
 
-  options.paul.flaresolverr = {
+  options.paul.flaresolverr = with lib; {
     enable = mkEnableOption "activate flaresolverr";
     openFirewall = mkEnableOption "open the firewall for flaresolverr";
 
@@ -21,7 +20,7 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     services.flaresolverr = {
       enable = true;
       openFirewall = cfg.openFirewall;

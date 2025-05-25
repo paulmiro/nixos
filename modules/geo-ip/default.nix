@@ -4,7 +4,6 @@
   pkgs,
   ...
 }:
-with lib;
 let
   cfg = config.paul.nginx;
 in
@@ -15,7 +14,7 @@ in
     ./vhostOptions.nix
   ];
 
-  options.paul.nginx = {
+  options.paul.nginx = with lib; {
     enableGeoIP = mkEnableOption "enable GeoIP";
     licenseKeyFile = mkOption {
       type = types.path;
@@ -29,10 +28,10 @@ in
     };
   };
 
-  config = mkIf cfg.enableGeoIP {
+  config = lib.mkIf cfg.enableGeoIP {
 
     # when Nginx is enabled, enable the GeoIP updater service
-    services.geoipupdate = mkIf cfg.enable {
+    services.geoipupdate = lib.mkIf cfg.enable {
       enable = true;
       interval = "weekly";
       settings = {

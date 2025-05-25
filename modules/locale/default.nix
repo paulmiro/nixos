@@ -4,21 +4,20 @@
   lib,
   ...
 }:
-with lib;
 let
   cfg = config.paul.locale;
 in
 {
 
   options.paul.locale = {
-    enable = mkEnableOption "activate locale";
-    hardwareClockInLocalTime = mkOption {
-      type = types.bool;
+    enable = lib.mkEnableOption "activate locale";
+    hardwareClockInLocalTime = lib.mkOption {
+      type = lib.types.bool;
       default = false;
     };
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
 
     # Set your time zone.
     time = {

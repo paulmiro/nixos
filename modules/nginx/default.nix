@@ -4,13 +4,12 @@
   config,
   ...
 }:
-with lib;
 let
   cfg = config.paul.nginx;
 in
 {
 
-  options.paul.nginx = {
+  options.paul.nginx = with lib; {
     enable = mkEnableOption "activate nginx";
 
     openFirewall = mkOption {
@@ -26,12 +25,12 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
 
     security.acme.defaults.email = config.paul.private.emails.proton;
     security.acme.acceptTerms = true;
 
-    networking.firewall.allowedTCPPorts = mkIf cfg.openFirewall [
+    networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [
       80
       443
     ];
@@ -42,15 +41,15 @@ in
       recommendedOptimisation = true;
       recommendedProxySettings = true;
       recommendedTlsSettings = true;
-      commonHttpConfig = mkIf cfg.openFirewall ''
+      commonHttpConfig = lib.mkIf cfg.openFirewall ''
         map $scheme $hsts_header {
           https "max-age=31536000; includeSubdomains; -preload";
         }
         add_header Strict-Transport-Security $hsts_header;
       '';
       virtualHosts."${cfg.defaultDomain}" = {
-        enableACME = mkIf cfg.openFirewall true; # ACME fails with closed firewall
-        forceSSL = mkIf cfg.openFirewall true; # turn off SSL if we don't have a cert
+        enableACME = lib.mkIf cfg.openFirewall true; # ACME fails with closed firewall
+        forceSSL = lib.mkIf cfg.openFirewall true; # turn off SSL if we don't have a cert
         default = true;
         locations."/" = {
           return = "418"; # I'm a teapot
@@ -58,7 +57,7 @@ in
       };
     };
 
-    systemd.services.nginx = mkIf config.paul.dyndns.enable {
+    systemd.services.nginx = lib.mkIf config.paul.dyndns.enable {
       after = [
         "network.target"
         "cloudflare-dyndns.service"
@@ -67,7 +66,7 @@ in
       serviceConfig.ExecStartPre = "${pkgs.coreutils}/bin/sleep 10";
     };
 
-    paul.dyndns = mkIf cfg.openFirewall {
+    paul.dyndns = lib.mkIf cfg.openFirewall {
       # dyndns is pretty much useless without the opened ports
       enable = true;
       domains = [

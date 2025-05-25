@@ -4,16 +4,15 @@
   config,
   ...
 }:
-with lib;
 let
   locationOptions =
     { config, ... }:
     {
       options = {
-        geo-ip = mkEnableOption "enable geo-ip";
+        geo-ip = lib.mkEnableOption "enable geo-ip";
       };
       config.extraConfig = toString [
-        (optional config.geo-ip ''
+        (lib.optional config.geo-ip ''
           if ($allowed_country = no) {
             return 444;
           }
@@ -24,10 +23,10 @@ in
 {
   options = {
     services.nginx.virtualHosts =
-      with types;
-      mkOption {
+      with lib.types;
+      lib.mkOption {
         type = attrsOf (submodule {
-          options.locations = mkOption { type = attrsOf (submodule locationOptions); };
+          options.locations = lib.mkOption { type = attrsOf (submodule locationOptions); };
         });
       };
   };

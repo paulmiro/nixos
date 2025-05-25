@@ -1,7 +1,5 @@
 { lib, ... }:
-
 with lib;
-
 let
 
   # Recursively constructs an attrset of a given folder, recursing on directories, value of attrs is the filetype
@@ -24,7 +22,5 @@ let
 
 in
 {
-
   imports = validFiles ./.;
-
 }

@@ -1,11 +1,10 @@
 { lib, config, ... }:
-with lib;
 let
   cfg = config.paul.paperless;
 in
 {
 
-  options.paul.paperless = {
+  options.paul.paperless = with lib; {
     enable = mkEnableOption "activate paperless";
     openFirewall = mkOption {
       type = types.bool;
@@ -19,12 +18,12 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     services.paperless = {
       enable = true;
       port = cfg.port;
       address = "hawking";
     };
-    networking.firewall.allowedTCPPorts = mkIf cfg.openFirewall [ cfg.port ];
+    networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [ cfg.port ];
   };
 }

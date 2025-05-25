@@ -5,14 +5,13 @@
   system-config,
   ...
 }:
-with lib;
 let
   cfg = config.paul.programs.rbw;
 in
 {
-  options.paul.programs.rbw.enable = mkEnableOption "enable rbw, an alternative to bitwaren-cli";
+  options.paul.programs.rbw.enable = lib.mkEnableOption "enable rbw, an alternative to bitwaren-cli";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     programs.rbw = {
       enable = true;
       settings = {

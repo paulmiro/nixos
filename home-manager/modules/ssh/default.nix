@@ -4,14 +4,13 @@
   config,
   ...
 }:
-with lib;
 let
   cfg = config.paul.programs.ssh;
 in
 {
-  options.paul.programs.ssh.enable = mkEnableOption "enable ssh";
+  options.paul.programs.ssh.enable = lib.mkEnableOption "enable ssh";
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
 
     programs.ssh = {
       enable = true;
