@@ -1,6 +1,13 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.paul.programs.starship; in
+let
+  cfg = config.paul.programs.starship;
+in
 {
   options.paul.programs.starship.enable = mkEnableOption "enable starship";
 
@@ -8,11 +15,15 @@ let cfg = config.paul.programs.starship; in
     programs.starship = {
       enable = true;
       settings =
-        (builtins.fromTOML (builtins.readFile (pkgs.fetchurl {
-          url = "https://starship.rs/presets/toml/no-runtime-versions.toml";
-          hash = "sha256-eUOdNK/941Kf5frs6G2TntRAcAisN8v1PrbVGMP11oY=";
-        }))) //
-        {
+        (builtins.fromTOML (
+          builtins.readFile (
+            pkgs.fetchurl {
+              url = "https://starship.rs/presets/toml/no-runtime-versions.toml";
+              hash = "sha256-eUOdNK/941Kf5frs6G2TntRAcAisN8v1PrbVGMP11oY=";
+            }
+          )
+        ))
+        // {
           hostname = {
             format = "[$hostname]($style) ";
           };

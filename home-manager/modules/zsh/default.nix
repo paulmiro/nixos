@@ -1,6 +1,13 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.paul.programs.zsh; in
+let
+  cfg = config.paul.programs.zsh;
+in
 {
   options.paul.programs.zsh.enable = mkEnableOption "enable zsh";
 
@@ -15,7 +22,9 @@ let cfg = config.paul.programs.zsh; in
       enableCompletion = true;
       dotDir = ".config/zsh";
 
-      sessionVariables = { ZDOTDIR = "$HOME/.config/zsh"; };
+      sessionVariables = {
+        ZDOTDIR = "$HOME/.config/zsh";
+      };
 
       initContent =
         let
@@ -170,7 +179,16 @@ let cfg = config.paul.programs.zsh; in
         enableZshIntegration = false;
         settings = {
           icons.when = "never";
-          blocks = [ "permission" "links" "user" "group" "size" "date" "git" "name" ];
+          blocks = [
+            "permission"
+            "links"
+            "user"
+            "group"
+            "size"
+            "date"
+            "git"
+            "name"
+          ];
           date = "+%Y-%m-%d %H:%M";
           indicators = true;
           hyperlink = "auto";

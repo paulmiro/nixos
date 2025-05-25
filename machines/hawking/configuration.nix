@@ -1,5 +1,10 @@
 { self, ... }:
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   services.qemuGuest.enable = true;
@@ -112,7 +117,10 @@
   services.tailscale = {
     enable = true;
     useRoutingFeatures = "server";
-    extraUpFlags = [ "--accept-dns=false" "--advertise-exit-node" ];
+    extraUpFlags = [
+      "--accept-dns=false"
+      "--advertise-exit-node"
+    ];
   };
 
   # Running fstrim weekly is a good idea for VMs.

@@ -1,6 +1,12 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.paul.sonarr;
+let
+  cfg = config.paul.sonarr;
 in
 {
 

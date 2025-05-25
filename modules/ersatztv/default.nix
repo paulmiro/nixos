@@ -1,11 +1,19 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
 let
   cfg = config.paul.ersatztv;
   hardwareVersion =
-    if cfg.hardwareTranscoding == "vaapi" || cfg.hardwareTranscoding == "qsv" then "-vaapi"
-    else if cfg.hardwareTranscoding == "nvenc" then "-nvidia"
-    else "";
+    if cfg.hardwareTranscoding == "vaapi" || cfg.hardwareTranscoding == "qsv" then
+      "-vaapi"
+    else if cfg.hardwareTranscoding == "nvenc" then
+      "-nvidia"
+    else
+      "";
 in
 {
 
@@ -37,36 +45,43 @@ in
     };
 
     hardwareTranscoding = mkOption {
-      type = types.enum [ "off" "nvenc" "vaapi" "qsv" ];
+      type = types.enum [
+        "off"
+        "nvenc"
+        "vaapi"
+        "qsv"
+      ];
       default = "off";
       description = "enable hardware transcoding";
     };
   };
 
-  config =
-    mkIf cfg.enable {
-      paul.docker.enable = true;
+  config = mkIf cfg.enable {
+    paul.docker.enable = true;
 
-      virtualisation.oci-containers.containers.ersatztv = {
-        autoStart = true;
-        image = "jasongdove/ersatztv:${cfg.version}${hardwareVersion}";
-        ports = [ "8409:${builtins.toString cfg.port}/tcp" ];
-        volumes = [
-          "${cfg.configDirectory}:/root/.local/share/ersatztv"
-          "/mnt/nfs/arr/media:/media:ro"
-        ];
-        extraOptions = [
+    virtualisation.oci-containers.containers.ersatztv = {
+      autoStart = true;
+      image = "jasongdove/ersatztv:${cfg.version}${hardwareVersion}";
+      ports = [ "8409:${builtins.toString cfg.port}/tcp" ];
+      volumes = [
+        "${cfg.configDirectory}:/root/.local/share/ersatztv"
+        "/mnt/nfs/arr/media:/media:ro"
+      ];
+      extraOptions =
+        [
           "-e TZ=America/Chicago"
-        ] ++ lib.optionals (cfg.hardwareTranscoding == "qsv") [
+        ]
+        ++ lib.optionals (cfg.hardwareTranscoding == "qsv") [
           # get group ID with: `getent group render | cut -d: -f3`
           "--group-add=303"
           "--device=/dev/dri/renderD128:/dev/dri/renderD128"
-        ] ++ lib.optionals (cfg.hardwareTranscoding == "nvenc") [
+        ]
+        ++ lib.optionals (cfg.hardwareTranscoding == "nvenc") [
           "--gpus"
           "all"
         ];
-      };
-
-      networking.firewall.allowedTCPPorts = mkIf cfg.openFirewall [ cfg.port ];
     };
+
+    networking.firewall.allowedTCPPorts = mkIf cfg.openFirewall [ cfg.port ];
+  };
 }

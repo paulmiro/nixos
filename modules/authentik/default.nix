@@ -1,6 +1,12 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.paul.authentik;
+let
+  cfg = config.paul.authentik;
 in
 {
   imports = [ ./vhostOptions.nix ];

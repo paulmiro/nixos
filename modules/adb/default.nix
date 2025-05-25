@@ -1,6 +1,7 @@
 { lib, config, ... }:
 with lib;
-let cfg = config.paul.adb;
+let
+  cfg = config.paul.adb;
 in
 {
   options.paul.adb = {

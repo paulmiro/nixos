@@ -1,6 +1,13 @@
-{ pkgs, lib, config, flake-self, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  flake-self,
+  ...
+}:
 with lib;
-let cfg = config.paul.common;
+let
+  cfg = config.paul.common;
 in
 {
 

@@ -1,10 +1,18 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.paul.openssh;
+let
+  cfg = config.paul.openssh;
 in
 {
 
-  options.paul.openssh = { enable = mkEnableOption "activate openssh"; };
+  options.paul.openssh = {
+    enable = mkEnableOption "activate openssh";
+  };
 
   config = mkIf cfg.enable {
 

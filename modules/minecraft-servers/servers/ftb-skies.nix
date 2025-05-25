@@ -1,4 +1,9 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
 let
   cfg = config.paul.minecraft-servers.ftb-skies;
@@ -13,8 +18,7 @@ in
     - `echo "eula=true" > eula.txt` to accept the eula
     - remove the eula stuff ftom the start script (optional)
     - replace the hardcoded jvm path in the start script with "java"
-
-   */
+  */
 
   options.paul.minecraft-servers.ftb-skies = {
     enable = mkEnableOption "activate FTB Skies Minecraft Server";
@@ -32,20 +36,22 @@ in
       wantedBy = [ "multi-user.target" ];
       after = [ "network.target" ];
 
-      path = with pkgs; [ temurin-bin-17 bash ];
+      path = with pkgs; [
+        temurin-bin-17
+        bash
+      ];
 
-      serviceConfig =
-        {
-          Restart = "always";
-          ExecStart = "${pkgs.bash}/bin/bash /var/lib/mc-ftb-skies/start.sh";
-          ExecStop = ''
-            ${pkgs.mcrcon}/bin/mcrcon stop
-          '';
-          TimeoutStopSec = "20";
-          User = "mc-ftb-skies";
-          StateDirectory = "mc-ftb-skies";
-          WorkingDirectory = "/var/lib/mc-ftb-skies";
-        };
+      serviceConfig = {
+        Restart = "always";
+        ExecStart = "${pkgs.bash}/bin/bash /var/lib/mc-ftb-skies/start.sh";
+        ExecStop = ''
+          ${pkgs.mcrcon}/bin/mcrcon stop
+        '';
+        TimeoutStopSec = "20";
+        User = "mc-ftb-skies";
+        StateDirectory = "mc-ftb-skies";
+        WorkingDirectory = "/var/lib/mc-ftb-skies";
+      };
 
     };
 

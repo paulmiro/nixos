@@ -6,7 +6,12 @@
 # https://github.com/nix-community/NixOS-WSL
 
 { self, ... }:
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   wsl = {

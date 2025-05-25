@@ -1,4 +1,9 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
 let
   cfg = config.paul.homepage-dashboard;
@@ -30,10 +35,9 @@ in
     };
   };
 
-
-  config = mkIf cfg.enable (mkMerge [{
-    services.homepage-dashboard =
-      {
+  config = mkIf cfg.enable (mkMerge [
+    {
+      services.homepage-dashboard = {
         enable = true;
         openFirewall = cfg.openFirewall;
         listenPort = cfg.port;
@@ -102,50 +106,59 @@ in
               target = "_blank";
             };
           }
-          /* # this requires a click on the widget to get the location permissions, wich is really annoying, maybe use private module to store my home location?
+          /*
+            # this requires a click on the widget to get the location permissions, wich is really annoying, maybe use private module to store my home location?
             {
               openmeteo = {
                 units = "metric";
                 cache = "5";
               };
             }#
-            */
+          */
         ];
 
         bookmarks = [
           {
             MainBookmarks = [
               {
-                "File Browser" = [{
-                  abbr = "FB";
-                  icon = "filebrowser.png";
-                  href = "https://${config.paul.private.domains.filebrowser}";
-                  description = "File Browser";
-                }];
+                "File Browser" = [
+                  {
+                    abbr = "FB";
+                    icon = "filebrowser.png";
+                    href = "https://${config.paul.private.domains.filebrowser}";
+                    description = "File Browser";
+                  }
+                ];
               }
               {
-                "Speedtest" = [{
-                  abbr = "ST";
-                  icon = "openspeedtest.png";
-                  href = "https://${config.paul.private.domains.librespeedtest}";
-                  description = "Speedtest";
-                }];
+                "Speedtest" = [
+                  {
+                    abbr = "ST";
+                    icon = "openspeedtest.png";
+                    href = "https://${config.paul.private.domains.librespeedtest}";
+                    description = "Speedtest";
+                  }
+                ];
               }
               {
-                "TheLounge" = [{
-                  abbr = "TL";
-                  icon = "thelounge.png";
-                  href = "http://hawking:9337";
-                  description = "IRC";
-                }];
+                "TheLounge" = [
+                  {
+                    abbr = "TL";
+                    icon = "thelounge.png";
+                    href = "http://hawking:9337";
+                    description = "IRC";
+                  }
+                ];
               }
               {
-                "Uptime Kuma" = [{
-                  abbr = "UK";
-                  icon = "uptime-kuma.png";
-                  href = "https://morse:3001";
-                  description = "Uptime Kuma";
-                }];
+                "Uptime Kuma" = [
+                  {
+                    abbr = "UK";
+                    icon = "uptime-kuma.png";
+                    href = "https://morse:3001";
+                    description = "Uptime Kuma";
+                  }
+                ];
               }
             ];
           }
@@ -180,15 +193,15 @@ in
                 };
               }
               /*
-              {
-                UptimeKuma = {
-                  widget = {
-                    type = "uptimekuma";
-                    url = "http://uptime-kuma:3001";
-                    slug = "homepage-dashboard";
+                {
+                  UptimeKuma = {
+                    widget = {
+                      type = "uptimekuma";
+                      url = "http://uptime-kuma:3001";
+                      slug = "homepage-dashboard";
+                    };
                   };
-                };
-              }
+                }
               */
             ];
           }
@@ -324,41 +337,41 @@ in
         ];
       };
 
-    systemd.services.homepage-dashboard = {
-      environment = {
-        HOMEPAGE_CACHE_DIR = "/var/cache/homepage-dashboard";
+      systemd.services.homepage-dashboard = {
+        environment = {
+          HOMEPAGE_CACHE_DIR = "/var/cache/homepage-dashboard";
+        };
+        serviceConfig = {
+          CacheDirectory = "homepage-dashboard";
+          user = "homepage-dashboard";
+        };
       };
-      serviceConfig = {
-        CacheDirectory = "homepage-dashboard";
-        user = "homepage-dashboard";
+
+      users.users.homepage-dashboard = {
+        isSystemUser = true;
+        group = "homepage-dashboard";
+        extraGroups = [ "keys" ];
       };
-    };
+      users.groups.homepage-dashboard = { };
 
-    users.users.homepage-dashboard = {
-      isSystemUser = true;
-      group = "homepage-dashboard";
-      extraGroups = [ "keys" ];
-    };
-    users.groups.homepage-dashboard = { };
+      # homepage seems to cache this file somehow, it may sometimes be necessary to reboot for changes to take effect
+      lollypops.secrets.files."homepage-environment" = {
+        cmd = ''
+          echo "
+          HOMEPAGE_VAR_JELLYFIN_API_KEY=$(rbw get jellyfin-api-key-homepage)
+          HOMEPAGE_VAR_JELLYSEERR_API_KEY=$(rbw get jellyseerr-api-key)
+          HOMEPAGE_VAR_SONARR_API_KEY=$(rbw get sonarr-api-key)
+          HOMEPAGE_VAR_RADARR_API_KEY=$(rbw get radarr-api-key)
+          HOMEPAGE_VAR_PROWLARR_API_KEY=$(rbw get prowlarr-api-key)
+          HOMEPAGE_VAR_IMMICH_API_KEY=$(rbw get immich-api-key-homepage)
+          HOMEPAGE_VAR_TRUENAS_API_KEY=$(rbw get truenas-api-key-homepage)
+          HOMEPAGE_VAR_AUTHENTIK_API_TOKEN=$(rbw get authentik-api-token-homepage)
+          "'';
+        path = cfg.environmentFile;
+        owner = "homepage-dashboard";
+      };
 
-    # homepage seems to cache this file somehow, it may sometimes be necessary to reboot for changes to take effect
-    lollypops.secrets.files."homepage-environment" = {
-      cmd = ''
-        echo "
-        HOMEPAGE_VAR_JELLYFIN_API_KEY=$(rbw get jellyfin-api-key-homepage)
-        HOMEPAGE_VAR_JELLYSEERR_API_KEY=$(rbw get jellyseerr-api-key)
-        HOMEPAGE_VAR_SONARR_API_KEY=$(rbw get sonarr-api-key)
-        HOMEPAGE_VAR_RADARR_API_KEY=$(rbw get radarr-api-key)
-        HOMEPAGE_VAR_PROWLARR_API_KEY=$(rbw get prowlarr-api-key)
-        HOMEPAGE_VAR_IMMICH_API_KEY=$(rbw get immich-api-key-homepage)
-        HOMEPAGE_VAR_TRUENAS_API_KEY=$(rbw get truenas-api-key-homepage)
-        HOMEPAGE_VAR_AUTHENTIK_API_TOKEN=$(rbw get authentik-api-token-homepage)
-        "'';
-      path = cfg.environmentFile;
-      owner = "homepage-dashboard";
-    };
-
-  }
+    }
     (mkIf cfg.enableNginx {
       services.nginx.virtualHosts."${cfg.domain}" = {
         enableAuthentik = true;
@@ -372,7 +385,7 @@ in
 
       paul.dyndns.domains = [ cfg.domain ];
 
-    })]);
+    })
+  ]);
 
 }
-

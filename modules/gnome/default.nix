@@ -1,6 +1,12 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 with lib;
-let cfg = config.paul.gnome;
+let
+  cfg = config.paul.gnome;
 in
 {
 
@@ -19,19 +25,22 @@ in
     # services.xserver.displayManager.sddm.enable = true;
 
     services.xserver.desktopManager.gnome.enable = true;
-    environment.gnome.excludePackages = (with pkgs; [
-      atomix # puzzle game
-      epiphany
-      geary
-      gnome-initial-setup
-      gnome-music
-      gnome-photos
-      gnome-tour
-      hitori # sudoku game
-      iagno # go game
-      tali # poker game
-      yelp
-    ]);
+    environment.gnome.excludePackages = (
+      with pkgs;
+      [
+        atomix # puzzle game
+        epiphany
+        geary
+        gnome-initial-setup
+        gnome-music
+        gnome-photos
+        gnome-tour
+        hitori # sudoku game
+        iagno # go game
+        tali # poker game
+        yelp
+      ]
+    );
     programs.dconf.enable = true;
     environment.systemPackages = with pkgs; [
       gnome-tweaks

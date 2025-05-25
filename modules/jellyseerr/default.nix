@@ -1,6 +1,12 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.paul.jellyseerr;
+let
+  cfg = config.paul.jellyseerr;
 in
 {
 
@@ -27,12 +33,10 @@ in
     };
   };
 
-
   config = mkIf cfg.enable (mkMerge [
     {
       paul.sonarr.enable = true;
       paul.radarr.enable = true;
-
 
       services.jellyseerr = {
         enable = true;
@@ -45,7 +49,10 @@ in
 
     (mkIf cfg.enableNginx {
       paul.nginx.enable = true;
-      paul.dyndns.domains = mkIf cfg.enableDyndns [ cfg.domain config.paul.private.domains.jellyseerr_old ];
+      paul.dyndns.domains = mkIf cfg.enableDyndns [
+        cfg.domain
+        config.paul.private.domains.jellyseerr_old
+      ];
 
       services.nginx.virtualHosts."${cfg.domain}" = {
         enableACME = true;

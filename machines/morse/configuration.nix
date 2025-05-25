@@ -1,5 +1,10 @@
 { self, ... }:
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 {
   paul = {
     common-server.enable = true;
@@ -43,11 +48,13 @@
   # Configure console keymap
   console.keyMap = "de";
 
-
   services.tailscale = {
     enable = true;
     useRoutingFeatures = "server";
-    extraUpFlags = [ "--accept-dns=true" "--advertise-exit-node" ];
+    extraUpFlags = [
+      "--accept-dns=true"
+      "--advertise-exit-node"
+    ];
   };
 
   # This value determines the NixOS release from which the default

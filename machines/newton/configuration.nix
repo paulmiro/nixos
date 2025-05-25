@@ -10,7 +10,10 @@
   paul = {
     common-desktop.enable = true;
     gnome.enable = true;
-    nvidia = { enable = true; laptop = true; };
+    nvidia = {
+      enable = true;
+      laptop = true;
+    };
     grub.enable = true;
     syncthing.enable = true;
     adb.enable = true;
@@ -56,9 +59,12 @@
   services.tailscale = {
     enable = true;
     useRoutingFeatures = "client";
-    extraUpFlags = [ "--accept-routes" "--operator=paulmiro" ];
+    extraUpFlags = [
+      "--accept-routes"
+      "--operator=paulmiro"
+    ];
   };
-  
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -70,7 +76,6 @@
   ];
 
   hardware.keyboard.qmk.enable = true;
-
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

@@ -1,12 +1,20 @@
-{ pkgs, lib, config, ... }:
-let global-config = config; in
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
-  vhostOptions = { config, ... }: {
-    options = {
-      enableAuthentik = lib.mkEnableOption "Enable Authentik Proxy";
-    };
-    config =
-      lib.mkIf config.enableAuthentik {
+  global-config = config;
+in
+let
+  vhostOptions =
+    { config, ... }:
+    {
+      options = {
+        enableAuthentik = lib.mkEnableOption "Enable Authentik Proxy";
+      };
+      config = lib.mkIf config.enableAuthentik {
         locations."/".extraConfig = ''
           auth_request     /outpost.goauthentik.io/auth/nginx;
           error_page       401 = @goauthentik_proxy_signin;
@@ -47,7 +55,7 @@ let
           # return 302 https://${global-config.paul.private.domains.authentik}/outpost.goauthentik.io/start?rd=$scheme://$http_host$request_uri;
         '';
       };
-  };
+    };
 in
 {
   options.services.nginx.virtualHosts = lib.mkOption {

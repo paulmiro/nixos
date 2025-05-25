@@ -1,5 +1,11 @@
-{ config, lib, pkgs, ... }:
-let cfg = config.paul.mealie;
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+let
+  cfg = config.paul.mealie;
 in
 {
   options.paul.mealie = {

@@ -1,6 +1,12 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.paul.postgres;
+let
+  cfg = config.paul.postgres;
 in
 {
 
@@ -8,19 +14,17 @@ in
     enable = mkEnableOption "activate postgres";
   };
 
-
-  config = mkIf cfg.enable
-    {
-      services.postgresql = {
-        enable = true;
-      };
-
-      services.postgresqlBackup = {
-        enable = true;
-        backupAll = true;
-        location = "/mnt/nfs/postgres_backup";
-      };
-
-      paul.nfs-mounts.enablePostgresBackup = true;
+  config = mkIf cfg.enable {
+    services.postgresql = {
+      enable = true;
     };
+
+    services.postgresqlBackup = {
+      enable = true;
+      backupAll = true;
+      location = "/mnt/nfs/postgres_backup";
+    };
+
+    paul.nfs-mounts.enablePostgresBackup = true;
+  };
 }

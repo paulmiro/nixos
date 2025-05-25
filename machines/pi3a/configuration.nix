@@ -1,6 +1,18 @@
 { self, ... }:
-{ pkgs, lib, config, modulesPath, flake-self, home-manager, nixos-hardware, nixpkgs, ... }:
-let private = config.paul.private; in
+{
+  pkgs,
+  lib,
+  config,
+  modulesPath,
+  flake-self,
+  home-manager,
+  nixos-hardware,
+  nixpkgs,
+  ...
+}:
+let
+  private = config.paul.private;
+in
 {
 
   paul = {

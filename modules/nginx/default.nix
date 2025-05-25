@@ -1,4 +1,9 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
 let
   cfg = config.paul.nginx;
@@ -26,7 +31,10 @@ in
     security.acme.defaults.email = config.paul.private.emails.proton;
     security.acme.acceptTerms = true;
 
-    networking.firewall.allowedTCPPorts = mkIf cfg.openFirewall [ 80 443 ];
+    networking.firewall.allowedTCPPorts = mkIf cfg.openFirewall [
+      80
+      443
+    ];
 
     services.nginx = {
       enable = true;
@@ -62,7 +70,10 @@ in
     paul.dyndns = mkIf cfg.openFirewall {
       # dyndns is pretty much useless without the opened ports
       enable = true;
-      domains = [ cfg.defaultDomain "*.${cfg.defaultDomain}" ];
+      domains = [
+        cfg.defaultDomain
+        "*.${cfg.defaultDomain}"
+      ];
     };
   };
 }

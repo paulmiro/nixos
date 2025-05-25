@@ -1,6 +1,12 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.paul.programs.development;
+let
+  cfg = config.paul.programs.development;
 in
 {
   options.paul.programs.development = {
@@ -64,11 +70,13 @@ in
     })
     (mkIf cfg.python {
       home.packages = with pkgs; [
-        (python3.withPackages (ps: with ps; [
-          requests
-          numpy
-          jupyter
-        ]))
+        (python3.withPackages (
+          ps: with ps; [
+            requests
+            numpy
+            jupyter
+          ]
+        ))
       ];
     })
   ];

@@ -1,4 +1,11 @@
-{ pkgs, lib, config, system-config, flake-self, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  system-config,
+  flake-self,
+  ...
+}:
 with lib;
 {
   config = {
@@ -25,46 +32,48 @@ with lib;
     };
 
     # Install these packages for my user
-    home.packages = with pkgs; [
-      anki
-      audacity
-      discord
-      element-desktop
-      gnome-graphs
-      gparted
-      inkscape
-      jellyfin-mpv-shim
-      krita
-      libreoffice
-      mattermost-desktop
-      mixxx
-      mpv
-      obs-studio
-      obsidian
-      oneko
-      onlyoffice-bin
-      pomodoro-gtk
-      prusa-slicer
-      orca-slicer
-      rnote
-      signal-desktop
-      sl
-      spotify
-      switcheroo
-      textpieces
-      thunderbird-bin
-      tor-browser
-      ungoogled-chromium
-      whatsapp-for-linux
-      vdhcoapp
-      xournalpp
-      zoom-us
+    home.packages =
+      with pkgs;
+      [
+        anki
+        audacity
+        discord
+        element-desktop
+        gnome-graphs
+        gparted
+        inkscape
+        jellyfin-mpv-shim
+        krita
+        libreoffice
+        mattermost-desktop
+        mixxx
+        mpv
+        obs-studio
+        obsidian
+        oneko
+        onlyoffice-bin
+        pomodoro-gtk
+        prusa-slicer
+        orca-slicer
+        rnote
+        signal-desktop
+        sl
+        spotify
+        switcheroo
+        textpieces
+        thunderbird-bin
+        tor-browser
+        ungoogled-chromium
+        whatsapp-for-linux
+        vdhcoapp
+        xournalpp
+        zoom-us
 
-      flake-self.inputs.zen-browser.packages.${system}.default
-    ]
-    # only install these packages on x86_64-linux systems
-    ++ lib.optionals (system-config.nixpkgs.hostPlatform.isx86_64) [
-      nvtopPackages.full
-    ];
+        flake-self.inputs.zen-browser.packages.${system}.default
+      ]
+      # only install these packages on x86_64-linux systems
+      ++ lib.optionals (system-config.nixpkgs.hostPlatform.isx86_64) [
+        nvtopPackages.full
+      ];
   };
 }

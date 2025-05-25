@@ -1,4 +1,9 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 let
   cfg = config.paul.microsocks;
   authPasswordFile = "/run/keys/microsocks-auth-password";

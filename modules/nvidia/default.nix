@@ -1,6 +1,12 @@
-{ pkgs, config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 with lib;
-let cfg = config.paul.nvidia;
+let
+  cfg = config.paul.nvidia;
 in
 {
   options.paul.nvidia = {
@@ -30,9 +36,11 @@ in
       graphics = {
         enable = true;
         enable32Bit = true;
-        extraPackages = with pkgs; mkIf cfg.laptop [
-          vaapiVdpau
-        ];
+        extraPackages =
+          with pkgs;
+          mkIf cfg.laptop [
+            vaapiVdpau
+          ];
       };
 
       nvidia = {
@@ -48,9 +56,9 @@ in
 
         # Use the NVidia open source kernel module (not to be confused with the
         # independent third-party "nouveau" open source driver).
-        # Support is limited to the Turing and later architectures. Full list of 
-        # supported GPUs is at: 
-        # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus 
+        # Support is limited to the Turing and later architectures. Full list of
+        # supported GPUs is at:
+        # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus
         # Only available from driver 515.43.04+
         # Do not disable this unless your GPU is unsupported or if you have a good reason to.
         open = false;

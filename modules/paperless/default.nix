@@ -1,6 +1,7 @@
 { lib, config, ... }:
 with lib;
-let cfg = config.paul.paperless;
+let
+  cfg = config.paul.paperless;
 in
 {
 

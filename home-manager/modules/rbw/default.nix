@@ -1,6 +1,13 @@
-{ lib, pkgs, config, system-config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  system-config,
+  ...
+}:
 with lib;
-let cfg = config.paul.programs.rbw;
+let
+  cfg = config.paul.programs.rbw;
 in
 {
   options.paul.programs.rbw.enable = mkEnableOption "enable rbw, an alternative to bitwaren-cli";

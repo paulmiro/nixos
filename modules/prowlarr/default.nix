@@ -1,6 +1,12 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.paul.prowlarr;
+let
+  cfg = config.paul.prowlarr;
 in
 {
 

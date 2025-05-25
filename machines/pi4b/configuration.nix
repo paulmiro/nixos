@@ -1,9 +1,20 @@
 # to remotely deploy while building on your system:
-# nixos-rebuild switch --flake '.#pi4b' --target-host 'root@192.182.X.X' -L 
+# nixos-rebuild switch --flake '.#pi4b' --target-host 'root@192.182.X.X' -L
 # to build the SD image:
 # nix build .\#nixosConfigurations.pi4b.config.system.build.sdImage
 { self, ... }:
-{ pkgs, lib, config, modulesPath, flake-self, home-manager, nixos-hardware, nixpkgs, ... }: {
+{
+  pkgs,
+  lib,
+  config,
+  modulesPath,
+  flake-self,
+  home-manager,
+  nixos-hardware,
+  nixpkgs,
+  ...
+}:
+{
 
   paul = {
     common-server.enable = true;
@@ -30,8 +41,7 @@
   # remove this once the issue is fixed!
   nixpkgs.overlays = [
     (final: super: {
-      makeModulesClosure = x:
-        super.makeModulesClosure (x // { allowMissing = true; });
+      makeModulesClosure = x: super.makeModulesClosure (x // { allowMissing = true; });
     })
   ];
   ###
@@ -42,7 +52,7 @@
   };
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
-  
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It's perfectly fine and recommended to leave

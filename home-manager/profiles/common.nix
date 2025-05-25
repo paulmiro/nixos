@@ -1,4 +1,11 @@
-{ config, pkgs, lib, flake-self, system-config, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  flake-self,
+  system-config,
+  ...
+}:
 with lib;
 {
   config = {

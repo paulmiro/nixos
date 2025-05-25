@@ -1,6 +1,13 @@
-{ lib, pkgs, config, self, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  self,
+  ...
+}:
 with lib;
-let cfg = config.paul.dyndns;
+let
+  cfg = config.paul.dyndns;
 in
 {
 
@@ -27,14 +34,16 @@ in
       ipv6 = false;
       domains = cfg.domains;
       # TODO remove this when a new release (>5.3) is released on nixpkgs-unstable
-      package = (pkgs.cloudflare-dyndns.overrideAttrs (old: {
-        src = pkgs.fetchFromGitHub {
-          owner = "kissgyorgy";
-          repo = "cloudflare-dyndns";
-          rev = "ad970df12e235c7fd473a922f663d912ba7107fc";
-          sha256 = "sha256-jLmGPwCcIJLNw+XgjYfkFhHfzIRtLArjt8WiHKqYR2s=";
-        };
-      }));
+      package = (
+        pkgs.cloudflare-dyndns.overrideAttrs (old: {
+          src = pkgs.fetchFromGitHub {
+            owner = "kissgyorgy";
+            repo = "cloudflare-dyndns";
+            rev = "ad970df12e235c7fd473a922f663d912ba7107fc";
+            sha256 = "sha256-jLmGPwCcIJLNw+XgjYfkFhHfzIRtLArjt8WiHKqYR2s=";
+          };
+        })
+      );
     };
 
     lollypops.secrets.files."cloudflare-api-token" = {

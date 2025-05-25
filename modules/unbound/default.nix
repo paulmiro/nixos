@@ -1,11 +1,20 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 with lib;
 let
   cfg = config.paul.unbound;
-  dns-overwrites-config = builtins.toFile "dns-overwrites.conf" (''
-    # DNS overwrites
-  '' + concatStringsSep "\n"
-    (mapAttrsToList (n: v: "local-data: \"${n} A ${toString v}\"") cfg.A-records));
+  dns-overwrites-config = builtins.toFile "dns-overwrites.conf" (
+    ''
+      # DNS overwrites
+    ''
+    + concatStringsSep "\n" (
+      mapAttrsToList (n: v: "local-data: \"${n} A ${toString v}\"") cfg.A-records
+    )
+  );
 in
 {
 

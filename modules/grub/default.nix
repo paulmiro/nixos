@@ -1,6 +1,12 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.paul.grub;
+let
+  cfg = config.paul.grub;
 in
 {
   options.paul.grub = {

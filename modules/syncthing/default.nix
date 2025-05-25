@@ -1,6 +1,7 @@
 { lib, config, ... }:
 with lib;
-let cfg = config.paul.syncthing;
+let
+  cfg = config.paul.syncthing;
 in
 {
 
@@ -20,8 +21,12 @@ in
       settings = {
 
         devices = {
-          "bell" = { id = "A7SHOWS-TWZ44IH-IHTFLKW-S6VXXYM-G5PVEHJ-RSMBZIB-O5AFW6B-3QCFHQL"; };
-          "newton" = { id = "GO53PCT-CGJPNMT-NWTGQ5D-REHZFXK-V4P4FRA-EUCLMA7-GB33L5T-ESJLDAQ"; };
+          "bell" = {
+            id = "A7SHOWS-TWZ44IH-IHTFLKW-S6VXXYM-G5PVEHJ-RSMBZIB-O5AFW6B-3QCFHQL";
+          };
+          "newton" = {
+            id = "GO53PCT-CGJPNMT-NWTGQ5D-REHZFXK-V4P4FRA-EUCLMA7-GB33L5T-ESJLDAQ";
+          };
         };
         folders = {
           "Obsidian" = {

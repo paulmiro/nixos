@@ -1,10 +1,18 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.paul.fonts;
+let
+  cfg = config.paul.fonts;
 in
 {
 
-  options.paul.fonts = { enable = mkEnableOption "activate fonts"; };
+  options.paul.fonts = {
+    enable = mkEnableOption "activate fonts";
+  };
 
   config = mkIf cfg.enable {
 

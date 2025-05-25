@@ -1,6 +1,12 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.paul.flaresolverr;
+let
+  cfg = config.paul.flaresolverr;
 in
 {
 
@@ -15,7 +21,7 @@ in
     };
   };
 
-    config = mkIf cfg.enable {
+  config = mkIf cfg.enable {
     services.flaresolverr = {
       enable = true;
       openFirewall = cfg.openFirewall;

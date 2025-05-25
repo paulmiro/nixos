@@ -1,6 +1,12 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.paul.audiobookshelf;
+let
+  cfg = config.paul.audiobookshelf;
 in
 {
 
@@ -26,7 +32,6 @@ in
       description = "domain name for audiobookshelf";
     };
   };
-
 
   config = mkIf cfg.enable (mkMerge [
     {

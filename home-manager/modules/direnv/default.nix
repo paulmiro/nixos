@@ -1,6 +1,12 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.paul.programs.direnv;
+let
+  cfg = config.paul.programs.direnv;
 in
 {
 
@@ -17,7 +23,9 @@ in
         enableZshIntegration = true;
         nix-direnv.enable = true;
       };
-      git = { ignores = [ ".direnv/" ]; };
+      git = {
+        ignores = [ ".direnv/" ];
+      };
       # vscode = { extensions = with pkgs.vscode-extensions; [ mkhl.direnv ]; };
     };
 

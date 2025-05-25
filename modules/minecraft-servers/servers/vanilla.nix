@@ -1,6 +1,14 @@
-{ lib, pkgs, config, nix-minecraft, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  nix-minecraft,
+  ...
+}:
 with lib;
-let cfg = config.paul.minecraft-servers.vanilla; in
+let
+  cfg = config.paul.minecraft-servers.vanilla;
+in
 {
   options.paul.minecraft-servers.vanilla = {
     enable = mkEnableOption "activate Vanilla Minecraft Server";

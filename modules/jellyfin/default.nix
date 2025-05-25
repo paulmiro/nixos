@@ -1,6 +1,12 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.paul.jellyfin;
+let
+  cfg = config.paul.jellyfin;
 in
 {
 
@@ -37,26 +43,26 @@ in
       };
 
       /*
-      // This needs some really complicated migration
-      // https://jellyfin.org/docs/general/administration/migrate/
-      // the script only works on windows, so this will propably be way too much work to be worth it
+        // This needs some really complicated migration
+        // https://jellyfin.org/docs/general/administration/migrate/
+        // the script only works on windows, so this will propably be way too much work to be worth it
 
-      services.jellyfin = {
-        enable = true;
-        dataDir = "/mnt/nfs/jellyfin";
-        openFirewall = cfg.openFirewall;
-      };
+        services.jellyfin = {
+          enable = true;
+          dataDir = "/mnt/nfs/jellyfin";
+          openFirewall = cfg.openFirewall;
+        };
 
-      users.users."jellyfin".uid = 4001;
-      users.groups."jellyfin".gid = 4001;
+        users.users."jellyfin".uid = 4001;
+        users.groups."jellyfin".gid = 4001;
 
-      systemd.services.jellyfin = {
-        after = [
-          "mnt-nfs-arr.mount"
-          "mnt-nfs-jellyfin.mount"
-          "remote-fs.target"
-        ];
-      };
+        systemd.services.jellyfin = {
+          after = [
+            "mnt-nfs-arr.mount"
+            "mnt-nfs-jellyfin.mount"
+            "remote-fs.target"
+          ];
+        };
       */
 
       virtualisation.oci-containers.backend = "docker";
@@ -68,16 +74,19 @@ in
           "/mnt/nfs/jellyfin/cache:/cache"
           "/mnt/nfs/arr/media:/data/media:ro"
         ];
-        extraOptions = [
-          "--network=host"
-        ] ++ lib.optionals (cfg.enableQuickSync) [
-          # get group ID with: `getent group render | cut -d: -f3`
-          "--group-add=303"
-          "--device=/dev/dri/renderD128:/dev/dri/renderD128"
-        ] ++ lib.optionals (config.paul.nvidia.enable) [
-          "--gpus"
-          "all"
-        ];
+        extraOptions =
+          [
+            "--network=host"
+          ]
+          ++ lib.optionals (cfg.enableQuickSync) [
+            # get group ID with: `getent group render | cut -d: -f3`
+            "--group-add=303"
+            "--device=/dev/dri/renderD128:/dev/dri/renderD128"
+          ]
+          ++ lib.optionals (config.paul.nvidia.enable) [
+            "--gpus"
+            "all"
+          ];
       };
 
       systemd.services.docker-jellyfin = {
@@ -93,8 +102,10 @@ in
 
     (mkIf cfg.enableNginx {
       paul.nginx.enable = true;
-      paul.dyndns.domains = mkIf cfg.enableDyndns [ cfg.domain config.paul.private.domains.jellyfin_old ];
-
+      paul.dyndns.domains = mkIf cfg.enableDyndns [
+        cfg.domain
+        config.paul.private.domains.jellyfin_old
+      ];
 
       services.nginx.virtualHosts."${cfg.domain}" = {
         enableACME = true;

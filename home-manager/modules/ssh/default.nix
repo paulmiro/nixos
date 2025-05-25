@@ -1,6 +1,12 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.paul.programs.ssh;
+let
+  cfg = config.paul.programs.ssh;
 in
 {
   options.paul.programs.ssh.enable = mkEnableOption "enable ssh";

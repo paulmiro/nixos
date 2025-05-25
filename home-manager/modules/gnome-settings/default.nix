@@ -1,6 +1,13 @@
-{ lib, pkgs, config, system-config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  system-config,
+  ...
+}:
 with lib;
-let cfg = config.paul.programs.gnome-settings;
+let
+  cfg = config.paul.programs.gnome-settings;
 in
 {
   options.paul.programs.gnome-settings.enable =
@@ -25,16 +32,16 @@ in
     gtk = {
       enable = true;
       /*
-      theme = {
-        name = "Orchis-Grey-Dark";
-        package = (pkgs.orchis-theme).override {
-          border-radius = 5;
+        theme = {
+          name = "Orchis-Grey-Dark";
+          package = (pkgs.orchis-theme).override {
+            border-radius = 5;
+          };
         };
-      };
-      iconTheme = {
-        name = "Tela-orange-dark";
-        package = pkgs.tela-icon-theme;
-      };
+        iconTheme = {
+          name = "Tela-orange-dark";
+          package = pkgs.tela-icon-theme;
+        };
       */
       cursorTheme = {
         name = "capitaine-cursors";
@@ -49,7 +56,7 @@ in
           "zen.desktop"
           "code.desktop"
           (
-            #if config.paul.programs.ghostty.enable then "com.mitchellh.ghostty.desktop" else 
+            #if config.paul.programs.ghostty.enable then "com.mitchellh.ghostty.desktop" else
             "org.gnome.Console.desktop"
           )
           "org.gnome.Nautilus.desktop"
@@ -115,8 +122,14 @@ in
 
       "org/gnome/desktop/input-sources" = {
         sources = [
-          (lib.gvariant.mkTuple [ "xkb" "de" ])
-          (lib.gvariant.mkTuple [ "xkb" "us" ])
+          (lib.gvariant.mkTuple [
+            "xkb"
+            "de"
+          ])
+          (lib.gvariant.mkTuple [
+            "xkb"
+            "us"
+          ])
         ];
       };
 
@@ -131,7 +144,11 @@ in
 
       # extension settings
       "org/gnome/shell/extensions/vitals" = {
-        hot-sensors = [ "_processor_usage_" "_memory_usage_" "__temperature_max__" ];
+        hot-sensors = [
+          "_processor_usage_"
+          "_memory_usage_"
+          "__temperature_max__"
+        ];
         show-temperature = true;
         show-voltage = false;
         show-fan = false;
@@ -202,4 +219,3 @@ in
     };
   };
 }
-

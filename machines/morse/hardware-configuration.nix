@@ -1,5 +1,13 @@
-{ config, lib, pkgs, modulesPath, ... }:
-let primaryDisk = "/dev/vda"; in
+{
+  config,
+  lib,
+  pkgs,
+  modulesPath,
+  ...
+}:
+let
+  primaryDisk = "/dev/vda";
+in
 {
   services.qemuGuest.enable = true;
 
@@ -8,10 +16,12 @@ let primaryDisk = "/dev/vda"; in
     interval = "weekly";
   };
 
-  swapDevices = [{
-    device = "/var/lib/swapfile";
-    size = 8 * 1024;
-  }];
+  swapDevices = [
+    {
+      device = "/var/lib/swapfile";
+      size = 8 * 1024;
+    }
+  ];
 
   # We want to standardize our partitions and bootloaders across all providers.
   # -> BIOS boot partition

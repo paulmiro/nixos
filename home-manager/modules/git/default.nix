@@ -1,6 +1,12 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.paul.programs.git;
+let
+  cfg = config.paul.programs.git;
 in
 {
   options.paul.programs.git.enable = mkEnableOption "enable git";

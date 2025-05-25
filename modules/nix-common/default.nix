@@ -1,6 +1,14 @@
-{ config, pkgs, lib, flake-self, nixpkgs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  flake-self,
+  nixpkgs,
+  ...
+}:
 with lib;
-let cfg = config.paul.nix-common;
+let
+  cfg = config.paul.nix-common;
 in
 {
 
@@ -57,7 +65,10 @@ in
         substituters = mkIf (cfg.disable-cache != true) [
           "https://cache.lounge.rocks/nix-cache"
         ];
-        trusted-users = [ "root" "@wheel" ];
+        trusted-users = [
+          "root"
+          "@wheel"
+        ];
 
         # Users allowed to run nix
         allowed-users = [ "root" ];

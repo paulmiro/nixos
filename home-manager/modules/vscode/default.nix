@@ -1,6 +1,12 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.paul.programs.vscode;
+let
+  cfg = config.paul.programs.vscode;
 in
 {
   options.paul.programs.vscode.enable = mkEnableOption "enable vscode";

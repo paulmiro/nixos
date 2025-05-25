@@ -1,6 +1,12 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.paul.programs.vscodium;
+let
+  cfg = config.paul.programs.vscodium;
 in
 {
   options.paul.programs.vscodium.enable = mkEnableOption "enable vscodium";

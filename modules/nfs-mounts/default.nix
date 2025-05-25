@@ -1,6 +1,12 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.paul.nfs-mounts;
+let
+  cfg = config.paul.nfs-mounts;
 in
 {
 

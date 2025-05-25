@@ -1,10 +1,18 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
-let cfg = config.paul.docker;
+let
+  cfg = config.paul.docker;
 in
 {
 
-  options.paul.docker = { enable = mkEnableOption "activate docker"; };
+  options.paul.docker = {
+    enable = mkEnableOption "activate docker";
+  };
 
   config = mkIf cfg.enable {
 
@@ -23,7 +31,7 @@ in
       backend = "docker";
     };
 
-    users.extraGroups.docker.members = mkIf config.paul.user.paulmiro.enable[ "paulmiro" ];
+    users.extraGroups.docker.members = mkIf config.paul.user.paulmiro.enable [ "paulmiro" ];
 
   };
 }
