@@ -84,7 +84,7 @@
     {
 
       formatter = forAllSystems
-        (system: nixpkgsFor.${system}.nixpkgs-fmt);
+        (system: nixpkgsFor.${system}.nixfmt-rfc-style); # TODO: change to "nixfmt" once it is replaced
 
       packages = forAllSystems (system:
         let pkgs = nixpkgsFor.${system}; in {

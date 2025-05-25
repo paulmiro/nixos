@@ -35,7 +35,7 @@ in
       #     "serverSettings" = {
       #       "nil" = {
       #         "formatting" = {
-      #           "command" = [ "${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt" ];
+      #           "command" = [ "${pkgs.nixfmt-rfc-style}/bin/nixfmt" ];
       #         };
       #       };
       #     };
