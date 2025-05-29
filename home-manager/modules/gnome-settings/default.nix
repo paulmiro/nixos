@@ -214,7 +214,10 @@ in
       "org/gnome/tweaks" = {
         show-extensions-notice = false; # annoying popup
       };
-    };
 
+      "org/gnome/desktop/notifications/application/spotify" = {
+        enable = false; # to prevent the current song showing up twice in the panel
+      };
+    };
   };
 }
