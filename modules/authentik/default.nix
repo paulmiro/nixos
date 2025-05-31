@@ -1,4 +1,5 @@
 {
+  authentik-nix,
   config,
   lib,
   ...
@@ -7,7 +8,10 @@ let
   cfg = config.paul.authentik;
 in
 {
-  imports = [ ./vhostOptions.nix ];
+  imports = [
+    authentik-nix.nixosModules.default
+    ./vhostOptions.nix
+  ];
 
   options.paul.authentik = with lib; {
     enable = mkEnableOption "activate authentik";

@@ -1,6 +1,7 @@
 {
   config,
   flake-self,
+  home-manager,
   lib,
   ...
 }:
@@ -8,6 +9,10 @@ let
   cfg = config.paul.common-desktop;
 in
 {
+  imports = [
+    home-manager.nixosModules.home-manager
+  ];
+
   options.paul.common-desktop = {
     enable = lib.mkEnableOption "contains configuration that is common to all systems with a desktop environment";
   };

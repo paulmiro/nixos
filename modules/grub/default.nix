@@ -1,5 +1,6 @@
 {
   config,
+  grub2-themes,
   lib,
   ...
 }:
@@ -7,6 +8,10 @@ let
   cfg = config.paul.grub;
 in
 {
+  imports = [
+    grub2-themes.nixosModules.default
+  ];
+
   options.paul.grub = {
     enable = lib.mkEnableOption "activate grub";
   };

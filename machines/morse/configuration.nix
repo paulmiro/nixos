@@ -1,6 +1,7 @@
 { self, ... }:
 {
   config,
+  disko,
   lib,
   pkgs,
   ...
@@ -33,6 +34,7 @@
 
   imports = [
     ./hardware-configuration.nix
+    disko.nixosModules.disko
   ];
 
   # enable all the firmware with a license allowing redistribution
