@@ -1,9 +1,6 @@
-{ self, ... }:
 {
   config,
-  disko,
   lib,
-  pkgs,
   ...
 }:
 {
@@ -34,8 +31,9 @@
 
   imports = [
     ./hardware-configuration.nix
-    disko.nixosModules.disko
   ];
+
+  clan.core.networking.targetHost = "morse.${config.paul.private.domains.base}";
 
   # enable all the firmware with a license allowing redistribution
   hardware.enableRedistributableFirmware = true;
