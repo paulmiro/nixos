@@ -354,21 +354,22 @@ in
         users.groups.homepage-dashboard = { };
 
         # homepage seems to cache this file somehow, it may sometimes be necessary to reboot for changes to take effect
-        lollypops.secrets.files."homepage-environment" = {
-          cmd = ''
-            echo "
-            HOMEPAGE_VAR_JELLYFIN_API_KEY=$(rbw get jellyfin-api-key-homepage)
-            HOMEPAGE_VAR_JELLYSEERR_API_KEY=$(rbw get jellyseerr-api-key)
-            HOMEPAGE_VAR_SONARR_API_KEY=$(rbw get sonarr-api-key)
-            HOMEPAGE_VAR_RADARR_API_KEY=$(rbw get radarr-api-key)
-            HOMEPAGE_VAR_PROWLARR_API_KEY=$(rbw get prowlarr-api-key)
-            HOMEPAGE_VAR_IMMICH_API_KEY=$(rbw get immich-api-key-homepage)
-            HOMEPAGE_VAR_TRUENAS_API_KEY=$(rbw get truenas-api-key-homepage)
-            HOMEPAGE_VAR_AUTHENTIK_API_TOKEN=$(rbw get authentik-api-token-homepage)
-            "'';
-          path = cfg.environmentFile;
-          owner = "homepage-dashboard";
-        };
+        # TODO: replace with clan secrets
+        # lollypops.secrets.files."homepage-environment" = {
+        #   cmd = ''
+        #     echo "
+        #     HOMEPAGE_VAR_JELLYFIN_API_KEY=$(rbw get jellyfin-api-key-homepage)
+        #     HOMEPAGE_VAR_JELLYSEERR_API_KEY=$(rbw get jellyseerr-api-key)
+        #     HOMEPAGE_VAR_SONARR_API_KEY=$(rbw get sonarr-api-key)
+        #     HOMEPAGE_VAR_RADARR_API_KEY=$(rbw get radarr-api-key)
+        #     HOMEPAGE_VAR_PROWLARR_API_KEY=$(rbw get prowlarr-api-key)
+        #     HOMEPAGE_VAR_IMMICH_API_KEY=$(rbw get immich-api-key-homepage)
+        #     HOMEPAGE_VAR_TRUENAS_API_KEY=$(rbw get truenas-api-key-homepage)
+        #     HOMEPAGE_VAR_AUTHENTIK_API_TOKEN=$(rbw get authentik-api-token-homepage)
+        #     "'';
+        #   path = cfg.environmentFile;
+        #   owner = "homepage-dashboard";
+        # };
 
       }
       (lib.mkIf cfg.enableNginx {

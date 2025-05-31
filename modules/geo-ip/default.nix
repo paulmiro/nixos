@@ -55,11 +55,13 @@ in
     # to fix this, three steps are needed:
     # 1. comment out this secrets block and deploy, ignore the error
     # 2. uncomment and deploy again
-    lollypops.secrets.files."maxmind-license-key" = {
-      cmd = "rbw get maxmind-license-key";
-      path = cfg.licenseKeyFile;
-      owner = "geoip";
-    };
+
+    # TODO: replace with clan secrets
+    # lollypops.secrets.files."maxmind-license-key" = {
+    #   cmd = "rbw get maxmind-license-key";
+    #   path = cfg.licenseKeyFile;
+    #   owner = "geoip";
+    # };
 
     # build nginx with geoip2 module
     services.nginx = {

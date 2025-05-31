@@ -42,10 +42,12 @@ in
     # 1. comment out this secrets block and deploy
     # 2. uncomment and deploy again
     # 3. (if needed) sudo systemctl restart microsocs.service
-    lollypops.secrets.files."microsocks-auth-password" = {
-      cmd = "rbw get microsocks-auth-password";
-      path = cfg.authPasswordFile;
-      owner = "microsocks";
-    };
+
+    # TODO: replace with clan secrets
+    # lollypops.secrets.files."microsocks-auth-password" = {
+    #   cmd = "rbw get microsocks-auth-password";
+    #   path = cfg.authPasswordFile;
+    #   owner = "microsocks";
+    # };
   };
 }

@@ -43,9 +43,10 @@ in
       );
     };
 
-    lollypops.secrets.files."cloudflare-api-token" = {
-      cmd = "rbw get cloudflare-api-token-edit-dns-all";
-      path = cfg.apiTokenFile;
-    };
+    # TODO: replace with clan secrets
+    # lollypops.secrets.files."cloudflare-api-token" = {
+    #   cmd = "rbw get cloudflare-api-token-edit-dns-all";
+    #   path = cfg.apiTokenFile;
+    # };
   };
 }
