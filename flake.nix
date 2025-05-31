@@ -29,13 +29,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # NixOS Deployment Tool
-    # https://github.com/pinpox/lollypops/
-    lollypops = {
-      url = "github:pinpox/lollypops";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     # NixOS on the Windows Subsystem for Linux
     # https://github.com/nix-community/NixOS-WSL
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
@@ -48,7 +41,6 @@
       inputs = {
         disko.follows = "disko";
         home-manager.follows = "home-manager";
-        lollypops.follows = "lollypops";
         nixos-hardware.follows = "nixos-hardware";
         nixpkgs.follows = "nixpkgs";
       };
@@ -115,10 +107,6 @@
         }
       );
 
-      apps = forAllSystems (system: {
-        lollypops = lollypops.apps.${system}.default { configFlake = self; };
-      });
-
       # Output all modules in ./modules to flake. Modules should be in
       # individual subdirectories and contain a default.nix file
       nixosModules = builtins.listToAttrs (
@@ -146,7 +134,6 @@
 
             modules = [
               home-manager.nixosModules.home-manager
-              lollypops.nixosModules.lollypops
               authentik-nix.nixosModules.default
               nixos-wsl.nixosModules.default
               grub2-themes.nixosModules.default

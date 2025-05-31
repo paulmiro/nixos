@@ -42,14 +42,15 @@ in
 
     users.groups.gotify-server = { };
 
-    lollypops.secrets.files."gotify-env" = {
-      cmd = ''
-        echo "
-        GOTIFY_DEFAULTUSER_NAME=admin
-        GOTIFY_DEFAULTUSER_PASS="$(rbw get gotify-admin-password)"
-        "'';
-      path = environmentFile;
-    };
+    # TODO: replace with clan secrets
+    # lollypops.secrets.files."gotify-env" = {
+    #   cmd = ''
+    #     echo "
+    #     GOTIFY_DEFAULTUSER_NAME=admin
+    #     GOTIFY_DEFAULTUSER_PASS="$(rbw get gotify-admin-password)"
+    #     "'';
+    #   path = environmentFile;
+    # };
 
     paul.dyndns.domains = lib.mkIf cfg.enableNginx [ cfg.domain ];
 

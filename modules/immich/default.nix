@@ -66,13 +66,14 @@ in
 
         networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [ cfg.port ];
 
-        lollypops.secrets.files."immich-environment" = {
-          cmd = ''
-            echo "
-            DB_PASSWORD="$(rbw get immich-database-password)"
-            "'';
-          path = cfg.environmentFile;
-        };
+        # TODO: replace with clan secrets
+        # lollypops.secrets.files."immich-environment" = {
+        #   cmd = ''
+        #     echo "
+        #     DB_PASSWORD="$(rbw get immich-database-password)"
+        #     "'';
+        #   path = cfg.environmentFile;
+        # };
       }
 
       (lib.mkIf cfg.enableNginx {

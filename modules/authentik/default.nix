@@ -70,14 +70,15 @@ in
 
         networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [ 9443 ];
 
-        lollypops.secrets.files."authentik-environment" = {
-          cmd = ''
-            echo "
-            AUTHENTIK_SECRET_KEY="$(rbw get authentik-secret-key)"
-            AUTHENTIK_EMAIL__PASSWORD="$(rbw get authentik-email-password)"
-            "'';
-          path = cfg.environmentFile;
-        };
+        # TODO: replace with clan secrets
+        # lollypops.secrets.files."authentik-environment" = {
+        #   cmd = ''
+        #     echo "
+        #     AUTHENTIK_SECRET_KEY="$(rbw get authentik-secret-key)"
+        #     AUTHENTIK_EMAIL__PASSWORD="$(rbw get authentik-email-password)"
+        #     "'';
+        #   path = cfg.environmentFile;
+        # };
 
         paul.postgres.enable = true; # this enables database backups
       }
@@ -93,15 +94,16 @@ in
           636 # ldaps
         ];
 
-        lollypops.secrets.files."authentik-ldap-environment" = {
-          cmd = ''
-            echo "
-            AUTHENTIK_HOST="https://${cfg.domain}"
-            AUTHENTIK_TOKEN="$(rbw get authentik-ldap-token)"
-            AUTHENTIK_INSECURE="false"
-            "'';
-          path = cfg.environmentFileLdap;
-        };
+        # TODO: replace with clan secrets
+        # lollypops.secrets.files."authentik-ldap-environment" = {
+        #   cmd = ''
+        #     echo "
+        #     AUTHENTIK_HOST="https://${cfg.domain}"
+        #     AUTHENTIK_TOKEN="$(rbw get authentik-ldap-token)"
+        #     AUTHENTIK_INSECURE="false"
+        #     "'';
+        #   path = cfg.environmentFileLdap;
+        # };
       })
 
       (lib.mkIf cfg.enableNginx {
