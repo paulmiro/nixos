@@ -110,9 +110,9 @@
       # Output all modules in ./modules to flake. Modules should be in
       # individual subdirectories and contain a default.nix file
       nixosModules = builtins.listToAttrs (
-        map (x: {
-          name = x;
-          value = import (./modules + "/${x}");
+        map (name: {
+          inherit name;
+          value = import (./modules + "/${name}");
         }) (builtins.attrNames (builtins.readDir ./modules))
       );
 
