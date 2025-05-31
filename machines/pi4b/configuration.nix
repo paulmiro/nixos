@@ -1,17 +1,7 @@
-# to remotely deploy while building on your system:
-# nixos-rebuild switch --flake '.#pi4b' --target-host 'root@192.182.X.X' -L
-# to build the SD image:
-# nix build .\#nixosConfigurations.pi4b.config.system.build.sdImage
-{ self, ... }:
 {
-  config,
-  flake-self,
-  home-manager,
   lib,
   modulesPath,
   nixos-hardware,
-  nixpkgs,
-  pkgs,
   ...
 }:
 {

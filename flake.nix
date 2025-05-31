@@ -22,6 +22,14 @@
 
     ### Tools for managing NixOS infrastructure
 
+    # Manage networks of machines
+    # https://clan.lol
+    clan-core = {
+      url = "git+https://git.clan.lol/clan/clan-core";
+      # Don't do this if your machines are on nixpkgs stable.
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Format disks with nix-config
     # https://github.com/nix-community/disko
     disko = {
@@ -74,7 +82,9 @@
         "aarch64-linux"
         "x86_64-linux"
       ];
+
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
+
       nixpkgsFor = forAllSystems (
         system:
         import nixpkgs {
@@ -82,9 +92,37 @@
           overlays = [ ];
         }
       );
+
+      clan = clan-core.lib.buildClan {
+        inherit self; # this needs to point at the repository root
+
+        # Make inputs and the flake itself accessible as module parameters.
+        # Technically, adding the inputs is redundant as they can be also
+        # accessed with flake-self.inputs.X, but adding them individually
+        # allows to only pass what is needed to each module.
+        specialArgs = {
+          flake-self = self;
+        } // inputs;
+
+        inventory = {
+
+          meta.name = "paulmiro-clan";
+
+          services = {
+            importer.default = {
+              roles.default.tags = [ "all" ];
+              # import all modules from ./modules/<module-name> everywhere
+              roles.default.extraModules = [
+                # Clan modules deployed on all machines
+                #clan-core.clanModules.state-version
+              ] ++ (map (m: "modules/${m}") (builtins.attrNames self.nixosModules));
+            };
+          };
+        };
+
+      };
     in
     {
-
       formatter = forAllSystems (system: nixpkgsFor.${system}.nixfmt-rfc-style); # TODO: change to "nixfmt" once it is replaced
 
       packages = forAllSystems (
@@ -94,10 +132,10 @@
         in
         {
 
-          woodpecker-pipeline = pkgs.callPackage ./pkgs/woodpecker-pipeline {
-            flake-self = self;
-            inputs = inputs;
-          };
+          #woodpecker-pipeline = pkgs.callPackage ./pkgs/woodpecker-pipeline {
+          #  flake-self = self;
+          #  inputs = inputs;
+          #};
 
           build_outputs = pkgs.callPackage mayniklas.packages.${system}.build_outputs.override {
             inherit self;
@@ -119,27 +157,10 @@
       # Each subdirectory in ./machines is a host. Add them all to
       # nixosConfiguratons. Host configurations need a file called
       # configuration.nix that will be read first
-      nixosConfigurations = builtins.listToAttrs (
-        map (x: {
-          name = x;
-          value = nixpkgs.lib.nixosSystem {
 
-            # Make inputs and the flake itself accessible as module parameters.
-            # Technically, adding the inputs is redundant as they can be also
-            # accessed with flake-self.inputs.X, but adding them individually
-            # allows to only pass what is needed to each module.
-            specialArgs = {
-              flake-self = self;
-            } // inputs;
+      nixosConfigurations = clan.nixosConfigurations;
 
-            modules = [
-              (import "${./.}/machines/${x}/configuration.nix" { inherit self; })
-              { imports = builtins.attrValues self.nixosModules; }
-            ];
-
-          };
-        }) (builtins.attrNames (builtins.readDir ./machines))
-      );
+      inherit (clan) clanInternals;
 
       homeConfigurations = {
         desktop =
@@ -175,6 +196,16 @@
           inherit name;
           value = import (./home-manager/modules + "/${name}");
         }) (builtins.attrNames (builtins.readDir ./home-manager/modules))
+      );
+
+      devShells = forAllSystems (
+        system: with nixpkgsFor.${system}; {
+          default = pkgs.mkShell {
+            packages = [
+              clan-core.packages.${system}.clan-cli
+            ];
+          };
+        }
       );
 
     };

@@ -1,8 +1,5 @@
-{ self, ... }:
 {
   config,
-  pkgs,
-  lib,
   ...
 }:
 
@@ -92,6 +89,8 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
+
+  clan.core.networking.targetHost = "hawking";
 
   services.netdata.enable = true;
 

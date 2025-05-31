@@ -1,13 +1,8 @@
-{ self, ... }:
 {
   config,
-  flake-self,
-  home-manager,
   lib,
   modulesPath,
   nixos-hardware,
-  nixpkgs,
-  pkgs,
   ...
 }:
 let
