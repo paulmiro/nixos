@@ -51,6 +51,7 @@
         home-manager.follows = "home-manager";
         nixos-hardware.follows = "nixos-hardware";
         nixpkgs.follows = "nixpkgs";
+        ondsel.follows = "";
       };
     };
 
