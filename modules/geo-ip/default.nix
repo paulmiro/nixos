@@ -35,33 +35,23 @@ in
       settings = {
         EditionIDs = [ "GeoLite2-Country" ];
         AccountID = 767585;
-        LicenseKey = cfg.licenseKeyFile;
+        LicenseKey = config.clan.core.vars.generators.maxmind-license-key.files.key.path;
         DatabaseDirectory = cfg.databaseDirectory;
       };
     };
 
-    # this user only exists to give the user the keys group for access to /run/keys
-    users.users.geoip = {
-      uid = 63606;
-      group = "geoip";
-      isSystemUser = true;
-      home = cfg.databaseDirectory;
-      extraGroups = [ "keys" ];
+    clan.core.vars.generators.maxmind-license-key = {
+      prompts.key.description = "MaxMind License Key (see bw)";
+      prompts.key.type = "hidden";
+      prompts.key.persist = false;
+
+      files.key.secret = true;
+      files.key.owner = "geoip";
+
+      share = true;
+
+      script = "cp $prompts/key $out/key";
     };
-
-    users.groups.geoip = { };
-
-    # this breaks on first deploy, because the user does not exist yet
-    # to fix this, three steps are needed:
-    # 1. comment out this secrets block and deploy, ignore the error
-    # 2. uncomment and deploy again
-
-    # TODO: replace with clan secrets
-    # lollypops.secrets.files."maxmind-license-key" = {
-    #   cmd = "rbw get maxmind-license-key";
-    #   path = cfg.licenseKeyFile;
-    #   owner = "geoip";
-    # };
 
     # build nginx with geoip2 module
     services.nginx = {
