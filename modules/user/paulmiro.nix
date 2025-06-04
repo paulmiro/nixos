@@ -22,7 +22,6 @@ in
         "wheel"
       ];
       shell = lib.mkIf config.programs.zsh.enable pkgs.zsh;
-      initialHashedPassword = config.paul.private.hashed-password-paulmiro;
       hashedPasswordFile =
         config.clan.core.vars.generators.user-password-paulmiro.files.hashed-password.path;
       openssh.authorizedKeys.keys = config.users.users.root.openssh.authorizedKeys.keys; # looks stupid but does the job
