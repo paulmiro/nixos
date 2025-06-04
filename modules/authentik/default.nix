@@ -36,19 +36,6 @@ in
       default = "account@" + config.paul.private.domains.authentik;
       description = "email adress for authentik";
     };
-
-    environmentFile = mkOption {
-      type = types.str;
-      default = "/run/keys/authentik.env";
-      description = "path to the secrets environment file";
-    };
-
-    environmentFileLdap = mkOption {
-      type = types.str;
-      default = "/run/keys/authentik-ldap.env";
-      description = "path to the ldap environment file";
-    };
-
   };
 
   config = lib.mkIf cfg.enable (
@@ -56,7 +43,7 @@ in
       {
         services.authentik = {
           enable = true;
-          environmentFile = cfg.environmentFile;
+          environmentFile = config.clan.core.vars.generators.authentik.files.env.path;
           settings = {
             email = {
               host = "mail.smtp2go.com";
@@ -74,15 +61,25 @@ in
 
         networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [ 9443 ];
 
-        # TODO: replace with clan secrets
-        # lollypops.secrets.files."authentik-environment" = {
-        #   cmd = ''
-        #     echo "
-        #     AUTHENTIK_SECRET_KEY="$(rbw get authentik-secret-key)"
-        #     AUTHENTIK_EMAIL__PASSWORD="$(rbw get authentik-email-password)"
-        #     "'';
-        #   path = cfg.environmentFile;
-        # };
+        clan.core.vars.generators.authentik = {
+          prompts.secret-key.description = "Secret Key for Authentik (see bw)";
+          prompts.secret-key.type = "hidden";
+          prompts.secret-key.persist = false;
+
+          prompts.smtp-password.description = "SMTP Password for Authentik (see bw)";
+          prompts.smtp-password.type = "hidden";
+          prompts.smtp-password.persist = false;
+
+          files.env.secret = true;
+          files.env.owner = "authentik";
+
+          script = ''
+            echo "
+            AUTHENTIK_SECRET_KEY="$(cat $prompts/secret-key)"
+            AUTHENTIK_EMAIL__PASSWORD="$(cat $prompts/smtp-password)"
+            " > $out/env
+          '';
+        };
 
         paul.postgres.enable = true; # this enables database backups
       }
@@ -90,7 +87,7 @@ in
       (lib.mkIf cfg.enableLdap {
         services.authentik-ldap = {
           enable = true;
-          environmentFile = cfg.environmentFileLdap;
+          environmentFile = config.clan.core.vars.generators.authentik-ldap.files.env.path;
         };
 
         networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [
@@ -98,16 +95,22 @@ in
           636 # ldaps
         ];
 
-        # TODO: replace with clan secrets
-        # lollypops.secrets.files."authentik-ldap-environment" = {
-        #   cmd = ''
-        #     echo "
-        #     AUTHENTIK_HOST="https://${cfg.domain}"
-        #     AUTHENTIK_TOKEN="$(rbw get authentik-ldap-token)"
-        #     AUTHENTIK_INSECURE="false"
-        #     "'';
-        #   path = cfg.environmentFileLdap;
-        # };
+        clan.core.vars.generators.authentik-ldap = {
+          prompts.api-token.description = "API Token for Authentik-LDAP (see bw)";
+          prompts.api-token.type = "hidden";
+          prompts.api-token.persist = false;
+
+          files.env.secret = true;
+          files.env.owner = "authentik-ldap";
+
+          script = ''
+            echo "
+            AUTHENTIK_HOST="https://${cfg.domain}"
+            AUTHENTIK_TOKEN="$(cat $prompts/api-token)"
+            AUTHENTIK_INSECURE="false"
+            " > $out/env
+          '';
+        };
       })
 
       (lib.mkIf cfg.enableNginx {

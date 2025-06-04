@@ -15,11 +15,7 @@ in
 
   options.paul.nginx = with lib; {
     enableGeoIP = mkEnableOption "enable GeoIP";
-    licenseKeyFile = mkOption {
-      type = types.path;
-      default = "/run/keys/maxmind-license-key";
-      description = "Path to the MaxMind license key file";
-    };
+
     databaseDirectory = mkOption {
       type = types.path;
       default = "/var/lib/GeoIP";

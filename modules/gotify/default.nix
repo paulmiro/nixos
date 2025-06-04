@@ -5,11 +5,11 @@
 }:
 let
   cfg = config.paul.gotify;
-  environmentFile = "/run/keys/gotify.env";
 in
 {
   options.paul.gotify = with lib; {
     enable = mkEnableOption "enable gotify server";
+
     enableNginx = mkEnableOption "enable nginx reverse proxy for gotify";
     port = mkOption {
       description = "internal port for gotify server";
@@ -28,29 +28,24 @@ in
       enable = true;
       environment = {
         GOTIFY_SERVER_PORT = cfg.port;
+        GOTIFY_DEFAULTUSER_NAME = "admin";
       };
-      environmentFiles = [ environmentFile ];
+      environmentFiles = [ config.clan.core.vars.generators.gotify.files.env.path ];
     };
 
-    users.users.gotify-server = {
-      uid = 63607;
-      group = "gotify-server";
-      isSystemUser = true;
-      home = "/var/lib/${config.services.gotify.stateDirectoryName}";
-      extraGroups = [ "keys" ];
+    clan.core.vars.generators.gotify = {
+      prompts.password.description = "Gotify Default User (admin) Password (see bw)";
+      prompts.password.type = "hidden";
+      prompts.password.persist = false;
+
+      files.env.secret = true;
+
+      script = ''
+        echo "
+        GOTIFY_DEFAULTUSER_PASS="$(cat $prompts/password)"
+        " > $out/env
+      '';
     };
-
-    users.groups.gotify-server = { };
-
-    # TODO: replace with clan secrets
-    # lollypops.secrets.files."gotify-env" = {
-    #   cmd = ''
-    #     echo "
-    #     GOTIFY_DEFAULTUSER_NAME=admin
-    #     GOTIFY_DEFAULTUSER_PASS="$(rbw get gotify-admin-password)"
-    #     "'';
-    #   path = environmentFile;
-    # };
 
     paul.dyndns.domains = lib.mkIf cfg.enableNginx [ cfg.domain ];
 

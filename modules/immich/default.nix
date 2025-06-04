@@ -29,12 +29,6 @@ in
       default = config.paul.private.domains.immich;
       description = "domain name for immich";
     };
-
-    environmentFile = mkOption {
-      type = types.str;
-      default = "/run/keys/immich.env";
-      description = "path to the secrets environment file";
-    };
   };
 
   config = lib.mkIf cfg.enable (
@@ -58,7 +52,12 @@ in
           ];
           serviceConfig = {
             WorkingDirectory = "${./compose}";
-            ExecStart = "${pkgs.docker}/bin/docker compose --env-file .env --env-file ${cfg.environmentFile} up --build";
+
+            ExecStart =
+              let
+                envFile = config.clan.core.vars.generators.immich.files.env.path;
+              in
+              "${pkgs.docker}/bin/docker compose --env-file .env --env-file ${envFile} up --build";
             ExecStop = "${pkgs.docker}/bin/docker compose down";
             Restart = "on-failure";
           };
@@ -66,14 +65,20 @@ in
 
         networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [ cfg.port ];
 
-        # TODO: replace with clan secrets
-        # lollypops.secrets.files."immich-environment" = {
-        #   cmd = ''
-        #     echo "
-        #     DB_PASSWORD="$(rbw get immich-database-password)"
-        #     "'';
-        #   path = cfg.environmentFile;
-        # };
+        clan.core.vars.generators.immich = {
+          prompts.database-password.description = "Immich Internal Database Password (see bw)";
+          prompts.database-password.type = "hidden";
+          prompts.database-password.persist = false;
+
+          files.env.secret = true;
+          files.env.owner = "root"; # TODO: make immich run under a different user?
+
+          script = ''
+            echo "
+            DB_PASSWORD="$(cat $prompts/database-password)"
+            " > $out/env
+          '';
+        };
       }
 
       (lib.mkIf cfg.enableNginx {

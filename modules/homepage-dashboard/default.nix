@@ -25,11 +25,6 @@ in
       default = 8082;
       description = "port for homepage";
     };
-    environmentFile = mkOption {
-      type = types.path;
-      default = "/run/keys/homepage.env";
-      description = "path to environment file";
-    };
   };
 
   config = lib.mkIf cfg.enable (
@@ -39,7 +34,7 @@ in
           enable = true;
           openFirewall = cfg.openFirewall;
           listenPort = cfg.port;
-          environmentFile = cfg.environmentFile;
+          environmentFile = config.clan.core.vars.generators.homepage-dashboard.files.env.path;
           allowedHosts = "localhost:8082,127.0.0.1:8082,${cfg.domain}";
 
           settings = {
@@ -338,6 +333,7 @@ in
 
         systemd.services.homepage-dashboard = {
           environment = {
+            # TODO: test if this hack is still needed
             HOMEPAGE_CACHE_DIR = "/var/cache/homepage-dashboard";
           };
           serviceConfig = {
@@ -346,32 +342,56 @@ in
           };
         };
 
-        users.users.homepage-dashboard = {
-          isSystemUser = true;
-          group = "homepage-dashboard";
-          extraGroups = [ "keys" ];
+        clan.core.vars.generators.homepage-dashboard = {
+          prompts.jellyfin-api-key.description = "Jellyfin API Key for Homepage Dashboard (see bw)";
+          prompts.jellyfin-api-key.type = "hidden";
+          prompts.jellyfin-api-key.persist = false;
+
+          prompts.jellyseerr-api-key.description = "Jellyseerr API Key for Homepage Dashboard (see bw)";
+          prompts.jellyseerr-api-key.type = "hidden";
+          prompts.jellyseerr-api-key.persist = false;
+
+          prompts.sonarr-api-key.description = "Sonarr API Key for Homepage Dashboard (see bw)";
+          prompts.sonarr-api-key.type = "hidden";
+          prompts.sonarr-api-key.persist = false;
+
+          prompts.radarr-api-key.description = "Radarr API Key for Homepage Dashboard (see bw)";
+          prompts.radarr-api-key.type = "hidden";
+          prompts.radarr-api-key.persist = false;
+
+          prompts.prowlarr-api-key.description = "Prowlarr API Key for Homepage Dashboard (see bw)";
+          prompts.prowlarr-api-key.type = "hidden";
+          prompts.prowlarr-api-key.persist = false;
+
+          prompts.immich-api-key.description = "Immich API Key for Homepage Dashboard (see bw)";
+          prompts.immich-api-key.type = "hidden";
+          prompts.immich-api-key.persist = false;
+
+          prompts.truenas-api-key.description = "TrueNas API Key for Homepage Dashboard (see bw)";
+          prompts.truenas-api-key.type = "hidden";
+          prompts.truenas-api-key.persist = false;
+
+          prompts.authentik-api-token.description = "Authentik API Token for Homepage Dashboard (see bw)";
+          prompts.authentik-api-token.type = "hidden";
+          prompts.authentik-api-token.persist = false;
+
+          files.env.secret = true;
+
+          script = ''
+            echo "
+            HOMEPAGE_VAR_JELLYFIN_API_KEY=$(cat $prompts/jellyfin-api-key)
+            HOMEPAGE_VAR_JELLYSEERR_API_KEY=$(cat $prompts/jellyseerr-api-key)
+            HOMEPAGE_VAR_SONARR_API_KEY=$(cat $prompts/sonarr-api-key)
+            HOMEPAGE_VAR_RADARR_API_KEY=$(cat $prompts/radarr-api-key)
+            HOMEPAGE_VAR_PROWLARR_API_KEY=$(cat $prompts/prowlarr-api-key)
+            HOMEPAGE_VAR_IMMICH_API_KEY=$(cat $prompts/immich-api-key)
+            HOMEPAGE_VAR_TRUENAS_API_KEY=$(cat $prompts/truenas-api-key)
+            HOMEPAGE_VAR_AUTHENTIK_API_TOKEN=$(cat $prompts/authentik-api-token)
+            " > $out/env
+          '';
         };
-        users.groups.homepage-dashboard = { };
-
-        # homepage seems to cache this file somehow, it may sometimes be necessary to reboot for changes to take effect
-        # TODO: replace with clan secrets
-        # lollypops.secrets.files."homepage-environment" = {
-        #   cmd = ''
-        #     echo "
-        #     HOMEPAGE_VAR_JELLYFIN_API_KEY=$(rbw get jellyfin-api-key-homepage)
-        #     HOMEPAGE_VAR_JELLYSEERR_API_KEY=$(rbw get jellyseerr-api-key)
-        #     HOMEPAGE_VAR_SONARR_API_KEY=$(rbw get sonarr-api-key)
-        #     HOMEPAGE_VAR_RADARR_API_KEY=$(rbw get radarr-api-key)
-        #     HOMEPAGE_VAR_PROWLARR_API_KEY=$(rbw get prowlarr-api-key)
-        #     HOMEPAGE_VAR_IMMICH_API_KEY=$(rbw get immich-api-key-homepage)
-        #     HOMEPAGE_VAR_TRUENAS_API_KEY=$(rbw get truenas-api-key-homepage)
-        #     HOMEPAGE_VAR_AUTHENTIK_API_TOKEN=$(rbw get authentik-api-token-homepage)
-        #     "'';
-        #   path = cfg.environmentFile;
-        #   owner = "homepage-dashboard";
-        # };
-
       }
+
       (lib.mkIf cfg.enableNginx {
         services.nginx.virtualHosts."${cfg.domain}" = {
           enableAuthentik = true;
