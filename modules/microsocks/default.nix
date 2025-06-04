@@ -30,24 +30,20 @@ in
       enable = true;
       ip = "0.0.0.0";
       authUsername = "socks";
-      authPasswordFile = authPasswordFile;
+      authPasswordFile = config.clan.core.vars.generators.microsocks.files.auth-password.path;
     };
-
-    users.users.microsocks.extraGroups = [ "keys" ];
 
     networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [ cfg.port ];
 
-    # this breaks on first deploy, because the user does not exist yet
-    # to fix this, three steps are needed:
-    # 1. comment out this secrets block and deploy
-    # 2. uncomment and deploy again
-    # 3. (if needed) sudo systemctl restart microsocs.service
+    clan.core.vars.generators.microsocks = {
+      prompts.auth-password.description = "MicroSocks Auth Password (see bw)";
+      prompts.auth-password.type = "hidden";
+      prompts.auth-password.persist = false;
 
-    # TODO: replace with clan secrets
-    # lollypops.secrets.files."microsocks-auth-password" = {
-    #   cmd = "rbw get microsocks-auth-password";
-    #   path = cfg.authPasswordFile;
-    #   owner = "microsocks";
-    # };
+      files.auth-password.secret = true;
+      files.auth-password.owner = "microsocks";
+
+      script = "cp $prompts/auth-password $out/auth-password";
+    };
   };
 }

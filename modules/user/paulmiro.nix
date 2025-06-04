@@ -23,7 +23,20 @@ in
       ];
       shell = lib.mkIf config.programs.zsh.enable pkgs.zsh;
       initialHashedPassword = config.paul.private.hashed-password-paulmiro;
+      hashedPasswordFile =
+        config.clan.core.vars.generators.user-password-paulmiro.files.hashed-password.path;
       openssh.authorizedKeys.keys = config.users.users.root.openssh.authorizedKeys.keys; # looks stupid but does the job
+    };
+
+    clan.core.vars.generators.user-password-paulmiro = {
+      prompts.password.description = "Password for unix user paulmiro (see bw)";
+      prompts.password.type = "hidden";
+      prompts.password.persist = false;
+
+      files.hashed-password.secret = false;
+
+      runtimeInputs = [ pkgs.mkpasswd ];
+      script = "cat $prompts/password | mkpasswd -m sha-512 > $out/hashed-password";
     };
 
     nix.settings = {

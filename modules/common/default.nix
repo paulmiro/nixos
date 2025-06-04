@@ -30,5 +30,9 @@ in
       git
       wget
     ];
+
+    # this is already the default and only here to throw an error if it is ever set to true anywhere else
+    # to make sure clan vars can manage passwords correctly
+    users.mutableUsers = false;
   };
 }
