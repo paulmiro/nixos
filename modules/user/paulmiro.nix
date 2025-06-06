@@ -33,6 +33,7 @@ in
       prompts.password.persist = false;
 
       files.hashed-password.secret = false;
+      files.hashed-password.neededFor = "users";
 
       runtimeInputs = [ pkgs.mkpasswd ];
       script = "cat $prompts/password | mkpasswd -m sha-512 > $out/hashed-password";
