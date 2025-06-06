@@ -42,7 +42,6 @@ in
       prompts.key.persist = false;
 
       files.key.secret = true;
-      files.key.owner = "geoip";
 
       share = true;
 
