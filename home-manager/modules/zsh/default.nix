@@ -113,6 +113,8 @@ in
 
         # show journalctl logs for a service
         logs = "${pkgs.systemd}/bin/journalctl -feau";
+        # list failed units
+        failed = "${pkgs.systemd}/bin/systemctl list-units --failed";
 
         ## lsd
 
