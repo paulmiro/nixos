@@ -26,6 +26,9 @@ in
       ipv6 = false;
       domains = cfg.domains;
       package = (
+        assert lib.assertMsg (
+          pkgs.cloudflare-dyndns.meta.name == "cloudflare-dyndns-5.3"
+        ) "cloudflare-dyndns has been updated. override should probably be removed now";
         pkgs.cloudflare-dyndns.overrideAttrs (old: {
           src = pkgs.fetchFromGitHub {
             owner = "kissgyorgy";
