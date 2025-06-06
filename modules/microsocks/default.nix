@@ -5,7 +5,6 @@
 }:
 let
   cfg = config.paul.microsocks;
-  authPasswordFile = "/run/keys/microsocks-auth-password";
 in
 {
   options.paul.microsocks = with lib; {
@@ -16,12 +15,6 @@ in
       type = types.port;
       default = 1080;
       description = "port to listen on";
-    };
-
-    authPasswordFile = mkOption {
-      type = types.str;
-      default = "/run/keys/microsocks-auth-password";
-      description = "path to put the auth password file";
     };
   };
 
