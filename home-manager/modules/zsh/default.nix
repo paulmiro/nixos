@@ -97,9 +97,6 @@ in
       shellAliases = {
         ## Nix
 
-        # switching within a flake repository
-        frb = "${pkgs.nixos-rebuild}/bin/nixos-rebuild --use-remote-sudo switch --flake";
-
         # always execute nixos-rebuild with sudo for switching
         nixos-rebuild = "${pkgs.nixos-rebuild}/bin/nixos-rebuild --use-remote-sudo";
 

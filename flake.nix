@@ -204,6 +204,10 @@
           default = pkgs.mkShell {
             packages = [
               clan-core.packages.${system}.clan-cli
+              (pkgs.writeShellScriptBin "rebuild" "${pkgs.nixos-rebuild}/bin/nixos-rebuild --use-remote-sudo switch --flake .")
+              (pkgs.writeShellScriptBin "rollout" "${
+                clan-core.packages.${system}.clan-cli
+              }/bin/clan machines update $@")
             ];
           };
         }
