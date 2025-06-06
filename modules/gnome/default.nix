@@ -17,11 +17,11 @@ in
     services.xserver.enable = true;
 
     # Enable the GNOME Desktop Environment.
-    services.xserver.displayManager.gdm.enable = true;
+    services.displayManager.gdm.enable = true;
     services.displayManager.defaultSession = "gnome"; # this forces gnome to run with wayland instead of x11
     # services.xserver.displayManager.sddm.enable = true;
 
-    services.xserver.desktopManager.gnome.enable = true;
+    services.desktopManager.gnome.enable = true;
     environment.gnome.excludePackages = (
       with pkgs;
       [
