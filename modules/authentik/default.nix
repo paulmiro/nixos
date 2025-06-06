@@ -71,7 +71,6 @@ in
           prompts.smtp-password.persist = false;
 
           files.env.secret = true;
-          files.env.owner = "authentik";
 
           script = ''
             echo "
@@ -101,7 +100,6 @@ in
           prompts.api-token.persist = false;
 
           files.env.secret = true;
-          files.env.owner = "authentik-ldap";
 
           script = ''
             echo "
