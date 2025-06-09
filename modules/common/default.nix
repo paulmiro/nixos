@@ -26,9 +26,6 @@ in
     };
 
     environment.systemPackages = with pkgs; [
-      dnsutils
-      git
-      wget
     ];
 
     # this is already the default and only here to throw an error if it is ever set to true anywhere else

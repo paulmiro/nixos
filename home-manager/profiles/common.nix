@@ -41,6 +41,7 @@
       unixtools.xxd
       unzip
       usbutils
+      wget
       zellij
     ];
 
