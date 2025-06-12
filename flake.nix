@@ -63,7 +63,10 @@
       # inputs.flake-parts.follows = "flake-parts"
     };
 
-    zen-browser.url = "github:youwen5/zen-browser-flake";
+    zen-browser = {
+      url = "github:youwen5/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     grub2-themes = {
       #url = "git+file:///home/paulmiro/repos/paulmiro/grub2-themes";
@@ -71,7 +74,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-minecraft.url = "github:Infinidoge/nix-minecraft";
+    nix-minecraft = {
+      url = "github:Infinidoge/nix-minecraft";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
   };
 
