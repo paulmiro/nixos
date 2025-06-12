@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -13,6 +14,7 @@ in
 
   config = lib.mkIf cfg.enable {
     users.users.root = {
+      shell = lib.mkIf config.programs.zsh.enable pkgs.zsh;
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMHjHjJ/vMoD3LId4IskuD9A6GwyTQXzt61IEq3/paul paulmiro@newton"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMEom7NN1k9UCOTTiYsMBLqUK8BF8rjXTWAVQHSk/hwk paulmiro@hawking"
