@@ -149,6 +149,9 @@
             output_path = "~/.keep-nix-outputs-paulmiro";
           };
 
+          vibe = pkgs.callPackage ./pkgs/vibe {
+            inherit inputs;
+          };
         }
       );
 

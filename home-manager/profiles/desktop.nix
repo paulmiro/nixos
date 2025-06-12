@@ -68,6 +68,8 @@
         zoom-us
 
         flake-self.inputs.zen-browser.packages.${system}.default
+
+        flake-self.packages.${system}.vibe
       ]
       # only install these packages on x86_64-linux systems
       ++ lib.optionals (system-config.nixpkgs.hostPlatform.isx86_64) [
