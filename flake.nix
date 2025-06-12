@@ -202,6 +202,7 @@
         system: with nixpkgsFor.${system}; {
           default = pkgs.mkShell {
             packages = [
+              pkgs.git-agecrypt
               clan-core.packages.${system}.clan-cli
               (pkgs.writeShellScriptBin "rebuild" "${pkgs.nixos-rebuild}/bin/nixos-rebuild --use-remote-sudo switch --flake .")
               (pkgs.writeShellScriptBin "rollout" "${

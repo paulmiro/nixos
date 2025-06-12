@@ -1,6 +1,6 @@
 { lib, ... }:
 let
-  data = builtins.fromJSON (builtins.readFile ./private.json);
+  file = builtins.readFile ./private.json;
 in
 {
   options.paul.private = lib.mkOption {
@@ -11,10 +11,10 @@ in
   };
 
   config.paul.private = lib.mkForce (
-    assert lib.assertMsg (data.is_decrypted == "yes") ''
+    assert lib.assertMsg (lib.hasPrefix "{" file) ''
       private.json has not been decrypted!
       please read modules/private/README.md for instructions
     '';
-    data
+    builtins.fromJSON (file)
   );
 }
