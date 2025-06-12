@@ -33,7 +33,7 @@ in
     networkmanager.enable = false;
     wireless.enable = true;
     wireless.networks = {
-      "${private.networks.gndv.ssid}".psk = private.networks.gndv.psk;
+      "TODOTODO".psk = "TODOTODO"; # TODO probably use clan to implement this
     };
   };
 
