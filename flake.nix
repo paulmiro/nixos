@@ -163,34 +163,24 @@
 
       inherit (clan) clanInternals;
 
-      homeConfigurations = {
-        desktop =
-          {
-            pkgs,
-            lib,
-            username,
-            ...
-          }:
-          {
-            imports = [
-              ./home-manager/profiles/common.nix
-              ./home-manager/profiles/desktop.nix
-            ] ++ (builtins.attrValues self.homeManagerModules);
-          };
-        server =
-          {
-            pkgs,
-            lib,
-            username,
-            ...
-          }:
-          {
-            imports = [
-              ./home-manager/profiles/common.nix
-              ./home-manager/profiles/server.nix
-            ] ++ (builtins.attrValues self.homeManagerModules);
-          };
-      };
+      homeConfigurations = builtins.listToAttrs (
+        map (filename: {
+          name = builtins.substring 0 ((builtins.stringLength filename) - 4) filename;
+          value =
+            {
+              pkgs,
+              lib,
+              username,
+              ...
+            }:
+            {
+              imports = [
+                "${./.}/home-manager/profiles/common.nix"
+                "${./.}/home-manager/profiles/${filename}"
+              ] ++ (builtins.attrValues self.homeManagerModules);
+            };
+        }) (builtins.attrNames (builtins.readDir ./home-manager/profiles))
+      );
 
       homeManagerModules = builtins.listToAttrs (
         map (name: {

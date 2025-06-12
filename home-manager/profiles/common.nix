@@ -1,3 +1,4 @@
+# This file gets imported for ALL home-manager profiles
 {
   pkgs,
   ...
