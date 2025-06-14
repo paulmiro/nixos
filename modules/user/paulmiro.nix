@@ -13,7 +13,6 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    # Define a user account. Don't forget to set a password with ‘passwd’.
     users.users.paulmiro = {
       isNormalUser = true;
       description = "Paul";
@@ -21,9 +20,8 @@ in
         "networkmanager"
         "wheel"
       ];
-      shell = lib.mkIf config.programs.zsh.enable pkgs.zsh;
-      hashedPasswordFile =
-        config.clan.core.vars.generators.user-password-paulmiro.files.hashed-password.path;
+      shell = pkgs.zsh;
+      hashedPasswordFile = lib.mkIf config.paul.clan.enable config.clan.core.vars.generators.user-password-paulmiro.files.hashed-password.path;
       openssh.authorizedKeys.keys = config.users.users.root.openssh.authorizedKeys.keys; # looks stupid but does the job
     };
 
