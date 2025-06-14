@@ -41,6 +41,9 @@
     # https://github.com/nix-community/NixOS-WSL
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
 
+    # NixOS on the Android Virtualization Framework
+    nixos-avf.url = "github:nix-community/nixos-avf";
+
     ### Packages outside of nixpkgs
 
     # MayNiklas - used for build_outputs
