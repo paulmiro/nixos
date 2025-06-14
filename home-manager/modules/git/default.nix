@@ -29,8 +29,7 @@ in
 
     home.packages = with pkgs; [
       pre-commit
-      git-crypt
-      transcrypt
+      git-agecrypt
     ];
 
   };
