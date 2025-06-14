@@ -20,7 +20,7 @@
 
   networking.hostName = "better-laptop-paul-wsl";
 
-  paul.common-server.enable = true;
+  paul.common.enable = true;
 
   programs.nix-ld.enable = true; # to allow VSCode-server to run
 

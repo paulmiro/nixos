@@ -15,11 +15,7 @@ in
   ];
 
   options.paul.home-manager = {
-    enable = lib.mkOption {
-      description = "enable home-manager";
-      type = lib.types.bool;
-      default = true;
-    };
+    enable = lib.mkEnableOption "enable home-manager";
 
     profile = lib.mkOption {
       description = "which home-mamager profile to use for user paulmiro";

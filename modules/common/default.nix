@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 let
@@ -16,6 +15,8 @@ in
     programs.zsh.enable = true;
 
     paul = {
+      home-manager.enable = true;
+
       locale.enable = true;
       nix-common.enable = true;
       openssh.enable = true;
@@ -24,9 +25,6 @@ in
         root.enable = true;
       };
     };
-
-    environment.systemPackages = with pkgs; [
-    ];
 
     # to make sure clan vars can manage passwords correctly
     users.mutableUsers = false;

@@ -14,11 +14,12 @@ in
   config = lib.mkIf cfg.enable {
     paul = {
       common.enable = true;
+
+      home-manager.profile = "desktop";
+
       sound.enable = true;
       fonts.enable = true;
       locale.hardwareClockInLocalTime = true;
-
-      home-manager.profile = "desktop";
     };
   };
 }
