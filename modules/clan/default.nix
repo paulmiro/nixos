@@ -9,7 +9,7 @@
     # should use this value to fall back to something that doesn't need clan
     enable = lib.mkOption {
       description = "enable clan-specific configuration (mainly secrets)";
-      type = lib.types.str;
+      type = lib.types.bool;
       default = true;
     };
   };
