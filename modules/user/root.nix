@@ -20,7 +20,7 @@ in
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMEom7NN1k9UCOTTiYsMBLqUK8BF8rjXTWAVQHSk/hwk paulmiro@hawking"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINirIGaLp4nLyJ4JUbCoknq5uqmp59uOfBrig0iW/mor paulmiro@morse"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINamsWVM0+zxXxUh5K1ww0GrdleakE3X8QSMJ+0b/btr paulmiro@better-laptop-paul-wsl"
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB5CwYET0c/EEb9qOBUVB2MV4+yyLAlKgbEIvUuF/pxl paulmiro@pixel"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGKn+lCU7J7iNEhsCVK8chXmqeGsIAlbqhwbY8Rq/bll paulmiro@bell-avf"
       ];
     };
   };
