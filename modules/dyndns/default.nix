@@ -25,19 +25,6 @@ in
       ipv4 = true;
       ipv6 = false;
       domains = cfg.domains;
-      package = (
-        assert lib.assertMsg (
-          pkgs.cloudflare-dyndns.meta.name == "cloudflare-dyndns-5.3"
-        ) "cloudflare-dyndns has been updated. override should probably be removed now";
-        pkgs.cloudflare-dyndns.overrideAttrs (old: {
-          src = pkgs.fetchFromGitHub {
-            owner = "kissgyorgy";
-            repo = "cloudflare-dyndns";
-            rev = "ad970df12e235c7fd473a922f663d912ba7107fc";
-            sha256 = "sha256-jLmGPwCcIJLNw+XgjYfkFhHfzIRtLArjt8WiHKqYR2s=";
-          };
-        })
-      );
     };
 
     clan.core.vars.generators.cloudflare-dyndns = {
