@@ -28,6 +28,9 @@ in
   sdImage.compressImage = false;
   sdImage.imageBaseName = "raspi-image";
 
+  # to prevent error messages, remove when using this template
+  clan.core.deployment.requireExplicitUpdate = true;
+
   networking = {
     hostName = "pi3a";
     networkmanager.enable = false;

@@ -12,6 +12,9 @@
 
   avf.defaultUser = "paulmiro";
 
+  # prevent error mesaages when offline
+  clan.core.deployment.requireExplicitUpdate = true;
+
   clan.core.networking.targetHost = "bell-avf";
 
   networking.hostName = "bell-avf";

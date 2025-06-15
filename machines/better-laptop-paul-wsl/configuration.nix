@@ -18,6 +18,9 @@
     #interop.includePath = false;
   };
 
+  # prevent error messages when offline
+  clan.core.deployment.requireExplicitUpdate = true;
+
   networking.hostName = "better-laptop-paul-wsl";
 
   paul.common.enable = true;

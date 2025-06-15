@@ -26,6 +26,9 @@
   sdImage.compressImage = false;
   sdImage.imageBaseName = "raspi-image";
 
+  # to prevent error messages, remove when using this template
+  clan.core.deployment.requireExplicitUpdate = true;
+
   # this workaround is currently needed to build the sd-image
   # basically: there currently is an issue that prevents the sd-image to be built successfully
   # remove this once the issue is fixed!
