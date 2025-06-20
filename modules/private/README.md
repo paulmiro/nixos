@@ -19,6 +19,8 @@ In order to build configurations that use this private data, you need to decrypt
 
 Please refer to the documantation of git-agecrypt to see how to set this up.
 
+Also make sure to remove the hardcoded store path in .git/config after, to avoid having it break on update
+
 ## Jank
 
 git-agecrypt can be pretty weird about changing `git-agecrypt.toml` without also changing `private.json`.
