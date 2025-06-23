@@ -46,18 +46,6 @@
 
     ### Packages outside of nixpkgs
 
-    # MayNiklas - used for build_outputs
-    mayniklas = {
-      url = "github:MayNiklas/nixos";
-      inputs = {
-        disko.follows = "disko";
-        home-manager.follows = "home-manager";
-        nixos-hardware.follows = "nixos-hardware";
-        nixpkgs.follows = "nixpkgs";
-        ondsel.follows = "";
-      };
-    };
-
     authentik-nix = {
       url = "github:nix-community/authentik-nix";
 
@@ -146,11 +134,6 @@
           #  flake-self = self;
           #  inputs = inputs;
           #};
-
-          build_outputs = pkgs.callPackage mayniklas.packages.${system}.build_outputs.override {
-            inherit self;
-            output_path = "~/.keep-nix-outputs-paulmiro";
-          };
 
           vibe = pkgs.callPackage ./pkgs/vibe {
             inherit inputs;
