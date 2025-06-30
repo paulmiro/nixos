@@ -20,6 +20,8 @@
 
   # prevent error messages when offline
   clan.core.deployment.requireExplicitUpdate = true;
+  clan.core.enableRecommendedDefaults = false; # this breaks networing
+  clan.core.networking.targetHost = "better-laptop-paul-wsl";
 
   networking.hostName = "better-laptop-paul-wsl";
 
