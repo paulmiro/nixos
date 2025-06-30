@@ -20,7 +20,7 @@
 
   # prevent error messages when offline
   clan.core.deployment.requireExplicitUpdate = true;
-  clan.core.enableRecommendedDefaults = false; # this breaks networing
+  clan.core.enableRecommendedDefaults = false; # this breaks networking
   clan.core.networking.targetHost = "btr-wsl";
 
   networking.hostName = "btr-wsl";
