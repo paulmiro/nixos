@@ -62,11 +62,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1751126145,
-        "narHash": "sha256-s5edB0n/Mrl+xZ64MMqE/UQwFY6B/Fc3FOuu7WAcqjc=",
+        "lastModified": 1751474899,
+        "narHash": "sha256-SqPBQLym6bRYTdFUH8/acGFpS/gdYJix4vA2+C2YI+I=",
         "ref": "refs/heads/main",
-        "rev": "b51dddaffc3db126bb17c46c138786bf8060f658",
-        "revCount": 7907,
+        "rev": "b2e8b8bf5904651acfae46f4ff2279a2fe128297",
+        "revCount": 8004,
         "type": "git",
         "url": "https://git.clan.lol/clan/clan-core"
       },
@@ -95,11 +95,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1750933274,
-        "narHash": "sha256-Aq7mRVv+mws5U+6RmQSVxiO6dKQi/r6MlO4caKwZdK0=",
-        "rev": "32b1ff6978758dda91a1e48d54f4f523ce9d1a98",
+        "lastModified": 1751413887,
+        "narHash": "sha256-+ut7DrSwamExIvaCFdiTYD88NTSYJFG2CEOvCha59vI=",
+        "rev": "246f0d66547d073af6249e4f7852466197e871ed",
         "type": "tarball",
-        "url": "https://git.clan.lol/api/v1/repos/clan/data-mesher/archive/32b1ff6978758dda91a1e48d54f4f523ce9d1a98.tar.gz"
+        "url": "https://git.clan.lol/api/v1/repos/clan/data-mesher/archive/246f0d66547d073af6249e4f7852466197e871ed.tar.gz"
       },
       "original": {
         "type": "tarball",
@@ -221,11 +221,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1749398372,
-        "narHash": "sha256-tYBdgS56eXYaWVW3fsnPQ/nFlgWi/Z2Ymhyu21zVM98=",
+        "lastModified": 1751413152,
+        "narHash": "sha256-Tyw1RjYEsp5scoigs1384gIg6e0GoBVjms4aXFfRssQ=",
         "owner": "hercules-ci",
         "repo": "flake-parts",
-        "rev": "9305fe4e5c2a6fcf5ba6a3ff155720fbe4076569",
+        "rev": "77826244401ea9de6e3bac47c2db46005e1f30b5",
         "type": "github"
       },
       "original": {
@@ -396,11 +396,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1750618568,
-        "narHash": "sha256-w9EG5FOXrjXGfbqCcQg9x1lMnTwzNDW5BMXp8ddy15E=",
+        "lastModified": 1751313918,
+        "narHash": "sha256-HsJM3XLa43WpG+665aGEh8iS8AfEwOIQWk3Mke3e7nk=",
         "owner": "nix-darwin",
         "repo": "nix-darwin",
-        "rev": "1dd19f19e4b53a1fd2e8e738a08dd5fe635ec7e5",
+        "rev": "e04a388232d9a6ba56967ce5b53a8a6f713cdfcf",
         "type": "github"
       },
       "original": {
