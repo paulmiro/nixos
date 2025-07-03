@@ -22,7 +22,7 @@ in
 
     port = mkOption {
       type = types.port;
-      default = 7074; # 3001 by default, but i may need that later
+      default = 19101; # 3001 by default, this is a random number
       description = "port to listen on";
     };
   };
