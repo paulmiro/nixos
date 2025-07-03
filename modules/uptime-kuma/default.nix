@@ -14,7 +14,7 @@ in
 
     domain = mkOption {
       type = types.str;
-      default = "uptime.${config.paul.private.domains.base}";
+      default = config.paul.private.domains.uptime-kuma;
       description = "domain to run public uptime tracker under";
     };
 

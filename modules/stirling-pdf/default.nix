@@ -20,7 +20,7 @@ in
 
     domain = lib.mkOption {
       type = lib.types.str;
-      default = "pdf.${config.paul.private.domains.base}";
+      default = config.paul.private.domains.stirling-pdf;
       description = "domain name for stirling-pdf";
     };
   };

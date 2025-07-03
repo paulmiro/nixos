@@ -19,7 +19,7 @@ in
     domain = mkOption {
       description = "domain for gotify server";
       type = types.str;
-      default = "gotify.${config.paul.private.domains.base}";
+      default = config.paul.private.domains.gotify;
     };
   };
 
