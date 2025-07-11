@@ -47,6 +47,10 @@
       enable = true;
       enableNginx = true;
     };
+    hedgedoc = {
+      enable = true;
+      enableNginx = true;
+    };
 
     # Local Services
     sonarr = {
