@@ -7,8 +7,5 @@ version: 2
 updates:
   - package-ecosystem: "github-actions"
     directory: "/"
-    reviewers:
-      - "paulmiro"
-      - "MayNiklas"
     schedule:
       interval: "weekly"
