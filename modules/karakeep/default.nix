@@ -45,8 +45,8 @@ in
         NEXTAUTH_URL = "https://${cfg.domain}";
         DISABLE_NEW_RELEASE_CHECK = "true";
         OAUTH_WELLKNOWN_URL = "https://${config.paul.private.domains.authentik}/application/o/karakeep/.well-known/openid-configuration";
-        OAUTH_SCOPE = "openid email profile";
         OAUTH_PROVIDER_NAME = config.paul.private.authentik_display_name;
+        DISABLE_PASSWORD_AUTH = "true";
       };
       environmentFile = config.clan.core.vars.generators.karakeep.files.env.path;
     };
