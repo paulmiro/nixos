@@ -51,6 +51,10 @@
       enable = true;
       enableNginx = true;
     };
+    karakeep = {
+      enable = true;
+      enableNginx = true;
+    };
 
     # Local Services
     sonarr = {
