@@ -42,7 +42,7 @@ in
       enable = true;
       extraEnvironment = {
         PORT = toString cfg.port;
-        NEXTAUTH_URL = cfg.domain;
+        NEXTAUTH_URL = "https://${cfg.domain}";
         DISABLE_NEW_RELEASE_CHECK = "true";
         OAUTH_WELLKNOWN_URL = "https://${config.paul.private.domains.authentik}/application/o/karakeep/.well-known/openid-configuration";
         OAUTH_SCOPE = "openid email profile";
