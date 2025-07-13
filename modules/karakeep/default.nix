@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -49,6 +50,10 @@ in
       };
       environmentFile = config.clan.core.vars.generators.karakeep.files.env.path;
     };
+
+    # required because of state-version shenanigans
+    # TODO: 25.11: remove this (assuming they actually removed meilisearch_1_11)
+    services.meilisearch.package = pkgs.meilisearch;
 
     clan.core.vars.generators.karakeep = {
       prompts.oauth-client-id.description = "Karakeep OAuth2 Client ID";
