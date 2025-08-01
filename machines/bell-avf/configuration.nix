@@ -9,6 +9,7 @@
   ];
 
   paul.common.enable = true;
+  paul.clan.manageUserPasswords = false;
 
   avf.defaultUser = "paulmiro";
 

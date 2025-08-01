@@ -21,7 +21,7 @@ in
         "wheel"
       ];
       shell = pkgs.zsh;
-      hashedPasswordFile = lib.mkIf config.paul.clan.enable config.clan.core.vars.generators.user-password-paulmiro.files.hashed-password.path;
+      hashedPasswordFile = lib.mkIf config.paul.clan.manageUserPasswords config.clan.core.vars.generators.user-password-paulmiro.files.hashed-password.path;
       openssh.authorizedKeys.keys = config.users.users.root.openssh.authorizedKeys.keys; # looks stupid but does the job
     };
 
