@@ -11,27 +11,11 @@ in
 {
   options.paul.minecraft-servers.vanilla = with lib; {
     enable = mkEnableOption "activate Vanilla Minecraft Server";
-    enableDyndns = mkEnableOption "enable dyndns";
-    domain = mkOption {
-      type = types.str;
-      default = "mc.${config.paul.private.domains.base}";
-      description = "domain name for Vanilla Minecraft Server";
-    };
   };
 
   config = lib.mkIf cfg.enable {
     users.users.paulmiro.extraGroups = [ "minecraft" ];
     nixpkgs.overlays = [ nix-minecraft.overlay ];
-    paul.dyndns.domains = lib.mkIf cfg.enableDyndns [ cfg.domain ];
-
-    services.nginx.virtualHosts."${cfg.domain}" = {
-      enableACME = true;
-      forceSSL = true;
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:8100";
-        geo-ip = true;
-      };
-    };
 
     services.minecraft-servers = {
       enable = true;
@@ -44,7 +28,7 @@ in
           package = pkgs.paperServers.paper-1_21_4;
           openFirewall = true;
           autoStart = true;
-          jvmOpts = "-Xms4G -Xmx5G";
+          jvmOpts = "-Xms1G -Xmx2G";
 
           symlinks = {
             "plugins/bluemap-5.5-paper.jar" = pkgs.fetchurl {
