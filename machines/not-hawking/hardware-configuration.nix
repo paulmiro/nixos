@@ -2,7 +2,9 @@
 # and may be overwritten by future invocations.  Please make changes
 # to /etc/nixos/configuration.nix instead.
 {
+  config,
   lib,
+  pkgs,
   modulesPath,
   ...
 }:
@@ -23,20 +25,24 @@
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
-  boot.growPartition = true;
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/2b88223d-9cd2-4d69-b122-1fa91482b00c";
+    device = "/dev/disk/by-uuid/6e78e1d3-e94c-4112-ab2f-200ae12dac3c";
     fsType = "ext4";
-    autoResize = true;
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/F456-E14C";
+    device = "/dev/disk/by-uuid/DA84-315D";
     fsType = "vfat";
+    options = [
+      "fmask=0077"
+      "dmask=0077"
+    ];
   };
 
-  swapDevices = [ ];
+  swapDevices = [
+    { device = "/dev/disk/by-uuid/f1bccd29-368c-405c-abe4-6aa6d4b7b406"; }
+  ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
