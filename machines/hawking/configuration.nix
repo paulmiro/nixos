@@ -2,7 +2,7 @@
   config,
   ...
 }:
-
+assert false; # prevent accidental use
 {
   services.qemuGuest.enable = true;
 
