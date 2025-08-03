@@ -16,6 +16,7 @@ in
   config = lib.mkIf cfg.enable {
     users.users.paulmiro.extraGroups = [ "minecraft" ];
     nixpkgs.overlays = [ nix-minecraft.overlay ];
+    networking.firewall.allowedTCPPorts = [ 8100 ];
 
     services.minecraft-servers = {
       enable = true;
