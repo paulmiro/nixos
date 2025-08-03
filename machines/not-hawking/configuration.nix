@@ -2,7 +2,6 @@
   config,
   ...
 }:
-
 {
   services.qemuGuest.enable = true;
 
@@ -10,91 +9,26 @@
     common-server.enable = true;
     systemd-boot.enable = true;
 
-    nginx = {
-      enable = true;
-      enableGeoIP = true;
-    };
-
     # Exposed Services
-    authentik = {
-      enable = true;
-      enableNginx = true;
-      enableLdap = true;
-      openFirewall = true;
-    };
     librespeedtest = {
       enable = true;
-      enableNginx = true;
-    };
-    jellyfin = {
-      enable = true;
-      enableNginx = true;
-      enableQuickSync = true;
-    };
-    jellyseerr = {
-      enable = true;
-      enableNginx = true;
-    };
-    immich = {
-      enable = true;
-      enableNginx = true;
-    };
-    # audiobookshelf = {
-    #   enable = true;
-    #   enableNginx = true;
-    # };
-    stirling-pdf = {
-      enable = true;
-      enableNginx = true;
-    };
-    hedgedoc = {
-      enable = true;
-      enableNginx = true;
-    };
-    karakeep = {
-      enable = true;
-      enableNginx = true;
     };
 
     # Local Services
-    sonarr = {
-      enable = true;
-      openFirewall = true;
-    };
-    radarr = {
-      enable = true;
-      openFirewall = true;
-    };
-    # readarr = {
+    # sonarr = {
     #   enable = true;
     #   openFirewall = true;
     # };
-    homepage-dashboard = {
-      enable = true;
-      enableNginx = true;
-    };
-    # thelounge = {
+    # radarr = {
     #   enable = true;
     #   openFirewall = true;
     # };
-
-    # ersatztv = {
-    #   enable = true;
-    #   version = "v25.1.0";
-    #   openFirewall = true;
-    #   hardwareTranscoding = "vaapi";
+    # minecraft-servers = {
+    #   vanilla = {
+    #     enable = true;
+    #     enableDyndns = true;
+    #   };
     # };
-
-    minecraft-servers = {
-      # ftb-skies = {
-      #   enable = true;
-      #   enableDyndns = true;
-      # };
-      vanilla = {
-        enable = true;
-        enableDyndns = true;
-      };
-    };
   };
 
   imports = [
@@ -102,35 +36,24 @@
     ./hardware-configuration.nix
   ];
 
-  clan.core.networking.targetHost = "hawking";
-
-  services.netdata.enable = true;
+  clan.core.networking.targetHost = "nixos";
 
   # enable all the firmware with a license allowing redistribution
   hardware.enableRedistributableFirmware = true;
 
   networking = {
-    hostName = "hawking";
+    hostName = "not-hawking";
     tempAddresses = "disabled";
-    firewall = {
-      allowedTCPPorts = [
-        19999 # netdata
-      ];
-    };
   };
 
   # Configure console keymap
   console.keyMap = "de";
-
-  # being able to build aarm64 stuff
-  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   services.tailscale = {
     enable = true;
     useRoutingFeatures = "server";
     extraUpFlags = [
       "--accept-dns=false"
-      "--advertise-exit-node"
     ];
   };
 
@@ -141,38 +64,6 @@
     enable = true;
     interval = "weekly";
   };
-
-  services.nginx.virtualHosts."${config.paul.private.domains.egg}" = {
-    enableACME = true;
-    forceSSL = true;
-    locations."/" = {
-      return = "302 https://www.youtube.com/watch?v=dQw4w9WgXcQ";
-    };
-  };
-
-  services.nginx.virtualHosts."${config.paul.private.domains.filebrowser}" = {
-    enableACME = true;
-    forceSSL = true;
-    locations."/" = {
-      proxyPass = "http://192.168.178.222:30044";
-      geo-ip = true;
-    };
-  };
-
-  services.nginx.virtualHosts."drop.${config.paul.private.domains.base}" = {
-    enableACME = true;
-    forceSSL = true;
-    locations."/" = {
-      proxyPass = "http://192.168.178.222:45301";
-      geo-ip = true;
-    };
-  };
-
-  paul.dyndns.domains = [
-    config.paul.private.domains.egg
-    config.paul.private.domains.filebrowser
-    "drop.${config.paul.private.domains.base}"
-  ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
