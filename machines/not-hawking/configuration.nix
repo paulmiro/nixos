@@ -15,6 +15,11 @@
       openFirewall = true;
     };
 
+    jellyfin = {
+      enable = true;
+      openFirewall = true;
+    };
+
     # Local Services
     sonarr = {
       enable = true;
