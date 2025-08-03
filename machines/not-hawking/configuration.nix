@@ -36,7 +36,7 @@
     ./hardware-configuration.nix
   ];
 
-  clan.core.networking.targetHost = "nixos";
+  clan.core.networking.targetHost = "not-hawking";
 
   # enable all the firmware with a license allowing redistribution
   hardware.enableRedistributableFirmware = true;
