@@ -29,12 +29,11 @@
     #   enable = true;
     #   openFirewall = true;
     # };
-    # minecraft-servers = {
-    #   vanilla = {
-    #     enable = true;
-    #     enableDyndns = true;
-    #   };
-    # };
+    minecraft-servers = {
+      vanilla = {
+        enable = true;
+      };
+    };
   };
 
   imports = [
