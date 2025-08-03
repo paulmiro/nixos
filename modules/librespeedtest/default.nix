@@ -10,6 +10,7 @@ in
 {
   options.paul.librespeedtest = with lib; {
     enable = mkEnableOption "activate librespeedtest";
+    openFirewall = mkEnableOption "open firewall for librespeedtest";
     enableNginx = mkEnableOption "activate nginx proxy";
     enableDyndns = mkOption {
       type = types.bool;
@@ -53,6 +54,10 @@ in
           ports = [ "${builtins.toString cfg.port}:${builtins.toString cfg.port}/tcp" ];
         };
       }
+
+      (lib.mkIf cfg.openFirewall {
+        networking.firewall.allowedTCPPorts = [ cfg.port ];
+      })
 
       (lib.mkIf cfg.enableNginx {
         paul.nginx.enable = true;

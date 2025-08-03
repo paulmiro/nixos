@@ -12,6 +12,7 @@
     # Exposed Services
     librespeedtest = {
       enable = true;
+      openFirewall = true;
     };
 
     # Local Services
