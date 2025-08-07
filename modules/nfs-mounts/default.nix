@@ -19,7 +19,7 @@ in
 
   config = {
     fileSystems."/mnt/nfs/arr" = lib.mkIf cfg.enableArr {
-      device = "not-turing:/mnt/BLITZ/arr";
+      device = "turing:/mnt/TANK2/arr";
       fsType = "nfs";
       options = [
         "x-systemd.automount"
@@ -27,7 +27,7 @@ in
       ];
     };
     fileSystems."/mnt/nfs/photos" = lib.mkIf cfg.enablePhotos {
-      device = "not-turing:/mnt/BLITZ/photos";
+      device = "turing:/mnt/TANK2/photos";
       fsType = "nfs";
       options = [
         "x-systemd.automount"
@@ -35,7 +35,7 @@ in
       ];
     };
     fileSystems."/mnt/nfs/jellyfin" = lib.mkIf cfg.enableJellyfin {
-      device = "not-turing:/mnt/BLITZ/apps/jellyfin";
+      device = "turing:/mnt/BLITZ1/apps/jellyfin";
       fsType = "nfs";
       options = [
         "x-systemd.automount"
@@ -43,7 +43,7 @@ in
       ];
     };
     fileSystems."/mnt/nfs/immich" = lib.mkIf cfg.enableImmich {
-      device = "not-turing:/mnt/BLITZ/apps/immich";
+      device = "turing:/mnt/BLITZ1/apps/immich";
       fsType = "nfs";
       options = [
         "x-systemd.automount"
@@ -51,7 +51,7 @@ in
       ];
     };
     fileSystems."/mnt/nfs/authentik" = lib.mkIf cfg.enableAuthentik {
-      device = "not-turing:/mnt/BLITZ/apps/authentik";
+      device = "turing:/mnt/BLITZ1/apps/authentik";
       fsType = "nfs";
       options = [
         "x-systemd.automount"
@@ -59,7 +59,7 @@ in
       ];
     };
     fileSystems."/mnt/nfs/playground" = lib.mkIf cfg.enablePlayground {
-      device = "not-turing:/mnt/BLITZ/playground";
+      device = "turing:/mnt/BLITZ1/playground";
       fsType = "nfs";
       options = [
         "x-systemd.automount"
@@ -67,7 +67,7 @@ in
       ];
     };
     fileSystems."/mnt/nfs/postgres_backup" = lib.mkIf cfg.enablePostgresBackup {
-      device = "not-turing:/mnt/BLITZ/backups/postgres";
+      device = "turing:/mnt/TANK2/backups/postgres";
       fsType = "nfs";
       options = [
         "x-systemd.automount"
