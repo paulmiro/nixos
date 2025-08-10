@@ -4,7 +4,7 @@
       bootroot1 = {
         # Boot/Root SSD 1
         type = "disk";
-        device = "/dev/by-id/nvme-SAMSUNG_MZVLB512HBJQ-000_S50HNX0N611770";
+        device = "/dev/disk/by-id/nvme-SAMSUNG_MZVLB512HBJQ-000_S50HNX0N611770";
         content = {
           type = "gpt";
           partitions = {
@@ -58,7 +58,7 @@
       ssd1 = {
         # SSD 1
         type = "disk";
-        device = "/dev/by-id/ata-SAMSUNG_SSD_PM851_2.5_7mm_256GB_S1CUNSAG126805";
+        device = "/dev/disk/by-id/ata-SAMSUNG_SSD_PM851_2.5_7mm_256GB_S1CUNSAG126805";
         content = {
           type = "gpt";
           partitions = {
@@ -75,7 +75,7 @@
       ssd2 = {
         # SSD 2
         type = "disk";
-        device = "/dev/by-id/ata-SAMSUNG_SSD_PM851_2.5_7mm_256GB_S1CUNSAG125413";
+        device = "/dev/disk/by-id/ata-SAMSUNG_SSD_PM851_2.5_7mm_256GB_S1CUNSAG125413";
         content = {
           type = "gpt";
           partitions = {
@@ -92,7 +92,7 @@
       data1 = {
         # HDD 1
         type = "disk";
-        device = "/dev/by-id/ata-WDC_WD3200AAKS-75L9A0_WD-WCAV27198536";
+        device = "/dev/disk/by-id/ata-WDC_WD3200AAKS-75L9A0_WD-WCAV27198536";
         content = {
           type = "gpt";
           partitions = {
@@ -109,7 +109,7 @@
       data2 = {
         # HDD 2
         type = "disk";
-        device = "/dev/by-id/ata-WDC_WD3200AAKS-75L9A0_WD-WCAV27241387";
+        device = "/dev/disk/by-id/ata-WDC_WD3200AAKS-75L9A0_WD-WCAV27241387";
         content = {
           type = "gpt";
           partitions = {
@@ -126,7 +126,7 @@
       data3 = {
         # HDD 3
         type = "disk";
-        device = "/dev/by-id/ata-WDC_WD3200AAKS-75L9A0_WD-WCAV27808397";
+        device = "/dev/disk/by-id/ata-WDC_WD3200AAKS-75L9A0_WD-WCAV27808397";
         content = {
           type = "gpt";
           partitions = {
