@@ -121,6 +121,8 @@
           flake-self = self;
         }
         // inputs;
+        }
+        // inputs;
 
         inventory = {
 
@@ -134,7 +136,11 @@
               };
               roles.default.tags."all" = { };
               # import all modules from ./modules/<module-name> everywhere
-              roles.default.extraModules = (map (m: "modules/${m}") (builtins.attrNames self.nixosModules));
+              roles.default.extraModules = [
+                # Clan modules deployed on all machines
+                #clan-core.clanModules.state-version
+              ]
+              ++ (map (m: "modules/${m}") (builtins.attrNames self.nixosModules));
             };
           };
 
@@ -183,6 +189,8 @@
               imports = [
                 "${./.}/home-manager/profiles/common.nix"
                 "${./.}/home-manager/profiles/${filename}"
+              ]
+              ++ (builtins.attrValues self.homeManagerModules);
               ]
               ++ (builtins.attrValues self.homeManagerModules);
             };
