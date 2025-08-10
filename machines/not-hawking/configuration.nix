@@ -34,6 +34,8 @@
         enable = true;
       };
     };
+
+    nfs-mounts.enableData = true;
   };
 
   imports = [
