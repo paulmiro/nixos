@@ -248,14 +248,6 @@
               "com.sun:auto-snapshot" = "true";
             };
           };
-          extra = {
-            type = "zfs_fs";
-            mountpoint = "/mnt/extra";
-            options = {
-              compression = "zstd";
-              "com.sun:auto-snapshot" = "true";
-            };
-          };
         };
       };
     };
