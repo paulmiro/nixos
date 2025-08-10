@@ -145,7 +145,7 @@
     zpool = {
       zroot = {
         type = "zpool";
-        mode = "mirror";
+        # mode = "mirror";
 
         mountpoint = "/";
         rootFsOptions = {
