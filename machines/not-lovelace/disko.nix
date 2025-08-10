@@ -1,7 +1,7 @@
 {
   disko.devices = {
     disk = {
-      bootroot1 = {
+      zroot1 = {
         # Boot/Root SSD 1
         type = "disk";
         device = "/dev/disk/by-id/nvme-SAMSUNG_MZVLB512HBJQ-000_S50HNX0N611770";
@@ -28,7 +28,7 @@
           };
         };
       };
-      # bootroot2 = {
+      # zroot2 = {
       #   # Boot/Root SSD 2
       #   type = "disk";
       #   device = "/dev/by-uuid/AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEE02";
