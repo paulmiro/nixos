@@ -15,6 +15,7 @@ in
     enableAuthentik = mkEnableOption "activate BLITZ1/apps/authentik";
     enablePostgresBackup = mkEnableOption "activate tank/postgres-backup";
     enablePlayground = mkEnableOption "activate BLITZ1/playground";
+    enableData = mkEnableOption "activate tank/data";
   };
 
   config = {
@@ -68,6 +69,14 @@ in
     };
     fileSystems."/mnt/nfs/postgres_backup" = lib.mkIf cfg.enablePostgresBackup {
       device = "not-turing:/mnt/tank/backups/postgres";
+      fsType = "nfs";
+      options = [
+        "x-systemd.automount"
+        "noauto"
+      ];
+    };
+    fileSystems."/mnt/nfs/data" = lib.mkIf cfg.enableData {
+      device = "not-turing:/mnt/tank/data";
       fsType = "nfs";
       options = [
         "x-systemd.automount"
