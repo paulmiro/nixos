@@ -15,25 +15,25 @@
       openFirewall = true;
     };
 
-    jellyfin = {
-      enable = true;
-      openFirewall = true;
-    };
+    # jellyfin = {
+    #   enable = true;
+    #   openFirewall = true;
+    # };
 
     # Local Services
-    sonarr = {
-      enable = true;
-      openFirewall = true;
-    };
+    # sonarr = {
+    #   enable = true;
+    #   openFirewall = true;
+    # };
     # radarr = {
     #   enable = true;
     #   openFirewall = true;
     # };
-    minecraft-servers = {
-      vanilla = {
-        enable = true;
-      };
-    };
+    # minecraft-servers = {
+    #   vanilla = {
+    #     enable = true;
+    #   };
+    # };
 
     nfs-mounts.enableData = true;
   };
