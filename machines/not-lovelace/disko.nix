@@ -4,7 +4,7 @@
       bootroot1 = {
         # Boot/Root SSD 1
         type = "disk";
-        device = "/dev/by-uuid/AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEE01";
+        device = "/dev/by-id/nvme-SAMSUNG_MZVLB512HBJQ-000_S50HNX0N611770";
         content = {
           type = "gpt";
           partitions = {
@@ -28,37 +28,37 @@
           };
         };
       };
-      bootroot2 = {
-        # Boot/Root SSD 2
-        type = "disk";
-        device = "/dev/by-uuid/AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEE02";
-        content = {
-          type = "gpt";
-          partitions = {
-            ESP = {
-              size = "8G";
-              type = "EF00"; # TODO: is this even possible?
-              content = {
-                type = "filesystem";
-                format = "vfat";
-                mountpoint = "/boot2";
-                mountOptions = [ "umask=0077" ];
-              };
-            };
-            zfs = {
-              size = "100%";
-              content = {
-                type = "zfs";
-                pool = "zroot";
-              };
-            };
-          };
-        };
-      };
+      # bootroot2 = {
+      #   # Boot/Root SSD 2
+      #   type = "disk";
+      #   device = "/dev/by-uuid/AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEE02";
+      #   content = {
+      #     type = "gpt";
+      #     partitions = {
+      #       ESP = {
+      #         size = "8G";
+      #         type = "EF00"; # TODO: is this even possible?
+      #         content = {
+      #           type = "filesystem";
+      #           format = "vfat";
+      #           mountpoint = "/boot2";
+      #           mountOptions = [ "umask=0077" ];
+      #         };
+      #       };
+      #       zfs = {
+      #         size = "100%";
+      #         content = {
+      #           type = "zfs";
+      #           pool = "zroot";
+      #         };
+      #       };
+      #     };
+      #   };
+      # };
       ssd1 = {
         # SSD 1
         type = "disk";
-        device = "/dev/by-uuid/AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEE03";
+        device = "/dev/by-id/ata-SAMSUNG_SSD_PM851_2.5_7mm_256GB_S1CUNSAG126805";
         content = {
           type = "gpt";
           partitions = {
@@ -75,7 +75,7 @@
       ssd2 = {
         # SSD 2
         type = "disk";
-        device = "/dev/by-uuid/AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEE04";
+        device = "/dev/by-id/ata-SAMSUNG_SSD_PM851_2.5_7mm_256GB_S1CUNSAG125413";
         content = {
           type = "gpt";
           partitions = {
@@ -92,7 +92,7 @@
       data1 = {
         # HDD 1
         type = "disk";
-        device = "/dev/by-uuid/AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEE05";
+        device = "/dev/by-id/ata-WDC_WD3200AAKS-75L9A0_WD-WCAV27198536";
         content = {
           type = "gpt";
           partitions = {
@@ -109,7 +109,7 @@
       data2 = {
         # HDD 2
         type = "disk";
-        device = "/dev/by-uuid/AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEE06";
+        device = "/dev/by-id/ata-WDC_WD3200AAKS-75L9A0_WD-WCAV27241387";
         content = {
           type = "gpt";
           partitions = {
@@ -126,7 +126,7 @@
       data3 = {
         # HDD 3
         type = "disk";
-        device = "/dev/by-uuid/AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEE07";
+        device = "/dev/by-id/ata-WDC_WD3200AAKS-75L9A0_WD-WCAV27808397";
         content = {
           type = "gpt";
           partitions = {
