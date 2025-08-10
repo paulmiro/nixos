@@ -55,7 +55,7 @@
       #     };
       #   };
       # };
-      ssd1 = {
+      blitz1 = {
         # SSD 1
         type = "disk";
         device = "/dev/disk/by-id/ata-SAMSUNG_SSD_PM851_2.5_7mm_256GB_S1CUNSAG126805";
@@ -66,13 +66,13 @@
               size = "100%";
               content = {
                 type = "zfs";
-                pool = "zfast";
+                pool = "blitz";
               };
             };
           };
         };
       };
-      ssd2 = {
+      blitz2 = {
         # SSD 2
         type = "disk";
         device = "/dev/disk/by-id/ata-SAMSUNG_SSD_PM851_2.5_7mm_256GB_S1CUNSAG125413";
@@ -83,13 +83,13 @@
               size = "100%";
               content = {
                 type = "zfs";
-                pool = "zfast";
+                pool = "blitz";
               };
             };
           };
         };
       };
-      data1 = {
+      tank1 = {
         # HDD 1
         type = "disk";
         device = "/dev/disk/by-id/ata-WDC_WD3200AAKS-75L9A0_WD-WCAV27198536";
@@ -100,13 +100,13 @@
               size = "100%";
               content = {
                 type = "zfs";
-                pool = "zdata";
+                pool = "tank";
               };
             };
           };
         };
       };
-      data2 = {
+      tank2 = {
         # HDD 2
         type = "disk";
         device = "/dev/disk/by-id/ata-WDC_WD3200AAKS-75L9A0_WD-WCAV27241387";
@@ -117,13 +117,13 @@
               size = "100%";
               content = {
                 type = "zfs";
-                pool = "zdata";
+                pool = "tank";
               };
             };
           };
         };
       };
-      data3 = {
+      tank3 = {
         # HDD 3
         type = "disk";
         device = "/dev/disk/by-id/ata-WDC_WD3200AAKS-75L9A0_WD-WCAV27808397";
@@ -134,7 +134,7 @@
               size = "100%";
               content = {
                 type = "zfs";
-                pool = "zdata";
+                pool = "tank";
               };
             };
           };
@@ -158,7 +158,7 @@
         };
       };
 
-      zfast = {
+      blitz = {
         type = "zpool";
         mode = {
           topology = {
@@ -167,8 +167,8 @@
               {
                 mode = "mirror";
                 members = [
-                  "ssd1"
-                  "ssd2"
+                  "blitz1"
+                  "blitz2"
                 ];
               }
             ];
@@ -208,7 +208,7 @@
         };
       };
 
-      zdata = {
+      tank = {
         type = "zpool";
         mode = {
           topology = {
@@ -217,9 +217,9 @@
               {
                 mode = "raidz1";
                 members = [
-                  "data1"
-                  "data2"
-                  "data3"
+                  "tank1"
+                  "tank2"
+                  "tank3"
                 ];
               }
             ];
