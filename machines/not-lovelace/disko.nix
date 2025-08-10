@@ -214,7 +214,7 @@
             type = "topology";
             vdev = [
               {
-                mode = "zraid1";
+                mode = "raidz1";
                 members = [
                   "data1"
                   "data2"
