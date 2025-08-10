@@ -154,14 +154,7 @@
         # postCreateHook = "zfs list -t snapshot -H -o name | grep -E '^zroot@blank$' || zfs snapshot zroot@blank";
 
         datasets = {
-          nix = {
-            type = "zfs_fs";
-            mountpoint = "/nix";
-            options = {
-              compression = "zstd";
-              "com.sun:auto-snapshot" = "false";
-            };
-          };
+
         };
       };
 
@@ -189,6 +182,14 @@
 
         datasets = {
           nix = {
+            type = "zfs_fs";
+            mountpoint = "/nix";
+            options = {
+              compression = "zstd";
+              "com.sun:auto-snapshot" = "false";
+            };
+          };
+          var = {
             type = "zfs_fs";
             mountpoint = "/var";
             options = {
