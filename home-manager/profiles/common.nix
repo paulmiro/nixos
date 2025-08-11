@@ -9,6 +9,7 @@
     paul = {
       programs.direnv.enable = true;
       programs.git.enable = true;
+      programs.neovim.enable = true;
       programs.ssh.enable = true;
       programs.zsh.enable = true;
       nixpkgs-config.enable = true;
