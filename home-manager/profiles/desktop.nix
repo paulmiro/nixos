@@ -3,6 +3,7 @@
   lib,
   pkgs,
   system-config,
+  zen-browser,
   ...
 }:
 {
@@ -68,7 +69,7 @@
         xournalpp
         zoom-us
 
-        flake-self.inputs.zen-browser.packages.${system}.default
+        zen-browser.packages.${system}.default
 
         flake-self.packages.${system}.vibe
       ]

@@ -1,7 +1,7 @@
 {
   config,
-  flake-self,
   lib,
+  nix4nvchad,
   pkgs,
   ...
 }:
@@ -10,7 +10,7 @@ let
 in
 {
   imports = [
-    flake-self.inputs.nix4nvchad.homeManagerModule
+    nix4nvchad.homeManagerModule
   ];
 
   options.paul.programs.neovim = {
