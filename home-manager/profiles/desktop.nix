@@ -13,6 +13,7 @@
       programs.vscode.enable = true;
       programs.ghostty.enable = true;
       programs.rbw.enable = true;
+      programs.neovim.enableNeovide = true;
 
       programs.development = {
         android = true;
