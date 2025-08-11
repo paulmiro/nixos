@@ -1,33 +1,33 @@
 {
   disko.devices = {
     disk = {
-      # zroot1 = {
-      #   # Boot/Root SSD 1
-      #   type = "disk";
-      #   device = "/dev/disk/by-id/nvme-SAMSUNG_MZVLB512HBJQ-000_S50HNX0N611770";
-      #   content = {
-      #     type = "gpt";
-      #     partitions = {
-      #       ESP = {
-      #         size = "8G";
-      #         type = "EF00";
-      #         content = {
-      #           type = "filesystem";
-      #           format = "vfat";
-      #           mountpoint = "/boot";
-      #           mountOptions = [ "umask=0077" ];
-      #         };
-      #       };
-      #       zfs = {
-      #         size = "100%";
-      #         content = {
-      #           type = "zfs";
-      #           pool = "zroot";
-      #         };
-      #       };
-      #     };
-      #   };
-      # };
+      zroot1 = {
+        # Boot/Root SSD 1
+        type = "disk";
+        device = "/dev/disk/by-id/nvme-SAMSUNG_MZVLB512HBJQ-000_S50HNX0N611770";
+        content = {
+          type = "gpt";
+          partitions = {
+            ESP = {
+              size = "8G";
+              type = "EF00";
+              content = {
+                type = "filesystem";
+                format = "vfat";
+                mountpoint = "/boot";
+                mountOptions = [ "umask=0077" ];
+              };
+            };
+            zfs = {
+              size = "100%";
+              content = {
+                type = "zfs";
+                pool = "zroot";
+              };
+            };
+          };
+        };
+      };
       # zroot2 = {
       #   # Boot/Root SSD 2
       #   type = "disk";
@@ -143,20 +143,20 @@
     };
 
     zpool = {
-      # zroot = {
-      #   type = "zpool";
-      #   # mode = "mirror";
+      zroot = {
+        type = "zpool";
+        # mode = "mirror";
 
-      #   mountpoint = "/";
-      #   rootFsOptions = {
-      #     "co.sun:auto-snapshot" = "false";
-      #   };
-      #   # postCreateHook = "zfs list -t snapshot -H -o name | grep -E '^zroot@blank$' || zfs snapshot zroot@blank";
+        mountpoint = "/";
+        rootFsOptions = {
+          "co.sun:auto-snapshot" = "false";
+        };
+        # postCreateHook = "zfs list -t snapshot -H -o name | grep -E '^zroot@blank$' || zfs snapshot zroot@blank";
 
-      #   datasets = {
+        datasets = {
 
-      #   };
-      # };
+        };
+      };
 
       blitz = {
         type = "zpool";
