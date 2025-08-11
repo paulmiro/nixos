@@ -6,6 +6,7 @@
   paul = {
     common-server.enable = true;
     systemd-boot.enable = true;
+    clan.manageUserPasswords = false;
   };
 
   clan.core.networking.targetHost = "not-lovelace";
