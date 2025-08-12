@@ -89,57 +89,57 @@
           };
         };
       };
-      tank1 = {
-        # HDD 1
-        type = "disk";
-        device = "/dev/disk/by-id/ata-WDC_WD3200AAKS-75L9A0_WD-WCAV27198536";
-        content = {
-          type = "gpt";
-          partitions = {
-            zfs = {
-              size = "100%";
-              content = {
-                type = "zfs";
-                pool = "tank";
-              };
-            };
-          };
-        };
-      };
-      tank2 = {
-        # HDD 2
-        type = "disk";
-        device = "/dev/disk/by-id/ata-WDC_WD3200AAKS-75L9A0_WD-WCAV27241387";
-        content = {
-          type = "gpt";
-          partitions = {
-            zfs = {
-              size = "100%";
-              content = {
-                type = "zfs";
-                pool = "tank";
-              };
-            };
-          };
-        };
-      };
-      tank3 = {
-        # HDD 3
-        type = "disk";
-        device = "/dev/disk/by-id/ata-WDC_WD3200AAKS-75L9A0_WD-WCAV27808397";
-        content = {
-          type = "gpt";
-          partitions = {
-            zfs = {
-              size = "100%";
-              content = {
-                type = "zfs";
-                pool = "tank";
-              };
-            };
-          };
-        };
-      };
+      # tank1 = {
+      #   # HDD 1
+      #   type = "disk";
+      #   device = "/dev/disk/by-id/ata-WDC_WD3200AAKS-75L9A0_WD-WCAV27198536";
+      #   content = {
+      #     type = "gpt";
+      #     partitions = {
+      #       zfs = {
+      #         size = "100%";
+      #         content = {
+      #           type = "zfs";
+      #           pool = "tank";
+      #         };
+      #       };
+      #     };
+      #   };
+      # };
+      # tank2 = {
+      #   # HDD 2
+      #   type = "disk";
+      #   device = "/dev/disk/by-id/ata-WDC_WD3200AAKS-75L9A0_WD-WCAV27241387";
+      #   content = {
+      #     type = "gpt";
+      #     partitions = {
+      #       zfs = {
+      #         size = "100%";
+      #         content = {
+      #           type = "zfs";
+      #           pool = "tank";
+      #         };
+      #       };
+      #     };
+      #   };
+      # };
+      # tank3 = {
+      #   # HDD 3
+      #   type = "disk";
+      #   device = "/dev/disk/by-id/ata-WDC_WD3200AAKS-75L9A0_WD-WCAV27808397";
+      #   content = {
+      #     type = "gpt";
+      #     partitions = {
+      #       zfs = {
+      #         size = "100%";
+      #         content = {
+      #           type = "zfs";
+      #           pool = "tank";
+      #         };
+      #       };
+      #     };
+      #   };
+      # };
     };
 
     zpool = {
@@ -208,48 +208,48 @@
         };
       };
 
-      tank = {
-        type = "zpool";
-        mode = {
-          topology = {
-            type = "topology";
-            vdev = [
-              {
-                mode = "raidz1";
-                members = [
-                  "tank1"
-                  "tank2"
-                  "tank3"
-                ];
-              }
-            ];
-          };
-        };
+      # tank = {
+      #   type = "zpool";
+      #   mode = {
+      #     topology = {
+      #       type = "topology";
+      #       vdev = [
+      #         {
+      #           mode = "raidz1";
+      #           members = [
+      #             "tank1"
+      #             "tank2"
+      #             "tank3"
+      #           ];
+      #         }
+      #       ];
+      #     };
+      #   };
 
-        rootFsOptions = {
-          mountpoint = "none";
-          "com.sun:auto-snapshot" = "false";
-        };
+      #   rootFsOptions = {
+      #     mountpoint = "none";
+      #     "com.sun:auto-snapshot" = "false";
+      #   };
 
-        datasets = {
-          arr = {
-            type = "zfs_fs";
-            mountpoint = "/mnt/arr";
-            options = {
-              compression = "zstd";
-              "com.sun:auto-snapshot" = "true";
-            };
-          };
-          data = {
-            type = "zfs_fs";
-            mountpoint = "/mnt/data";
-            options = {
-              compression = "zstd";
-              "com.sun:auto-snapshot" = "true";
-            };
-          };
-        };
-      };
+      #   datasets = {
+      #     arr = {
+      #       type = "zfs_fs";
+      #       mountpoint = "/mnt/arr";
+      #       options = {
+      #         compression = "zstd";
+      #         "com.sun:auto-snapshot" = "true";
+      #       };
+      #     };
+      #     data = {
+      #       type = "zfs_fs";
+      #       mountpoint = "/mnt/data";
+      #       options = {
+      #         compression = "zstd";
+      #         "com.sun:auto-snapshot" = "true";
+      #       };
+      #     };
+      #   };
+      # };
     };
   };
 }
