@@ -26,6 +26,11 @@ in
           efiInstallAsRemovable = true;
           useOSProber = true;
           configurationLimit = 100;
+
+          memtest86 = {
+            enable = true;
+            params = [ "onepass" ];
+          };
         };
         grub2-theme = {
           enable = true;
