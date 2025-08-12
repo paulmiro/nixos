@@ -1,5 +1,6 @@
 # This file gets imported for ALL home-manager profiles
 {
+  flake-self,
   pkgs,
   ...
 }:
@@ -17,7 +18,7 @@
 
     # Home-manager nixpkgs config
     nixpkgs = {
-      overlays = [ ];
+      overlays = [ flake-self.overlays.paulmiro-overlay ];
     };
 
     # Include man-pages

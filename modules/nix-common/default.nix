@@ -1,5 +1,6 @@
 {
   config,
+  flake-self,
   lib,
   nixpkgs,
   pkgs,
@@ -28,7 +29,7 @@ in
     nix.registry.nixpkgs.flake = nixpkgs;
 
     nixpkgs = {
-      overlays = [ ];
+      overlays = [ flake-self.overlays.paulmiro-overlay ];
       # Allow unfree licenced packages
       config.allowUnfree = true;
     };

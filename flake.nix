@@ -96,6 +96,15 @@
         }
       );
 
+      flakePkgs =
+        pkgs:
+        (builtins.listToAttrs (
+          map (name: {
+            inherit name;
+            value = pkgs.callPackage (./pkgs + "/${name}") { flake-self = self; };
+          }) (builtins.attrNames (builtins.readDir ./pkgs))
+        ));
+
       clan = clan-core.lib.clan {
         inherit self; # this needs to point at the repository root
 
@@ -128,23 +137,13 @@
     {
       formatter = forAllSystems (system: nixpkgsFor.${system}.nixfmt-rfc-style); # TODO: change to "nixfmt" once it is replaced
 
-      packages = forAllSystems (
-        system:
-        let
-          pkgs = nixpkgsFor.${system};
-        in
-        {
+      packages = forAllSystems (system: flakePkgs nixpkgsFor.${system});
 
-          #woodpecker-pipeline = pkgs.callPackage ./pkgs/woodpecker-pipeline {
-          #  flake-self = self;
-          #  inputs = inputs;
-          #};
-
-          vibe = pkgs.callPackage ./pkgs/vibe {
-            inherit inputs;
-          };
-        }
-      );
+      overlays = {
+        paulmiro-overlay = self: super: {
+          paulmiro = flakePkgs super;
+        };
+      };
 
       # Output all modules in ./modules to flake. Modules should be in
       # individual subdirectories and contain a default.nix file
