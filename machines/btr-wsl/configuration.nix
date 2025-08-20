@@ -27,6 +27,8 @@
 
   paul.common.enable = true;
 
+  paul.home-manager.profile = "wsl-work";
+
   programs.nix-ld.enable = true; # to allow VSCode-server to run
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
