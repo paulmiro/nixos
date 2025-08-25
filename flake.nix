@@ -114,7 +114,8 @@
         # allows to only pass what is needed to each module.
         specialArgs = {
           flake-self = self;
-        } // inputs;
+        }
+        // inputs;
 
         inventory = {
 
@@ -127,7 +128,8 @@
               roles.default.extraModules = [
                 # Clan modules deployed on all machines
                 #clan-core.clanModules.state-version
-              ] ++ (map (m: "modules/${m}") (builtins.attrNames self.nixosModules));
+              ]
+              ++ (map (m: "modules/${m}") (builtins.attrNames self.nixosModules));
             };
           };
         };
@@ -140,8 +142,8 @@
       packages = forAllSystems (system: flakePkgs nixpkgsFor.${system});
 
       overlays = {
-        paulmiro-overlay = self: super: {
-          paulmiro = flakePkgs super;
+        paulmiro-overlay = final: prev: {
+          paulmiro = flakePkgs prev;
         };
       };
 
@@ -175,7 +177,8 @@
               imports = [
                 "${./.}/home-manager/profiles/common.nix"
                 "${./.}/home-manager/profiles/${filename}"
-              ] ++ (builtins.attrValues self.homeManagerModules);
+              ]
+              ++ (builtins.attrValues self.homeManagerModules);
             };
         }) (builtins.attrNames (builtins.readDir ./home-manager/profiles))
       );
