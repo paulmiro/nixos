@@ -130,7 +130,9 @@ in
 
         c = "code .";
         q = "exit";
+        qq = "clear && exit";
         r = "${pkgs.trashy}/bin/trash";
+        y = "yazi";
 
         ## Important
 
