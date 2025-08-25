@@ -123,13 +123,9 @@
 
           services = {
             importer.default = {
-              roles.default.tags = [ "all" ];
               # import all modules from ./modules/<module-name> everywhere
-              roles.default.extraModules = [
-                # Clan modules deployed on all machines
-                #clan-core.clanModules.state-version
-              ]
-              ++ (map (m: "modules/${m}") (builtins.attrNames self.nixosModules));
+              roles.default.tags.all = { };
+              roles.default.extraModules = (map (m: "modules/${m}") (builtins.attrNames self.nixosModules));
             };
           };
         };
