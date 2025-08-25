@@ -226,6 +226,8 @@
           };
         };
 
+        options.autoexpand = "on";
+
         rootFsOptions = {
           mountpoint = "none";
           "com.sun:auto-snapshot" = "false";
