@@ -51,7 +51,7 @@ in
                 echo $REPO_FULL_PATH
                 exit 1
               fi
-              git clone git@github.com:$REPO_FULL_NAME.git $REPO_FULL_PATH
+              git clone --recursive git@github.com:$REPO_FULL_NAME.git $REPO_FULL_PATH
               echo $REPO_FULL_PATH
               exit 0
             fi
