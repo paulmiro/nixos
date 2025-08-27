@@ -121,13 +121,18 @@
 
           meta.name = "paulmiro-clan";
 
-          services = {
-            importer.default = {
+          instances = {
+            importer-modules-dir = {
+              module = {
+                name = "importer";
+                input = "clan-core";
+              };
+              roles.default.tags."all" = { };
               # import all modules from ./modules/<module-name> everywhere
-              roles.default.tags.all = { };
               roles.default.extraModules = (map (m: "modules/${m}") (builtins.attrNames self.nixosModules));
             };
           };
+
         };
 
       };
