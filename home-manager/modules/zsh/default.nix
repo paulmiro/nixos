@@ -21,10 +21,10 @@ in
       enable = true;
       autosuggestion.enable = true;
       enableCompletion = true;
-      dotDir = ".config/zsh";
+      dotDir = "${config.xdg.configHome}/zsh";
 
       sessionVariables = {
-        ZDOTDIR = "$HOME/.config/zsh";
+        ZDOTDIR = "${config.xdg.configHome}/zsh";
       };
 
       initContent =
