@@ -62,10 +62,10 @@ in
         ];
 
         substituters = lib.mkIf (cfg.disable-cache != true) [
-          "https://cache.lounge.rocks/nix-cache?priority=30"
+          "https://cache.lounge.rocks/nix-cache?priority=20"
           # chache.nixos.org has priority=40
-          "https://cache.clan.lol?priority=60"
-          "https://nix-community.cachix.org?priority=70"
+          "https://cache.clan.lol/?priority=60"
+          "https://nix-community.cachix.org/?priority=70"
         ];
 
         trusted-users = [
