@@ -145,14 +145,67 @@ in
     };
 
     programs = {
+
+      # TODO atuin
+
       # cooler cat
-      bat.enable = true;
+      bat = {
+        enable = true;
+        config = {
+          paging = "never";
+          plain = true;
+        };
+      };
 
       # cooler htop
-      btop.enable = true;
+      btop = {
+        enable = true;
+        settings = {
+          theme_background = false;
+        };
+      };
 
       # dir colors for ls and lsd
       dircolors.enable = true;
+
+      # TODO eza
+
+      # cooler find
+      fd = {
+        enable = true;
+        hidden = true;
+        ignores = [
+          ".git/"
+          ".direnv/"
+        ];
+      };
+
+      # fuzzy find
+      fzf = {
+        enable = true;
+        defaultCommand = "fd --type f"; # to respect .gitignore and fd's ignore list
+        defaultOptions = [
+          "--height 40%"
+          "--border"
+        ];
+        changeDirWidgetCommand = "fd --type d";
+        changeDirWidgetOptions = [
+          "--preview 'tree -C {} | head -200'"
+          "--height 40%"
+          "--border"
+        ];
+        fileWidgetCommand = "fd --type f";
+        fileWidgetOptions = [
+          "--preview 'bat --color=always --line-range=:500 {}'"
+          "--height 40%"
+          "--border"
+        ];
+        historyWidgetOptions = [
+          "--sort"
+          "--height 40%"
+          "--border"
+        ];
+      };
 
       # cooler top
       htop = {
