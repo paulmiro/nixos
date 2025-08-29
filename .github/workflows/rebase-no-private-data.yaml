@@ -18,15 +18,20 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
-          ref: no-private-data
 
-      - name: Rebase Main
-        uses: martincostello/rebaser@v2.1.1
-        id: rebase
+      - name: Setup Git User
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Push changes
-        if: ${{ steps.rebase.outputs.result == 'success' }}
-        run: git push --force-with-lease origin no-private-data
+      - name: Update Test Branch
+        run: |
+          git checkout main
+          git fetch origin
+          git checkout no-private-data
+          git pull
+          git rebase origin/main
+          git push origin no-private-data
