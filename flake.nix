@@ -121,8 +121,6 @@
           flake-self = self;
         }
         // inputs;
-        }
-        // inputs;
 
         inventory = {
 
@@ -189,8 +187,6 @@
               imports = [
                 "${./.}/home-manager/profiles/common.nix"
                 "${./.}/home-manager/profiles/${filename}"
-              ]
-              ++ (builtins.attrValues self.homeManagerModules);
               ]
               ++ (builtins.attrValues self.homeManagerModules);
             };
