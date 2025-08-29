@@ -21,5 +21,10 @@ in
       fonts.enable = true;
       locale.hardwareClockInLocalTime = true;
     };
+
+    programs.appimage = {
+      enable = true;
+      binfmt = true;
+    };
   };
 }
