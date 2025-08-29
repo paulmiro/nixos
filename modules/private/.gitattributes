@@ -1,1 +1,1 @@
-private.json filter=git-agecrypt diff=git-agecrypt
+private.toml filter=git-agecrypt diff=git-agecrypt

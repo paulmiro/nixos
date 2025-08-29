@@ -1,0 +1,26 @@
+[domains]
+base = "example.com"
+jellyfin = "jellyfin.example.com"
+jellyfin_old = "jellyfin.alt.example.com"
+jellyseerr = "jellyseerr.example.com"
+jellyseerr_old = "jellyseerr.alt.example.com"
+immich = "immich.example.com"
+authentik = "authentik.example.com"
+filebrowser = "filebrowser.example.com"
+audiobookshelf = "audiobookshelf.example.com"
+homepage-dashboard = "homepage-dashboard.example.com"
+librespeedtest = "librespeedtest.example.com"
+stirling-pdf = "stirling-pdf.example.com"
+uptime-kuma = "uptime-kuma.example.com"
+gotify = "gotify.example.com"
+hedgedoc = "hedgedoc.example.com"
+karakeep = "karakeep.example.com"
+egg = "egg.example.com"
+
+[emails]
+proton = "proton@example.com"
+gmail = "gmail@example.com"
+
+[misc]
+smtp2go_username_authentik = "example_username"
+authentik_display_name = "Example Display Name"

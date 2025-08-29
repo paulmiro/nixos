@@ -48,7 +48,7 @@ in
             email = false;
             oauth2 = {
               baseUrl = "https://${config.paul.private.domains.authentik}";
-              providerName = config.paul.private.authentik_display_name;
+              providerName = config.paul.private.misc.authentik_display_name;
               clientID = "$OAUTH2_CLIENT_ID";
               clientSecret = "$OAUTH2_CLIENT_SECRET";
               scope = "openid email profile";

@@ -5,7 +5,7 @@ steps:
   - name: Decrypt Private Data
     image: bash
     commands:
-      - echo $AGE_KEY_PRIVATE_DATA | nix shell nixpkgs#age --command age --decrypt -i - -o modules/private/private.json.decrypted modules/private/private.json && mv modules/private/private.json.decrypted modules/private/private.json
+      - echo $AGE_KEY_PRIVATE_DATA | nix shell nixpkgs#age --command age --decrypt -i - -o modules/private/private.toml.decrypted modules/private/private.toml && mv modules/private/private.toml.decrypted modules/private/private.toml
     secrets:
       - AGE_KEY_PRIVATE_DATA
   - name: Nix flake show

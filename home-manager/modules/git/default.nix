@@ -1,5 +1,6 @@
 {
   config,
+  git-agecrypt-armor,
   lib,
   pkgs,
   ...
@@ -29,7 +30,7 @@ in
 
     home.packages = with pkgs; [
       pre-commit
-      git-agecrypt
+      git-agecrypt-armor.packages.${system}.default
     ];
 
   };

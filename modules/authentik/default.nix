@@ -48,7 +48,7 @@ in
             email = {
               host = "mail.smtp2go.com";
               port = 2525;
-              username = config.paul.private.smtp2go_username_authentik;
+              username = config.paul.private.misc.smtp2go_username_authentik;
               use_tls = true;
               use_ssl = false;
               from = cfg.emailAdress;

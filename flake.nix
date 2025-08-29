@@ -75,6 +75,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    git-agecrypt-armor = {
+      url = "github:paulmiro/git-agecrypt-armor";
+      # inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs =
@@ -195,7 +200,7 @@
         system: with nixpkgsFor.${system}; {
           default = pkgs.mkShell {
             packages = [
-              pkgs.git-agecrypt
+              git-agecrypt-armor.packages.${system}.default
               clan-core.packages.${system}.clan-cli
               (pkgs.writeShellScriptBin "rebuild" "${pkgs.nixos-rebuild}/bin/nixos-rebuild --use-remote-sudo switch --flake .")
               (pkgs.writeShellScriptBin "rollout" "${
