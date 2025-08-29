@@ -98,7 +98,7 @@ in
         ## Nix
 
         # always execute nixos-rebuild with sudo for switching
-        nixos-rebuild = "${pkgs.nixos-rebuild}/bin/nixos-rebuild --use-remote-sudo";
+        nixos-rebuild = "${pkgs.nixos-rebuild}/bin/nixos-rebuild --sudo";
 
         # list syslinks into nix-store
         nix-list = "${pkgs.nix}/bin/nix-store --gc --print-roots";
