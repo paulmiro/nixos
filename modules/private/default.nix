@@ -8,7 +8,7 @@ let
       lib.throwIfNot allow_fake ''
         Private data has not been decrypted.
 
-        If you are not paulmiro, simply edit the contents of ./modules/private/allow_fake.nix to "true".
+        If you are not paulmiro, simply switch to the "no-private-data" branch or edit the contents of ./modules/private/allow_fake.nix to "true".
 
         You can refer to modules/private/README.md for more information.
       '' builtins.readFile ./fake_private.toml
