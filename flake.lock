@@ -307,11 +307,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1756472635,
-        "narHash": "sha256-9yLKETnBb/ikA/ALbNpobqKJNMbAeM08C8lAg3Rowsw=",
+        "lastModified": 1756487785,
+        "narHash": "sha256-nUW/zt29kZQVfQW/PF5FCjdlkxFHlwMWSJ5tzIzPe0k=",
         "owner": "paulmiro",
         "repo": "git-agecrypt-armor",
-        "rev": "68712e995ce5c691262f924e08d2c33ab7817066",
+        "rev": "5c3aeefcfaf0155871e21f61c0c8f756986877b6",
         "type": "github"
       },
       "original": {
