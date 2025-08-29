@@ -1,0 +1,32 @@
+name: rebase
+
+on:
+  push:
+    branches:
+      - "main"
+
+permissions:
+  contents: write
+
+jobs:
+  rebase:
+    runs-on: [ubuntu-latest]
+
+    concurrency:
+      group: "rebase-no-private-data"
+      cancel-in-progress: false
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: no-private-data
+
+      - name: Rebase Main
+        uses: martincostello/rebaser@v2.1.1
+        id: rebase
+
+      - name: Push changes
+        if: ${{ steps.rebase.outputs.result == 'success' }}
+        run: git push --force-with-lease origin no-private-data
