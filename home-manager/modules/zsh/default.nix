@@ -129,6 +129,7 @@ in
         # General Purpose
 
         c = "code .";
+        e = "xdg-open .";
         q = "exit";
         qq = "clear && exit";
         r = "${pkgs.trashy}/bin/trash";
