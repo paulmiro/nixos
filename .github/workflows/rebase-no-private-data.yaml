@@ -27,11 +27,11 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Update Test Branch
+      - name: Update np-private-data Branch
         run: |
           git checkout main
           git fetch origin
           git checkout no-private-data
           git pull
           git rebase origin/main
-          git push origin no-private-data
+          git push origin no-private-data --force
