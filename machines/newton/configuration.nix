@@ -1,8 +1,26 @@
 {
   pkgs,
+  config,
   ...
 }:
 {
+
+  ################### KANI TEST ###################
+  # Make sure to delete state folders when done
+  #################################################
+
+  services.kanidm = {
+    enableClient = true;
+
+    package = pkgs.kanidm_1_7;
+
+    clientSettings = {
+      uri = "https://kanidm.kani-test.morse.${config.paul.private.domains.base}";
+    };
+  };
+
+  ################### END KANI TEST ###################
+
   paul = {
     common-desktop.enable = true;
     gnome.enable = true;
