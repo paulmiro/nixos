@@ -79,10 +79,10 @@ in
     (lib.mkIf cfg.enableClient {
       services.kanidm = {
         enableClient = true;
-      };
 
-      clientSettings = {
-        uri = "https://${domain}";
+        clientSettings = {
+          uri = "https://${domain}";
+        };
       };
     })
   ];
