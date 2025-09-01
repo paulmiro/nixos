@@ -43,7 +43,23 @@
         gnome-graphs
         gparted
         inkscape
-        jellyfin-mpv-shim
+        (jellyfin-mpv-shim.overrideAttrs {
+          propagatedBuildInputs = with python3Packages; [
+            jellyfin-apiclient-python
+            mpv
+            pillow
+            python-mpv-jsonipc
+
+            # gui dependencies
+            pystray
+            tkinter
+
+            # I removed these because pywebview is marked as insecure and I don't need the optional feature it is needed for:
+            # # display_mirror dependencies
+            # jinja2
+            # pywebview
+          ];
+        })
         krita
         libreoffice
         mattermost-desktop
