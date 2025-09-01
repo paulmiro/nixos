@@ -16,6 +16,7 @@ gotify = "gotify.example.com"
 hedgedoc = "hedgedoc.example.com"
 karakeep = "karakeep.example.com"
 egg = "egg.example.com"
+kanidm = "kanidm.example.com"
 
 [emails]
 proton = "proton@example.com"
