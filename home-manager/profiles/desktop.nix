@@ -36,7 +36,7 @@
     home.packages =
       with pkgs;
       [
-        anki
+        anki-bin
         audacity
         discord
         element-desktop
