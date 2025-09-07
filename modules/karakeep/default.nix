@@ -35,8 +35,9 @@ in
             PORT = toString cfg.port;
             NEXTAUTH_URL = "https://${cfg.domain}";
             DISABLE_NEW_RELEASE_CHECK = "true";
-            OAUTH_WELLKNOWN_URL = "https://${config.paul.private.domains.authentik}/application/o/karakeep/.well-known/openid-configuration";
-            OAUTH_PROVIDER_NAME = config.paul.private.misc.authentik_display_name;
+            OAUTH_CLIENT_ID = "karakeep";
+            OAUTH_WELLKNOWN_URL = "https://${config.paul.private.domains.kanidm}/oauth2/openid/karakeep/.well-known/openid-configuration";
+            OAUTH_PROVIDER_NAME = config.paul.private.misc.kanidm_display_name;
             DISABLE_PASSWORD_AUTH = "true";
           };
           environmentFile = config.clan.core.vars.generators.karakeep.files.env.path;
@@ -55,10 +56,6 @@ in
         systemd.services.meilisearch.serviceConfig.ProcSubset = lib.mkForce "all";
 
         clan.core.vars.generators.karakeep = {
-          prompts.oauth-client-id.description = "Karakeep OAuth2 Client ID";
-          prompts.oauth-client-id.type = "hidden";
-          prompts.oauth-client-id.persist = false;
-
           prompts.oauth-client-secret.description = "Karakeep OAuth2 Client Secret";
           prompts.oauth-client-secret.type = "hidden";
           prompts.oauth-client-secret.persist = false;
@@ -71,7 +68,6 @@ in
 
           script = ''
             echo "\
-            OAUTH_CLIENT_ID="$(cat $prompts/oauth-client-id)"
             OAUTH_CLIENT_SECRET="$(cat $prompts/oauth-client-secret)"
             OPENAI_API_KEY="$(cat $prompts/openai-api-key)"
             " > $out/env
