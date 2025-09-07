@@ -47,14 +47,14 @@ in
 
             email = false;
             oauth2 = {
-              baseUrl = "https://${config.paul.private.domains.authentik}";
-              providerName = config.paul.private.misc.authentik_display_name;
-              clientID = "$OAUTH2_CLIENT_ID";
+              baseUrl = "https://${config.paul.private.domains.kanidm}";
+              providerName = config.paul.private.misc.kanidm_display_name;
+              clientID = "hedgedoc";
               clientSecret = "$OAUTH2_CLIENT_SECRET";
               scope = "openid email profile";
-              userProfileURL = "https://${config.paul.private.domains.authentik}/application/o/userinfo/";
-              tokenURL = "https://${config.paul.private.domains.authentik}/application/o/token/";
-              authorizationURL = "https://${config.paul.private.domains.authentik}/application/o/authorize/";
+              userProfileURL = "https://${config.paul.private.domains.kanidm}/oauth2/openid/hedgedoc/userinfo";
+              tokenURL = "https://${config.paul.private.domains.kanidm}/oauth2/token";
+              authorizationURL = "https://${config.paul.private.domains.kanidm}/ui/oauth2";
               userProfileUsernameAttr = "preferred_username";
               userProfileDisplayNameAttr = "name";
               userProfileEmailAttr = "email";
@@ -63,10 +63,6 @@ in
         };
 
         clan.core.vars.generators.hedgedoc = {
-          prompts.oauth2-client-id.description = "Hedgedoc OAuth2 Client ID";
-          prompts.oauth2-client-id.type = "hidden";
-          prompts.oauth2-client-id.persist = false;
-
           prompts.oauth2-client-secret.description = "Hedgedoc OAuth2 Client Secret";
           prompts.oauth2-client-secret.type = "hidden";
           prompts.oauth2-client-secret.persist = false;
@@ -77,7 +73,6 @@ in
 
           script = ''
             echo "\
-            OAUTH2_CLIENT_ID="$(cat $prompts/oauth2-client-id)"
             OAUTH2_CLIENT_SECRET="$(cat $prompts/oauth2-client-secret)"
             SESSION_SECRET="$(pwgen -s 64 1)"
             " > $out/env
