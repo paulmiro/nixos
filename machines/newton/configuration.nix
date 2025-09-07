@@ -15,6 +15,7 @@
     adb.enable = true;
     docker.enable = true;
     gaming.enable = true;
+    kanidm.enableClient = true;
   };
 
   imports = [

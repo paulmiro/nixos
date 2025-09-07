@@ -22,6 +22,9 @@
       enableLdap = true;
       openFirewall = true;
     };
+    kanidm = {
+      enable = true;
+    };
     librespeedtest = {
       enable = true;
       enableNginx = true;
