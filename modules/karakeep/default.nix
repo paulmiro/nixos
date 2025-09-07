@@ -51,6 +51,9 @@ in
           settings.experimental_dumpless_upgrade = true;
         };
 
+        # surrealdb/surrealdb/issues/6153#issuecomment-3135333587
+        systemd.services.meilisearch.serviceConfig.ProcSubset = lib.mkForce "all";
+
         clan.core.vars.generators.karakeep = {
           prompts.oauth-client-id.description = "Karakeep OAuth2 Client ID";
           prompts.oauth-client-id.type = "hidden";
