@@ -42,10 +42,14 @@ in
           environmentFile = config.clan.core.vars.generators.karakeep.files.env.path;
         };
 
-        # meilisearch breaks on every update (love it), this is just a hack to make it future paul's problem (you're welcome <3)
-        services.meilisearch.package =
-          assert pkgs.meilisearch.version == "1.18.0";
-          pkgs.meilisearch;
+        services.meilisearch = {
+          # this is required because state-version < 25.05 sets the package to 1.11
+          # TODO: 25.11: remove this (assuming they actually removed meilisearch_1_11)
+          # -> also check if the dumpless upgrade is made the default, and remove that too if that's the case
+          package = pkgs.meilisearch;
+          # this allows the database to be updated automatically without having to dump and then re-import it
+          settings.experimental_dumpless_upgrade = true;
+        };
 
         clan.core.vars.generators.karakeep = {
           prompts.oauth-client-id.description = "Karakeep OAuth2 Client ID";
