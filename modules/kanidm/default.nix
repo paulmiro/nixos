@@ -58,7 +58,7 @@ in
         forceSSL = true;
         enableDyndns = true;
         locations."/" = {
-          proxyPass = "https://${domain}";
+          proxyPass = "https://[::1]:8443";
         };
       };
 
