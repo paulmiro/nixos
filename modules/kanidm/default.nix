@@ -7,6 +7,7 @@
 let
   cfg = config.paul.kanidm;
   domain = config.paul.private.domains.kanidm; # not set as an option because it should never be changed
+  package = pkgs.kanidm_1_7;
 in
 {
   options.paul.kanidm = {
@@ -34,7 +35,7 @@ in
       services.kanidm = {
         enableServer = true;
 
-        package = pkgs.kanidm_1_7;
+        inherit package;
 
         serverSettings = {
           version = "2";
@@ -80,6 +81,8 @@ in
     (lib.mkIf cfg.enableClient {
       services.kanidm = {
         enableClient = true;
+
+        inherit package;
 
         clientSettings = {
           uri = "https://${domain}";
