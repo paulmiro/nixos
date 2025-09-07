@@ -397,14 +397,12 @@ in
           enableAuthentik = true;
           enableACME = true;
           forceSSL = true;
+          enableDyndns = true;
           locations."/" = {
             proxyPass = "http://127.0.0.1:${builtins.toString cfg.port}";
             geo-ip = true;
           };
         };
-
-        paul.dyndns.domains = [ cfg.domain ];
-
       })
     ]
   );

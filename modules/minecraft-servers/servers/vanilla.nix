@@ -22,11 +22,11 @@ in
   config = lib.mkIf cfg.enable {
     users.users.paulmiro.extraGroups = [ "minecraft" ];
     nixpkgs.overlays = [ nix-minecraft.overlay ];
-    paul.dyndns.domains = lib.mkIf cfg.enableDyndns [ cfg.domain ];
 
     services.nginx.virtualHosts."${cfg.domain}" = {
       enableACME = true;
       forceSSL = true;
+      enableDyndns = cfg.enableDyndns;
       locations."/" = {
         proxyPass = "http://127.0.0.1:8100";
         geo-ip = true;

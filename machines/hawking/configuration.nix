@@ -145,6 +145,7 @@
   services.nginx.virtualHosts."${config.paul.private.domains.egg}" = {
     enableACME = true;
     forceSSL = true;
+    enableDyndns = true;
     locations."/" = {
       return = "302 https://www.youtube.com/watch?v=dQw4w9WgXcQ";
     };
@@ -153,6 +154,7 @@
   services.nginx.virtualHosts."${config.paul.private.domains.filebrowser}" = {
     enableACME = true;
     forceSSL = true;
+    enableDyndns = true;
     locations."/" = {
       proxyPass = "http://192.168.178.222:30044";
       geo-ip = true;
@@ -162,17 +164,12 @@
   services.nginx.virtualHosts."drop.${config.paul.private.domains.base}" = {
     enableACME = true;
     forceSSL = true;
+    enableDyndns = true;
     locations."/" = {
       proxyPass = "http://192.168.178.222:45301";
       geo-ip = true;
     };
   };
-
-  paul.dyndns.domains = [
-    config.paul.private.domains.egg
-    config.paul.private.domains.filebrowser
-    "drop.${config.paul.private.domains.base}"
-  ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

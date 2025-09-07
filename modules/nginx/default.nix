@@ -55,7 +55,7 @@ in
       };
     };
 
-    systemd.services.nginx = lib.mkIf config.paul.dyndns.enable {
+    systemd.services.nginx = lib.mkIf config.paul.dyndns._enable {
       after = [
         "network.target"
         "cloudflare-dyndns.service"
@@ -66,8 +66,7 @@ in
 
     paul.dyndns = lib.mkIf cfg.openFirewall {
       # dyndns is pretty much useless without the opened ports
-      enable = true;
-      domains = [
+      extraDomains = [
         cfg.defaultDomain
         "*.${cfg.defaultDomain}"
       ];

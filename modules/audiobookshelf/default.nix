@@ -45,11 +45,10 @@ in
       (lib.mkIf cfg.enableNginx {
         paul.nginx.enable = true;
 
-        paul.dyndns.domains = lib.mkIf cfg.enableDyndns [ cfg.domain ];
-
         services.nginx.virtualHosts."${cfg.domain}" = {
           enableACME = true;
           forceSSL = true;
+          enableDyndns = cfg.enableDyndns;
           locations."/" = {
             proxyPass = "http://127.0.0.1:${builtins.toString cfg.port}";
             proxyWebsockets = true;

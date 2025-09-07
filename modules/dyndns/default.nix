@@ -1,30 +1,54 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 let
   cfg = config.paul.dyndns;
+  domains =
+    (map (vhost: (if vhost.value.serverName != null then vhost.value.serverName else vhost.name)) (
+      builtins.filter (vhost: vhost.value.enableDyndns) (
+        lib.attrsToList config.services.nginx.virtualHosts
+      )
+    ))
+    ++ cfg.extraDomains;
+  enable = (!cfg.forceDisable) && ((builtins.length domains) != 0);
 in
 {
-  options.paul.dyndns = with lib; {
-    enable = mkEnableOption "activate dyndns";
+  options.paul.dyndns = {
+    forceDisable = lib.mkEnableOption "force disable dyndns";
 
-    domains = mkOption {
-      type = types.listOf types.str;
+    extraDomains = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
       default = [ ];
-      description = "domains to update";
+      description = "extra domains to update";
     };
+
+    _enable = lib.mkEnableOption "enable dyndns"; # readonly for other services
   };
 
-  config = lib.mkIf cfg.enable {
+  options.services.nginx.virtualHosts = lib.mkOption {
+    type = lib.types.attrsOf (
+      lib.types.submodule (
+        { config, ... }:
+        {
+          options = {
+            enableDyndns = lib.mkEnableOption "enable dyndns";
+          };
+        }
+      )
+    );
+  };
+
+  config = lib.mkIf enable {
+    paul.dyndns._enable = lib.mkForce true;
+
     services.cloudflare-dyndns = {
       enable = true;
       apiTokenFile = config.clan.core.vars.generators.cloudflare-dyndns.files.api-token.path;
       ipv4 = true;
       ipv6 = false;
-      domains = cfg.domains;
+      domains = domains;
     };
 
     clan.core.vars.generators.cloudflare-dyndns = {

@@ -74,19 +74,18 @@ in
             "/mnt/nfs/jellyfin/cache:/cache"
             "/mnt/nfs/arr/media:/data/media:ro"
           ];
-          extraOptions =
-            [
-              "--network=host"
-            ]
-            ++ lib.optionals (cfg.enableQuickSync) [
-              # get group ID with: `getent group render | cut -d: -f3`
-              "--group-add=303"
-              "--device=/dev/dri/renderD128:/dev/dri/renderD128"
-            ]
-            ++ lib.optionals (config.paul.nvidia.enable) [
-              "--gpus"
-              "all"
-            ];
+          extraOptions = [
+            "--network=host"
+          ]
+          ++ lib.optionals (cfg.enableQuickSync) [
+            # get group ID with: `getent group render | cut -d: -f3`
+            "--group-add=303"
+            "--device=/dev/dri/renderD128:/dev/dri/renderD128"
+          ]
+          ++ lib.optionals (config.paul.nvidia.enable) [
+            "--gpus"
+            "all"
+          ];
         };
 
         systemd.services.docker-jellyfin = {
@@ -102,14 +101,11 @@ in
 
       (lib.mkIf cfg.enableNginx {
         paul.nginx.enable = true;
-        paul.dyndns.domains = lib.mkIf cfg.enableDyndns [
-          cfg.domain
-          config.paul.private.domains.jellyfin_old
-        ];
 
         services.nginx.virtualHosts."${cfg.domain}" = {
           enableACME = true;
           forceSSL = true;
+          enableDyndns = cfg.enableDyndns;
           locations."/" = {
             proxyPass = "http://127.0.0.1:8096";
             geo-ip = true;
@@ -145,6 +141,7 @@ in
           {
             enableACME = true;
             forceSSL = true;
+            enableDyndns = cfg.enableDyndns;
             root = "${web-root-dir}";
             extraConfig = ''
               error_page 410 /errors/410.html;

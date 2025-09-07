@@ -51,11 +51,10 @@ in
         };
       };
 
-      paul.dyndns.domains = [ domain ];
-
       services.nginx.virtualHosts.${domain} = {
         enableACME = true;
         forceSSL = true;
+        enableDyndns = true;
         locations."/" = {
           proxyPass = "https://${domain}";
         };

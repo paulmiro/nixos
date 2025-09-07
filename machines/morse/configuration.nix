@@ -62,12 +62,11 @@
   services.nginx.virtualHosts."paulmiro.de" = {
     enableACME = true;
     forceSSL = true;
+    enableDyndns = true;
     locations."/" = {
       return = "301 https://github.com/paulmiro";
     };
   };
-
-  paul.dyndns.domains = [ "paulmiro.de" ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

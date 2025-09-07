@@ -114,8 +114,6 @@ in
       (lib.mkIf cfg.enableNginx {
         paul.nginx.enable = true;
 
-        paul.dyndns.domains = lib.mkIf cfg.enableDyndns [ cfg.domain ];
-
         services.authentik.nginx = {
           enable = true;
           enableACME = true;
@@ -124,6 +122,7 @@ in
 
         services.nginx = {
           virtualHosts."${cfg.domain}" = {
+            enableDyndns = cfg.enableDyndns;
             locations."/" = {
               geo-ip = true;
             };

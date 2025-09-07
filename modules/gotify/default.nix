@@ -47,11 +47,10 @@ in
       '';
     };
 
-    paul.dyndns.domains = lib.mkIf cfg.enableNginx [ cfg.domain ];
-
     services.nginx.virtualHosts."${cfg.domain}" = lib.mkIf cfg.enableNginx {
       enableACME = true;
       forceSSL = true;
+      enableDyndns = true;
       locations."/" = {
         proxyPass = "http://127.0.0.1:${toString cfg.port}";
         geo-ip = false;
