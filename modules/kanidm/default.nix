@@ -41,10 +41,12 @@ in
           origin = "https://${domain}";
           domain = domain;
           # we usually want to bind to ::1, but opening the firewall is pointless without binding to an accessible ip
-          bindaddress = "[::${lib.mkIf (!cfg.openHttpsFirewall) "1"}]:${toString cfg.httpsPort}";
+          bindaddress = "[::${
+            toString (lib.optional (!cfg.openHttpsFirewall) "1")
+          }]:${toString cfg.httpsPort}";
           ldapbindaddress =
             lib.mkIf (!cfg.disableLdaps)
-              "[::${lib.mkIf (!cfg.openLdapsFirewall) "1"}]:${toString cfg.ldapsPort}";
+              "[::${toString (lib.optional (!cfg.openLdapsFirewall) "1")}]:${toString cfg.ldapsPort}";
           http_client_address_info.x-forward-for = [ "::1" ];
           tls_chain = "/var/lib/kanidm/cert.pem";
           tls_key = "/var/lib/kanidm/key.pem";
@@ -62,9 +64,9 @@ in
 
       security.acme.certs.${domain} = {
         postRun = ''
-          cp -Lv {cert,key,chain}.pem /var/lib/kanidm
-          chown kanidm:kanidm /var/lib/kanidm/{cert,key,chain}.pem
-          chmod 400 /var/lib/kanidm/{cert,key,chain}.pem
+          cp -Lv {cert,key}.pem /var/lib/kanidm
+          chown root:kanidm /var/lib/kanidm/{cert,key}.pem
+          chmod 040 /var/lib/kanidm/{cert,key}.pem
         '';
         reloadServices = [ "kanidm.service" ];
       };
