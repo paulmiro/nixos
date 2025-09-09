@@ -13,6 +13,8 @@
 
   avf.defaultUser = "paulmiro";
 
+  boot.loader.systemd-boot.configurationLimit = 1;
+
   # prevent error mesaages when offline
   clan.core.deployment.requireExplicitUpdate = true;
 
