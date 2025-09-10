@@ -43,7 +43,8 @@ in
         # Pass system configuration (top-level "config") to home-manager modules,
         # so we can access it's values for conditional statements
         system-config = config;
-      } // flake-self.inputs;
+      }
+      // flake-self.inputs;
       users.paulmiro = flake-self.homeConfigurations.${cfg.profile};
       users.root = flake-self.homeConfigurations.${cfg.rootProfile};
     };

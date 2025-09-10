@@ -63,19 +63,18 @@ in
         "${cfg.configDirectory}:/root/.local/share/ersatztv"
         "/mnt/nfs/arr/media:/media:ro"
       ];
-      extraOptions =
-        [
-          "-e TZ=America/Chicago"
-        ]
-        ++ lib.optionals (cfg.hardwareTranscoding == "qsv") [
-          # get group ID with: `getent group render | cut -d: -f3`
-          "--group-add=303"
-          "--device=/dev/dri/renderD128:/dev/dri/renderD128"
-        ]
-        ++ lib.optionals (cfg.hardwareTranscoding == "nvenc") [
-          "--gpus"
-          "all"
-        ];
+      extraOptions = [
+        "-e TZ=America/Chicago"
+      ]
+      ++ lib.optionals (cfg.hardwareTranscoding == "qsv") [
+        # get group ID with: `getent group render | cut -d: -f3`
+        "--group-add=303"
+        "--device=/dev/dri/renderD128:/dev/dri/renderD128"
+      ]
+      ++ lib.optionals (cfg.hardwareTranscoding == "nvenc") [
+        "--gpus"
+        "all"
+      ];
     };
 
     networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [ cfg.port ];
