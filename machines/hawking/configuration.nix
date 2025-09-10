@@ -16,12 +16,6 @@
     };
 
     # Exposed Services
-    authentik = {
-      enable = true;
-      enableNginx = true;
-      enableLdap = true;
-      openFirewall = true;
-    };
     kanidm = {
       enable = true;
     };
@@ -72,10 +66,10 @@
     #   enable = true;
     #   openFirewall = true;
     # };
-    homepage-dashboard = {
-      enable = true;
-      enableNginx = true;
-    };
+    # homepage-dashboard = { # TODO: reenable (see module for details)
+    #   enable = true;
+    #   enableNginx = true;
+    # };
     # thelounge = {
     #   enable = true;
     #   openFirewall = true;

@@ -312,22 +312,6 @@ in
                 }
               ];
             }
-            {
-              Other = [
-                {
-                  Authentik = {
-                    icon = "authentik.png";
-                    href = "https://${config.paul.authentik.domain}";
-                    description = "Authentik";
-                    widget = {
-                      type = "authentik";
-                      url = "https://${config.paul.authentik.domain}";
-                      key = "{{HOMEPAGE_VAR_AUTHENTIK_API_TOKEN}}";
-                    };
-                  };
-                }
-              ];
-            }
           ];
         };
 
@@ -371,10 +355,6 @@ in
           prompts.truenas-api-key.type = "hidden";
           prompts.truenas-api-key.persist = false;
 
-          prompts.authentik-api-token.description = "Authentik API Token for Homepage Dashboard (see bw)";
-          prompts.authentik-api-token.type = "hidden";
-          prompts.authentik-api-token.persist = false;
-
           files.env.secret = true;
 
           script = ''
@@ -386,23 +366,25 @@ in
             HOMEPAGE_VAR_PROWLARR_API_KEY=$(cat $prompts/prowlarr-api-key)
             HOMEPAGE_VAR_IMMICH_API_KEY=$(cat $prompts/immich-api-key)
             HOMEPAGE_VAR_TRUENAS_API_KEY=$(cat $prompts/truenas-api-key)
-            HOMEPAGE_VAR_AUTHENTIK_API_TOKEN=$(cat $prompts/authentik-api-token)
             " > $out/env
           '';
         };
       }
 
       (lib.mkIf cfg.enableNginx {
-        services.nginx.virtualHosts."${cfg.domain}" = {
-          enableAuthentik = true;
-          enableACME = true;
-          forceSSL = true;
-          enableDyndns = true;
-          locations."/" = {
-            proxyPass = "http://127.0.0.1:${builtins.toString cfg.port}";
-            geo-ip = true;
+        services.nginx.virtualHosts."${cfg.domain}" =
+          assert false;
+          # TODO: this used to be behind the authentik reverse proxy.
+          # Only turn it back on if we have oauth2-proxy (or similar) running, and activated here
+          {
+            enableACME = true;
+            forceSSL = true;
+            enableDyndns = true;
+            locations."/" = {
+              proxyPass = "http://127.0.0.1:${builtins.toString cfg.port}";
+              geo-ip = true;
+            };
           };
-        };
       })
     ]
   );
