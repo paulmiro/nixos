@@ -42,7 +42,7 @@ let
               secrets = [ "attic_key" ];
             };
           in
-          pkgs.lib.lists.flatten ([
+          pkgs.lib.lists.flatten [
             (map
               (arch: {
                 name = "Hosts with arch: ${arch}";
@@ -92,7 +92,7 @@ let
                 "${system}"
               ]
             )
-          ]);
+          ];
       }
     )
   );

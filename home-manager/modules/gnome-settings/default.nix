@@ -53,10 +53,7 @@ in
         favorite-apps = [
           "zen.desktop"
           "code.desktop"
-          (
-            #if config.paul.programs.ghostty.enable then "com.mitchellh.ghostty.desktop" else
-            "org.gnome.Console.desktop"
-          )
+          "org.gnome.Console.desktop"
           "org.gnome.Nautilus.desktop"
         ];
         enabled-extensions = [
