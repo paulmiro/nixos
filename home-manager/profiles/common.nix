@@ -33,7 +33,7 @@
       neofetch
       nil
       nix-tree
-      nixfmt-rfc-style # TODO: change to "nixfmt" once it is replaced
+      nixfmt-tree
       openssl
       psmisc
       pwgen
