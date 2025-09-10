@@ -35,6 +35,7 @@
       nixd
       nix-tree
       nixfmt-tree
+      nixfmt-rfc-style
       openssl
       psmisc
       pwgen
