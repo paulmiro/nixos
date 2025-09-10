@@ -174,9 +174,6 @@
           name = builtins.substring 0 ((builtins.stringLength filename) - 4) filename;
           value =
             {
-              pkgs,
-              lib,
-              username,
               ...
             }:
             {
