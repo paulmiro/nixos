@@ -1,9 +1,7 @@
 [domains]
 base = "example.com"
 jellyfin = "jellyfin.example.com"
-jellyfin_old = "jellyfin.alt.example.com"
 jellyseerr = "jellyseerr.example.com"
-jellyseerr_old = "jellyseerr.alt.example.com"
 immich = "immich.example.com"
 authentik = "authentik.example.com"
 filebrowser = "filebrowser.example.com"
