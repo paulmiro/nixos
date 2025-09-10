@@ -25,3 +25,4 @@ gmail = "gmail@example.com"
 [misc]
 smtp2go_username_authentik = "example_username"
 authentik_display_name = "Example Display Name"
+kanidm_display_name = "Example Kanidm Display Name"
