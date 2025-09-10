@@ -27,7 +27,7 @@ in
     ldapsPort = lib.mkOption {
       description = "ldaps port for kanidm";
       type = lib.types.port;
-      default = 3636; # TODO: change to 636 once authentik is turned off (most tooling expects port 636 for ldaps)
+      default = 636;
     };
   };
 
