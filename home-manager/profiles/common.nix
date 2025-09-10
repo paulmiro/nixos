@@ -32,6 +32,7 @@
       glances
       neofetch
       nil
+      nixd
       nix-tree
       nixfmt-tree
       openssl
