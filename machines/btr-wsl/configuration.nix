@@ -18,16 +18,18 @@
     #interop.includePath = false;
   };
 
+  paul = {
+    common.enable = true;
+    home-manager.profile = "wsl-work";
+    kanidm.enableClient = true;
+  };
+
   # prevent error messages when offline
   clan.core.deployment.requireExplicitUpdate = true;
   clan.core.enableRecommendedDefaults = false; # this breaks networking
   clan.core.networking.targetHost = "btr-wsl";
 
   networking.hostName = "btr-wsl";
-
-  paul.common.enable = true;
-
-  paul.home-manager.profile = "wsl-work";
 
   programs.nix-ld.enable = true; # to allow VSCode-server to run
 

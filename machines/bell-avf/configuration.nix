@@ -8,10 +8,15 @@
     nixos-avf.nixosModules.avf
   ];
 
-  paul.common.enable = true;
-  paul.clan.manageUserPasswords = false;
+  avf = {
+    defaultUser = "paulmiro";
+  };
 
-  avf.defaultUser = "paulmiro";
+  paul = {
+    common.enable = true;
+    clan.manageUserPasswords = false;
+    kanidm.enableClient = true;
+  };
 
   boot.loader.systemd-boot.configurationLimit = 1;
 
