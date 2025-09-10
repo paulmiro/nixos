@@ -60,6 +60,7 @@
             # pywebview
           ];
         })
+        keyguard
         krita
         libreoffice
         mattermost-desktop
