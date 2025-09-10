@@ -7,6 +7,7 @@
 let
   cfg = config.paul.kanidm;
   domain = config.paul.private.domains.kanidm; # not set as an option because it should never be changed
+  origin = "https://${domain}";
   package = pkgs.kanidm_1_7;
 in
 {
@@ -39,7 +40,7 @@ in
 
         serverSettings = {
           version = "2";
-          origin = "https://${domain}";
+          origin = origin;
           domain = domain;
           # we usually want to bind to ::1, but opening the firewall is pointless without binding to an accessible ip
           bindaddress = "[::${
@@ -85,7 +86,7 @@ in
         inherit package;
 
         clientSettings = {
-          uri = "https://${domain}";
+          uri = origin;
         };
       };
     })
