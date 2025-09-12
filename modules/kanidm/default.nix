@@ -40,15 +40,11 @@ in
 
         serverSettings = {
           version = "2";
-          origin = origin;
-          domain = domain;
-          # we usually want to bind to ::1, but opening the firewall is pointless without binding to an accessible ip
-          bindaddress = "[::${
-            toString (lib.optional (!cfg.openHttpsFirewall) "1")
-          }]:${toString cfg.httpsPort}";
-          ldapbindaddress =
-            lib.mkIf (!cfg.disableLdaps)
-              "[::${toString (lib.optional (!cfg.openLdapsFirewall) "1")}]:${toString cfg.ldapsPort}";
+          inherit origin domain;
+          bindaddress = (if cfg.openHttpsFirewall then "[::]" else "[::1]") + ":" + toString cfg.httpsPort;
+          ldapbindaddress = lib.mkIf (!cfg.disableLdaps) (
+            (if cfg.openLdapsFirewall then "[::]" else "[::1]") + ":" + toString cfg.ldapsPort
+          );
           http_client_address_info.x-forward-for = [ "::1" ];
           tls_chain = "/var/lib/kanidm/cert.pem";
           tls_key = "/var/lib/kanidm/key.pem";
@@ -60,7 +56,7 @@ in
         forceSSL = true;
         enableDyndns = true;
         locations."/" = {
-          proxyPass = "https://[::1]:8443";
+          proxyPass = "https://[::1]:${toString cfg.httpsPort}";
         };
       };
 
