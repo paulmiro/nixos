@@ -54,7 +54,7 @@
     enable = true;
     useRoutingFeatures = "server";
     extraUpFlags = [
-      "--accept-dns=true"
+      "--operator=paulmiro"
       "--advertise-exit-node"
     ];
   };
