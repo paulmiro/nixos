@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -21,6 +22,15 @@ in
 
     services.readarr = {
       enable = true;
+      package =
+        assert false;
+        pkgs.readarr.overrideAttrs {
+          # bookshelf fork does not do releases so here are the options:
+          # - use Faustvil fork instead ( slightly wporse results)
+          # - build bookshelf from source (use other arrs as examples)
+          # - use bookshelf container
+          # TODO override src
+        };
       user = "readarr";
       group = "arr";
       openFirewall = cfg.openFirewall;
