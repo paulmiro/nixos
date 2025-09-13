@@ -55,15 +55,6 @@ in
       };
     };
 
-    systemd.services.nginx = lib.mkIf config.paul.dyndns._enable {
-      after = [
-        "network.target"
-        "cloudflare-dyndns.service"
-      ];
-      # Wait for 10 seconds to have the dns record up by the time the acme service runs
-      serviceConfig.ExecStartPre = "${pkgs.coreutils}/bin/sleep 10";
-    };
-
     paul.dyndns = lib.mkIf cfg.openFirewall {
       # dyndns is pretty much useless without the opened ports
       extraDomains = [

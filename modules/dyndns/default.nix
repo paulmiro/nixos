@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -23,14 +24,12 @@ in
       default = [ ];
       description = "extra domains to update";
     };
-
-    _enable = lib.mkEnableOption "enable dyndns"; # readonly for other services
   };
 
   options.services.nginx.virtualHosts = lib.mkOption {
     type = lib.types.attrsOf (
       lib.types.submodule (
-        { config, ... }:
+        { ... }:
         {
           options = {
             enableDyndns = lib.mkEnableOption "enable dyndns";
@@ -41,8 +40,6 @@ in
   };
 
   config = lib.mkIf enable {
-    paul.dyndns._enable = lib.mkForce true;
-
     services.cloudflare-dyndns = {
       enable = true;
       apiTokenFile = config.clan.core.vars.generators.cloudflare-dyndns.files.api-token.path;
@@ -50,6 +47,15 @@ in
       ipv6 = false;
       domains = domains;
     };
+
+    systemd.services = lib.mkMerge (
+      map (domain: {
+        "acme-${domain}" = {
+          after = [ "cloudflare-dyndns.service" ];
+          serviceConfig.ExecStartPre = "${pkgs.coreutils}/bin/sleep 10";
+        };
+      }) (builtins.filter (domain: !(lib.strings.hasInfix "*" domain)) domains)
+    );
 
     clan.core.vars.generators.cloudflare-dyndns = {
       prompts.api-token.description = "Cloudflare API Token with permissions to edit DNS (see bw)";
