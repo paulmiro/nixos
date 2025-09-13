@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -28,5 +29,25 @@ in
 
     # to make sure clan vars can manage passwords correctly
     users.mutableUsers = false;
+
+    security.sudo.extraRules = [
+      {
+        commands = [
+          {
+            command = "/run/current-system/sw/bin/reboot";
+            options = [ "NOPASSWD" ];
+          }
+          {
+            command = "/run/current-system/sw/bin/poweroff";
+            options = [ "NOPASSWD" ];
+          }
+          {
+            command = "/run/current-system/sw/bin/systemctl *";
+            options = [ "NOPASSWD" ];
+          }
+        ];
+        groups = [ "wheel" ];
+      }
+    ];
   };
 }
