@@ -11,11 +11,6 @@ in
     enable = mkEnableOption "activate audiobookshelf";
     openFirewall = mkEnableOption "allow audiobookshelf port in firewall";
     enableNginx = mkEnableOption "activate nginx proxy";
-    enableDyndns = mkOption {
-      type = types.bool;
-      default = true;
-      description = "enable dyndns";
-    };
 
     port = mkOption {
       type = types.port;
@@ -35,11 +30,9 @@ in
       {
         services.audiobookshelf = {
           enable = true;
-          port = cfg.port;
-          openFirewall = cfg.openFirewall;
+          inherit (cfg) port openFirewall;
           host = if cfg.openFirewall then "0.0.0.0" else "127.0.0.1";
         };
-
       }
 
       (lib.mkIf cfg.enableNginx {
@@ -48,13 +41,12 @@ in
         services.nginx.virtualHosts."${cfg.domain}" = {
           enableACME = true;
           forceSSL = true;
-          enableDyndns = cfg.enableDyndns;
+          enableDyndns = true;
           locations."/" = {
-            proxyPass = "http://127.0.0.1:${builtins.toString cfg.port}";
             proxyWebsockets = true;
             geo-ip = true;
+            proxyPass = "http://127.0.0.1:${toString cfg.port}";
           };
-
         };
       })
     ]
