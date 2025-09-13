@@ -7,12 +7,14 @@
 let
   cfg = config.paul.dyndns;
   domains =
-    (map (vhost: (if vhost.value.serverName != null then vhost.value.serverName else vhost.name)) (
-      builtins.filter (vhost: vhost.value.enableDyndns) (
-        lib.attrsToList config.services.nginx.virtualHosts
-      )
-    ))
+    (
+      config.services.nginx.virtualHosts
+      |> lib.attrsToList
+      |> builtins.filter (vhost: vhost.value.enableDyndns)
+      |> map (vhost: (if vhost.value.serverName != null then vhost.value.serverName else vhost.name))
+    )
     ++ cfg.extraDomains;
+
   enable = (!cfg.forceDisable) && ((builtins.length domains) != 0);
 in
 {
@@ -49,12 +51,14 @@ in
     };
 
     systemd.services = lib.mkMerge (
-      map (domain: {
+      domains
+      |> builtins.filter (domain: !(lib.strings.hasInfix "*" domain))
+      |> map (domain: {
         "acme-${domain}" = {
           after = [ "cloudflare-dyndns.service" ];
           serviceConfig.ExecStartPre = "${pkgs.coreutils}/bin/sleep 10";
         };
-      }) (builtins.filter (domain: !(lib.strings.hasInfix "*" domain)) domains)
+      })
     );
 
     clan.core.vars.generators.cloudflare-dyndns = {
