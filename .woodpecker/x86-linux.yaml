@@ -12,11 +12,11 @@ steps:
     image: bash
     name: Decrypt Private Data
   - commands:
-      - nix flake show
+      - nix --show-trace --extra-experimental-features pipe-operators flake show
     image: bash
     name: Nix flake show
   - commands:
-      - nix flake check --show-trace
+      - nix --show-trace --extra-experimental-features pipe-operators flake check --show-trace
     image: bash
     name: Nix flake check
   - commands:
@@ -27,11 +27,11 @@ steps:
     image: bash
     name: Setup Attic
   - commands:
-      - nix build --print-out-paths --show-trace '.#nixosConfigurations.btr-wsl.config.system.build.toplevel' -o 'result-btr-wsl'
+      - nix --show-trace --extra-experimental-features pipe-operators build --print-out-paths '.#nixosConfigurations.btr-wsl.config.system.build.toplevel' -o 'result-btr-wsl'
     image: bash
     name: Build btr-wsl
   - commands:
-      - nix path-info --closure-size -h $(readlink -f 'result-btr-wsl')
+      - nix --show-trace --extra-experimental-features pipe-operators path-info --closure-size -h $(readlink -f 'result-btr-wsl')
     image: bash
     name: Show btr-wsl info
   - commands:
@@ -39,11 +39,11 @@ steps:
     image: bash
     name: Push btr-wsl to Attic
   - commands:
-      - nix build --print-out-paths --show-trace '.#nixosConfigurations.hawking.config.system.build.toplevel' -o 'result-hawking'
+      - nix --show-trace --extra-experimental-features pipe-operators build --print-out-paths '.#nixosConfigurations.hawking.config.system.build.toplevel' -o 'result-hawking'
     image: bash
     name: Build hawking
   - commands:
-      - nix path-info --closure-size -h $(readlink -f 'result-hawking')
+      - nix --show-trace --extra-experimental-features pipe-operators path-info --closure-size -h $(readlink -f 'result-hawking')
     image: bash
     name: Show hawking info
   - commands:
@@ -51,11 +51,11 @@ steps:
     image: bash
     name: Push hawking to Attic
   - commands:
-      - nix build --print-out-paths --show-trace '.#nixosConfigurations.morse.config.system.build.toplevel' -o 'result-morse'
+      - nix --show-trace --extra-experimental-features pipe-operators build --print-out-paths '.#nixosConfigurations.morse.config.system.build.toplevel' -o 'result-morse'
     image: bash
     name: Build morse
   - commands:
-      - nix path-info --closure-size -h $(readlink -f 'result-morse')
+      - nix --show-trace --extra-experimental-features pipe-operators path-info --closure-size -h $(readlink -f 'result-morse')
     image: bash
     name: Show morse info
   - commands:
@@ -63,11 +63,11 @@ steps:
     image: bash
     name: Push morse to Attic
   - commands:
-      - nix build --print-out-paths --show-trace '.#nixosConfigurations.newton.config.system.build.toplevel' -o 'result-newton'
+      - nix --show-trace --extra-experimental-features pipe-operators build --print-out-paths '.#nixosConfigurations.newton.config.system.build.toplevel' -o 'result-newton'
     image: bash
     name: Build newton
   - commands:
-      - nix path-info --closure-size -h $(readlink -f 'result-newton')
+      - nix --show-trace --extra-experimental-features pipe-operators path-info --closure-size -h $(readlink -f 'result-newton')
     image: bash
     name: Show newton info
   - commands:

@@ -12,7 +12,7 @@ steps:
     image: bash
     name: Decrypt Private Data
   - commands:
-      - nix flake show
+      - nix --show-trace --extra-experimental-features pipe-operators flake show
     image: bash
     name: Nix flake show
   - commands:
@@ -23,11 +23,11 @@ steps:
     image: bash
     name: Setup Attic
   - commands:
-      - nix build --print-out-paths --show-trace '.#nixosConfigurations.bell-avf.config.system.build.toplevel' -o 'result-bell-avf'
+      - nix --show-trace --extra-experimental-features pipe-operators build --print-out-paths '.#nixosConfigurations.bell-avf.config.system.build.toplevel' -o 'result-bell-avf'
     image: bash
     name: Build bell-avf
   - commands:
-      - nix path-info --closure-size -h $(readlink -f 'result-bell-avf')
+      - nix --show-trace --extra-experimental-features pipe-operators path-info --closure-size -h $(readlink -f 'result-bell-avf')
     image: bash
     name: Show bell-avf info
   - commands:
@@ -35,11 +35,11 @@ steps:
     image: bash
     name: Push bell-avf to Attic
   - commands:
-      - nix build --print-out-paths --show-trace '.#nixosConfigurations.pi3a.config.system.build.toplevel' -o 'result-pi3a'
+      - nix --show-trace --extra-experimental-features pipe-operators build --print-out-paths '.#nixosConfigurations.pi3a.config.system.build.toplevel' -o 'result-pi3a'
     image: bash
     name: Build pi3a
   - commands:
-      - nix path-info --closure-size -h $(readlink -f 'result-pi3a')
+      - nix --show-trace --extra-experimental-features pipe-operators path-info --closure-size -h $(readlink -f 'result-pi3a')
     image: bash
     name: Show pi3a info
   - commands:
@@ -47,11 +47,11 @@ steps:
     image: bash
     name: Push pi3a to Attic
   - commands:
-      - nix build --print-out-paths --show-trace '.#nixosConfigurations.pi4b.config.system.build.toplevel' -o 'result-pi4b'
+      - nix --show-trace --extra-experimental-features pipe-operators build --print-out-paths '.#nixosConfigurations.pi4b.config.system.build.toplevel' -o 'result-pi4b'
     image: bash
     name: Build pi4b
   - commands:
-      - nix path-info --closure-size -h $(readlink -f 'result-pi4b')
+      - nix --show-trace --extra-experimental-features pipe-operators path-info --closure-size -h $(readlink -f 'result-pi4b')
     image: bash
     name: Show pi4b info
   - commands:

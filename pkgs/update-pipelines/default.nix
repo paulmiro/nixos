@@ -12,10 +12,11 @@ let
   };
   forAllSystems = lib.genAttrs <| builtins.attrNames platforms;
   # Map platform names between woodpecker and nix
+  nix = "nix --show-trace --extra-experimental-features pipe-operators";
   nixFlakeShow = {
     name = "Nix flake show";
     image = "bash";
-    commands = [ "nix flake show" ];
+    commands = [ "${nix} flake show" ];
   };
   decryptPrivateDataStep = {
     name = "Decrypt Private Data";
@@ -30,7 +31,7 @@ let
   nixFlakeCheck = {
     name = "Nix flake check";
     image = "bash";
-    commands = [ "nix flake check --show-trace" ];
+    commands = [ "${nix} flake check --show-trace" ];
   };
   atticSetupStep = {
     name = "Setup Attic";
@@ -64,14 +65,14 @@ let
                 name = "Build ${host}";
                 image = "bash";
                 commands = [
-                  "nix build --print-out-paths --show-trace '.#nixosConfigurations.${host}.config.system.build.toplevel' -o 'result-${host}'"
+                  "${nix} build --print-out-paths '.#nixosConfigurations.${host}.config.system.build.toplevel' -o 'result-${host}'"
                 ];
               }
               {
                 name = "Show ${host} info";
                 image = "bash";
                 commands = [
-                  "nix path-info --closure-size -h $(readlink -f 'result-${host}')"
+                  "${nix} path-info --closure-size -h $(readlink -f 'result-${host}')"
                 ];
               }
               {
