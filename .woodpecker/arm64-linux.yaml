@@ -2,47 +2,59 @@ labels:
   backend: local
   platform: linux/arm64
 steps:
-  - name: Decrypt Private Data
-    image: bash
-    commands:
-      - echo $AGE_KEY_PRIVATE_DATA | nix shell nixpkgs#age --command age --decrypt -i - -o modules/private/private.toml.decrypted modules/private/private.toml && mv modules/private/private.toml.decrypted modules/private/private.toml
+  - commands:
+      - cd modules/private
+      - echo $AGE_KEY_PRIVATE_DATA | nix shell nixpkgs#age --command age --decrypt -i - -o private.toml.decrypted private.toml
+      - mv private.toml.decrypted private.toml
     environment:
       AGE_KEY_PRIVATE_DATA:
         from_secret: AGE_KEY_PRIVATE_DATA
-  - name: Nix flake show
     image: bash
-    commands:
+    name: Decrypt Private Data
+  - commands:
       - nix flake show
-  - name: Setup Attic
     image: bash
-    commands:
+    name: Nix flake show
+  - commands:
       - attic login lounge-rocks https://cache.lounge.rocks $ATTIC_KEY --set-default
     environment:
       ATTIC_KEY:
         from_secret: attic_key
-
-  - name: Build pi4b
     image: bash
-    commands:
-      - nix build --print-out-paths '.#nixosConfigurations.pi4b.config.system.build.toplevel' -o 'result-pi4b'
-  - name: Show pi4b info
+    name: Setup Attic
+  - commands:
+      - nix build --print-out-paths --show-trace '.#nixosConfigurations.bell-avf.config.system.build.toplevel' -o 'result-bell-avf'
     image: bash
-    commands:
-      - nix path-info --closure-size -h $(readlink -f 'result-pi4b')
-  - name: Push pi4b to Attic
+    name: Build bell-avf
+  - commands:
+      - nix path-info --closure-size -h $(readlink -f 'result-bell-avf')
     image: bash
-    commands:
-      - attic push lounge-rocks:nix-cache 'result-pi4b'
-
-  - name: Build pi3a
+    name: Show bell-avf info
+  - commands:
+      - attic push lounge-rocks:nix-cache 'result-bell-avf'
     image: bash
-    commands:
-      - nix build --print-out-paths '.#nixosConfigurations.pi3a.config.system.build.toplevel' -o 'result-pi3a'
-  - name: Show pi3a info
+    name: Push bell-avf to Attic
+  - commands:
+      - nix build --print-out-paths --show-trace '.#nixosConfigurations.pi3a.config.system.build.toplevel' -o 'result-pi3a'
     image: bash
-    commands:
+    name: Build pi3a
+  - commands:
       - nix path-info --closure-size -h $(readlink -f 'result-pi3a')
-  - name: Push pi3a to Attic
     image: bash
-    commands:
+    name: Show pi3a info
+  - commands:
       - attic push lounge-rocks:nix-cache 'result-pi3a'
+    image: bash
+    name: Push pi3a to Attic
+  - commands:
+      - nix build --print-out-paths --show-trace '.#nixosConfigurations.pi4b.config.system.build.toplevel' -o 'result-pi4b'
+    image: bash
+    name: Build pi4b
+  - commands:
+      - nix path-info --closure-size -h $(readlink -f 'result-pi4b')
+    image: bash
+    name: Show pi4b info
+  - commands:
+      - attic push lounge-rocks:nix-cache 'result-pi4b'
+    image: bash
+    name: Push pi4b to Attic

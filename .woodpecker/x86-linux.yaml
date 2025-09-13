@@ -2,64 +2,75 @@ labels:
   backend: local
   platform: linux/amd64
 steps:
-  - name: Decrypt Private Data
-    image: bash
-    commands:
-      - echo $AGE_KEY_PRIVATE_DATA | nix shell nixpkgs#age --command age --decrypt -i - -o modules/private/private.toml.decrypted modules/private/private.toml && mv modules/private/private.toml.decrypted modules/private/private.toml
+  - commands:
+      - cd modules/private
+      - echo $AGE_KEY_PRIVATE_DATA | nix shell nixpkgs#age --command age --decrypt -i - -o private.toml.decrypted private.toml
+      - mv private.toml.decrypted private.toml
     environment:
       AGE_KEY_PRIVATE_DATA:
         from_secret: AGE_KEY_PRIVATE_DATA
-  - name: Nix flake show
     image: bash
-    commands:
+    name: Decrypt Private Data
+  - commands:
       - nix flake show
-  - name: Nix flake check
     image: bash
-    commands:
-      - nix flake check
-  - name: Setup Attic
+    name: Nix flake show
+  - commands:
+      - nix flake check --show-trace
     image: bash
-    commands:
+    name: Nix flake check
+  - commands:
       - attic login lounge-rocks https://cache.lounge.rocks $ATTIC_KEY --set-default
     environment:
       ATTIC_KEY:
         from_secret: attic_key
-
-  - name: Build hawking
     image: bash
-    commands:
-      - nix build --print-out-paths '.#nixosConfigurations.hawking.config.system.build.toplevel' -o 'result-hawking'
-  - name: Show hawking info
+    name: Setup Attic
+  - commands:
+      - nix build --print-out-paths --show-trace '.#nixosConfigurations.btr-wsl.config.system.build.toplevel' -o 'result-btr-wsl'
     image: bash
-    commands:
+    name: Build btr-wsl
+  - commands:
+      - nix path-info --closure-size -h $(readlink -f 'result-btr-wsl')
+    image: bash
+    name: Show btr-wsl info
+  - commands:
+      - attic push lounge-rocks:nix-cache 'result-btr-wsl'
+    image: bash
+    name: Push btr-wsl to Attic
+  - commands:
+      - nix build --print-out-paths --show-trace '.#nixosConfigurations.hawking.config.system.build.toplevel' -o 'result-hawking'
+    image: bash
+    name: Build hawking
+  - commands:
       - nix path-info --closure-size -h $(readlink -f 'result-hawking')
-  - name: Push hawking to Attic
     image: bash
-    commands:
+    name: Show hawking info
+  - commands:
       - attic push lounge-rocks:nix-cache 'result-hawking'
-
-  - name: Build newton
     image: bash
-    commands:
-      - nix build --print-out-paths '.#nixosConfigurations.newton.config.system.build.toplevel' -o 'result-newton'
-  - name: Show newton info
+    name: Push hawking to Attic
+  - commands:
+      - nix build --print-out-paths --show-trace '.#nixosConfigurations.morse.config.system.build.toplevel' -o 'result-morse'
     image: bash
-    commands:
-      - nix path-info --closure-size -h $(readlink -f 'result-newton')
-  - name: Push newton to Attic
-    image: bash
-    commands:
-      - attic push lounge-rocks:nix-cache 'result-newton'
-
-  - name: Build morse
-    image: bash
-    commands:
-      - nix build --print-out-paths '.#nixosConfigurations.morse.config.system.build.toplevel' -o 'result-morse'
-  - name: Show morse info
-    image: bash
-    commands:
+    name: Build morse
+  - commands:
       - nix path-info --closure-size -h $(readlink -f 'result-morse')
-  - name: Push morse to Attic
     image: bash
-    commands:
+    name: Show morse info
+  - commands:
       - attic push lounge-rocks:nix-cache 'result-morse'
+    image: bash
+    name: Push morse to Attic
+  - commands:
+      - nix build --print-out-paths --show-trace '.#nixosConfigurations.newton.config.system.build.toplevel' -o 'result-newton'
+    image: bash
+    name: Build newton
+  - commands:
+      - nix path-info --closure-size -h $(readlink -f 'result-newton')
+    image: bash
+    name: Show newton info
+  - commands:
+      - attic push lounge-rocks:nix-cache 'result-newton'
+    image: bash
+    name: Push newton to Attic
