@@ -38,7 +38,7 @@ in
       package = pkgs.nixVersions.stable;
       extraOptions = ''
         # this enables the technically experimental feature Flakes
-        experimental-features = nix-command flakes
+        experimental-features = nix-command flakes pipe-operators
 
         # If set to true, Nix will fall back to building from source if a binary substitute fails.
         fallback = true
