@@ -47,10 +47,10 @@ in
           environment = {
             TITLE = "${cfg.title}";
             ENABLE_ID_OBFUSCATION = "true";
-            WEBPORT = builtins.toString cfg.port;
+            WEBPORT = toString cfg.port;
             MODE = "standalone";
           };
-          ports = [ "${builtins.toString cfg.port}:${builtins.toString cfg.port}/tcp" ];
+          ports = [ "${toString cfg.port}:${toString cfg.port}/tcp" ];
         };
       }
 
@@ -62,7 +62,7 @@ in
           forceSSL = true;
           enableDyndns = cfg.enableDyndns;
           locations."/" = {
-            proxyPass = "http://127.0.0.1:${builtins.toString cfg.port}";
+            proxyPass = "http://127.0.0.1:${toString cfg.port}";
             geo-ip = true;
           };
         };

@@ -58,7 +58,7 @@ in
     virtualisation.oci-containers.containers.ersatztv = {
       autoStart = true;
       image = "jasongdove/ersatztv:${cfg.version}${hardwareVersion}";
-      ports = [ "8409:${builtins.toString cfg.port}/tcp" ];
+      ports = [ "8409:${toString cfg.port}/tcp" ];
       volumes = [
         "${cfg.configDirectory}:/root/.local/share/ersatztv"
         "/mnt/nfs/arr/media:/media:ro"
