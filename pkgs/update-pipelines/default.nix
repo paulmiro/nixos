@@ -10,9 +10,9 @@ let
     "aarch64-linux" = "linux/arm64";
     "x86_64-linux" = "linux/amd64";
   };
-  forAllSystems = lib.genAttrs <| builtins.attrNames platforms;
+  forAllSystems = lib.genAttrs (builtins.attrNames platforms);
   # Map platform names between woodpecker and nix
-  nix = "nix --show-trace --extra-experimental-features pipe-operators";
+  nix = "nix --show-trace";
   nixFlakeShow = {
     name = "Nix flake show";
     image = "bash";
@@ -56,11 +56,8 @@ let
           ]
           ++ lib.optionals ("${system}" == "x86_64-linux") [ nixFlakeCheck ]
           ++ [ atticSetupStep ]
-          ++ (
-            flake-self.nixosConfigurations
-            |> lib.filterAttrs (name: config: config.config.nixpkgs.hostPlatform.system == system)
-            |> builtins.attrNames
-            |> (map (host: [
+          ++ (map
+            (host: [
               {
                 name = "Build ${host}";
                 image = "bash";
@@ -80,7 +77,14 @@ let
                 image = "bash";
                 commands = [ "attic push lounge-rocks:nix-cache 'result-${host}'" ];
               }
-            ]))
+            ])
+            (
+              builtins.attrNames (
+                lib.filterAttrs (
+                  name: config: config.config.nixpkgs.hostPlatform.system == system
+                ) flake-self.nixosConfigurations
+              )
+            )
           )
         );
       }

@@ -103,14 +103,12 @@
 
       flakePkgs =
         pkgs:
-        ./pkgs
-        |> builtins.readDir
-        |> builtins.attrNames
-        |> map (name: {
-          inherit name;
-          value = pkgs.callPackage (./pkgs + "/${name}") { flake-self = self; };
-        })
-        |> builtins.listToAttrs;
+        (builtins.listToAttrs (
+          map (name: {
+            inherit name;
+            value = pkgs.callPackage (./pkgs + "/${name}") { flake-self = self; };
+          }) (builtins.attrNames (builtins.readDir ./pkgs))
+        ));
 
       clan = clan-core.lib.clan {
         inherit self; # this needs to point at the repository root
@@ -157,16 +155,12 @@
 
       # Output all modules in ./modules to flake. Modules should be in
       # individual subdirectories and contain a default.nix file
-
-      nixosModules =
-        ./modules
-        |> builtins.readDir
-        |> builtins.attrNames
-        |> map (name: {
+      nixosModules = builtins.listToAttrs (
+        map (name: {
           inherit name;
           value = import (./modules + "/${name}");
-        })
-        |> builtins.listToAttrs;
+        }) (builtins.attrNames (builtins.readDir ./modules))
+      );
 
       # Each subdirectory in ./machines is a host. Add them all to
       # nixosConfiguratons. Host configurations need a file called
@@ -175,11 +169,13 @@
       inherit (clan.config) nixosConfigurations clanInternals;
       clan = clan.config;
 
-      homeConfigurationsOLD = builtins.listToAttrs (
+      homeConfigurations = builtins.listToAttrs (
         map (filename: {
           name = builtins.substring 0 ((builtins.stringLength filename) - 4) filename;
           value =
-            { ... }:
+            {
+              ...
+            }:
             {
               imports = [
                 "${./.}/home-manager/profiles/common.nix"
@@ -190,33 +186,12 @@
         }) (builtins.attrNames (builtins.readDir ./home-manager/profiles))
       );
 
-      homeConfigurations =
-        ./home-manager/profiles
-        |> builtins.readDir
-        |> builtins.attrNames
-        |> map (filename: {
-          name = filename |> builtins.substring 0 ((builtins.stringLength filename) - 4);
-          value =
-            { ... }:
-            {
-              imports = [
-                "${./.}/home-manager/profiles/common.nix"
-                "${./.}/home-manager/profiles/${filename}"
-              ]
-              ++ (builtins.attrValues self.homeManagerModules);
-            };
-        })
-        |> builtins.listToAttrs;
-
-      homeManagerModules =
-        ./home-manager/modules
-        |> builtins.readDir
-        |> builtins.attrNames
-        |> map (name: {
+      homeManagerModules = builtins.listToAttrs (
+        map (name: {
           inherit name;
           value = import (./home-manager/modules + "/${name}");
-        })
-        |> builtins.listToAttrs;
+        }) (builtins.attrNames (builtins.readDir ./home-manager/modules))
+      );
 
       devShells = forAllSystems (
         system: with nixpkgsFor.${system}; {
