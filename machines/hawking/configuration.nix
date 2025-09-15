@@ -36,10 +36,10 @@
       enable = true;
       enableNginx = true;
     };
-    # audiobookshelf = {
-    #   enable = true;
-    #   enableNginx = true;
-    # };
+    audiobookshelf = {
+      enable = true;
+      enableNginx = true;
+    };
     stirling-pdf = {
       enable = true;
       enableNginx = true;
