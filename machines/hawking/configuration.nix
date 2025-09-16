@@ -139,6 +139,8 @@
     interval = "weekly";
   };
 
+  paul.nfs-mounts.enablePlayground = true;
+
   services.nginx.virtualHosts."${config.paul.private.domains.egg}" = {
     enableACME = true;
     forceSSL = true;

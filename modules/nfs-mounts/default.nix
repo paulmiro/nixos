@@ -59,7 +59,7 @@ in
       ];
     };
     fileSystems."/mnt/nfs/playground" = lib.mkIf cfg.enablePlayground {
-      device = "turing:/mnt/BLITZ1/playground";
+      device = "turing:/mnt/TANK2/playground";
       fsType = "nfs";
       options = [
         "x-systemd.automount"
