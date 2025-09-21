@@ -1,9 +1,52 @@
 {
   config,
+  pkgs,
   ...
 }:
 
 {
+  ######## TEMPORARY CONFIG DURING MIGRATION ########
+
+  services.nginx.virtualHosts."${config.paul.private.domains.jellyseerr}" =
+    let
+      web-root-dir = pkgs.writeTextFile {
+        name = "web-root";
+        text = ''
+          <!DOCTYPE html>
+          <html>
+          <head><meta charset="utf-8"/></head>
+          <body style="font-family: sans-serif; color: #ddd; background-color: #111">
+            <div style="text-align: center; margin-top: 20%">
+              <p style="font-size: 5em; margin: 0">🚧</p>
+              <h1>Server is under Maintenance</h1>
+              <p>The page you are looking for is temporarily unavailable due to maintenance work.</p>
+              <p>It may take several weeks to get up and running again. Just reload the page to see if it's done.</p>
+              <p style="font-size: 5em; margin: 0">🚧</p>
+            </div>
+          </body>
+          </html>
+        '';
+        destination = "/errors/503.html";
+      };
+    in
+    {
+      enableACME = true;
+      forceSSL = true;
+      enableDyndns = true;
+      root = "${web-root-dir}";
+      extraConfig = ''
+        error_page 503 /errors/503.html;
+      '';
+      locations."/" = {
+        return = "503";
+      };
+      locations."/errors/" = {
+        root = "${web-root-dir}";
+      };
+    };
+
+  ######### END TEMPORARY CONFIG #######
+
   services.qemuGuest.enable = true;
 
   paul = {
@@ -30,7 +73,7 @@
     };
     jellyseerr = {
       enable = true;
-      enableNginx = true;
+      #enableNginx = true; # TODO: reenable
     };
     immich = {
       enable = true;
