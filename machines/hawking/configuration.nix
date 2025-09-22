@@ -72,16 +72,16 @@
       enableQuickSync = true;
     };
     jellyseerr = {
-      enable = true;
-      #enableNginx = true; # TODO: reenable
+      #enable = true;
+      #enableNginx = true;
     };
     immich = {
       enable = true;
       enableNginx = true;
     };
     audiobookshelf = {
-      enable = true;
-      enableNginx = true;
+      #enable = true;
+      #enableNginx = true;
     };
     stirling-pdf = {
       enable = true;
@@ -98,12 +98,12 @@
 
     # Local Services
     sonarr = {
-      enable = true;
-      openFirewall = true;
+      #enable = true;
+      #openFirewall = true;
     };
     radarr = {
-      enable = true;
-      openFirewall = true;
+      #enable = true;
+      #openFirewall = true;
     };
     # readarr = {
     #   enable = true;
