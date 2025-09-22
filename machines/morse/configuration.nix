@@ -59,10 +59,10 @@
         #"immich"
         #"stirling-pdf"
         #"kanidm"
-        #"hedgedoc"
-        #"karakeep"
+        "hedgedoc"
+        "karakeep"
         #"librespeedtest"
-        #"filebrowser"
+        "filebrowser"
       ]);
 
   ######### END TEMPORARY CONFIG #######

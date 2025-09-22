@@ -50,12 +50,12 @@
       enableNginx = true;
     };
     hedgedoc = {
-      enable = true;
-      enableNginx = true;
+      #enable = true;
+      #enableNginx = true;
     };
     karakeep = {
-      enable = true;
-      enableNginx = true;
+      #enable = true;
+      #enableNginx = true;
     };
 
     # Local Services
@@ -93,8 +93,8 @@
       #   enableDyndns = true;
       # };
       vanilla = {
-        enable = true;
-        enableDyndns = true;
+        #enable = true;
+        #enableDyndns = true;
       };
     };
   };
@@ -155,25 +155,25 @@
     };
   };
 
-  services.nginx.virtualHosts."${config.paul.private.domains.filebrowser}" = {
-    enableACME = true;
-    forceSSL = true;
-    enableDyndns = true;
-    locations."/" = {
-      proxyPass = "http://192.168.178.222:30044";
-      geo-ip = true;
-    };
-  };
+  # services.nginx.virtualHosts."${config.paul.private.domains.filebrowser}" = {
+  #   enableACME = true;
+  #   forceSSL = true;
+  #   enableDyndns = true;
+  #   locations."/" = {
+  #     proxyPass = "http://192.168.178.222:30044";
+  #     geo-ip = true;
+  #   };
+  # };
 
-  services.nginx.virtualHosts."drop.${config.paul.private.domains.base}" = {
-    enableACME = true;
-    forceSSL = true;
-    enableDyndns = true;
-    locations."/" = {
-      proxyPass = "http://192.168.178.222:45301";
-      geo-ip = true;
-    };
-  };
+  # services.nginx.virtualHosts."drop.${config.paul.private.domains.base}" = {
+  #   enableACME = true;
+  #   forceSSL = true;
+  #   enableDyndns = true;
+  #   locations."/" = {
+  #     proxyPass = "http://192.168.178.222:45301";
+  #     geo-ip = true;
+  #   };
+  # };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
