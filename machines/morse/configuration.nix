@@ -7,9 +7,9 @@
 {
   ######## TEMPORARY CONFIG DURING TURING MIGRATION ########
 
-  services.nginx.virtualHosts =
-    lib.mkMerge
-      (map (serviceName: {
+  services.nginx.virtualHosts = lib.mkMerge (
+    map
+      (serviceName: {
         ${config.paul.private.domains.${serviceName}} =
           let
             web-root-dir = pkgs.writeTextFile {
@@ -63,7 +63,9 @@
         "karakeep"
         #"librespeedtest"
         "filebrowser"
-      ]);
+        "audiobookshelf"
+      ]
+  );
 
   ######### END TEMPORARY CONFIG #######
 
