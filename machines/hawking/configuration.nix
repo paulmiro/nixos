@@ -16,38 +16,38 @@
     systemd-boot.enable = true;
 
     nginx = {
-      enable = true;
-      enableGeoIP = true;
+      #enable = true;
+      #enableGeoIP = true;
     };
 
     # Exposed Services
     kanidm = {
-      enable = true;
+      # enable = true;
     };
     librespeedtest = {
-      enable = true;
-      enableNginx = true;
+      #enable = true;
+      #enableNginx = true;
     };
     jellyfin = {
-      enable = true;
-      enableNginx = true;
-      enableQuickSync = true;
+      #enable = true;
+      #enableNginx = true;
+      #enableQuickSync = true;
     };
     jellyseerr = {
       #enable = true;
       #enableNginx = true;
     };
     immich = {
-      enable = true;
-      enableNginx = true;
+      #enable = true;
+      #enableNginx = true;
     };
     audiobookshelf = {
       #enable = true;
       #enableNginx = true;
     };
     stirling-pdf = {
-      enable = true;
-      enableNginx = true;
+      #enable = true;
+      #enableNginx = true;
     };
     hedgedoc = {
       #enable = true;
@@ -106,7 +106,7 @@
 
   clan.core.networking.targetHost = "hawking";
 
-  services.netdata.enable = true;
+  # services.netdata.enable = true;
 
   # enable all the firmware with a license allowing redistribution
   hardware.enableRedistributableFirmware = true;
@@ -115,9 +115,9 @@
     hostName = "hawking";
     tempAddresses = "disabled";
     firewall = {
-      allowedTCPPorts = [
-        19999 # netdata
-      ];
+      # allowedTCPPorts = [
+      #   19999 # netdata
+      # ];
     };
   };
 
@@ -146,14 +146,14 @@
 
   paul.nfs-mounts.enablePlayground = true;
 
-  services.nginx.virtualHosts."${config.paul.private.domains.egg}" = {
-    enableACME = true;
-    forceSSL = true;
-    enableDyndns = true;
-    locations."/" = {
-      return = "302 https://www.youtube.com/watch?v=dQw4w9WgXcQ";
-    };
-  };
+  # services.nginx.virtualHosts."${config.paul.private.domains.egg}" = {
+  #   enableACME = true;
+  #   forceSSL = true;
+  #   enableDyndns = true;
+  #   locations."/" = {
+  #     return = "302 https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+  #   };
+  # };
 
   # services.nginx.virtualHosts."${config.paul.private.domains.filebrowser}" = {
   #   enableACME = true;
