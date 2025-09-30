@@ -169,6 +169,7 @@
         rootFsOptions = {
           mountpoint = "none";
           atime = "off";
+          acltype = "posix";
           "com.sun:auto-snapshot" = "false";
         };
 
