@@ -6,6 +6,12 @@
     common-server.enable = true;
     systemd-boot.enable = true;
     zfs.enable = true;
+
+    nginx.enable = true;
+
+    kanidm = {
+      enable = true;
+    };
   };
 
   networking = {
