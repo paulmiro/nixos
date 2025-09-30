@@ -167,7 +167,7 @@
         };
 
         rootFsOptions = {
-          mountpoint = "/mnt/zpool/blitz";
+          mountpoint = "none";
           atime = "off";
           "com.sun:auto-snapshot" = "false";
         };
