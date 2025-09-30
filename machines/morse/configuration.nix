@@ -55,10 +55,10 @@
       })
       [
         "jellyseerr"
-        "jellyfin"
-        "immich"
+        #"jellyfin"
+        #"immich"
         "stirling-pdf"
-        "kanidm"
+        #"kanidm"
         "hedgedoc"
         "karakeep"
         "librespeedtest"
