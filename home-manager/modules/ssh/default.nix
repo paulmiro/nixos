@@ -28,6 +28,10 @@ in
           controlPath = "~/.ssh/master-%r@%n:%p";
           controlPersist = "no";
         };
+        "turing" = {
+          hostname = "turing";
+          user = "paulmiro";
+        };
         "newton" = {
           hostname = "newton";
           user = "paulmiro";
