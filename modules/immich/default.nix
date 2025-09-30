@@ -34,10 +34,6 @@ in
   config = lib.mkIf cfg.enable (
     lib.mkMerge [
       {
-        paul.nfs-mounts = {
-          enableImmich = true;
-          enablePhotos = true;
-        };
         paul.docker.enable = true;
 
         systemd.services.docker-immich = {
@@ -46,9 +42,6 @@ in
           after = [
             "docker.service"
             "docker.socket"
-            "mnt-nfs-photos.mount"
-            "mnt-nfs-immich.mount"
-            "remote-fs.target"
           ];
           serviceConfig = {
             WorkingDirectory = "${./compose}";

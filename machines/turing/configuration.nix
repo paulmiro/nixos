@@ -7,10 +7,18 @@
     systemd-boot.enable = true;
     zfs.enable = true;
 
-    nginx.enable = true;
+    nginx = {
+      enable = true;
+      enableGeoIP = true; # TODO: this should be enabled automatically, see dyndns
+    };
 
     kanidm = {
       enable = true;
+    };
+
+    immich = {
+      enable = true;
+      enableNginx = true;
     };
   };
 
@@ -20,7 +28,7 @@
 
   clan.core.networking.targetHost = "turing";
 
-  console.keyMap = "de"; # TODO: move to locale module?
+  console.keyMap = "de"; # TODO: move this to locale module?
 
   # enable all the firmware with a license allowing redistribution
   hardware.enableRedistributableFirmware = true;
