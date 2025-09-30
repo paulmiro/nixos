@@ -28,16 +28,8 @@ in
           controlPath = "~/.ssh/master-%r@%n:%p";
           controlPersist = "no";
         };
-        "turing" = {
-          hostname = "turing";
-          user = "admin";
-        };
         "newton" = {
           hostname = "newton";
-          user = "paulmiro";
-        };
-        "hawking" = {
-          hostname = "hawking";
           user = "paulmiro";
         };
         "morse" = {
@@ -47,10 +39,6 @@ in
         "uni" = {
           hostname = "login-stud.informatik.uni-bonn.de";
           user = "rohdep0";
-        };
-        "vci1" = {
-          hostname = "vci-gpu1.cs.uni-bonn.de";
-          user = "student_rohde";
         };
       };
     };
