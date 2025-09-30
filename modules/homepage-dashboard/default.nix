@@ -231,19 +231,6 @@ in
                     };
                   };
                 }
-                {
-                  TrueNAS = {
-                    icon = "truenas.png";
-                    href = "https://turing";
-                    description = "Storage";
-                    widget = {
-                      type = "truenas";
-                      url = "https://turing";
-                      key = "{{HOMEPAGE_VAR_TRUENAS_API_KEY}}";
-                      enablePools = true;
-                    };
-                  };
-                }
               ];
             }
             {
