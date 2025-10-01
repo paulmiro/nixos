@@ -42,6 +42,15 @@
     hostName = "turing";
   };
 
+  services.tailscale = {
+    enable = true;
+    useRoutingFeatures = "server";
+    extraUpFlags = [
+      "--advertise-exit-node"
+      "--operator=paulmiro"
+    ];
+  };
+
   clan.core.networking.targetHost = "turing";
 
   console.keyMap = "de"; # TODO: move this to locale module?
