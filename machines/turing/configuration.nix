@@ -20,6 +20,12 @@
       enable = true;
       enableNginx = true;
     };
+
+    jellyfin = {
+      enable = true;
+      enableNginx = true;
+      enableQuickSync = true;
+    };
   };
 
   networking = {
