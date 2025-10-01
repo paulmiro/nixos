@@ -125,23 +125,23 @@
           };
         };
       };
-      # tank_a_5 = {
-      #   # HDD 5
-      #   type = "disk";
-      #   device = "/dev/disk/by-id/ata-TOSHIBA5"; # TODO replace
-      #   content = {
-      #     type = "gpt";
-      #     partitions = {
-      #       zfs = {
-      #         size = "100%";
-      #         content = {
-      #           type = "zfs";
-      #           pool = "tank";
-      #         };
-      #       };
-      #     };
-      #   };
-      # };
+      tank_a_5 = {
+        # HDD 5
+        type = "disk";
+        device = "/dev/disk/by-id/ata-TOSHIBA_MG09ACA18TE_Z440A0A9FJDH";
+        content = {
+          type = "gpt";
+          partitions = {
+            zfs = {
+              size = "100%";
+              content = {
+                type = "zfs";
+                pool = "tank";
+              };
+            };
+          };
+        };
+      };
     };
 
     zpool = {
@@ -286,7 +286,7 @@
                   "tank_a_2"
                   "tank_a_3"
                   "tank_a_4"
-                  #"tank_a_5"
+                  "tank_a_5"
                 ];
               }
             ];
