@@ -26,6 +26,16 @@
       enableNginx = true;
       enableQuickSync = true;
     };
+
+    stirling-pdf = {
+      enable = true;
+      enableNginx = true;
+    };
+
+    librespeedtest = {
+      enable = true;
+      enableNginx = true;
+    };
   };
 
   networking = {

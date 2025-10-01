@@ -57,11 +57,11 @@
         "jellyseerr"
         #"jellyfin"
         #"immich"
-        "stirling-pdf"
+        #"stirling-pdf"
         #"kanidm"
         "hedgedoc"
         "karakeep"
-        "librespeedtest"
+        #"librespeedtest"
         "filebrowser"
         "audiobookshelf"
       ]
