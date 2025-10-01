@@ -36,42 +36,15 @@ in
   config = lib.mkIf cfg.enable (
     lib.mkMerge [
       {
-        paul.nfs-mounts = {
-          enableJellyfin = true;
-          enableArr = true;
-        };
+        paul.docker.enable = true;
 
-        /*
-          // This needs some really complicated migration
-          // https://jellyfin.org/docs/general/administration/migrate/
-          // the script only works on windows, so this will propably be way too much work to be worth it
-
-          services.jellyfin = {
-            enable = true;
-            dataDir = "/mnt/nfs/jellyfin";
-            openFirewall = cfg.openFirewall;
-          };
-
-          users.users."jellyfin".uid = 4001;
-          users.groups."jellyfin".gid = 4001;
-
-          systemd.services.jellyfin = {
-            after = [
-              "mnt-nfs-arr.mount"
-              "mnt-nfs-jellyfin.mount"
-              "remote-fs.target"
-            ];
-          };
-        */
-
-        virtualisation.oci-containers.backend = "docker";
         virtualisation.oci-containers.containers.jellyfin = {
           image = "jellyfin/jellyfin:${cfg.containerVersion}";
-          user = "4001:4001";
           volumes = [
-            "/mnt/nfs/jellyfin/config:/config"
-            "/mnt/nfs/jellyfin/cache:/cache"
-            "/mnt/nfs/arr/media:/data/media:ro"
+            "/var/lib/jellyfin/config:/config"
+            "/var/lib/jellyfin/cache:/cache"
+            #"/mnt/arr/media:/data/media:ro" # TODO switch
+            "/TEMPTANK/arr/media:/data/media:ro"
           ];
           extraOptions = [
             "--network=host"
@@ -79,19 +52,11 @@ in
           ++ lib.optionals (cfg.enableQuickSync) [
             # get group ID with: `getent group render | cut -d: -f3`
             "--group-add=303"
-            "--device=/dev/dri/renderD128:/dev/dri/renderD128"
+            "--device=/dev/dri/renderD129:/dev/dri/renderD129"
           ]
           ++ lib.optionals (config.paul.nvidia.enable) [
             "--gpus"
             "all"
-          ];
-        };
-
-        systemd.services.docker-jellyfin = {
-          after = [
-            "mnt-nfs-arr.mount"
-            "mnt-nfs-jellyfin.mount"
-            "remote-fs.target"
           ];
         };
 
