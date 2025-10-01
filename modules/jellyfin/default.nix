@@ -43,8 +43,7 @@ in
           volumes = [
             "/var/lib/jellyfin/config:/config"
             "/var/lib/jellyfin/cache:/cache"
-            #"/mnt/arr/media:/data/media:ro" # TODO switch
-            "/TEMPTANK/arr/media:/data/media:ro"
+            "/mnt/arr/media:/data/media:ro"
           ];
           extraOptions = [
             "--network=host"
