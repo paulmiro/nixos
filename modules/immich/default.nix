@@ -36,7 +36,7 @@ in
       {
         paul.docker.enable = true;
 
-        systemd.services.docker-immich = {
+        systemd.services.immich-docker-compose = {
           description = "Immich docker-compose service";
           wantedBy = [ "multi-user.target" ];
           after = [
