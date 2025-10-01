@@ -39,6 +39,7 @@ in
         paul.docker.enable = true;
 
         virtualisation.oci-containers.containers.jellyfin = {
+          serviceName = "jellyfin-docker";
           image = "jellyfin/jellyfin:${cfg.containerVersion}";
           volumes = [
             "/var/lib/jellyfin/config:/config"
