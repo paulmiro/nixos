@@ -251,6 +251,12 @@
               "com.sun:auto-snapshot" = "true";
             };
           };
+          "var/lib/audiobookshelf" = {
+            type = "zfs_fs";
+            options = {
+              "com.sun:auto-snapshot" = "true";
+            };
+          };
           "var/lib/transmission" = {
             type = "zfs_fs";
             options = {
@@ -264,6 +270,12 @@
             };
           };
           "var/lib/radarr" = {
+            type = "zfs_fs";
+            options = {
+              "com.sun:auto-snapshot" = "true";
+            };
+          };
+          "var/lib/hedgedoc" = {
             type = "zfs_fs";
             options = {
               "com.sun:auto-snapshot" = "true";
