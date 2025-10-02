@@ -60,7 +60,7 @@
         #"stirling-pdf"
         #"kanidm"
         #"hedgedoc"
-        "karakeep"
+        #"karakeep"
         #"librespeedtest"
         "filebrowser"
         "audiobookshelf"
