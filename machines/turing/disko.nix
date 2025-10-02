@@ -337,6 +337,15 @@
             };
           };
 
+          dump = {
+            type = "zfs_fs";
+            mountpoint = "/mnt/dump";
+            options = {
+              compression = "zstd-5";
+              "com.sun:auto-snapshot" = "true";
+            };
+          };
+
         };
       };
     };
