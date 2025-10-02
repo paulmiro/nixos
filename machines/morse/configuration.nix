@@ -63,7 +63,7 @@
         #"karakeep"
         #"librespeedtest"
         "filebrowser"
-        "audiobookshelf"
+        #"audiobookshelf"
       ]
   );
 
