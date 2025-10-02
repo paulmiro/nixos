@@ -27,6 +27,11 @@
       enableQuickSync = true;
     };
 
+    audiobookshelf = {
+      enable = true;
+      enableNginx = true;
+    };
+
     hedgedoc = {
       enable = true;
       enableNginx = true;
