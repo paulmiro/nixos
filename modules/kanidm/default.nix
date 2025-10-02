@@ -48,6 +48,7 @@ in
           http_client_address_info.x-forward-for = [ "::1" ];
           tls_chain = "/var/lib/kanidm/cert.pem";
           tls_key = "/var/lib/kanidm/key.pem";
+          db_fs_type = if config.paul.zfs.enable then "zfs" else "other";
         };
       };
 
