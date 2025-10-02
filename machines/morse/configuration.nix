@@ -59,7 +59,7 @@
         #"immich"
         #"stirling-pdf"
         #"kanidm"
-        "hedgedoc"
+        #"hedgedoc"
         "karakeep"
         #"librespeedtest"
         "filebrowser"

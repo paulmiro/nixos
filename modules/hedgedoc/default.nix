@@ -34,10 +34,9 @@ in
           environmentFile = config.clan.core.vars.generators.hedgedoc.files.env.path;
           settings = {
             port = cfg.port;
-            host = "0.0.0.0";
+            host = if cfg.openFirewall then "0.0.0.0" else "127.0.0.1";
             domain = lib.mkIf cfg.enableNginx cfg.domain;
             protocolUseSSL = cfg.enableNginx;
-            # TODO: tn-migrate: set uploadsPath ?
             allowAnonymous = true;
             allowAnonymousEdits = true;
             allowFreeUrl = true;
