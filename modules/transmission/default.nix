@@ -57,8 +57,7 @@ in
         HEALTH_CHECK_HOST = "google.com";
 
         TRANSMISSION_DOWNLOAD_DIR = "/data/torrents";
-        # TRANSMISSION_WEB_UI = "flow-for-transmission"; # TODO
-        # TRANSMISSION_RPC_WHITELIST_ENABLED = "false"; # TODO
+        # TRANSMISSION_WEB_UI = "flood-for-transmission"; # TODO
 
         GLOBAL_APPLY_PERMISSIONS = "false";
         LOCAL_NETWORK = "192.168.178.0/24,100.0.0.0/8,127.0.0.1/32";
