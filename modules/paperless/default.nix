@@ -25,7 +25,7 @@ in
     services.paperless = {
       enable = true;
       port = cfg.port;
-      address = "hawking";
+      address = "turing";
     };
     networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [ cfg.port ];
   };

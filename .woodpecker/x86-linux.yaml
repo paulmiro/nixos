@@ -39,18 +39,6 @@ steps:
     image: bash
     name: Push btr-wsl to Attic
   - commands:
-      - nix --show-trace build --print-out-paths '.#nixosConfigurations.hawking.config.system.build.toplevel' -o 'result-hawking'
-    image: bash
-    name: Build hawking
-  - commands:
-      - nix --show-trace path-info --closure-size -h $(readlink -f 'result-hawking')
-    image: bash
-    name: Show hawking info
-  - commands:
-      - attic push lounge-rocks:nix-cache 'result-hawking'
-    image: bash
-    name: Push hawking to Attic
-  - commands:
       - nix --show-trace build --print-out-paths '.#nixosConfigurations.morse.config.system.build.toplevel' -o 'result-morse'
     image: bash
     name: Build morse
@@ -74,3 +62,15 @@ steps:
       - attic push lounge-rocks:nix-cache 'result-newton'
     image: bash
     name: Push newton to Attic
+  - commands:
+      - nix --show-trace build --print-out-paths '.#nixosConfigurations.turing.config.system.build.toplevel' -o 'result-turing'
+    image: bash
+    name: Build turing
+  - commands:
+      - nix --show-trace path-info --closure-size -h $(readlink -f 'result-turing')
+    image: bash
+    name: Show turing info
+  - commands:
+      - attic push lounge-rocks:nix-cache 'result-turing'
+    image: bash
+    name: Push turing to Attic

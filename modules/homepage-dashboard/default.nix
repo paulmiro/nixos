@@ -139,7 +139,7 @@ in
                     {
                       abbr = "TL";
                       icon = "thelounge.png";
-                      href = "http://hawking:9337";
+                      href = "http://turing:9337";
                       description = "IRC";
                     }
                   ];
@@ -251,11 +251,11 @@ in
                 {
                   Radarr = {
                     icon = "radarr.png";
-                    href = "http://hawking:7878";
+                    href = "http://turing:7878";
                     description = "Movie Management";
                     widget = {
                       type = "radarr";
-                      url = "http://hawking:7878";
+                      url = "http://turing:7878";
                       key = "{{HOMEPAGE_VAR_RADARR_API_KEY}}";
                       enableQueue = true;
                     };
@@ -264,11 +264,11 @@ in
                 {
                   Sonarr = {
                     icon = "sonarr.png";
-                    href = "http://hawking:8989";
+                    href = "http://turing:8989";
                     description = "TV Show Management";
                     widget = {
                       type = "sonarr";
-                      url = "http://hawking:8989";
+                      url = "http://turing:8989";
                       key = "{{HOMEPAGE_VAR_SONARR_API_KEY}}";
                       enableQueue = true;
                     };
@@ -277,11 +277,11 @@ in
                 {
                   Prowlarr = {
                     icon = "prowlarr.png";
-                    href = "http://hawking:9696";
+                    href = "http://turing:9696";
                     description = "Indexer Management";
                     widget = {
                       type = "prowlarr";
-                      url = "http://hawking:9696";
+                      url = "http://turing:9696";
                       key = "{{HOMEPAGE_VAR_PROWLARR_API_KEY}}";
                     };
                   };
