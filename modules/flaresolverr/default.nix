@@ -7,22 +7,18 @@ let
   cfg = config.paul.flaresolverr;
 in
 {
-  options.paul.flaresolverr = with lib; {
-    enable = mkEnableOption "activate flaresolverr";
-    openFirewall = mkEnableOption "open the firewall for flaresolverr";
-
-    port = mkOption {
-      type = types.port;
-      default = 8191;
-      description = "port to listen on";
-    };
+  options.paul.flaresolverr = {
+    enable = lib.mkEnableOption "activate flaresolverr";
+    openTailscaleFirewall = lib.mkEnableOption "open the firewall for flaresolverr on tailscale interface";
   };
 
   config = lib.mkIf cfg.enable {
     services.flaresolverr = {
       enable = true;
-      openFirewall = cfg.openFirewall;
-      port = cfg.port;
     };
+
+    networking.firewall.interfaces."tailscale".allowedTCPPorts = lib.mkIf cfg.openTailscaleFirewall [
+      config.services.flaresolverr.port
+    ];
   };
 }
