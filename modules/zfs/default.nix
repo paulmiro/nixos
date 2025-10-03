@@ -9,9 +9,18 @@ in
 {
   options.paul.zfs = {
     enable = lib.mkEnableOption "enable common zfs options";
+    maxArcGB = lib.mkOption {
+      description = "limit the amount of memory the zfs ARC can use";
+      type = lib.types.nullOr lib.types.int;
+      default = null;
+    };
   };
 
   config = lib.mkIf cfg.enable {
+    boot.kernelParams = lib.mkIf (cfg.maxArcGB != null) [
+      "zfs.zfs_arc_max=${toString (cfg.maxArcGB * 1024 * 1024 * 1024)}"
+    ];
+
     services.zfs = {
       autoScrub = {
         enable = true;

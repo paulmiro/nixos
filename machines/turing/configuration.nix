@@ -5,7 +5,10 @@
   paul = {
     common-server.enable = true;
     systemd-boot.enable = true;
-    zfs.enable = true;
+    zfs = {
+      enable = true;
+      maxArcGB = 96;
+    };
 
     nginx = {
       enable = true;
