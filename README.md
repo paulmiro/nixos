@@ -11,5 +11,5 @@
 
 ## Commands
 
-- `clan machines update hawking`
-- `nix-tree $(nix build --print-out-paths .\#nixosConfigurations.hawking.config.system.build.toplevel)`
+- `clan machines update turing`
+- `nix-tree $(nix build --print-out-paths .\#nixosConfigurations.turing.config.system.build.toplevel)`
