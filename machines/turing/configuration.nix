@@ -32,6 +32,10 @@
       enableNginx = true;
     };
 
+    jellyseerr = {
+      enable = true;
+      enableNginx = true;
+    };
     transmission = {
       enable = true;
       openTailscaleFirewall = true;
