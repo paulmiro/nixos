@@ -7,58 +7,44 @@ let
   cfg = config.paul.jellyseerr;
 in
 {
-  options.paul.jellyseerr = with lib; {
-    enable = mkEnableOption "activate jellyseerr";
-    openFirewall = mkEnableOption "allow jellyseerr port in firewall";
-    enableNginx = mkEnableOption "activate nginx proxy";
-    enableDyndns = mkOption {
-      type = types.bool;
+  options.paul.jellyseerr = {
+    enable = lib.mkEnableOption "activate jellyseerr";
+    openFirewall = lib.mkEnableOption "allow jellyseerr port in firewall";
+    enableNginx = lib.mkEnableOption "activate nginx proxy";
+    enableDyndns = lib.mkOption {
+      type = lib.types.bool;
       default = true;
       description = "enable dyndns";
     };
 
-    port = mkOption {
-      type = types.port;
+    port = lib.mkOption {
+      type = lib.types.port;
       default = 5055;
       description = "Port to listen on";
     };
 
-    domain = mkOption {
-      type = types.str;
+    domain = lib.mkOption {
+      type = lib.types.str;
       default = config.paul.private.domains.jellyseerr;
       description = "domain name for jellyseerr";
     };
   };
 
-  config = lib.mkIf cfg.enable (
-    lib.mkMerge [
-      {
-        paul.sonarr.enable = true;
-        paul.radarr.enable = true;
+  config = lib.mkIf cfg.enable {
+    services.jellyseerr = {
+      enable = true;
+      port = cfg.port;
+      openFirewall = cfg.openFirewall;
+    };
 
-        services.jellyseerr = {
-          enable = true;
-          port = cfg.port;
-          openFirewall = cfg.openFirewall;
-          configDir = "/var/lib/jellyseerr"; # TODO remove when it's the default again (373533)
-        };
-
-      }
-
-      (lib.mkIf cfg.enableNginx {
-        paul.nginx.enable = true;
-
-        services.nginx.virtualHosts."${cfg.domain}" = {
-          enableACME = true;
-          forceSSL = true;
-          enableDyndns = cfg.enableDyndns;
-          locations."/" = {
-            proxyPass = "http://127.0.0.1:${toString cfg.port}";
-            geo-ip = true;
-          };
-        };
-      })
-
-    ]
-  );
+    services.nginx.virtualHosts."${cfg.domain}" = lib.mkIf cfg.enableNginx {
+      enableACME = true;
+      forceSSL = true;
+      enableDyndns = cfg.enableDyndns;
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:${toString cfg.port}";
+        geo-ip = true;
+      };
+    };
+  };
 }
