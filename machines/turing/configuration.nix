@@ -32,6 +32,23 @@
       enableNginx = true;
     };
 
+    transmission = {
+      enable = true;
+      openTailscaleFirewall = true;
+    };
+    radarr = {
+      enable = true;
+      openTailscaleFirewall = true;
+    };
+    sonarr = {
+      enable = true;
+      openTailscaleFirewall = true;
+    };
+    prowlarr = {
+      enable = true;
+      openTailscaleFirewall = true;
+    };
+
     hedgedoc = {
       enable = true;
       enableNginx = true;

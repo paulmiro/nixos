@@ -9,31 +9,19 @@ in
 {
   options.paul.sonarr = {
     enable = lib.mkEnableOption "activate sonarr";
-    openFirewall = lib.mkEnableOption "allow sonarr port in firewall";
+    openTailscaleFirewall = lib.mkEnableOption "allow sonarr port in firewall on tailscale interface";
   };
 
   config = lib.mkIf cfg.enable {
-    paul.group.arr.enable = true;
-    paul.prowlarr.enable = true;
-    paul.nfs-mounts.enableArr = true;
-
-    ids.uids.sonarr = lib.mkForce 8989;
-
-    users.users.sonarr.isSystemUser = true; # this should be set in the services.sonarr module, bit it isn't
+    paul.group.transmission.enable = true;
 
     services.sonarr = {
       enable = true;
-      user = "sonarr";
-      group = "arr";
-      openFirewall = cfg.openFirewall;
+      group = "transmission";
     };
 
-    #TODO: remove this once Sonarr supports .NET 8 (https://github.com/Sonarr/Sonarr/issues/7442)
-    nixpkgs.config.permittedInsecurePackages = [
-      "aspnetcore-runtime-wrapped-6.0.36"
-      "aspnetcore-runtime-6.0.36"
-      "dotnet-sdk-wrapped-6.0.428"
-      "dotnet-sdk-6.0.428"
+    networking.firewall.interfaces."tailscale".allowedTCPPorts = lib.mkIf cfg.openTailscaleFirewall [
+      config.services.sonarr.settings.server.port
     ];
   };
 }

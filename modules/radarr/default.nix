@@ -9,23 +9,19 @@ in
 {
   options.paul.radarr = {
     enable = lib.mkEnableOption "activate radarr";
-    openFirewall = lib.mkEnableOption "allow radarr port in firewall";
+    openTailscaleFirewall = lib.mkEnableOption "allow radarr port in firewall on tailscale interface";
   };
 
   config = lib.mkIf cfg.enable {
-    paul.group.arr.enable = true;
-    paul.prowlarr.enable = true;
-    paul.nfs-mounts.enableArr = true;
-
-    ids.uids.radarr = lib.mkForce 7878;
-
-    users.users.radarr.isSystemUser = true; # this should be set in the services.radarr module, bit it isn't
+    paul.group.transmission.enable = true;
 
     services.radarr = {
       enable = true;
-      user = "radarr";
-      group = "arr";
-      openFirewall = cfg.openFirewall;
+      group = "transmission";
     };
+
+    networking.firewall.interfaces."tailscale".allowedTCPPorts = lib.mkIf cfg.openTailscaleFirewall [
+      config.services.radarr.settings.server.port
+    ];
   };
 }

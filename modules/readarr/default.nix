@@ -14,11 +14,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    paul.group.arr.enable = true;
-    paul.prowlarr.enable = true;
-    paul.nfs-mounts.enableArr = true;
-
-    users.users.readarr.uid = 8787;
+    paul.group.transmission.enable = true;
 
     services.readarr = {
       enable = true;
@@ -26,14 +22,16 @@ in
         assert false;
         pkgs.readarr.overrideAttrs {
           # bookshelf fork does not do releases so here are the options:
-          # - use Faustvil fork instead ( slightly wporse results)
+          # - use Faustvil fork instead ( slightly worse results)
           # - build bookshelf from source (use other arrs as examples)
           # - use bookshelf container
           # TODO override src
         };
-      user = "readarr";
-      group = "arr";
-      openFirewall = cfg.openFirewall;
+      group = "transmission";
     };
+
+    networking.firewall.interfaces."tailscale".allowedTCPPorts = lib.mkIf cfg.openTailscaleFirewall [
+      config.services.readarr.settings.server.port
+    ];
   };
 }
