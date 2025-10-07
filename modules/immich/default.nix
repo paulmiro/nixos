@@ -7,9 +7,12 @@
 }:
 let
   cfg = config.paul.immich;
-  versionEnvFile = pkgs.writeText "immich-version.env" ''
-    IMMICH_VERSION=v${(builtins.fromJSON (builtins.readFile "${immich-source}/server/package.json")).version}
-  '';
+  version = (builtins.fromJSON (builtins.readFile "${immich-source}/server/package.json")).version;
+  versionEnvFile =
+    assert lib.strings.hasPrefix "2." version; # shoudld fail only on major version releases
+    pkgs.writeText "immich-version.env" ''
+      IMMICH_VERSION=v${version}
+    '';
 in
 {
   options.paul.immich = with lib; {
