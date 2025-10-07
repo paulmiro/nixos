@@ -77,6 +77,7 @@ in
             JP yes;
             LU yes;
             US yes;
+            AU yes;
           }
         ''
       ]);
