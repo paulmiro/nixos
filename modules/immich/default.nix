@@ -9,7 +9,7 @@ let
   cfg = config.paul.immich;
   version = (builtins.fromJSON (builtins.readFile "${immich-source}/server/package.json")).version;
   versionEnvFile =
-    assert lib.strings.hasPrefix "2." version; # shoudld fail only on major version releases
+    assert lib.strings.hasPrefix "2." version; # should only fail on major version releases
     pkgs.writeText "immich-version.env" ''
       IMMICH_VERSION=v${version}
     '';
