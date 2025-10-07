@@ -36,7 +36,6 @@ in
     networkmanager.enable = false;
     wireless.enable = true;
     wireless.networks = {
-      "TODOTODO".psk = "TODOTODO"; # TODO probably use clan to implement this
     };
   };
 
