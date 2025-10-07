@@ -8,7 +8,7 @@
 let
   cfg = config.paul.immich;
   versionEnvFile = pkgs.writeText "immich-version.env" ''
-    IMMICH_VERSION=${(builtins.fromJSON (builtins.readFile "${immich-source}/server/package.json")).version}
+    IMMICH_VERSION=v${(builtins.fromJSON (builtins.readFile "${immich-source}/server/package.json")).version}
   '';
 in
 {
