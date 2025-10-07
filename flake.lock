@@ -360,6 +360,22 @@
         "type": "github"
       }
     },
+    "immich-source": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1759865073,
+        "narHash": "sha256-b8hJkqTcp4W3TENPBoNnX91Pb7zrWrOG3kOduqul744=",
+        "owner": "immich-app",
+        "repo": "immich",
+        "rev": "ee4c45d5d392ab30c5a3302f53ba9666ddec7de2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "immich-app",
+        "repo": "immich",
+        "type": "github"
+      }
+    },
     "napalm": {
       "inputs": {
         "flake-utils": [
@@ -703,6 +719,7 @@
         "git-agecrypt-armor": "git-agecrypt-armor",
         "grub2-themes": "grub2-themes",
         "home-manager": "home-manager",
+        "immich-source": "immich-source",
         "nix-minecraft": "nix-minecraft",
         "nix4nvchad": "nix4nvchad",
         "nixos-avf": "nixos-avf",

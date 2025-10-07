@@ -2,10 +2,14 @@
   config,
   lib,
   pkgs,
+  immich-source,
   ...
 }:
 let
   cfg = config.paul.immich;
+  versionEnvFile = pkgs.writeText "immich-version.env" ''
+    IMMICH_VERSION=${(builtins.fromJSON (builtins.readFile "${immich-source}/server/package.json")).version}
+  '';
 in
 {
   options.paul.immich = with lib; {
@@ -50,10 +54,14 @@ in
               let
                 envFile = config.clan.core.vars.generators.immich.files.env.path;
               in
-              "${pkgs.docker}/bin/docker compose --env-file .env --env-file ${envFile} up --build";
+              "${pkgs.docker}/bin/docker compose --env-file .env --env-file ${envFile} --env-file ${versionEnvFile} up --build";
             ExecStop = "${pkgs.docker}/bin/docker compose down";
             Restart = "on-failure";
           };
+        };
+
+        environment.etc."immich/version.env" = {
+          source = versionEnvFile;
         };
 
         networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [ cfg.port ];

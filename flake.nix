@@ -80,6 +80,13 @@
       # inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    ### Non-Flake Inputs
+
+    immich-source = {
+      flake = false;
+      url = "github:immich-app/immich";
+    };
+
   };
 
   outputs =
