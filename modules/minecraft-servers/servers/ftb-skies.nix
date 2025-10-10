@@ -19,11 +19,11 @@ in
     - replace the hardcoded jvm path in the start script with "java"
   */
 
-  options.paul.minecraft-servers.ftb-skies = with lib; {
-    enable = mkEnableOption "activate FTB Skies Minecraft Server";
-    enableDyndns = mkEnableOption "enable dyndns";
-    domain = mkOption {
-      type = types.str;
+  options.paul.minecraft-servers.ftb-skies = {
+    enable = lib.mkEnableOption "activate FTB Skies Minecraft Server";
+    enableDyndns = lib.mkEnableOption "enable dyndns";
+    domain = lib.mkOption {
+      type = lib.types.str;
       default = "ftb-skies.${config.paul.private.domains.base}";
       description = "domain name for FTB Skies Minecraft Server";
     };

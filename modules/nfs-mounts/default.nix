@@ -7,14 +7,14 @@ let
   cfg = config.paul.nfs-mounts;
 in
 {
-  options.paul.nfs-mounts = with lib; {
-    enableArr = mkEnableOption "activate TANK2/arr";
-    enablePhotos = mkEnableOption "activate TANK2/photos";
-    enableJellyfin = mkEnableOption "activate BLITZ1/apps/jellyfin";
-    enableImmich = mkEnableOption "activate BLITZ1/apps/immich";
-    enableAuthentik = mkEnableOption "activate BLITZ1/apps/authentik";
-    enablePostgresBackup = mkEnableOption "activate TANK2/postgres-backup";
-    enablePlayground = mkEnableOption "activate BLITZ1/playground";
+  options.paul.nfs-mounts = {
+    enableArr = lib.mkEnableOption "activate TANK2/arr";
+    enablePhotos = lib.mkEnableOption "activate TANK2/photos";
+    enableJellyfin = lib.mkEnableOption "activate BLITZ1/apps/jellyfin";
+    enableImmich = lib.mkEnableOption "activate BLITZ1/apps/immich";
+    enableAuthentik = lib.mkEnableOption "activate BLITZ1/apps/authentik";
+    enablePostgresBackup = lib.mkEnableOption "activate TANK2/postgres-backup";
+    enablePlayground = lib.mkEnableOption "activate BLITZ1/playground";
   };
 
   config = {

@@ -15,24 +15,24 @@ let
     '';
 in
 {
-  options.paul.immich = with lib; {
-    enable = mkEnableOption "activate immich";
-    openFirewall = mkEnableOption "open firewall for immich";
-    enableNginx = mkEnableOption "activate nginx proxy";
-    enableDyndns = mkOption {
-      type = types.bool;
+  options.paul.immich = {
+    enable = lib.mkEnableOption "activate immich";
+    openFirewall = lib.mkEnableOption "open firewall for immich";
+    enableNginx = lib.mkEnableOption "activate nginx proxy";
+    enableDyndns = lib.mkOption {
+      type = lib.types.bool;
       default = true;
       description = "enable dyndns";
     };
 
-    port = mkOption {
-      type = types.port;
+    port = lib.mkOption {
+      type = lib.types.port;
       default = 2283;
       description = "port to listen on";
     };
 
-    domain = mkOption {
-      type = types.str;
+    domain = lib.mkOption {
+      type = lib.types.str;
       default = config.paul.private.domains.immich;
       description = "domain name for immich";
     };

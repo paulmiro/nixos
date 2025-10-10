@@ -13,26 +13,26 @@ in
     ./vhostOptions.nix
   ];
 
-  options.paul.authentik = with lib; {
-    enable = mkEnableOption "activate authentik";
-    enableLdap = mkEnableOption "activate ldap";
+  options.paul.authentik = {
+    enable = lib.mkEnableOption "activate authentik";
+    enableLdap = lib.mkEnableOption "activate ldap";
 
-    openFirewall = mkEnableOption "open firewall for authentik";
-    enableNginx = mkEnableOption "activate nginx proxy";
-    enableDyndns = mkOption {
-      type = types.bool;
+    openFirewall = lib.mkEnableOption "open firewall for authentik";
+    enableNginx = lib.mkEnableOption "activate nginx proxy";
+    enableDyndns = lib.mkOption {
+      type = lib.types.bool;
       default = true;
       description = "enable dyndns";
     };
 
-    domain = mkOption {
-      type = types.str;
+    domain = lib.mkOption {
+      type = lib.types.str;
       default = config.paul.private.domains.authentik;
       description = "domain name for authentik";
     };
 
-    emailAdress = mkOption {
-      type = types.str;
+    emailAdress = lib.mkOption {
+      type = lib.types.str;
       default = "account@" + config.paul.private.domains.authentik;
       description = "email adress for authentik";
     };

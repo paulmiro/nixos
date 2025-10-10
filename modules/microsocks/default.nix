@@ -7,12 +7,12 @@ let
   cfg = config.paul.microsocks;
 in
 {
-  options.paul.microsocks = with lib; {
-    enable = mkEnableOption "activate microsocks";
-    openFirewall = mkEnableOption "open the firewall for microsocks";
+  options.paul.microsocks = {
+    enable = lib.mkEnableOption "activate microsocks";
+    openFirewall = lib.mkEnableOption "open the firewall for microsocks";
 
-    port = mkOption {
-      type = types.port;
+    port = lib.mkOption {
+      type = lib.types.port;
       default = 1080;
       description = "port to listen on";
     };

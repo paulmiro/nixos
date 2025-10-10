@@ -7,15 +7,15 @@ let
   cfg = config.paul.paperless;
 in
 {
-  options.paul.paperless = with lib; {
-    enable = mkEnableOption "activate paperless";
-    openFirewall = mkOption {
-      type = types.bool;
+  options.paul.paperless = {
+    enable = lib.mkEnableOption "activate paperless";
+    openFirewall = lib.mkOption {
+      type = lib.types.bool;
       default = true;
       description = "allow paperless port in firewall";
     };
-    port = mkOption {
-      type = types.port;
+    port = lib.mkOption {
+      type = lib.types.port;
       default = 28981;
       description = "port to run paperless on";
     };

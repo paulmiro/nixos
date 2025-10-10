@@ -8,11 +8,11 @@ let
   cfg = config.paul.thelounge;
 in
 {
-  options.paul.thelounge = with lib; {
-    enable = mkEnableOption "activate thelounge";
-    openFirewall = mkEnableOption "allow thelounge port in firewall";
-    port = mkOption {
-      type = types.port;
+  options.paul.thelounge = {
+    enable = lib.mkEnableOption "activate thelounge";
+    openFirewall = lib.mkEnableOption "allow thelounge port in firewall";
+    port = lib.mkOption {
+      type = lib.types.port;
       default = 9337;
       description = "port to listen on";
     };

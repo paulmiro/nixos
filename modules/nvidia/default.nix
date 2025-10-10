@@ -8,16 +8,16 @@ let
   cfg = config.paul.nvidia;
 in
 {
-  options.paul.nvidia = with lib; {
-    enable = mkEnableOption "activate nvidia";
-    laptop = mkEnableOption "activate nvidia laptop mode";
-    intelBusId = mkOption {
-      type = types.str;
+  options.paul.nvidia = {
+    enable = lib.mkEnableOption "activate nvidia";
+    laptop = lib.mkEnableOption "activate nvidia laptop mode";
+    intelBusId = lib.mkOption {
+      type = lib.types.str;
       default = "PCI:0:2:0";
       description = "Bus ID of the Intel GPU";
     };
-    nvidiaBusId = mkOption {
-      type = types.str;
+    nvidiaBusId = lib.mkOption {
+      type = lib.types.str;
       default = "PCI:58:0:0";
       description = "Bus ID of the Nvidia GPU";
     };

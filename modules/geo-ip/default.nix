@@ -13,11 +13,11 @@ in
     ./vhostOptions.nix
   ];
 
-  options.paul.nginx = with lib; {
-    enableGeoIP = mkEnableOption "enable GeoIP";
+  options.paul.nginx = {
+    enableGeoIP = lib.mkEnableOption "enable GeoIP";
 
-    databaseDirectory = mkOption {
-      type = types.path;
+    databaseDirectory = lib.mkOption {
+      type = lib.types.path;
       default = "/var/lib/GeoIP";
       description = "Directory where the GeoIP database is stored";
     };

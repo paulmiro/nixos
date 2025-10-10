@@ -7,21 +7,21 @@ let
   cfg = config.paul.uptime-kuma;
 in
 {
-  options.paul.uptime-kuma = with lib; {
-    enable = mkEnableOption "activate uptime-kuma";
+  options.paul.uptime-kuma = {
+    enable = lib.mkEnableOption "activate uptime-kuma";
 
-    enableNginx = mkEnableOption "activate nginx for uptime-kuma";
+    enableNginx = lib.mkEnableOption "activate nginx for uptime-kuma";
 
-    domain = mkOption {
-      type = types.str;
+    domain = lib.mkOption {
+      type = lib.types.str;
       default = config.paul.private.domains.uptime-kuma;
       description = "domain to run public uptime tracker under";
     };
 
-    openTailscaleFirewall = mkEnableOption "open the firewall for uptime-kuma";
+    openTailscaleFirewall = lib.mkEnableOption "open the firewall for uptime-kuma";
 
-    port = mkOption {
-      type = types.port;
+    port = lib.mkOption {
+      type = lib.types.port;
       default = 19101; # 3001 by default, this is a random number
       description = "port to listen on";
     };

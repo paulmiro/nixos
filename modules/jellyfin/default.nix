@@ -7,30 +7,30 @@ let
   cfg = config.paul.jellyfin;
 in
 {
-  options.paul.jellyfin = with lib; {
-    enable = mkEnableOption "activate jellyfin";
-    containerVersion = mkOption {
-      type = types.str;
+  options.paul.jellyfin = {
+    enable = lib.mkEnableOption "activate jellyfin";
+    containerVersion = lib.mkOption {
+      type = lib.types.str;
       default = "10.10.7";
       description = "jellyfin version";
     };
 
-    openFirewall = mkEnableOption "open firewall for jellyfin";
+    openFirewall = lib.mkEnableOption "open firewall for jellyfin";
 
-    enableNginx = mkEnableOption "activate nginx proxy";
-    enableDyndns = mkOption {
-      type = types.bool;
+    enableNginx = lib.mkEnableOption "activate nginx proxy";
+    enableDyndns = lib.mkOption {
+      type = lib.types.bool;
       default = true;
       description = "enable dyndns";
     };
 
-    domain = mkOption {
-      type = types.str;
+    domain = lib.mkOption {
+      type = lib.types.str;
       default = config.paul.private.domains.jellyfin;
       description = "domain name for jellyfin";
     };
 
-    enableQuickSync = mkEnableOption "enable quicksync";
+    enableQuickSync = lib.mkEnableOption "enable quicksync";
   };
 
   config = lib.mkIf cfg.enable (

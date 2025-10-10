@@ -8,17 +8,17 @@ let
   cfg = config.paul.nginx;
 in
 {
-  options.paul.nginx = with lib; {
-    enable = mkEnableOption "activate nginx";
+  options.paul.nginx = {
+    enable = lib.mkEnableOption "activate nginx";
 
-    openFirewall = mkOption {
-      type = types.bool;
+    openFirewall = lib.mkOption {
+      type = lib.types.bool;
       default = true;
       description = "open port 80 and 443";
     };
 
-    defaultDomain = mkOption {
-      type = types.str;
+    defaultDomain = lib.mkOption {
+      type = lib.types.str;
       default = "${config.networking.hostName}.${config.paul.private.domains.base}";
       description = "The default domain to use for the nginx configuration";
     };

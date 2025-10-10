@@ -14,34 +14,34 @@ let
       "";
 in
 {
-  options.paul.ersatztv = with lib; {
-    enable = mkEnableOption "activate ersatztv";
-    openFirewall = mkOption {
-      type = types.bool;
+  options.paul.ersatztv = {
+    enable = lib.mkEnableOption "activate ersatztv";
+    openFirewall = lib.mkOption {
+      type = lib.types.bool;
       default = true;
       description = "open the firewall for ersatztv";
     };
 
-    port = mkOption {
-      type = types.port;
+    port = lib.mkOption {
+      type = lib.types.port;
       default = 8409;
       description = "port to listen on";
     };
 
-    configDirectory = mkOption {
-      type = types.path;
+    configDirectory = lib.mkOption {
+      type = lib.types.path;
       default = "/var/lib/ersatztv";
       description = "directory where ersatztv stores its config";
     };
 
-    version = mkOption {
-      type = types.str;
+    version = lib.mkOption {
+      type = lib.types.str;
       default = "latest";
       description = "ersatztv version to use";
     };
 
-    hardwareTranscoding = mkOption {
-      type = types.enum [
+    hardwareTranscoding = lib.mkOption {
+      type = lib.types.enum [
         "off"
         "nvenc"
         "vaapi"

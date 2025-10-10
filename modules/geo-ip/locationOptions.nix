@@ -20,13 +20,15 @@ let
 in
 {
   options = {
-    services.nginx.virtualHosts =
-      with lib.types;
-      lib.mkOption {
-        type = attrsOf (submodule {
-          options.locations = lib.mkOption { type = attrsOf (submodule locationOptions); };
-        });
-      };
+    services.nginx.virtualHosts = lib.mkOption {
+      type = lib.types.attrsOf (
+        lib.types.submodule {
+          options.locations = lib.mkOption {
+            type = lib.types.attrsOf (lib.types.submodule locationOptions);
+          };
+        }
+      );
+    };
   };
   config = { };
 }

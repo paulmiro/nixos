@@ -7,18 +7,18 @@ let
   cfg = config.paul.gotify;
 in
 {
-  options.paul.gotify = with lib; {
-    enable = mkEnableOption "enable gotify server";
+  options.paul.gotify = {
+    enable = lib.mkEnableOption "enable gotify server";
 
-    enableNginx = mkEnableOption "enable nginx reverse proxy for gotify";
-    port = mkOption {
+    enableNginx = lib.mkEnableOption "enable nginx reverse proxy for gotify";
+    port = lib.mkOption {
       description = "internal port for gotify server";
-      type = types.port;
+      type = lib.types.port;
       default = 34501;
     };
-    domain = mkOption {
+    domain = lib.mkOption {
       description = "domain for gotify server";
-      type = types.str;
+      type = lib.types.str;
       default = config.paul.private.domains.gotify;
     };
   };

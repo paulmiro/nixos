@@ -7,21 +7,21 @@ let
   cfg = config.paul.homepage-dashboard;
 in
 {
-  options.paul.homepage-dashboard = with lib; {
-    enable = mkEnableOption "activate homepage";
-    openFirewall = mkOption {
-      type = types.bool;
+  options.paul.homepage-dashboard = {
+    enable = lib.mkEnableOption "activate homepage";
+    openFirewall = lib.mkOption {
+      type = lib.types.bool;
       default = true;
       description = "allow homepage port in firewall";
     };
-    enableNginx = mkEnableOption "activate nginx";
-    domain = mkOption {
-      type = types.str;
+    enableNginx = lib.mkEnableOption "activate nginx";
+    domain = lib.mkOption {
+      type = lib.types.str;
       default = config.paul.private.domains.homepage-dashboard;
       description = "domain for homepage";
     };
-    port = mkOption {
-      type = types.port;
+    port = lib.mkOption {
+      type = lib.types.port;
       default = 8082;
       description = "port for homepage";
     };

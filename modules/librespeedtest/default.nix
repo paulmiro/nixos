@@ -8,29 +8,29 @@ let
   cfg = config.paul.librespeedtest;
 in
 {
-  options.paul.librespeedtest = with lib; {
-    enable = mkEnableOption "activate librespeedtest";
-    enableNginx = mkEnableOption "activate nginx proxy";
-    enableDyndns = mkOption {
-      type = types.bool;
+  options.paul.librespeedtest = {
+    enable = lib.mkEnableOption "activate librespeedtest";
+    enableNginx = lib.mkEnableOption "activate nginx proxy";
+    enableDyndns = lib.mkOption {
+      type = lib.types.bool;
       default = true;
       description = "enable dyndns";
     };
 
-    port = mkOption {
-      type = types.port;
+    port = lib.mkOption {
+      type = lib.types.port;
       default = 5894;
       description = "port to listen on";
     };
 
-    domain = mkOption {
-      type = types.str;
+    domain = lib.mkOption {
+      type = lib.types.str;
       default = config.paul.private.domains.librespeedtest;
       description = "domain name for jellyfin";
     };
 
-    title = mkOption {
-      type = types.str;
+    title = lib.mkOption {
+      type = lib.types.str;
       default = "LibreSpeed";
       description = "title to display";
     };

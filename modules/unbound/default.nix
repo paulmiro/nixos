@@ -15,10 +15,10 @@ let
   );
 in
 {
-  options.paul.unbound = with lib; {
-    enable = mkEnableOption "activate unbound";
-    A-records = mkOption {
-      type = types.attrs;
+  options.paul.unbound = {
+    enable = lib.mkEnableOption "activate unbound";
+    A-records = lib.mkOption {
+      type = lib.types.attrs;
       default = {
         "iceportal.de" = "172.18.1.110";
         "pass.telekom.de" = "109.237.176.33";

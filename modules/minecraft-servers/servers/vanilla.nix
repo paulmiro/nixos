@@ -9,11 +9,11 @@ let
   cfg = config.paul.minecraft-servers.vanilla;
 in
 {
-  options.paul.minecraft-servers.vanilla = with lib; {
-    enable = mkEnableOption "activate Vanilla Minecraft Server";
-    enableDyndns = mkEnableOption "enable dyndns";
-    domain = mkOption {
-      type = types.str;
+  options.paul.minecraft-servers.vanilla = {
+    enable = lib.mkEnableOption "activate Vanilla Minecraft Server";
+    enableDyndns = lib.mkEnableOption "enable dyndns";
+    domain = lib.mkOption {
+      type = lib.types.str;
       default = "mc.${config.paul.private.domains.base}";
       description = "domain name for Vanilla Minecraft Server";
     };

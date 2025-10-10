@@ -7,19 +7,19 @@ let
   cfg = config.paul.audiobookshelf;
 in
 {
-  options.paul.audiobookshelf = with lib; {
-    enable = mkEnableOption "activate audiobookshelf";
-    openFirewall = mkEnableOption "allow audiobookshelf port in firewall";
-    enableNginx = mkEnableOption "activate nginx proxy";
+  options.paul.audiobookshelf = {
+    enable = lib.mkEnableOption "activate audiobookshelf";
+    openFirewall = lib.mkEnableOption "allow audiobookshelf port in firewall";
+    enableNginx = lib.mkEnableOption "activate nginx proxy";
 
-    port = mkOption {
-      type = types.port;
+    port = lib.mkOption {
+      type = lib.types.port;
       default = 13378;
       description = "Port to listen on";
     };
 
-    domain = mkOption {
-      type = types.str;
+    domain = lib.mkOption {
+      type = lib.types.str;
       default = config.paul.private.domains.audiobookshelf;
       description = "domain name for audiobookshelf";
     };
