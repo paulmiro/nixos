@@ -57,7 +57,7 @@ in
         HEALTH_CHECK_HOST = "google.com";
 
         TRANSMISSION_DOWNLOAD_DIR = "/data/torrents";
-        TRANSMISSION_WEB_UI = "transmissionic";
+        TRANSMISSION_WEB_UI = "";
 
         GLOBAL_APPLY_PERMISSIONS = "false";
         LOCAL_NETWORK = "192.168.178.0/24,100.0.0.0/8,127.0.0.1/32";
