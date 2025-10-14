@@ -36,6 +36,9 @@ in
     services.nginx = {
       enable = true;
       clientMaxBodySize = "8196m"; # 8GiB
+
+      recommendedBrotliSettings = true;
+      recommendedGzipSettings = true;
       recommendedOptimisation = true;
       recommendedProxySettings = true;
       recommendedTlsSettings = true;
@@ -44,6 +47,8 @@ in
           https "max-age=31536000; includeSubdomains; -preload";
         }
         add_header Strict-Transport-Security $hsts_header;
+
+        access_log syslog:server=unix:/dev/log;
       '';
       virtualHosts."${cfg.defaultDomain}" = {
         enableACME = lib.mkIf cfg.openFirewall true; # ACME fails with closed firewall

@@ -17,27 +17,24 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    boot = {
-      loader = {
-        grub = {
-          enable = true;
-          device = "nodev";
-          efiSupport = true;
-          efiInstallAsRemovable = true;
-          useOSProber = true;
-          configurationLimit = 100;
+    boot.loader = {
+      grub = {
+        enable = true;
+        device = "nodev";
+        efiSupport = true;
+        efiInstallAsRemovable = true;
+        useOSProber = true;
+        configurationLimit = 100;
 
-          memtest86 = {
-            enable = true;
-            params = [ "onepass" ];
-          };
-        };
-        grub2-theme = {
+        memtest86 = {
           enable = true;
-          theme = "sicher";
+          params = [ "onepass" ];
         };
       };
-      tmp.cleanOnBoot = true;
+      grub2-theme = {
+        enable = true;
+        theme = "sicher";
+      };
     };
   };
 }
