@@ -228,55 +228,60 @@
               "com.sun:auto-snapshot" = "true";
             };
           };
-          "var/lib" = {
+          "immich" = {
             type = "zfs_fs";
-          };
-          "var/lib/immich" = {
-            type = "zfs_fs";
+            mountpoint = "/var/lib/immich";
             options = {
               "com.sun:auto-snapshot" = "true";
             };
           };
-          "var/lib/kanidm" = {
+          "kanidm" = {
             type = "zfs_fs";
+            mountpoint = "/var/lib/kanidm";
             options = {
               "com.sun:auto-snapshot" = "true";
               recordsize = "64K";
             };
           };
-          "var/lib/jellyfin" = {
+          "jellyfin" = {
             type = "zfs_fs";
+            mountpoint = "/var/lib/jellyfin";
             options = {
               compression = "zstd";
               "com.sun:auto-snapshot" = "true";
             };
           };
-          "var/lib/audiobookshelf" = {
+          "audiobookshelf" = {
             type = "zfs_fs";
+            mountpoint = "/var/lib/audiobookshelf";
             options = {
               "com.sun:auto-snapshot" = "true";
             };
           };
-          "var/lib/transmission" = {
+          "transmission" = {
             type = "zfs_fs";
+            mountpoint = "/var/lib/transmission";
             options = {
               "com.sun:auto-snapshot" = "true";
             };
           };
-          "var/lib/sonarr" = {
+          "sonarr" = {
             type = "zfs_fs";
+            mountpoint = "/var/lib/sonarr";
             options = {
               "com.sun:auto-snapshot" = "true";
             };
           };
-          "var/lib/radarr" = {
+          "radarr" = {
             type = "zfs_fs";
+            mountpoint = "/var/lib/radarr";
             options = {
               "com.sun:auto-snapshot" = "true";
             };
           };
-          "var/lib/hedgedoc" = {
+          "hedgedoc" = {
             type = "zfs_fs";
+            mountpoint = "/var/lib/hedgedoc";
             options = {
               "com.sun:auto-snapshot" = "true";
             };
