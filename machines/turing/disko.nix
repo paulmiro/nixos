@@ -228,65 +228,53 @@
               "com.sun:auto-snapshot" = "true";
             };
           };
-          "immich" = {
+
+          apps = {
             type = "zfs_fs";
-            mountpoint = "/var/lib/immich";
+            mountpoint = "none";
             options = {
+              compression = "lz4";
               "com.sun:auto-snapshot" = "true";
             };
           };
-          "kanidm" = {
+          "apps/immich" = {
+            type = "zfs_fs";
+            mountpoint = "/var/lib/immich";
+          };
+          "apps/kanidm" = {
             type = "zfs_fs";
             mountpoint = "/var/lib/kanidm";
             options = {
-              "com.sun:auto-snapshot" = "true";
               recordsize = "64K";
             };
           };
-          "jellyfin" = {
+          "apps/jellyfin" = {
             type = "zfs_fs";
             mountpoint = "/var/lib/jellyfin";
             options = {
               compression = "zstd";
-              "com.sun:auto-snapshot" = "true";
             };
           };
-          "audiobookshelf" = {
+          "apps/audiobookshelf" = {
             type = "zfs_fs";
             mountpoint = "/var/lib/audiobookshelf";
-            options = {
-              "com.sun:auto-snapshot" = "true";
-            };
           };
-          "transmission" = {
+          "apps/transmission" = {
             type = "zfs_fs";
             mountpoint = "/var/lib/transmission";
-            options = {
-              "com.sun:auto-snapshot" = "true";
-            };
           };
-          "sonarr" = {
+          "apps/sonarr" = {
             type = "zfs_fs";
             mountpoint = "/var/lib/sonarr";
-            options = {
-              "com.sun:auto-snapshot" = "true";
-            };
           };
-          "radarr" = {
+          "apps/radarr" = {
             type = "zfs_fs";
             mountpoint = "/var/lib/radarr";
-            options = {
-              "com.sun:auto-snapshot" = "true";
-            };
           };
-          "hedgedoc" = {
+          "apps/hedgedoc" = {
             type = "zfs_fs";
             mountpoint = "/var/lib/hedgedoc";
-            options = {
-              "com.sun:auto-snapshot" = "true";
-            };
           };
-
         };
       };
 
