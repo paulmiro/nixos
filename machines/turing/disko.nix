@@ -231,7 +231,7 @@
 
           apps = {
             type = "zfs_fs";
-            mountpoint = "none";
+            # mountpoint = "none"; # can't be set explicitly in disko
             options = {
               compression = "lz4";
               "com.sun:auto-snapshot" = "true";
