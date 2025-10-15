@@ -19,8 +19,8 @@ in
         (builtins.fromTOML (
           builtins.readFile (
             pkgs.fetchurl {
-              url = "https://starship.rs/presets/toml/no-runtime-versions.toml";
-              hash = "sha256-eUOdNK/941Kf5frs6G2TntRAcAisN8v1PrbVGMP11oY=";
+              url = "https://starship.rs/presets/toml/no-empty-icons.toml";
+              hash = "sha256-MLNeDH3xKJdalKWUwkaFFD/swwdmkuVgvSqoS90ep4I=";
             }
           )
         ))
