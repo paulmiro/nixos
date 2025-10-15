@@ -16,6 +16,7 @@
     docker.enable = true;
     gaming.enable = true;
     kanidm.enableClient = true;
+    tor-client.enable = true;
   };
 
   imports = [
