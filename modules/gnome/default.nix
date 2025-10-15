@@ -43,6 +43,8 @@ in
 
     environment.systemPackages = with pkgs; [
       gnome-tweaks
+
+      wl-clipboard
     ];
 
     programs.nautilus-open-any-terminal = {
