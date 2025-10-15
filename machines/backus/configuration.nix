@@ -8,7 +8,7 @@
     tailscale.enable = true;
     zfs = {
       enable = true;
-      maxArcGB = 2;
+      maxArcGB = 1;
     };
   };
 
