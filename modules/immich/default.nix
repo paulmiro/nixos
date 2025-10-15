@@ -49,6 +49,9 @@ in
           after = [
             "docker.service"
             "docker.socket"
+          ]
+          ++ lib.optionals (config.paul.zfs.enable) [
+            "zfs.target"
           ];
           serviceConfig = {
             WorkingDirectory = "${./compose}";
@@ -83,6 +86,7 @@ in
             " > $out/env
           '';
         };
+
       }
 
       (lib.mkIf cfg.enableNginx {

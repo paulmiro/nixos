@@ -60,6 +60,12 @@ in
           ];
         };
 
+        systemd.services.jellyfin-docker = {
+          after = lib.mkIf config.paul.zfs.enable [
+            "zfs.target"
+          ];
+        };
+
         networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [ 8096 ];
       }
 
