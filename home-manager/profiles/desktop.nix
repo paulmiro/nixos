@@ -73,6 +73,7 @@
         pomodoro-gtk
         prusa-slicer
         orca-slicer
+        qrtool
         rnote
         signal-desktop
         sl
