@@ -7,6 +7,10 @@ let
   cfg = config.paul.clan;
 in
 {
+  imports = [
+    ./state.nix
+  ];
+
   options.paul.clan = {
     # This exists so that the first rebuild into this flake on a new machine can be done normally.
     # Modules that are enabled by any of the common modules and depend on clan-specifig config
