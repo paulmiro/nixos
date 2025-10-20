@@ -27,6 +27,18 @@ steps:
     image: bash
     name: Setup Attic
   - commands:
+      - nix --show-trace build --print-out-paths '.#nixosConfigurations.backus.config.system.build.toplevel' -o 'result-backus'
+    image: bash
+    name: Build backus
+  - commands:
+      - nix --show-trace path-info --closure-size -h $(readlink -f 'result-backus')
+    image: bash
+    name: Show backus info
+  - commands:
+      - attic push lounge-rocks:nix-cache 'result-backus'
+    image: bash
+    name: Push backus to Attic
+  - commands:
       - nix --show-trace build --print-out-paths '.#nixosConfigurations.btr-wsl.config.system.build.toplevel' -o 'result-btr-wsl'
     image: bash
     name: Build btr-wsl
