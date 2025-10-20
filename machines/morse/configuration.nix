@@ -6,6 +6,7 @@
 {
   paul = {
     common-server.enable = true;
+    grub.enable = true;
 
     nginx = {
       enable = true;
@@ -26,7 +27,6 @@
       enable = true;
       openFirewall = true;
     };
-
   };
 
   imports = [
@@ -45,6 +45,7 @@
     firewall = {
       allowedTCPPorts = [ ];
     };
+    useDHCP = lib.mkDefault true;
   };
 
   # Configure console keymap
@@ -59,14 +60,15 @@
     ];
   };
 
-  services.nginx.virtualHosts."paulmiro.de" = {
-    enableACME = true;
-    forceSSL = true;
-    enableDyndns = true;
-    locations."/" = {
-      return = "301 https://github.com/paulmiro";
-    };
-  };
+  # TODO: disabled for now until I set up a blog or something like thats
+  # services.nginx.virtualHosts."paulmiro.de" = {
+  #   enableACME = true;
+  #   forceSSL = true;
+  #   enableDyndns = true;
+  #   locations."/" = {
+  #     return = "301 https://github.com/paulmiro";
+  #   };
+  # };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
