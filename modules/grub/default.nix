@@ -20,11 +20,11 @@ in
     boot.loader = {
       grub = {
         enable = true;
-        device = "nodev";
+        device = lib.mkDefault "nodev";
         efiSupport = true;
         efiInstallAsRemovable = true;
         useOSProber = true;
-        configurationLimit = 100;
+        configurationLimit = lib.mkDefault 100;
 
         memtest86 = {
           enable = true;
