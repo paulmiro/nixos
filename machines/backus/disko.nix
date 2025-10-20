@@ -99,8 +99,9 @@
             type = "zfs_fs";
             mountpoint = "/mnt/borg";
             options = {
-              compression = "zstd";
+              compression = "zstd-10";
               recordsize = "1M";
+              "com.sun:auto-snapshot" = "false";
             };
           };
 
