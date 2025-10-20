@@ -80,6 +80,11 @@
       # inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    direnv-instant = {
+      url = "github:Mic92/direnv-instant";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     ### Non-Flake Inputs
 
     immich-source = {
