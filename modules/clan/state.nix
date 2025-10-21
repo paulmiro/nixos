@@ -261,7 +261,7 @@ in
               description = "Use rsync copies for this backup job";
             };
 
-            # Clan will use the unmodified paths for restores, so we have to edit them as they're being passed to borgbackup
+            # Clan needs to use the unmodified paths for restores, so we have to edit them as they're being passed to borgbackup
             paths = lib.mkOption {
               apply =
                 paths:
@@ -273,21 +273,6 @@ in
                   paths;
             };
           };
-
-          # config = {
-          #   postHook = lib.mkIf config.useZfsSnapshots (
-          #     lib.mkAfter ''
-          #       echo "Cleaning up ZFS snapshots for borgbackup job ${name}"
-
-          #       # Destroy recursive snapshots (only need to destroy root datasets)
-          #       ${lib.concatMapStringsSep "\n" (fs: ''
-          #         if ${zfsPackage}/bin/zfs list -H -o name "${fs.device}@borg-${name}" >/dev/null 2>&1; then
-          #           ${zfsPackage}/bin/zfs destroy -r "${fs.device}@borg-${name}" || echo "Warning: Failed to destroy recursive snapshot ${fs.device}@borg-${name}"
-          #         fi
-          #       '') (rootDatasetsFor (system-config.clan.core.state.${name}.folders))}
-          #     ''
-          #   );
-          # };
         }
       )
     );
