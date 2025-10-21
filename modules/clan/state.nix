@@ -9,6 +9,13 @@ let
 
   zfsPackage = config.boot.zfs.package;
 
+  stateForPath =
+    path:
+    lib.findSingle (state: (builtins.elem path state.folders))
+      (throw "Could not find state for path: ${path}") # never happens because paths are only added through clan
+      (throw "Found multiple states for path: ${path}") # never happens because we assert that paths are unique
+      (builtins.attrValues config.clan.core.state);
+
   # Get all ZFS filesystems
   zfsFileSystems = lib.filter (fs: fs.fsType == "zfs") (lib.attrValues config.fileSystems);
 
@@ -58,7 +65,7 @@ let
     else
       path;
 
-  transformPathToRsyncCopyDir = name: path: "${path}/.borg-copy";
+  transformPathToRsyncCopyDir = path: "${path}/.borg-copy";
 in
 {
   options.clan.core.state = lib.mkOption {
@@ -245,41 +252,48 @@ in
 
   options.services.borgbackup.jobs = lib.mkOption {
     type = lib.types.attrsOf (
-      lib.types.submodule (
-        { config, name, ... }:
-        {
-          options = {
-            useZfsSnapshots = lib.mkOption {
-              type = lib.types.bool;
-              default = system-config.clan.core.state.${name}.useZfsSnapshots or false;
-              description = "Use ZFS snapshots for this backup job";
-            };
-
-            useRsyncCopy = lib.mkOption {
-              type = lib.types.bool;
-              default = system-config.clan.core.state.${name}.useRsyncCopy or false;
-              description = "Use rsync copies for this backup job";
-            };
-
-            # Clan needs to use the unmodified paths for restores, so we have to edit them as they're being passed to borgbackup
-            paths = lib.mkOption {
-              apply =
-                paths:
-                if config.useZfsSnapshots then
-                  map (transformPathToZfsSnapshot name) paths
-                else if config.useRsyncCopy then
-                  map (transformPathToRsyncCopyDir name) paths
-                else
-                  paths;
-            };
-
-            startAt = lib.mkOption {
-              # better default for me than what clan does
-              apply = schedule: if schedule == "*-*-* 01:00:00" then "*-*-* 05:00:00" else schedule;
-            };
+      lib.types.submodule {
+        options = {
+          includesZfsSnapshots = lib.mkOption {
+            type = lib.types.bool;
+            # this assumes all paths get backet up to all destinations. this is currently true.
+            default = lib.any (state: state.useZfsSnapshots) (
+              builtins.attrValues system-config.clan.core.state
+            );
+            description = "Use ZFS snapshots for this backup job";
           };
-        }
-      )
+
+          includesRsyncCopies = lib.mkOption {
+            type = lib.types.bool;
+            # this assumes all paths get backet up to all destinations. this is currently true.
+            default = lib.any (state: state.useRsyncCopy) (builtins.attrValues system-config.clan.core.state);
+            description = "Use rsync copies for this backup job";
+          };
+
+          # Clan needs to use the unmodified paths for restores, so we have to edit them as they're being passed to borgbackup
+          paths = lib.mkOption {
+            apply =
+              paths:
+              map (
+                path:
+                let
+                  state = stateForPath path;
+                in
+                if state.useZfsSnapshots then
+                  (transformPathToZfsSnapshot state.name path)
+                else if state.useRsyncCopy then
+                  (transformPathToRsyncCopyDir path)
+                else
+                  path
+              ) paths;
+          };
+
+          startAt = lib.mkOption {
+            # better default for me than what clan does
+            apply = schedule: if schedule == "*-*-* 01:00:00" then "*-*-* 05:00:00" else schedule;
+          };
+        };
+      }
     );
   };
 
@@ -288,7 +302,7 @@ in
     systemd.services = lib.mapAttrs' (
       name: job:
       lib.nameValuePair "borgbackup-job-${name}" (
-        lib.mkIf (job.useZfsSnapshots or false) {
+        lib.mkIf (job.includesZfsSnapshots or false) {
           serviceConfig = {
             PrivateDevices = lib.mkForce false; # ZFS needs access to /dev/zfs
           };
@@ -298,26 +312,35 @@ in
       )
     ) config.services.borgbackup.jobs;
 
-    assertions = lib.concatMap (state: [
-      {
-        assertion = !(state.useZfsSnapshots && state.useRsyncCopy);
-        message = "State ${state.name}: ZFS snapshots and rsync copies cannot be used at the same time";
-      }
-      {
-        assertion = state.useZfsSnapshots -> lib.all (folder: pathToDataset folder != null) state.folders;
-        message = "State ${state.name}: ZFS snapshots can only be used if all folders are in ZFS datasets. Make sure the disko config is up to date.";
-      }
-      {
-        assertion = lib.all (
-          serviceName:
-          lib.filterAttrs (name: value: value.name == serviceName) system-config.systemd.services != { }
-        ) state.servicesToStop;
-        message = "State ${state.name} is configured to stop services that don't exist: [ ${lib.concatStringsSep ", " state.servicesToStop} ]";
-      }
-      {
-        assertion = !lib.strings.hasInfix "/" state.name;
-        message = "State names cannot contain '/': ${state.name}";
-      }
-    ]) (builtins.attrValues config.clan.core.state);
+    assertions =
+      (lib.concatMap (state: [
+        {
+          assertion = !(state.useZfsSnapshots && state.useRsyncCopy);
+          message = "State ${state.name}: ZFS snapshots and rsync copies cannot be used at the same time";
+        }
+        {
+          assertion = state.useZfsSnapshots -> lib.all (folder: pathToDataset folder != null) state.folders;
+          message = "State ${state.name}: ZFS snapshots can only be used if all folders are in ZFS datasets. Make sure the disko config is up to date.";
+        }
+        {
+          assertion = lib.all (
+            serviceName:
+            lib.filterAttrs (name: value: value.name == serviceName) system-config.systemd.services != { }
+          ) state.servicesToStop;
+          message = "State ${state.name} is configured to stop services that don't exist: [ ${lib.concatStringsSep ", " state.servicesToStop} ]";
+        }
+        {
+          assertion = !lib.strings.hasInfix "/" state.name;
+          message = "State names cannot contain '/': ${state.name}";
+        }
+      ]) (builtins.attrValues config.clan.core.state))
+      ++ [
+        {
+          assertion = lib.allUnique (
+            lib.flatten (map (state: state.folders) (builtins.attrValues config.clan.core.state))
+          );
+          message = "State paths must be unique";
+        }
+      ];
   };
 }
