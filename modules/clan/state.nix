@@ -301,22 +301,22 @@ in
     assertions = lib.concatMap (state: [
       {
         assertion = !(state.useZfsSnapshots && state.useRsyncCopy);
-        message = "ZFS snapshots and rsync copies cannot be used at the same time";
+        message = "State ${state.name}: ZFS snapshots and rsync copies cannot be used at the same time";
       }
       {
         assertion = state.useZfsSnapshots -> lib.all (folder: pathToDataset folder != null) state.folders;
-        message = "ZFS snapshots can only be used if all folders are in ZFS datasets. Make sure the disko config is up to date.";
+        message = "State ${state.name}: ZFS snapshots can only be used if all folders are in ZFS datasets. Make sure the disko config is up to date.";
       }
       {
         assertion = lib.all (
           serviceName:
           lib.filterAttrs (name: value: value.name == serviceName) system-config.systemd.services != { }
         ) state.servicesToStop;
-        message = "State is configured to stop services that don't exist";
+        message = "State ${state.name} is configured to stop services that don't exist: [ ${lib.concatStringsSep ", " state.servicesToStop} ]";
       }
       {
         assertion = !lib.strings.hasInfix "/" state.name;
-        message = "State names cannot contain '/'";
+        message = "State names cannot contain '/': ${state.name}";
       }
     ]) (builtins.attrValues config.clan.core.state);
   };
