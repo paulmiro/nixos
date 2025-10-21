@@ -24,6 +24,7 @@
   };
 
   clan.core.networking.targetHost = "backus.${config.paul.private.domains.tailnet}";
+  clan.core.networking.buildHost = "paulmiro@turing.${config.paul.private.domains.tailnet}";
 
   console.keyMap = "de"; # TODO: move this to locale module?
 
