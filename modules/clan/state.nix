@@ -143,7 +143,8 @@ in
                   # Check if the service is running
                   service_status["${serviceName}"]=$(systemctl is-active ${serviceName} || true)
 
-                  if [ "''${service_status["${serviceName}"]}" = "active" ]; then
+                  if [ "''${service_status[${serviceName}]}" = "active" ]; then
+                    echo "Stopping service ${serviceName}"
                     systemctl stop ${serviceName}
                   fi
                 '') config.servicesToStop}
@@ -152,9 +153,7 @@ in
             {
               preBackupScript = lib.mkIf config.useZfsSnapshots (
                 lib.mkOrder 1300 ''
-                  set -e
-
-                  echo "Cleaning up previous ZFS snapshots for borgbackup job ${name}"
+                  echo "Cleaning up previous ZFS snapshots for ${name}"
                   # Destroy recursive snapshots (only need to destroy root datasets)
                   ${lib.concatMapStringsSep "\n" (fs: ''
                     if ${zfsPackage}/bin/zfs list -H -o name "${fs.device}@borg-${name}" >/dev/null 2>&1; then
@@ -162,7 +161,7 @@ in
                     fi
                   '') rootDatasets}
 
-                  echo "Creating ZFS snapshots for borgbackup job ${name}"
+                  echo "Creating ZFS snapshots for ${name}"
                   # Create recursive snapshots for root datasets only
                   ${lib.concatMapStringsSep "\n" (fs: ''
                     if ${zfsPackage}/bin/zfs list -H -o name "${fs.device}" >/dev/null 2>&1; then
@@ -181,32 +180,28 @@ in
                       echo "Warning: Could not access snapshot directory ${fs.mountPoint}/.zfs/snapshot/borg-${name}/"
                     }
                   '') allBackupDatasets}
-
-                  set +e
                 ''
               );
             }
             {
               preBackupScript = lib.mkIf config.useRsyncCopy (
                 lib.mkOrder 1300 ''
-                  echo "Creating Copy for borgbackup job ${name}"
-                  set -e
+                  echo "Creating Copy for ${name}"
 
                   ${lib.concatMapStringsSep "\n" (folder: ''
                     echo "Copying folder ${folder}"
                     rsync -avH --delete --numeric-ids "${folder}/" "${transformPathToRsyncCopyDir folder}/"
                   '') config.folders}
-
-                  set +e
                 ''
               );
             }
             {
               preBackupScript = lib.mkOrder 1400 ''
-                echo "Restarting services after borgbackup job ${name}"
+                echo "Restarting services for ${name}"
 
                 ${lib.concatMapStringsSep "\n" (serviceName: ''
-                  if [ "''${service_status["${serviceName}"]}" = "active" ]; then
+                  if [ "''${service_status[${serviceName}]}" = "active" ]; then
+                    echo "Restarting service ${serviceName}"
                     systemctl start ${serviceName}
                   fi
                 '') config.servicesToStop}
@@ -219,7 +214,7 @@ in
 
                 # Fill the service_status array
                 ${lib.concatMapStringsSep "\n" (serviceName: ''
-                  service_status["${serviceName}"]="$(systemctl is-active ${serviceName} || true)"
+                  service_status[${serviceName}]="$(systemctl is-active ${serviceName} || true)"
                 '') config.servicesToStop}
 
                 touch /tmp/clan_restore_stopped_services_${name}
@@ -231,6 +226,9 @@ in
                     echo "$service_name"
                   fi
                 done > /tmp/clan_restore_stopped_services_${name}
+
+                echo "Stopped services:"
+                cat /tmp/clan_restore_stopped_services_${name})
               '';
             }
             # postRestoreScript
