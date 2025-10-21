@@ -17,15 +17,16 @@ in
     programs.git = {
       enable = true;
       lfs.enable = true;
-      ignores = [
-        ".vscode/"
-      ];
-      extraConfig = {
-        pull.rebase = false;
+      settings = {
+        user.name = "Paul Mika Rohde";
+        user.email = "git@paulmiro.de";
+
         init.defaultBranch = "main";
+
+        pull.rebase = true;
+        rebase.autostatsh = true;
+        merge.autostatsh = true;
       };
-      userEmail = "30203227+paulmiro@users.noreply.github.com";
-      userName = "paulmiro";
     };
 
     home.packages = with pkgs; [

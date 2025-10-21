@@ -63,5 +63,9 @@ in
       # ];
 
     };
+
+    programs.git.ignores = [
+      ".vscode/"
+    ];
   };
 }
