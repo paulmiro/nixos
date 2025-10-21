@@ -15,6 +15,7 @@ hedgedoc = "hedgedoc.example.com"
 karakeep = "karakeep.example.com"
 egg = "egg.example.com"
 kanidm = "kanidm.example.com"
+tailnet = "example-tailnet.ts.net"
 
 [emails]
 proton = "proton@example.com"

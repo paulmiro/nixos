@@ -1,4 +1,5 @@
 {
+  config,
   ...
 }:
 {
@@ -22,7 +23,7 @@
     hostName = "backus";
   };
 
-  clan.core.networking.targetHost = "backus";
+  clan.core.networking.targetHost = "backus.${config.paul.private.domains.tailnet}";
 
   console.keyMap = "de"; # TODO: move this to locale module?
 

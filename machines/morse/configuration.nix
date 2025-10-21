@@ -29,7 +29,7 @@
     };
   };
 
-  clan.core.networking.targetHost = "morse.${config.paul.private.domains.base}";
+  clan.core.networking.targetHost = "morse.${config.paul.private.domains.tailnet}";
 
   # enable all the firmware with a license allowing redistribution
   hardware.enableRedistributableFirmware = true;
