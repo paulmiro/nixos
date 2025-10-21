@@ -21,6 +21,7 @@ in
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINamsWVM0+zxXxUh5K1ww0GrdleakE3X8QSMJ+0b/btr paulmiro@better-laptop-paul-wsl"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGKn+lCU7J7iNEhsCVK8chXmqeGsIAlbqhwbY8Rq/bll paulmiro@bell-avf"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIESZxtxQOpcoxKjJO5f6XlVDmUSG7ZYz1fN5dIqi/tur paulmiro@turing"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIq7MvzwppeaeZKiAZD2ioW6MB7wLClX4H78kO72/bak paulmiro@backus"
       ];
     };
   };
