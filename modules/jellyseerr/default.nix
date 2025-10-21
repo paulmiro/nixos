@@ -37,6 +37,12 @@ in
       openFirewall = cfg.openFirewall;
     };
 
+    clan.core.state.jellyseerr = {
+      useZfsSnapshots = true;
+      folders = [ "/var/lib/private/jellyseerr" ];
+      servicesToStop = [ "jellyseerr.service" ];
+    };
+
     services.nginx.virtualHosts."${cfg.domain}" = lib.mkIf cfg.enableNginx {
       enableACME = true;
       forceSSL = true;

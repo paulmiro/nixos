@@ -33,5 +33,11 @@ in
     networking.firewall.interfaces."tailscale".allowedTCPPorts = lib.mkIf cfg.openTailscaleFirewall [
       config.services.readarr.settings.server.port
     ];
+
+    clan.core.state.readarr = {
+      useZfsSnapshots = true;
+      folders = [ "/var/lib/readarr" ];
+      servicesToStop = [ "readarr.service" ];
+    };
   };
 }

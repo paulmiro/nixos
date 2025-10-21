@@ -47,6 +47,13 @@ in
       '';
     };
 
+    clan.core.state.gotify = {
+      useZfsSnapshots = config.paul.zfs.enable;
+      useRsyncCopy = !config.paul.zfs.enable;
+      folders = [ "/var/lib/gotify-server" ];
+      servicesToStop = [ "gotify-server.service" ];
+    };
+
     services.nginx.virtualHosts."${cfg.domain}" = lib.mkIf cfg.enableNginx {
       enableACME = true;
       forceSSL = true;

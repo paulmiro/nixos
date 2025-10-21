@@ -6,6 +6,7 @@
 }:
 let
   cfg = config.paul.minecraft-servers.ftb-skies;
+  serviceName = "mc-ftb-skies";
 in
 {
   /*
@@ -30,7 +31,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    systemd.services.mc-ftb-skies = {
+    systemd.services.${serviceName} = {
       description = "Minecraft Server FTB Skies";
       wantedBy = [ "multi-user.target" ];
       after = [ "network.target" ];
@@ -47,7 +48,7 @@ in
           ${pkgs.mcrcon}/bin/mcrcon stop
         '';
         TimeoutStopSec = "20";
-        User = "mc-ftb-skies";
+        User = config.users.users.mc-ftb-skies.name;
         StateDirectory = "mc-ftb-skies";
         WorkingDirectory = "/var/lib/mc-ftb-skies";
       };
@@ -59,7 +60,7 @@ in
       isSystemUser = true;
       useDefaultShell = true;
       createHome = true;
-      group = "mc-ftb-skies";
+      group = config.users.groups.mc-ftb-skies.name;
       home = "/var/lib/mc-ftb-skies";
     };
 
@@ -68,6 +69,12 @@ in
     networking.firewall = {
       allowedUDPPorts = [ 25565 ];
       allowedTCPPorts = [ 25565 ];
+    };
+
+    clan.core.state.minecraft-ftb-skies = {
+      useZfsSnapshots = true;
+      folders = [ "/var/lib/mc-ftb-skies" ];
+      servicesToStop = [ "${serviceName}.service" ];
     };
 
     paul.dyndns.extraDomains = lib.mkIf cfg.enableDyndns [ cfg.domain ];

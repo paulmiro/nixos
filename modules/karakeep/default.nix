@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 let
@@ -29,6 +28,8 @@ in
   config = lib.mkIf cfg.enable (
     lib.mkMerge [
       {
+        paul.meilisearch.enable = true;
+
         services.karakeep = {
           enable = true;
           extraEnvironment = {
@@ -41,15 +42,6 @@ in
             DISABLE_PASSWORD_AUTH = "true";
           };
           environmentFile = config.clan.core.vars.generators.karakeep.files.env.path;
-        };
-
-        services.meilisearch = {
-          # this is required because state-version < 25.05 sets the package to 1.11
-          # TODO: 25.11: remove this (assuming they actually removed meilisearch_1_11)
-          # -> also check if the dumpless upgrade is made the default, and remove that too if that's the case
-          package = pkgs.meilisearch;
-          # this allows the database to be updated automatically without having to dump and then re-import it
-          settings.experimental_dumpless_upgrade = true;
         };
 
         # surrealdb/surrealdb/issues/6153#issuecomment-3135333587
@@ -72,6 +64,16 @@ in
             OPENAI_API_KEY="$(cat $prompts/openai-api-key)"
             " > $out/env
           '';
+        };
+
+        clan.core.state.karakeep = {
+          useZfsSnapshots = true;
+          folders = [ "/var/lib/karakeep" ];
+          servicesToStop = [
+            "karakeep-init.service"
+            "karakeep-web.service"
+            "karakeep-workers.service"
+          ];
         };
       }
       (lib.mkIf cfg.openFirewall {

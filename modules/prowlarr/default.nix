@@ -22,5 +22,11 @@ in
     networking.firewall.interfaces."tailscale".allowedTCPPorts = lib.mkIf cfg.openTailscaleFirewall [
       config.services.prowlarr.settings.server.port
     ];
+
+    clan.core.state.prowlarr = {
+      useZfsSnapshots = true;
+      folders = [ "/var/lib/private/prowlarr" ];
+      servicesToStop = [ "prowlarr.service" ];
+    };
   };
 }

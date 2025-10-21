@@ -25,10 +25,15 @@ in
       plugins = [ pkgs.theLoungePlugins.themes.flat-dark ];
       extraConfig = {
         theme = "thelounge-theme-flat-dark";
-
       };
     };
 
     networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [ cfg.port ];
+
+    clan.core.state.thelounge = {
+      useZfsSnapshots = true;
+      folders = [ "/var/lib/thelounge" ];
+      servicesToStop = [ "thelounge.service" ];
+    };
   };
 }

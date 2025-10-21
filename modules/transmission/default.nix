@@ -5,6 +5,7 @@
 }:
 let
   cfg = config.paul.transmission;
+  serviceName = "transmission-openvpn-docker";
 in
 {
   options.paul.transmission = {
@@ -29,7 +30,7 @@ in
     };
 
     virtualisation.oci-containers.containers.transmission-openvpn = {
-      serviceName = "transmission-openvpn-docker";
+      inherit serviceName;
       image = "haugene/transmission-openvpn:${cfg.containerVersion}";
       volumes = [
         "/var/lib/transmission/config:/config"
@@ -71,6 +72,12 @@ in
       9091
       8118
     ];
+
+    clan.core.state.transmission = {
+      useZfsSnapshots = true;
+      folders = [ "/var/lib/transmission" ];
+      servicesToStop = [ "${serviceName}.service" ];
+    };
   };
 
 }

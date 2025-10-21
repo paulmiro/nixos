@@ -56,5 +56,11 @@ in
       };
     };
 
+    clan.core.state.minecraft-vanilla = {
+      useZfsSnapshots = true;
+      folders = [ "/var/lib/minecraft-servers/vanilla" ];
+      servicesToStop = [ "minecraft-vanilla.service" ];
+    };
+
   };
 }

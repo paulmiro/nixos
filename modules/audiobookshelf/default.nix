@@ -33,6 +33,12 @@ in
           inherit (cfg) port openFirewall;
           host = if cfg.openFirewall then "0.0.0.0" else "127.0.0.1";
         };
+
+        clan.core.state.audiobookshelf = {
+          useZfsSnapshots = true;
+          folders = [ "/var/lib/audiobookshelf" ];
+          servicesToStop = [ "audiobookshelf.service" ];
+        };
       }
 
       (lib.mkIf cfg.enableNginx {

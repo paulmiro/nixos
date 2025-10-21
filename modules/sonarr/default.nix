@@ -23,5 +23,11 @@ in
     networking.firewall.interfaces."tailscale".allowedTCPPorts = lib.mkIf cfg.openTailscaleFirewall [
       config.services.sonarr.settings.server.port
     ];
+
+    clan.core.state.sonarr = {
+      useZfsSnapshots = true;
+      folders = [ "/var/lib/sonarr" ];
+      servicesToStop = [ "sonarr.service" ];
+    };
   };
 }

@@ -5,6 +5,7 @@
 }:
 let
   cfg = config.paul.filebrowser;
+  serviceName = "filebrowser-docker";
 in
 {
   options.paul.filebrowser = {
@@ -45,7 +46,7 @@ in
     };
 
     virtualisation.oci-containers.containers.filebrowser = {
-      serviceName = "filebrowser-docker";
+      inherit serviceName;
       image = "ghcr.io/gtsteffaniak/filebrowser:${cfg.containerVersion}";
       user = "filebrowser:filebrowser";
       volumes = [
@@ -89,6 +90,15 @@ in
         FILEBROWSER_ADMIN_PASSWORD="$(cat $prompts/admin-password)"
         " > $out/env
       '';
+    };
+
+    clan.core.state.filebrowser = {
+      useZfsSnapshots = true;
+      folders = [
+        "/var/lib/filebrowser"
+        # TODO: more?
+      ];
+      servicesToStop = [ "${serviceName}.service" ];
     };
 
     networking.firewall.interfaces."tailscale".allowedTCPPorts = lib.mkIf cfg.openTailscaleFirewall [

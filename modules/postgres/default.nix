@@ -19,7 +19,12 @@ in
     services.postgresqlBackup = {
       enable = true;
       backupAll = true;
-      location = "/mnt/nfs/postgres_backup";
+    };
+
+    clan.core.state.postgres = {
+      useZfsSnapshots = config.paul.zfs.enable;
+      folders = [ "/var/backup/postgres" ];
+      servicesToStop = lib.mkIf config.paul.zfs.enable [ "postgresqlBackup.service" ];
     };
   };
 }

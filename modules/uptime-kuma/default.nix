@@ -42,6 +42,13 @@ in
         networking.firewall.interfaces.tailscale0.allowedTCPPorts = lib.mkIf cfg.openTailscaleFirewall [
           cfg.port
         ];
+
+        clan.core.state.uptime-kuma = {
+          useZfsSnapshots = config.paul.zfs.enable;
+          useRsyncCopy = !config.paul.zfs.enable;
+          folders = [ "/var/lib/uptime-kuma" ];
+          servicesToStop = [ "uptime-kuma.service" ];
+        };
       }
 
       (lib.mkIf cfg.enableNginx {

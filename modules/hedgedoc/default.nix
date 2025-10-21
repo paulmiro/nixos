@@ -77,6 +77,12 @@ in
             " > $out/env
           '';
         };
+
+        clan.core.state.hedgedoc = {
+          useZfsSnapshots = true;
+          folders = [ "/var/lib/hedgedoc" ];
+          servicesToStop = [ "hedgedoc.service" ];
+        };
       }
       (lib.mkIf cfg.openFirewall {
         networking.firewall.allowedTCPPorts = [ cfg.port ];

@@ -23,5 +23,11 @@ in
     networking.firewall.interfaces."tailscale".allowedTCPPorts = lib.mkIf cfg.openTailscaleFirewall [
       config.services.radarr.settings.server.port
     ];
+
+    clan.core.state.radarr = {
+      useZfsSnapshots = true;
+      folders = [ "/var/lib/radarr" ];
+      servicesToStop = [ "radarr.service" ];
+    };
   };
 }

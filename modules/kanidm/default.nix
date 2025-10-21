@@ -74,6 +74,12 @@ in
         (lib.mkIf cfg.openHttpsFirewall cfg.httpsPort)
         (lib.mkIf cfg.openLdapsFirewall cfg.ldapsPort)
       ];
+
+      clan.core.state.kanidm = {
+        useZfsSnapshots = true;
+        folders = [ "/var/lib/kanidm" ];
+        servicesToStop = [ "kanidm.service" ];
+      };
     })
 
     (lib.mkIf cfg.enableClient {

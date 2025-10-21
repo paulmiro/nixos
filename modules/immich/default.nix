@@ -13,6 +13,7 @@ let
     pkgs.writeText "immich-version.env" ''
       IMMICH_VERSION=v${version}
     '';
+  serviceName = "immich-docker-compose";
 in
 {
   options.paul.immich = {
@@ -43,7 +44,7 @@ in
       {
         paul.docker.enable = true;
 
-        systemd.services.immich-docker-compose = {
+        systemd.services.${serviceName} = {
           description = "Immich docker-compose service";
           wantedBy = [ "multi-user.target" ];
           after = [
@@ -85,6 +86,15 @@ in
             DB_PASSWORD="$(cat $prompts/database-password)"
             " > $out/env
           '';
+        };
+
+        clan.core.state.immich = {
+          useZfsSnapshots = true;
+          folders = [
+            "/var/lib/immich"
+            "/mnt/photos"
+          ];
+          servicesToStop = [ "${serviceName}.service" ];
         };
 
       }

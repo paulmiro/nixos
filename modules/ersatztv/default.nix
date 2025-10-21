@@ -12,6 +12,7 @@ let
       "-nvidia"
     else
       "";
+  serviceName = "ersatztv-docker";
 in
 {
   options.paul.ersatztv = {
@@ -56,6 +57,7 @@ in
     paul.docker.enable = true;
 
     virtualisation.oci-containers.containers.ersatztv = {
+      inherit serviceName;
       autoStart = true;
       image = "jasongdove/ersatztv:${cfg.version}${hardwareVersion}";
       ports = [ "8409:${toString cfg.port}/tcp" ];
@@ -75,6 +77,12 @@ in
         "--gpus"
         "all"
       ];
+    };
+
+    clan.core.state.ersatztv = {
+      useZfsSnapshots = true;
+      folders = [ "/var/lib/ersatztv" ];
+      servicesToStop = [ "${serviceName}.service" ];
     };
 
     networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [ cfg.port ];

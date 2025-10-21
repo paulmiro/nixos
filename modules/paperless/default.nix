@@ -27,6 +27,13 @@ in
       port = cfg.port;
       address = "turing";
     };
+
     networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [ cfg.port ];
+
+    clan.core.state.paperless = {
+      useZfsSnapshots = true;
+      folders = [ "/var/lib/paperless" ];
+      servicesToStop = [ "paperless.service" ];
+    };
   };
 }

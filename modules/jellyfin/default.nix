@@ -5,6 +5,7 @@
 }:
 let
   cfg = config.paul.jellyfin;
+  serviceName = "jellyfin-docker";
 in
 {
   options.paul.jellyfin = {
@@ -39,7 +40,7 @@ in
         paul.docker.enable = true;
 
         virtualisation.oci-containers.containers.jellyfin = {
-          serviceName = "jellyfin-docker";
+          inherit serviceName;
           image = "jellyfin/jellyfin:${cfg.containerVersion}";
           volumes = [
             "/var/lib/jellyfin/config:/config"
@@ -67,6 +68,12 @@ in
         };
 
         networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [ 8096 ];
+
+        clan.core.state.jellyfin = {
+          useZfsSnapshots = true;
+          folders = [ "/var/lib/jellyfin" ];
+          servicesToStop = [ "${serviceName}.service" ];
+        };
       }
 
       (lib.mkIf cfg.enableNginx {
