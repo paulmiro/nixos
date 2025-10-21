@@ -272,6 +272,11 @@ in
                 else
                   paths;
             };
+
+            startAt = lib.mkOption {
+              # better default for me than what clan does
+              apply = schedule: if schedule == "*-*-* 01:00:00" then "*-*-* 05:00:00" else schedule;
+            };
           };
         }
       )
