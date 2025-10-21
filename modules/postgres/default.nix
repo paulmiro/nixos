@@ -21,7 +21,5 @@ in
       backupAll = true;
       location = "/mnt/nfs/postgres_backup";
     };
-
-    paul.nfs-mounts.enablePostgresBackup = true;
   };
 }
