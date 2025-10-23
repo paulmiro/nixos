@@ -90,6 +90,7 @@
         rootFsOptions = {
           mountpoint = "none";
           atime = "off";
+          snapdir = "visible";
           "com.sun:auto-snapshot" = "false";
         };
 
