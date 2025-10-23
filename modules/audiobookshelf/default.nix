@@ -25,36 +25,28 @@ in
     };
   };
 
-  config = lib.mkIf cfg.enable (
-    lib.mkMerge [
-      {
-        services.audiobookshelf = {
-          enable = true;
-          inherit (cfg) port openFirewall;
-          host = if cfg.openFirewall then "0.0.0.0" else "127.0.0.1";
-        };
+  config = lib.mkIf cfg.enable {
+    services.audiobookshelf = {
+      enable = true;
+      inherit (cfg) port openFirewall;
+      host = if cfg.openFirewall then "0.0.0.0" else "127.0.0.1";
+    };
 
-        clan.core.state.audiobookshelf = {
-          useZfsSnapshots = true;
-          folders = [ "/var/lib/audiobookshelf" ];
-          servicesToStop = [ "audiobookshelf.service" ];
-        };
-      }
+    clan.core.state.audiobookshelf = {
+      useZfsSnapshots = true;
+      folders = [ "/var/lib/audiobookshelf" ];
+      servicesToStop = [ "audiobookshelf.service" ];
+    };
 
-      (lib.mkIf cfg.enableNginx {
-        paul.nginx.enable = true;
-
-        services.nginx.virtualHosts."${cfg.domain}" = {
-          enableACME = true;
-          forceSSL = true;
-          enableDyndns = true;
-          locations."/" = {
-            proxyWebsockets = true;
-            geo-ip = true;
-            proxyPass = "http://127.0.0.1:${toString cfg.port}";
-          };
-        };
-      })
-    ]
-  );
+    services.nginx.virtualHosts."${cfg.domain}" = lib.mkIf cfg.enableNginx {
+      enableACME = true;
+      forceSSL = true;
+      enableDyndns = true;
+      locations."/" = {
+        proxyWebsockets = true;
+        geo-ip = true;
+        proxyPass = "http://127.0.0.1:${toString cfg.port}";
+      };
+    };
+  };
 }

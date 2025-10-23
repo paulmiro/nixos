@@ -25,32 +25,24 @@ in
     };
   };
 
-  config = lib.mkIf cfg.enable (
-    lib.mkMerge [
-      {
-        services.stirling-pdf = {
-          enable = true;
-          environment = {
-            SERVER_PORT = cfg.port;
-            INSTALL_BOOK_AND_ADVANCED_HTML_OPS = "true";
-          };
-        };
-      }
-      (lib.mkIf cfg.openFirewall {
-        networking.firewall.allowedTCPPorts = [ cfg.port ];
-      })
-      (lib.mkIf cfg.enableNginx {
-        paul.nginx.enable = true;
+  config = lib.mkIf cfg.enable {
+    services.stirling-pdf = {
+      enable = true;
+      environment = {
+        SERVER_PORT = cfg.port;
+        INSTALL_BOOK_AND_ADVANCED_HTML_OPS = "true";
+      };
+    };
 
-        services.nginx.virtualHosts."${cfg.domain}" = {
-          enableACME = true;
-          forceSSL = true;
-          enableDyndns = true;
-          locations."/" = {
-            proxyPass = "http://127.0.0.1:${toString cfg.port}";
-          };
-        };
-      })
-    ]
-  );
+    networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [ cfg.port ];
+
+    services.nginx.virtualHosts."${cfg.domain}" = lib.mkIf cfg.enableNginx {
+      enableACME = true;
+      forceSSL = true;
+      enableDyndns = true;
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:${toString cfg.port}";
+      };
+    };
+  };
 }

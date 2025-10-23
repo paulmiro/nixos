@@ -39,81 +39,71 @@ in
     };
   };
 
-  config = lib.mkIf cfg.enable (
-    lib.mkMerge [
-      {
-        paul.docker.enable = true;
+  config = lib.mkIf cfg.enable {
+    paul.docker.enable = true;
 
-        systemd.services.${serviceName} = {
-          description = "Immich docker-compose service";
-          wantedBy = [ "multi-user.target" ];
-          after = [
-            "docker.service"
-            "docker.socket"
-          ]
-          ++ lib.optionals (config.paul.zfs.enable) [
-            "zfs.target"
-          ];
-          serviceConfig = {
-            WorkingDirectory = "${./compose}";
+    systemd.services.${serviceName} = {
+      description = "Immich docker-compose service";
+      wantedBy = [ "multi-user.target" ];
+      after = [
+        "docker.service"
+        "docker.socket"
+      ]
+      ++ lib.optionals (config.paul.zfs.enable) [
+        "zfs.target"
+      ];
+      serviceConfig = {
+        WorkingDirectory = "${./compose}";
 
-            ExecStart =
-              let
-                envFile = config.clan.core.vars.generators.immich.files.env.path;
-              in
-              "${pkgs.docker}/bin/docker compose --env-file .env --env-file ${envFile} --env-file ${versionEnvFile} up --build";
-            ExecStop = "${pkgs.docker}/bin/docker compose down";
-            Restart = "on-failure";
-          };
-        };
+        ExecStart =
+          let
+            envFile = config.clan.core.vars.generators.immich.files.env.path;
+          in
+          "${pkgs.docker}/bin/docker compose --env-file .env --env-file ${envFile} --env-file ${versionEnvFile} up --build";
+        ExecStop = "${pkgs.docker}/bin/docker compose down";
+        Restart = "on-failure";
+      };
+    };
 
-        environment.etc."immich/version.env" = {
-          source = versionEnvFile;
-        };
+    environment.etc."immich/version.env" = {
+      source = versionEnvFile;
+    };
 
-        networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [ cfg.port ];
+    networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [ cfg.port ];
 
-        clan.core.vars.generators.immich = {
-          prompts.database-password.description = "Immich Internal Database Password (see bw)";
-          prompts.database-password.type = "hidden";
-          prompts.database-password.persist = false;
+    clan.core.vars.generators.immich = {
+      prompts.database-password.description = "Immich Internal Database Password (see bw)";
+      prompts.database-password.type = "hidden";
+      prompts.database-password.persist = false;
 
-          files.env.secret = true;
-          files.env.owner = "root"; # TODO: make immich run under a different user?
+      files.env.secret = true;
+      files.env.owner = "root"; # TODO: make immich run under a different user?
 
-          script = ''
-            echo "
-            DB_PASSWORD="$(cat $prompts/database-password)"
-            " > $out/env
-          '';
-        };
+      script = ''
+        echo "
+        DB_PASSWORD="$(cat $prompts/database-password)"
+        " > $out/env
+      '';
+    };
 
-        clan.core.state.immich = {
-          useZfsSnapshots = true;
-          folders = [
-            "/var/lib/immich"
-            "/mnt/photos"
-          ];
-          servicesToStop = [ "${serviceName}.service" ];
-        };
+    clan.core.state.immich = {
+      useZfsSnapshots = true;
+      folders = [
+        "/var/lib/immich"
+        "/mnt/photos"
+      ];
+      servicesToStop = [ "${serviceName}.service" ];
+    };
 
-      }
-
-      (lib.mkIf cfg.enableNginx {
-        paul.nginx.enable = true;
-
-        services.nginx.virtualHosts."${cfg.domain}" = {
-          enableACME = true;
-          forceSSL = true;
-          enableDyndns = cfg.enableDyndns;
-          locations."/" = {
-            proxyPass = "http://127.0.0.1:${toString cfg.port}";
-            geo-ip = true;
-            proxyWebsockets = true;
-          };
-        };
-      })
-
-    ]
-  );
+    services.nginx.virtualHosts."${cfg.domain}" = lib.mkIf cfg.enableNginx {
+      enableACME = true;
+      forceSSL = true;
+      enableDyndns = cfg.enableDyndns;
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:${toString cfg.port}";
+        geo-ip = true;
+        proxyWebsockets = true;
+      };
+    };
+  };
 }
