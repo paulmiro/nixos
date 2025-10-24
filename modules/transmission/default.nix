@@ -46,6 +46,11 @@ in
       capabilities = {
         NET_ADMIN = true;
       };
+      extraOptions = [
+        # prevent "too many open files" error (default is 1024:524288)
+        "--ulimit"
+        "nofile=8192:524288"
+      ];
       environment = {
         PUID = toString config.users.users.transmission.uid;
         PGID = toString config.users.groups.transmission.gid;
