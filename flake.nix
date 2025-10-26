@@ -132,24 +132,19 @@
 
           instances = {
             importer-modules-dir = {
-              module = {
-                name = "importer";
-                input = "clan-core";
-              };
+              module.name = "importer";
+              module.input = "clan-core";
+
               roles.default.tags."all" = { };
-              # import all modules from ./modules/<module-name> everywhere
-              roles.default.extraModules = (map (m: "modules/${m}") (builtins.attrNames self.nixosModules));
+              roles.default.extraModules = builtins.attrValues self.nixosModules;
             };
 
             "borgbackup-turing" = {
-              module = {
-                name = "borgbackup";
-                input = "clan-core";
-              };
-              roles.client.machines = {
-                "backus" = { };
-                "newton" = { };
-              };
+              module.name = "borgbackup";
+              module.input = "clan-core";
+
+              roles.client.machines."backus" = { };
+              roles.client.machines."newton" = { };
 
               roles.server.machines."turing".settings = {
                 directory = "/mnt/borg";
@@ -157,14 +152,11 @@
             };
 
             "borgbackup-backus" = {
-              module = {
-                name = "borgbackup";
-                input = "clan-core";
-              };
-              roles.client.machines = {
-                "turing" = { };
-                "morse" = { };
-              };
+              module.name = "borgbackup";
+              module.input = "clan-core";
+
+              roles.client.machines."turing" = { };
+              roles.client.machines."morse" = { };
 
               roles.server.machines."backus".settings = {
                 directory = "/mnt/borg";
