@@ -20,7 +20,7 @@ in
           builtins.readFile (
             pkgs.fetchurl {
               url = "https://starship.rs/presets/toml/no-empty-icons.toml";
-              hash = "sha256-MLNeDH3xKJdalKWUwkaFFD/swwdmkuVgvSqoS90ep4I=";
+              hash = "sha256-1AOV92TmqrSycE2HjV1K18mXW0V9YqUvVCAU7qGBCSI=";
             }
           )
         ))
