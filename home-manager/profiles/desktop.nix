@@ -75,6 +75,7 @@
         orca-slicer
         qrtool
         rnote
+        rustdesk
         signal-desktop
         sl
         spotify
