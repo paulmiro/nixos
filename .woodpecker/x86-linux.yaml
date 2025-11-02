@@ -1,6 +1,11 @@
 labels:
   backend: local
   platform: linux/amd64
+when:
+  - branch:
+      include: ["**"]
+      exclude: [no-private-data]
+    event: [push]
 steps:
   - commands:
       - cd modules/private
