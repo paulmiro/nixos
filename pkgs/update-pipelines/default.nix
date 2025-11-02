@@ -49,6 +49,13 @@ let
           backend = "local";
           platform = platforms."${system}";
         };
+        when = {
+          branch = {
+            include = [ "**" ];
+            exclude = [ "no-private-data" ];
+          };
+          event = [ "push" ];
+        };
         steps = pkgs.lib.lists.flatten (
           [
             decryptPrivateDataStep

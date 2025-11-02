@@ -1,11 +1,6 @@
 labels:
   backend: local
   platform: linux/arm64
-when:
-  - branch:
-      include: ["**"]
-      exclude: [no-private-data]
-    event: [push]
 steps:
   - commands:
       - cd modules/private
@@ -39,3 +34,11 @@ steps:
       - attic push lounge-rocks:nix-cache 'result-bell-avf'
     image: bash
     name: Push bell-avf to Attic
+when:
+  branch:
+    exclude:
+      - no-private-data
+    include:
+      - '**'
+  event:
+    - push

@@ -1,11 +1,6 @@
 labels:
   backend: local
   platform: linux/amd64
-when:
-  - branch:
-      include: ["**"]
-      exclude: [no-private-data]
-    event: [push]
 steps:
   - commands:
       - cd modules/private
@@ -91,3 +86,11 @@ steps:
       - attic push lounge-rocks:nix-cache 'result-turing'
     image: bash
     name: Push turing to Attic
+when:
+  branch:
+    exclude:
+      - no-private-data
+    include:
+      - '**'
+  event:
+    - push
