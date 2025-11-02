@@ -1,6 +1,8 @@
+depends_on:
+  - build-backus
 labels:
   backend: local
-  platform: linux/arm64
+  platform: linux/amd64
 steps:
   - commands:
       - cd modules/private
@@ -12,10 +14,6 @@ steps:
     image: bash
     name: Decrypt Private Data
   - commands:
-      - nix --show-trace flake show
-    image: bash
-    name: Nix flake show
-  - commands:
       - attic login lounge-rocks https://cache.lounge.rocks $ATTIC_KEY --set-default
     environment:
       ATTIC_KEY:
@@ -23,17 +21,17 @@ steps:
     image: bash
     name: Setup Attic
   - commands:
-      - nix --show-trace build --print-out-paths '.#nixosConfigurations.bell-avf.config.system.build.toplevel' -o 'result-bell-avf'
+      - nix --show-trace build --print-out-paths '.#nixosConfigurations.btr-wsl.config.system.build.toplevel' -o 'result-btr-wsl'
     image: bash
-    name: Build bell-avf
+    name: Build btr-wsl
   - commands:
-      - nix --show-trace path-info --closure-size -h $(readlink -f 'result-bell-avf')
+      - nix --show-trace path-info --closure-size -h $(readlink -f 'result-btr-wsl')
     image: bash
-    name: Show bell-avf info
+    name: Show btr-wsl info
   - commands:
-      - attic push lounge-rocks:nix-cache 'result-bell-avf'
+      - attic push lounge-rocks:nix-cache 'result-btr-wsl'
     image: bash
-    name: Push bell-avf to Attic
+    name: Push btr-wsl to Attic
 when:
   branch:
     exclude:

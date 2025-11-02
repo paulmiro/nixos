@@ -1,0 +1,18 @@
+depends_on:
+  - nix-flake-show
+labels:
+  backend: local
+  platform: linux/amd64
+steps:
+  - commands:
+      - nix --show-trace flake check --show-trace
+    image: bash
+    name: Nix flake check
+when:
+  branch:
+    exclude:
+      - no-private-data
+    include:
+      - '**'
+  event:
+    - push

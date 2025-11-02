@@ -1,0 +1,42 @@
+depends_on:
+  - nix-flake-check
+labels:
+  backend: local
+  platform: linux/arm64
+steps:
+  - commands:
+      - cd modules/private
+      - echo $AGE_KEY_PRIVATE_DATA | nix shell nixpkgs#age --command age --decrypt -i - -o private.toml.decrypted private.toml
+      - mv private.toml.decrypted private.toml
+    environment:
+      AGE_KEY_PRIVATE_DATA:
+        from_secret: AGE_KEY_PRIVATE_DATA
+    image: bash
+    name: Decrypt Private Data
+  - commands:
+      - attic login lounge-rocks https://cache.lounge.rocks $ATTIC_KEY --set-default
+    environment:
+      ATTIC_KEY:
+        from_secret: attic_key
+    image: bash
+    name: Setup Attic
+  - commands:
+      - nix --show-trace build --print-out-paths '.#nixosConfigurations.bell-avf.config.system.build.toplevel' -o 'result-bell-avf'
+    image: bash
+    name: Build bell-avf
+  - commands:
+      - nix --show-trace path-info --closure-size -h $(readlink -f 'result-bell-avf')
+    image: bash
+    name: Show bell-avf info
+  - commands:
+      - attic push lounge-rocks:nix-cache 'result-bell-avf'
+    image: bash
+    name: Push bell-avf to Attic
+when:
+  branch:
+    exclude:
+      - no-private-data
+    include:
+      - '**'
+  event:
+    - push
