@@ -137,8 +137,7 @@
                 input = "clan-core";
               };
               roles.default.tags."all" = { };
-              # import all modules from ./modules/<module-name> everywhere
-              roles.default.extraModules = (map (m: "modules/${m}") (builtins.attrNames self.nixosModules));
+              roles.default.extraModules = builtins.attrValues self.nixosModules;
             };
 
             "borgbackup-turing" = {
