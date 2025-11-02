@@ -57,7 +57,10 @@ let
   };
 
   nixosConfigurations = lib.filterAttrs (
-    name: config: config.config.paul.ci.enable
+    name: config:
+    config.config.paul.ci.enable
+      # make sure this works on other people's configs
+      or true
   ) flake-self.nixosConfigurations;
 
   systemFor = config: config.config.nixpkgs.hostPlatform.system;
