@@ -81,7 +81,7 @@ let
             (
               builtins.attrNames (
                 lib.filterAttrs (
-                  name: config: config.config.nixpkgs.hostPlatform.system == system
+                  name: config: (config.config.nixpkgs.hostPlatform.system == system && config.config.paul.ci.enable)
                 ) flake-self.nixosConfigurations
               )
             )

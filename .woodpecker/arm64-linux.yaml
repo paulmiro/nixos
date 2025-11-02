@@ -34,27 +34,3 @@ steps:
       - attic push lounge-rocks:nix-cache 'result-bell-avf'
     image: bash
     name: Push bell-avf to Attic
-  - commands:
-      - nix --show-trace build --print-out-paths '.#nixosConfigurations.pi3a.config.system.build.toplevel' -o 'result-pi3a'
-    image: bash
-    name: Build pi3a
-  - commands:
-      - nix --show-trace path-info --closure-size -h $(readlink -f 'result-pi3a')
-    image: bash
-    name: Show pi3a info
-  - commands:
-      - attic push lounge-rocks:nix-cache 'result-pi3a'
-    image: bash
-    name: Push pi3a to Attic
-  - commands:
-      - nix --show-trace build --print-out-paths '.#nixosConfigurations.pi4b.config.system.build.toplevel' -o 'result-pi4b'
-    image: bash
-    name: Build pi4b
-  - commands:
-      - nix --show-trace path-info --closure-size -h $(readlink -f 'result-pi4b')
-    image: bash
-    name: Show pi4b info
-  - commands:
-      - attic push lounge-rocks:nix-cache 'result-pi4b'
-    image: bash
-    name: Push pi4b to Attic

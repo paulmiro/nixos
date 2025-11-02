@@ -1,17 +1,13 @@
 {
-  config,
   lib,
   modulesPath,
   nixos-hardware,
   ...
 }:
-let
-  private = config.paul.private;
-in
 {
-
   paul = {
     common-server.enable = true;
+    ci.enable = false;
   };
 
   imports = [
