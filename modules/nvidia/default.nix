@@ -27,7 +27,9 @@ in
     # Load nvidia driver for Xorg and Wayland
     services.xserver.videoDrivers = [ "nvidia" ];
 
-    environment.systemPackages = with pkgs; [ nvtopPackages.full ];
+    environment.systemPackages = with pkgs; [
+      # nvtopPackages.full # TODO: broken (also: switch to .nvidia?)
+    ];
 
     hardware = {
       # Enable OpenGL
@@ -37,7 +39,7 @@ in
         extraPackages = lib.mkIf cfg.laptop (
           with pkgs;
           [
-            vaapiVdpau
+            libva-vdpau-driver
           ]
         );
       };

@@ -69,7 +69,7 @@
         obs-studio
         obsidian
         oneko
-        onlyoffice-bin
+        onlyoffice-desktopeditors
         pomodoro-gtk
         prusa-slicer
         orca-slicer
@@ -83,7 +83,7 @@
         thunderbird-bin
         tor-browser
         ungoogled-chromium
-        whatsapp-for-linux
+        wasistlos
         vdhcoapp
         xournalpp
         zoom-us
@@ -94,7 +94,6 @@
       ]
       # only install these packages on x86_64-linux systems
       ++ lib.optionals (system-config.nixpkgs.hostPlatform.isx86_64) [
-        nvtopPackages.full
       ];
   };
 }
