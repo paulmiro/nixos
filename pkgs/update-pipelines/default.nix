@@ -144,30 +144,24 @@ let
   );
 
   pipelines = machinePipelines // {
-    nix-flake-show = {
+    ".nix-flake-check" = {
       labels = {
         backend = "local";
         platform = "linux/amd64";
       };
       inherit when;
       steps = [
+        steps.decryptPrivateData
         steps.nixFlakeShow
-      ];
-    };
-    nix-flake-check = {
-      labels = {
-        backend = "local";
-        platform = "linux/amd64";
-      };
-      inherit when;
-      depends_on = [ "nix-flake-show" ];
-      steps = [
         steps.nixFlakeCheck
       ];
     };
   };
 in
 pkgs.writeShellScriptBin "woodpecker-pipeline" ''
+  set -euo pipefail
+  shopt -s dotglob
+
   # make sure .woodpecker folder exists
   mkdir -p .woodpecker
 

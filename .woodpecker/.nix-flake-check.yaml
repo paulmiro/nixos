@@ -1,0 +1,29 @@
+labels:
+  backend: local
+  platform: linux/amd64
+steps:
+  - commands:
+      - cd modules/private
+      - echo $AGE_KEY_PRIVATE_DATA | nix shell nixpkgs#age --command age --decrypt -i - -o private.toml.decrypted private.toml
+      - mv private.toml.decrypted private.toml
+    environment:
+      AGE_KEY_PRIVATE_DATA:
+        from_secret: AGE_KEY_PRIVATE_DATA
+    image: bash
+    name: Decrypt Private Data
+  - commands:
+      - nix --show-trace flake show
+    image: bash
+    name: Nix flake show
+  - commands:
+      - nix --show-trace flake check --show-trace
+    image: bash
+    name: Nix flake check
+when:
+  branch:
+    exclude:
+      - no-private-data
+    include:
+      - '**'
+  event:
+    - push
