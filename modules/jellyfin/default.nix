@@ -12,7 +12,7 @@ in
     enable = lib.mkEnableOption "activate jellyfin";
     containerVersion = lib.mkOption {
       type = lib.types.str;
-      default = "10.10.7";
+      default = "10.11.2";
       description = "jellyfin version";
     };
 
