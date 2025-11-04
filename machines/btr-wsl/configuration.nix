@@ -22,6 +22,7 @@
     common.enable = true;
     home-manager.profile = "wsl-work";
     kanidm.enableClient = true;
+    docker.enable = true;
   };
 
   # prevent error messages when offline
