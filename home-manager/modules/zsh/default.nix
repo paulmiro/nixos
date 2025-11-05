@@ -143,6 +143,7 @@ in
         sduo = "sudo";
         suod = "sudo";
         cope = "code";
+        "ßh" = "ssh";
       };
     };
 
