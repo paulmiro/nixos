@@ -90,12 +90,14 @@
     { self, ... }@inputs:
     with inputs;
     let
+      lib = nixpkgs.lib;
+
       supportedSystems = [
         "aarch64-linux"
         "x86_64-linux"
       ];
 
-      forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
+      forAllSystems = lib.genAttrs supportedSystems;
 
       nixpkgsFor = forAllSystems (
         system:
@@ -204,33 +206,33 @@
 
       homeConfigurations = forAllSystems (
         system:
-        (builtins.mapAttrs (
+        (lib.concatMapAttrs (
           profileName: profile:
-          home-manager.lib.homeManagerConfiguration {
-            pkgs = nixpkgsFor.${system};
-            modules = [
-              profile
-              (
-                let
-                  lib = nixpkgsFor.${system}.lib;
-                  isRoot = lib.hasPrefix "root-" profileName;
-                  username = if isRoot then "root" else "paulmiro";
-                  homeDirectory = if isRoot then "/root" else "/home/${username}";
-                in
-                {
-                  home.username = lib.mkDefault username;
-                  home.homeDirectory = lib.mkDefault homeDirectory;
+          let
+            configForUser =
+              username:
+              home-manager.lib.homeManagerConfiguration {
+                pkgs = nixpkgsFor.${system};
+                modules = [
+                  profile
+                  {
+                    home.username = lib.mkDefault username;
+                    home.homeDirectory = lib.mkDefault (if username == "root" then "/root" else "/home/${username}");
+                  }
+                ];
+                extraSpecialArgs = {
+                  flake-self = self;
+                  system-config = builtins.warn ''
+                    system-config is being accessed from standalone home-manager.
+                    This will fall back to an empty attribute set.
+                  '' { };
                 }
-              )
-            ];
-            extraSpecialArgs = {
-              flake-self = self;
-              system-config = builtins.warn ''
-                system-config is being accessed from standalone home-manager.
-                This will fall back to an empty attribute set.
-              '' { };
-            }
-            // inputs;
+                // inputs;
+              };
+          in
+          {
+            "${profileName}" = configForUser "paulmiro";
+            "${profileName}-root" = configForUser "root";
           }
         ) self.homeProfiles)
       );
