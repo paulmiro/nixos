@@ -1,3 +1,4 @@
+# This is BOTH a nixos module and a home-manager module.
 { lib, ... }:
 let
   private = builtins.readFile ./private.toml;

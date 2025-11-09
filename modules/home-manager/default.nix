@@ -7,7 +7,7 @@
 }:
 let
   cfg = config.paul.home-manager;
-  profileType = lib.types.enum (builtins.attrNames flake-self.homeConfigurations);
+  profileType = lib.types.enum (builtins.attrNames flake-self.homeProfiles);
 in
 {
   imports = [
@@ -45,8 +45,8 @@ in
         system-config = config;
       }
       // flake-self.inputs;
-      users.paulmiro = flake-self.homeConfigurations.${cfg.profile};
-      users.root = flake-self.homeConfigurations.${cfg.rootProfile};
+      users.paulmiro = flake-self.homeProfiles.${cfg.profile};
+      users.root = flake-self.homeProfiles.${cfg.rootProfile};
     };
   };
 }

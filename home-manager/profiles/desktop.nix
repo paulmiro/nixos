@@ -2,7 +2,6 @@
   flake-self,
   lib,
   pkgs,
-  system-config,
   zen-browser,
   ...
 }:
@@ -93,7 +92,7 @@
         flake-self.packages.${system}.vibe
       ]
       # only install these packages on x86_64-linux systems
-      ++ lib.optionals (system-config.nixpkgs.hostPlatform.isx86_64) [
+      ++ lib.optionals (pkgs.stdenv.hostPlatform.isx86_64) [
       ];
   };
 }

@@ -202,29 +202,62 @@
       inherit (clan.config) nixosConfigurations clanInternals;
       clan = clan.config;
 
-      homeConfigurations = builtins.listToAttrs (
+      homeConfigurations = forAllSystems (
+        system:
+        (builtins.mapAttrs (
+          profileName: profile:
+          home-manager.lib.homeManagerConfiguration {
+            pkgs = nixpkgsFor.${system};
+            modules = [
+              profile
+              (
+                let
+                  lib = nixpkgsFor.${system}.lib;
+                  isRoot = lib.hasPrefix "root-" profileName;
+                  username = if isRoot then "root" else "paulmiro";
+                  homeDirectory = if isRoot then "/root" else "/home/${username}";
+                in
+                {
+                  home.username = lib.mkDefault username;
+                  home.homeDirectory = lib.mkDefault homeDirectory;
+                }
+              )
+            ];
+            extraSpecialArgs = {
+              flake-self = self;
+              system-config = builtins.warn ''
+                system-config is being accessed from standalone home-manager.
+                This will fall back to an empty attribute set.
+              '' { };
+            }
+            // inputs;
+          }
+        ) self.homeProfiles)
+      );
+
+      homeProfiles = builtins.listToAttrs (
         map (filename: {
           name = builtins.substring 0 ((builtins.stringLength filename) - 4) filename;
-          value =
-            {
-              ...
-            }:
-            {
-              imports = [
-                "${./.}/home-manager/profiles/common.nix"
-                "${./.}/home-manager/profiles/${filename}"
-              ]
-              ++ (builtins.attrValues self.homeManagerModules);
-            };
+          value = {
+            imports = [
+              ./home-manager/profiles/common.nix
+              (./home-manager/profiles + "/${filename}")
+            ]
+            ++ (builtins.attrValues self.homeModules);
+          };
         }) (builtins.attrNames (builtins.readDir ./home-manager/profiles))
       );
 
-      homeManagerModules = builtins.listToAttrs (
-        map (name: {
-          inherit name;
-          value = import (./home-manager/modules + "/${name}");
-        }) (builtins.attrNames (builtins.readDir ./home-manager/modules))
-      );
+      homeModules =
+        builtins.listToAttrs (
+          map (name: {
+            inherit name;
+            value = import (./home-manager/modules + "/${name}");
+          }) (builtins.attrNames (builtins.readDir ./home-manager/modules))
+        )
+        // {
+          private = import ./modules/private;
+        };
 
       devShells = forAllSystems (
         system: with nixpkgsFor.${system}; {

@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  system-config,
   ...
 }:
 let
@@ -10,7 +9,7 @@ let
 in
 {
   options.paul.programs.gnome-settings.enable =
-    lib.mkEnableOption "enamble custom gnome configuration and theme";
+    lib.mkEnableOption "enable custom gnome configuration and theme";
 
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
@@ -75,7 +74,7 @@ in
       "org/gnome/desktop/interface" = {
         accent-color = "yellow";
         gtk-enable-primary-paste = false;
-        monospace-font-name = lib.mkIf system-config.paul.fonts.enable "MesloLGS NF 10";
+        monospace-font-name = "MesloLGS NF 10";
         show-battery-percentage = true;
         enable-hot-corners = false;
         clock-show-weekday = true;

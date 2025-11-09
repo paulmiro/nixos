@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  system-config,
   ...
 }:
 let
@@ -15,7 +14,7 @@ in
     programs.rbw = {
       enable = true;
       settings = {
-        email = system-config.paul.private.emails.gmail;
+        email = config.paul.private.emails.gmail;
         pinentry = pkgs.pinentry-tty;
       };
     };
