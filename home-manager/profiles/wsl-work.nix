@@ -11,6 +11,13 @@
           IdentityFile = "~/.ssh/id_ed25519_pr";
         };
       };
+      "betterbuild" = {
+        hostname = "betterbuild";
+        user = "bettertec";
+        extraOptions = {
+          IdentityFile = "~/.ssh/id_ed25519_pr";
+        };
+      };
       "git.bettertec.internal" = {
         hostname = "git.bettertec.internal";
         user = "forgejo";
