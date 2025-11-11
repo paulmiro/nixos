@@ -140,12 +140,42 @@ in
 
       # extension settings
 
+      "org/gnome/shell/extensions/burn-my-windows" = {
+        active-profile = "${./burn-my-windows-config.conf}";
+      };
+
       "org/gnome/shell/extensions/caffeine" = {
         duration-timer-list = [
           900 # 15m
           3600 # 1h
           10800 # 3h
         ];
+      };
+
+      "org/gnome/shell/extensions/clipboard-indicator" = {
+        move-item-first = true;
+        clear-on-boot = true;
+        confirm-clear = false;
+        enable-keybindings = true;
+        # this seems to be the only way to disable the keybindings individually
+        private-mode-binding = lib.gvariant.mkEmptyArray (lib.gvariant.type.string);
+        toggle-menu = [ "<Super>v" ];
+        clear-history = lib.gvariant.mkEmptyArray (lib.gvariant.type.string);
+        next-entry = lib.gvariant.mkEmptyArray (lib.gvariant.type.string);
+        prev-entry = lib.gvariant.mkEmptyArray (lib.gvariant.type.string);
+      };
+
+      "org/gnome/shell/extensions/just-perfection" = {
+        workspace-wrap-around = true;
+        workspace-switcher-should-show = true;
+        window-demands-attention-focus = true;
+        switcher-popup-delay = false;
+        startup-status = 0;
+        search = false;
+        window-preview-caption = false;
+        world-clock = false;
+        workspace-switcher-size = 10;
+        animation = 5;
       };
 
       "org/gnome/shell/extensions/vitals" = {
@@ -167,23 +197,6 @@ in
         position-in-panel = 0;
       };
 
-      "org/gnome/shell/extensions/just-perfection" = {
-        workspace-wrap-around = true;
-        workspace-switcher-should-show = true;
-        window-demands-attention-focus = true;
-        switcher-popup-delay = false;
-        startup-status = 0;
-        search = false;
-        window-preview-caption = false;
-        world-clock = false;
-        workspace-switcher-size = 10;
-        animation = 5;
-      };
-
-      "org/gnome/shell/extensions/burn-my-windows" = {
-        active-profile = "${./burn-my-windows-config.conf}";
-      };
-
       "org/gnome/shell/extensions/windowgestures" = {
         three-finger = true;
         use-active-window = false;
@@ -197,19 +210,6 @@ in
         fn-fullscreen = false;
         fn-maximized-snap = false;
         fn-move-snap = false;
-      };
-
-      "org/gnome/shell/extensions/clipboard-indicator" = {
-        move-item-first = true;
-        clear-on-boot = true;
-        confirm-clear = false;
-        enable-keybindings = true;
-        # this seems to be the only way to disable the keybindings individually
-        private-mode-binding = lib.gvariant.mkEmptyArray (lib.gvariant.type.string);
-        toggle-menu = [ "<Super>v" ];
-        clear-history = lib.gvariant.mkEmptyArray (lib.gvariant.type.string);
-        next-entry = lib.gvariant.mkEmptyArray (lib.gvariant.type.string);
-        prev-entry = lib.gvariant.mkEmptyArray (lib.gvariant.type.string);
       };
 
       # app settings
