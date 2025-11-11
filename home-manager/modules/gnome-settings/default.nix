@@ -59,6 +59,7 @@ in
         enabled-extensions = [
           "blur-my-shell@aunetx"
           "burn-my-windows@schneegans.github.com"
+          "caffeine@patapon.info"
           "clipboard-indicator@tudmotu.com"
           "drive-menu@gnome-shell-extensions.gcampax.github.com"
           "gsconnect@andyholmes.github.io"
@@ -138,6 +139,15 @@ in
       };
 
       # extension settings
+
+      "org/gnome/shell/extensions/caffeine" = {
+        duration-timer-list = [
+          900 # 15m
+          3600 # 1h
+          10800 # 3h
+        ];
+      };
+
       "org/gnome/shell/extensions/vitals" = {
         hot-sensors = [
           "_processor_usage_"
