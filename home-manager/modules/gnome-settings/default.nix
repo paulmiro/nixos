@@ -16,6 +16,7 @@ in
       gnomeExtensions.activate_gnome
       gnomeExtensions.blur-my-shell
       gnomeExtensions.burn-my-windows
+      gnomeExtensions.caffeine
       gnomeExtensions.clipboard-indicator
       # gnomeExtensions.gesture-improvements # not yet compatible with gnome 45
       gnomeExtensions.gsconnect
