@@ -30,8 +30,8 @@ in
       autoSnapshot = {
         enable = true;
         flags = "--keep-zero-sized-snapshots --parallel-snapshots --utc";
-        frequent = 4;
-        hourly = 24;
+        frequent = 0;
+        hourly = 0;
         daily = 7;
         weekly = 4;
         monthly = 12;
