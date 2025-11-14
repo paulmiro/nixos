@@ -6,6 +6,8 @@
   paul = {
     common-server.enable = true;
     systemd-boot.enable = true;
+    tailscale.enable = true;
+
     zfs = {
       enable = true;
       maxArcGB = 96;
@@ -80,15 +82,6 @@
 
   networking = {
     hostName = "turing";
-  };
-
-  services.tailscale = {
-    enable = true;
-    useRoutingFeatures = "server";
-    extraUpFlags = [
-      "--advertise-exit-node"
-      "--operator=paulmiro"
-    ];
   };
 
   clan.core.networking.targetHost = "turing.${config.paul.private.domains.tailnet}";
