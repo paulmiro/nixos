@@ -7,6 +7,10 @@ let
   cfg = config.paul.tailscale;
 in
 {
+  imports = [
+    ./services.nix
+  ];
+
   options.paul.tailscale = {
     enable = lib.mkEnableOption "enable tailscale";
   };
