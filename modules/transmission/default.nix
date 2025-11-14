@@ -5,6 +5,8 @@
 }:
 let
   cfg = config.paul.transmission;
+  port = 9091;
+  privoxyPort = 8118;
   serviceName = "transmission-openvpn-docker";
 in
 {
@@ -17,6 +19,9 @@ in
     };
 
     openTailscaleFirewall = lib.mkEnableOption "open firewall for transmission";
+    enableTailscaleService = lib.mkEnableOption "enable tailscale service for transmission";
+
+    openTailscaleFirewallPrivoxy = lib.mkEnableOption "open firewall for privoxy (transmission)";
   };
 
   config = lib.mkIf cfg.enable {
@@ -40,8 +45,8 @@ in
         "/mnt/arr/torrents:/data/torrents"
       ];
       ports = [
-        "9091:9091/tcp"
-        "8118:8118/tcp"
+        "${toString port}:9091/tcp"
+        "${toString privoxyPort}:8118/tcp"
       ];
       capabilities = {
         NET_ADMIN = true;
@@ -73,10 +78,13 @@ in
       };
     };
 
-    networking.firewall.interfaces."tailscale".allowedTCPPorts = lib.mkIf cfg.openTailscaleFirewall [
-      9091
-      8118
-    ];
+    networking.firewall.interfaces."tailscale".allowedTCPPorts =
+      (lib.optional cfg.openTailscaleFirewall port)
+      ++ (lib.optional cfg.openTailscaleFirewall privoxyPort);
+
+    paul.tailscale.services = lib.mkIf cfg.enableTailscaleService {
+      transmission.port = port;
+    };
 
     clan.core.state.transmission = {
       useZfsSnapshots = true;

@@ -5,11 +5,13 @@
 }:
 let
   cfg = config.paul.sonarr;
+  port = config.services.sonarr.settings.server.port;
 in
 {
   options.paul.sonarr = {
     enable = lib.mkEnableOption "activate sonarr";
     openTailscaleFirewall = lib.mkEnableOption "allow sonarr port in firewall on tailscale interface";
+    enableTailscaleService = lib.mkEnableOption "use tailscale serve to proxy sonarr";
   };
 
   config = lib.mkIf cfg.enable {
@@ -21,8 +23,10 @@ in
     };
 
     networking.firewall.interfaces."tailscale".allowedTCPPorts = lib.mkIf cfg.openTailscaleFirewall [
-      config.services.sonarr.settings.server.port
+      port
     ];
+
+    paul.tailscale.services = lib.mkIf cfg.enableTailscaleService { sonarr.port = port; };
 
     clan.core.state.sonarr = {
       useZfsSnapshots = true;

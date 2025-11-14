@@ -5,11 +5,13 @@
 }:
 let
   cfg = config.paul.prowlarr;
+  port = config.services.prowlarr.settings.server.port;
 in
 {
   options.paul.prowlarr = {
     enable = lib.mkEnableOption "activate prowlarr";
     openTailscaleFirewall = lib.mkEnableOption "allow prowlarr port in firewall on tailscale interface";
+    enableTailscaleService = lib.mkEnableOption "use tailscale serve to proxy prowlarr";
   };
 
   config = lib.mkIf cfg.enable {
@@ -20,8 +22,10 @@ in
     };
 
     networking.firewall.interfaces."tailscale".allowedTCPPorts = lib.mkIf cfg.openTailscaleFirewall [
-      config.services.prowlarr.settings.server.port
+      port
     ];
+
+    paul.tailscale.services = lib.mkIf cfg.enableTailscaleService { prowlarr.port = port; };
 
     clan.core.state.prowlarr = {
       useZfsSnapshots = true;

@@ -5,11 +5,13 @@
 }:
 let
   cfg = config.paul.radarr;
+  port = config.services.radarr.settings.server.port;
 in
 {
   options.paul.radarr = {
     enable = lib.mkEnableOption "activate radarr";
     openTailscaleFirewall = lib.mkEnableOption "allow radarr port in firewall on tailscale interface";
+    enableTailscaleService = lib.mkEnableOption "use tailscale serve to proxy radarr";
   };
 
   config = lib.mkIf cfg.enable {
@@ -21,8 +23,10 @@ in
     };
 
     networking.firewall.interfaces."tailscale".allowedTCPPorts = lib.mkIf cfg.openTailscaleFirewall [
-      config.services.radarr.settings.server.port
+      port
     ];
+
+    paul.tailscale.services = lib.mkIf cfg.enableTailscaleService { radarr.port = port; };
 
     clan.core.state.radarr = {
       useZfsSnapshots = true;

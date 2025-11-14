@@ -44,19 +44,20 @@
     };
     transmission = {
       enable = true;
-      openTailscaleFirewall = true;
+      enableTailscaleService = true;
+      openTailscaleFirewallPrivoxy = true;
     };
     radarr = {
       enable = true;
-      openTailscaleFirewall = true;
+      enableTailscaleService = true;
     };
     sonarr = {
       enable = true;
-      openTailscaleFirewall = true;
+      enableTailscaleService = true;
     };
     prowlarr = {
       enable = true;
-      openTailscaleFirewall = true;
+      enableTailscaleService = true;
     };
 
     hedgedoc = {
