@@ -6,7 +6,12 @@
   paul = {
     common-server.enable = true;
     systemd-boot.enable = true;
-    tailscale.enable = true;
+
+    tailscale = {
+      enable = true;
+      exitNode = true;
+    };
+
     zfs = {
       enable = true;
       maxArcGB = 1;

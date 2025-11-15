@@ -7,7 +7,11 @@
   paul = {
     common-server.enable = true;
     grub.enable = true;
-    tailscale.enable = true;
+
+    tailscale = {
+      enable = true;
+      exitNode = true;
+    };
 
     nginx = {
       enable = true;

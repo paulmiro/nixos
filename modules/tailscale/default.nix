@@ -13,6 +13,7 @@ in
 
   options.paul.tailscale = {
     enable = lib.mkEnableOption "enable tailscale";
+    exitNode = lib.mkEnableOption "enable exit node";
   };
 
   config = lib.mkIf cfg.enable {
@@ -22,7 +23,8 @@ in
       authKeyFile = config.clan.core.vars.generators.tailscale.files.auth-key.path;
       extraUpFlags = [
         "--operator=paulmiro"
-      ];
+      ]
+      ++ (lib.optional cfg.exitNode "--advertise-exit-node");
     };
 
     clan.core.vars.generators.tailscale = {
