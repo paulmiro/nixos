@@ -7,6 +7,7 @@
   paul = {
     common-server.enable = true;
     grub.enable = true;
+    tailscale.enable = true;
 
     nginx = {
       enable = true;
@@ -46,15 +47,6 @@
 
   # Configure console keymap
   console.keyMap = "de";
-
-  services.tailscale = {
-    enable = true;
-    useRoutingFeatures = "server";
-    extraUpFlags = [
-      "--operator=paulmiro"
-      "--advertise-exit-node"
-    ];
-  };
 
   # TODO: disabled for now until I set up a blog or something like thats
   # services.nginx.virtualHosts."paulmiro.de" = {
