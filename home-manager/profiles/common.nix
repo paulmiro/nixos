@@ -42,6 +42,8 @@
       tmux
       unzip
       wget
+
+      paulmiro.copypasta
     ];
 
     programs.yazi.enable = true;

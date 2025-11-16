@@ -67,6 +67,22 @@ in
           function repo () {
             cd $(${repo-script} $@)
           }
+
+          function mkcd () {
+            mkdir -p "$1"
+            cd "$1"
+          }
+
+          cdtmp () {
+            cd "$(mktemp -d)"
+            chmod -R 0700 .
+            if [[ $# -eq 1 ]]; then
+              mkdir -p "$1"
+              cd "$1"
+              chmod -R 0700 .
+            fi
+          }
+
         '';
 
       history = {
@@ -121,6 +137,9 @@ in
         lla = "lsd -lA";
         lt = "lsd --tree";
         lta = "lsd -A --tree";
+
+        # clipboard
+        cpwd = "pwd | tr -d '\\n' | ${pkgs.paulmiro.copypasta}/bin/copy";
 
         ## Default Parameters
 
