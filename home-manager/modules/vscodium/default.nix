@@ -5,10 +5,10 @@
   ...
 }:
 let
-  cfg = config.paul.programs.vscodium;
+  cfg = config.paul.vscodium;
 in
 {
-  options.paul.programs.vscodium = {
+  options.paul.vscodium = {
     enable = lib.mkEnableOption "enable vscodium";
   };
 

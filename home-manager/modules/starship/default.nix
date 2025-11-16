@@ -5,10 +5,10 @@
   ...
 }:
 let
-  cfg = config.paul.programs.starship;
+  cfg = config.paul.starship;
 in
 {
-  options.paul.programs.starship = {
+  options.paul.starship = {
     enable = lib.mkEnableOption "enable starship";
   };
 

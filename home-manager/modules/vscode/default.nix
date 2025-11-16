@@ -5,10 +5,10 @@
   ...
 }:
 let
-  cfg = config.paul.programs.vscode;
+  cfg = config.paul.vscode;
 in
 {
-  options.paul.programs.vscode = {
+  options.paul.vscode = {
     enable = lib.mkEnableOption "enable vscode";
   };
 

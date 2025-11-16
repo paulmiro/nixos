@@ -6,11 +6,11 @@
   ...
 }:
 let
-  cfg = config.paul.programs.direnv;
+  cfg = config.paul.direnv;
   direnv-instant-package = direnv-instant.packages.${pkgs.stdenv.hostPlatform.system}.default;
 in
 {
-  options.paul.programs.direnv = {
+  options.paul.direnv = {
     enable = lib.mkEnableOption "activate direnv";
   };
 

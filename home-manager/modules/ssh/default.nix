@@ -4,10 +4,10 @@
   ...
 }:
 let
-  cfg = config.paul.programs.ssh;
+  cfg = config.paul.ssh;
 in
 {
-  options.paul.programs.ssh = {
+  options.paul.ssh = {
     enable = lib.mkEnableOption "enable ssh";
   };
 

@@ -5,10 +5,10 @@
   ...
 }:
 let
-  cfg = config.paul.programs.ghostty;
+  cfg = config.paul.ghostty;
 in
 {
-  options.paul.programs.ghostty = {
+  options.paul.ghostty = {
     enable = lib.mkEnableOption "enable ghostty";
   };
 

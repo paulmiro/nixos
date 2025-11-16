@@ -8,12 +8,13 @@
   config = {
 
     paul = {
-      programs.direnv.enable = true;
-      programs.git.enable = true;
-      programs.neovim.enable = true;
-      programs.ssh.enable = true;
-      programs.zsh.enable = true;
+      direnv.enable = true;
+      git.enable = true;
+      neovim.enable = true;
       nixpkgs-config.enable = true;
+      ssh.enable = true;
+      zsh.enable = true;
+      zellij.enable = true;
     };
 
     # Home-manager nixpkgs config
@@ -26,27 +27,20 @@
 
     # Install these packages for my user
     home.packages = with pkgs; [
-      asciinema
       croc
       dnsutils
-      glances
-      neofetch
-      nil
-      nixd
+      iputils
+      jq
       nix-tree
+      nixd
       nixfmt-tree
-      nixfmt-rfc-style
       openssl
       psmisc
-      pwgen
       ripgrep
       sops
       tmux
-      unixtools.xxd
       unzip
-      usbutils
       wget
-      zellij
     ];
 
     programs.yazi.enable = true;
@@ -55,6 +49,5 @@
     programs.home-manager.enable = true;
 
     home.stateVersion = "23.11";
-
   };
 }

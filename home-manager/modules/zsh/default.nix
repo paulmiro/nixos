@@ -5,15 +5,15 @@
   ...
 }:
 let
-  cfg = config.paul.programs.zsh;
+  cfg = config.paul.zsh;
 in
 {
-  options.paul.programs.zsh = {
+  options.paul.zsh = {
     enable = lib.mkEnableOption "enable zsh configuration";
   };
 
   config = lib.mkIf cfg.enable {
-    paul.programs.starship.enable = true;
+    paul.starship.enable = true;
 
     home.shell.enableZshIntegration = true;
 
@@ -109,7 +109,7 @@ in
         ## Systemd
 
         # show journalctl logs for a service
-        logs = "${pkgs.systemd}/bin/journalctl -feau";
+        logs = "${pkgs.systemd}/bin/journalctl -fea -n 50 -u";
         # list failed units
         failed = "${pkgs.systemd}/bin/systemctl list-units --failed";
 
@@ -221,9 +221,6 @@ in
           tree_view = false;
         };
       };
-
-      # json processor
-      jq.enable = true;
 
       # cooler ls
       lsd = {

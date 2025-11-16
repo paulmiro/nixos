@@ -1,98 +1,65 @@
 {
-  flake-self,
-  lib,
   pkgs,
-  zen-browser,
   ...
 }:
 {
   config = {
     paul = {
-      programs.gnome-settings.enable = true;
-      programs.vscode.enable = true;
-      programs.ghostty.enable = true;
-      programs.rbw.enable = true;
-      programs.neovim.enableNeovide = true;
+      gnome-settings.enable = true;
+      vscode.enable = true;
+      ghostty.enable = true;
+      neovim.enableNeovide = true;
 
-      programs.development = {
+      development = {
         android = true;
-        c_cpp = true;
         go = true;
-        godot = true;
         javascript = true;
-        python = true;
       };
-    };
 
-    programs = {
-      firefox = {
-        enable = true;
-        package = (pkgs.wrapFirefox (pkgs.firefox-unwrapped.override { pipewireSupport = true; }) { });
+      browsers = {
+        chromium = true;
+        tor = true;
+        zen = true;
       };
     };
 
     # Install these packages for my user
-    home.packages =
-      with pkgs;
-      [
-        anki-bin
-        audacity
-        discord
-        element-desktop
-        gnome-graphs
-        gparted
-        inkscape
-        (jellyfin-mpv-shim.overrideAttrs {
-          propagatedBuildInputs = with python3Packages; [
-            jellyfin-apiclient-python
-            mpv
-            pillow
-            python-mpv-jsonipc
+    home.packages = with pkgs; [
+      anki-bin
+      audacity
+      discord
+      element-desktop
+      gnome-graphs
+      gparted
+      inkscape
+      jellyfin-mpv-shim
+      keyguard
+      krita
+      libreoffice
+      mattermost-desktop
+      mixxx
+      mpv
+      obs-studio
+      obsidian
+      oneko
+      onlyoffice-desktopeditors
+      pomodoro-gtk
+      prusa-slicer
+      orca-slicer
+      qrtool
+      rnote
+      signal-desktop
+      sl
+      spotify
+      switcheroo
+      textpieces
+      thunderbird-bin
+      wasistlos
+      vdhcoapp
+      xournalpp
+      zoom-us
 
-            # gui dependencies
-            pystray
-            tkinter
-
-            # I removed these because pywebview is marked as insecure and I don't need the optional feature it is needed for:
-            # # display_mirror dependencies
-            # jinja2
-            # pywebview
-          ];
-        })
-        keyguard
-        krita
-        libreoffice
-        mattermost-desktop
-        mixxx
-        mpv
-        obs-studio
-        obsidian
-        oneko
-        onlyoffice-desktopeditors
-        pomodoro-gtk
-        prusa-slicer
-        orca-slicer
-        qrtool
-        rnote
-        signal-desktop
-        sl
-        spotify
-        switcheroo
-        textpieces
-        thunderbird-bin
-        tor-browser
-        ungoogled-chromium
-        wasistlos
-        vdhcoapp
-        xournalpp
-        zoom-us
-
-        zen-browser.packages.${system}.default
-
-        flake-self.packages.${system}.vibe
-      ]
-      # only install these packages on x86_64-linux systems
-      ++ lib.optionals (pkgs.stdenv.hostPlatform.isx86_64) [
-      ];
+      paulmiro.vibe
+    ];
   };
 }

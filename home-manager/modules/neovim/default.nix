@@ -6,14 +6,14 @@
   ...
 }:
 let
-  cfg = config.paul.programs.neovim;
+  cfg = config.paul.neovim;
 in
 {
   imports = [
     nix4nvchad.homeManagerModule
   ];
 
-  options.paul.programs.neovim = {
+  options.paul.neovim = {
     enable = lib.mkEnableOption "enable neovim configuration";
     enableNeovide = lib.mkEnableOption "install neovide";
   };

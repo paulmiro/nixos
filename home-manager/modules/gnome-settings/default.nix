@@ -5,11 +5,10 @@
   ...
 }:
 let
-  cfg = config.paul.programs.gnome-settings;
+  cfg = config.paul.gnome-settings;
 in
 {
-  options.paul.programs.gnome-settings.enable =
-    lib.mkEnableOption "enable custom gnome configuration and theme";
+  options.paul.gnome-settings.enable = lib.mkEnableOption "enable custom gnome configuration and theme";
 
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [

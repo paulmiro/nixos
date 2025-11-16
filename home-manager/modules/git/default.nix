@@ -6,10 +6,10 @@
   ...
 }:
 let
-  cfg = config.paul.programs.git;
+  cfg = config.paul.git;
 in
 {
-  options.paul.programs.git = {
+  options.paul.git = {
     enable = lib.mkEnableOption "enable git";
   };
 
