@@ -33,6 +33,7 @@
       jq
       nix-tree
       nixd
+      nixfmt
       nixfmt-tree
       openssl
       psmisc
