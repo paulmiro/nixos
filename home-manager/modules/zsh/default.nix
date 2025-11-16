@@ -125,7 +125,6 @@ in
         ## Default Parameters
 
         lsblk = "${pkgs.util-linux}/bin/lsblk -o name,mountpoint,label,size,type,uuid";
-        xclip = "${pkgs.xclip}/bin/xclip -selection c";
 
         # General Purpose
 
