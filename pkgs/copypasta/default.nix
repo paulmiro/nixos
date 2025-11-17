@@ -17,14 +17,14 @@ let
     if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
       ${wl-clipboard}/bin/wl-copy $@
     elif [ "$XDG_SESSION_TYPE" = "x11" ] || [ "$XDG_SESSION_TYPE" = "xorg" ]; then
-      if [ -z $1 ]; then
+      if [ $# -eq 0 ]; then
         ${xclip}/bin/xclip -selection clipboard
       else
         echo "$@" | ${xclip}/bin/xclip -selection clipboard
       fi
     else
       mkdir -p ${cacheDir}
-      if [ -z $1 ]; then
+      if [ $# -eq 0 ]; then
         cat > ${cacheDir}/clipboard
       else
         echo "$@" > ${cacheDir}/clipboard
