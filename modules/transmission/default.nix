@@ -80,7 +80,7 @@ in
 
     networking.firewall.interfaces."tailscale".allowedTCPPorts =
       (lib.optional cfg.openTailscaleFirewall port)
-      ++ (lib.optional cfg.openTailscaleFirewall privoxyPort);
+      ++ (lib.optional cfg.openTailscaleFirewallPrivoxy privoxyPort);
 
     paul.tailscale.services = lib.mkIf cfg.enableTailscaleService {
       transmission.port = port;
