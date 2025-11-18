@@ -23,6 +23,7 @@
     home-manager.profile = "wsl-work";
     kanidm.enableClient = true;
     docker.enable = true;
+    tor-client.enable = true;
   };
 
   # prevent error messages when offline
