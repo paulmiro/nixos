@@ -144,13 +144,13 @@ in
         ## Default Parameters
 
         lsblk = "${pkgs.util-linux}/bin/lsblk -o name,mountpoint,label,size,type,uuid";
+        clear = "clear -x"; # don't clear scrollback
 
         # General Purpose
 
         c = "code .";
         e = "xdg-open .";
         q = "exit";
-        qq = "clear && exit";
         r = "${pkgs.trashy}/bin/trash";
         y = "yazi";
 
