@@ -44,6 +44,7 @@
       wget
 
       paulmiro.copypasta
+      paulmiro.httpstatus
     ];
 
     programs.yazi.enable = true;
