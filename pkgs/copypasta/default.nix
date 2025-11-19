@@ -10,37 +10,38 @@
   ...
 }:
 let
-  cacheDir = ''"''${XDG_CACHE_HOME:-$HOME/.cache}/copypasta"'';
+  cacheDir = "\${XDG_CACHE_HOME:-$HOME/.cache}/copypasta";
+  sessionType = "\${XDG_SESSION_TYPE:-none}";
   copy = writeShellScript "copy" ''
     set -euo pipefail
 
-    if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
+    if [ "${sessionType}" = "wayland" ]; then
       ${wl-clipboard}/bin/wl-copy $@
-    elif [ "$XDG_SESSION_TYPE" = "x11" ] || [ "$XDG_SESSION_TYPE" = "xorg" ]; then
+    elif [ "${sessionType}" = "x11" ] || [ "${sessionType}" = "xorg" ]; then
       if [ $# -eq 0 ]; then
         ${xclip}/bin/xclip -selection clipboard
       else
         echo "$@" | ${xclip}/bin/xclip -selection clipboard
       fi
     else
-      mkdir -p ${cacheDir}
+      mkdir -p "${cacheDir}"
       if [ $# -eq 0 ]; then
-        cat > ${cacheDir}/clipboard
+        cat > "${cacheDir}"/clipboard
       else
-        echo "$@" > ${cacheDir}/clipboard
+        echo "$@" > "${cacheDir}"/clipboard
       fi
-      chmod 600 ${cacheDir}/clipboard
+      chmod 600 "${cacheDir}"/clipboard
     fi
   '';
   pasta = writeShellScript "pasta" ''
     set -euo pipefail
 
-    if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
+    if [ "${sessionType}" = "wayland" ]; then
       ${wl-clipboard}/bin/wl-paste
-    elif [ "$XDG_SESSION_TYPE" = "x11" ] || [ "$XDG_SESSION_TYPE" = "xorg" ]; then
+    elif [ "${sessionType}" = "x11" ] || [ "${sessionType}" = "xorg" ]; then
       ${xclip}/bin/xclip -selection clipboard -o
-    elif [[ -e ${cacheDir}/clipboard ]]; then
-      cat ${cacheDir}/clipboard
+    elif [[ -e "${cacheDir}"/clipboard ]]; then
+      cat "${cacheDir}"/clipboard
     else
       echo
     fi
