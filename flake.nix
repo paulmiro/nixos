@@ -30,13 +30,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Format disks with nix-config
-    # https://github.com/nix-community/disko
-    disko = {
-      url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     # NixOS on the Windows Subsystem for Linux
     # https://github.com/nix-community/NixOS-WSL
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
