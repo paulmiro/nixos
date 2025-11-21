@@ -16,6 +16,7 @@ in
       enable = true;
       settings = {
         default_mode = "locked"; # ctrl-g to unlock
+        show_startup_tips = false;
       };
     };
   };
