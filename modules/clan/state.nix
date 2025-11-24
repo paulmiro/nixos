@@ -176,10 +176,18 @@ in
                   # Ensure snapshot directories are accessible (trigger automount)
                   echo "Ensuring snapshot directories are accessible..."
                   ${lib.concatMapStringsSep "\n" (fs: ''
-                    ls "${fs.mountPoint}/.zfs/snapshot/borg-${name}/" > /dev/null || {
+                    ls -A "${fs.mountPoint}/.zfs/snapshot/borg-${name}/" > /dev/null || {
                       echo "Warning: Could not access snapshot directory ${fs.mountPoint}/.zfs/snapshot/borg-${name}/"
                     }
                   '') allBackupDatasets}
+
+                  # Ensure folders are accessible
+                  echo "Ensuring folders are accessible..."
+                  ${lib.concatMapStringsSep "\n" (folder: ''
+                    ls -A "${folder}/" > /dev/null || {
+                      echo "Warning: Could not access folder ${folder}/"
+                    }
+                  '') config.folders}
                 ''
               );
             }
@@ -190,7 +198,7 @@ in
 
                   ${lib.concatMapStringsSep "\n" (folder: ''
                     echo "Copying folder ${folder}"
-                    rsync -avH --delete --numeric-ids "${folder}/" "${transformPathToRsyncCopyDir folder}/"
+                    rsync -avH --delete --numeric-ids --exclude ".borg-copy" "${folder}/" "${transformPathToRsyncCopyDir folder}/"
                   '') config.folders}
                 ''
               );
@@ -288,8 +296,17 @@ in
 
           startAt = lib.mkOption {
             # better default for me than what clan does
-            apply = schedule: if schedule == "*-*-* 01:00:00" then "*-*-* 05:00:00" else schedule;
+            # + 5 minutes to avoid collisiions with auto-snapshots
+            apply = schedule: if schedule == "*-*-* 01:00:00" then "*-*-* 05:05:00" else schedule;
           };
+        };
+
+        config = {
+          extraCreateArgs = [
+            "--debug"
+            "--progress"
+            "--show-rc"
+          ];
         };
       }
     );
