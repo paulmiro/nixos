@@ -29,6 +29,7 @@
       audacity
       discord
       element-desktop
+      freecad
       gnome-graphs
       gparted
       inkscape
