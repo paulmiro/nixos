@@ -41,6 +41,7 @@ in
           };
 
           nvidia = {
+            open = lib.mkDefault true;
             # Fine-grained power management. Turns off GPU when not in use.
             # Experimental and only works on modern Nvidia GPUs (Turing or newer).
             powerManagement.finegrained = false;
