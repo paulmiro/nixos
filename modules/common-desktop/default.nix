@@ -18,8 +18,9 @@ in
 
       sound.enable = true;
       fonts.enable = true;
-      locale.hardwareClockInLocalTime = true;
     };
+
+    time.hardwareClockInLocalTime = lib.mkDefault true;
 
     programs.appimage = {
       enable = true;

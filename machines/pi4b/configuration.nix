@@ -40,7 +40,6 @@
   ###
 
   networking = {
-    hostName = "pi4b";
     networkmanager.enable = true;
   };
 

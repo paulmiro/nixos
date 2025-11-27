@@ -84,12 +84,4 @@
       enableNginx = true;
     };
   };
-
-  networking = {
-    hostName = "turing";
-  };
-
-  clan.core.networking.targetHost = "turing.${config.paul.private.domains.tailnet}";
-
-  console.keyMap = "de"; # TODO: move this to locale module?
 }

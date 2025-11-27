@@ -28,15 +28,11 @@
   clan.core.deployment.requireExplicitUpdate = true;
 
   networking = {
-    hostName = "pi3a";
     networkmanager.enable = false;
     wireless.enable = true;
     wireless.networks = {
     };
   };
-
-  # Configure console keymap
-  console.keyMap = "de";
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 

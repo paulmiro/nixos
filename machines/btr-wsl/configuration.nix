@@ -31,8 +31,6 @@
   clan.core.enableRecommendedDefaults = false; # this breaks networking
   clan.core.networking.targetHost = "btr-wsl";
 
-  networking.hostName = "btr-wsl";
-
   programs.nix-ld.enable = true; # to allow VSCode-server to run
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";

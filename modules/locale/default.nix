@@ -9,16 +9,11 @@ in
 {
   options.paul.locale = {
     enable = lib.mkEnableOption "activate locale";
-    hardwareClockInLocalTime = lib.mkOption {
-      type = lib.types.bool;
-      default = false;
-    };
   };
 
   config = lib.mkIf cfg.enable {
     time = {
       timeZone = "Europe/Berlin";
-      hardwareClockInLocalTime = cfg.hardwareClockInLocalTime;
     };
 
     i18n.defaultLocale = "en_US.UTF-8";
@@ -34,5 +29,12 @@ in
       LC_TELEPHONE = "de_DE.UTF-8";
       LC_TIME = "de_DE.UTF-8";
     };
+
+    services.xserver.xkb = {
+      layout = "de";
+      variant = "";
+    };
+
+    console.keyMap = "de";
   };
 }

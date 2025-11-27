@@ -39,16 +39,12 @@
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
   networking = {
-    hostName = "morse";
     tempAddresses = "disabled";
     firewall = {
       allowedTCPPorts = [ ];
     };
     useDHCP = lib.mkDefault true;
   };
-
-  # Configure console keymap
-  console.keyMap = "de";
 
   # TODO: disabled for now until I set up a blog or something like thats
   # services.nginx.virtualHosts."paulmiro.de" = {
