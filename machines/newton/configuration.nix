@@ -19,11 +19,6 @@
     tor-client.enable = true;
   };
 
-  imports = [
-    # Include the results of the hardware scan.
-    ./hardware-configuration.nix
-  ];
-
   clan.core.networking.targetHost = "newton";
 
   # enable all the firmware with a license allowing redistribution
