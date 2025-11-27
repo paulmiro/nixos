@@ -21,9 +21,6 @@
 
   clan.core.networking.targetHost = "newton";
 
-  # enable all the firmware with a license allowing redistribution
-  hardware.enableRedistributableFirmware = true;
-
   networking = {
     networkmanager = {
       enable = true;

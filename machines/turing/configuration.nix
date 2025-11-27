@@ -92,7 +92,4 @@
   clan.core.networking.targetHost = "turing.${config.paul.private.domains.tailnet}";
 
   console.keyMap = "de"; # TODO: move this to locale module?
-
-  # enable all the firmware with a license allowing redistribution
-  hardware.enableRedistributableFirmware = true;
 }
