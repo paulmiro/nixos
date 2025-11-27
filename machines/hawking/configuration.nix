@@ -12,6 +12,7 @@
     tailscale.enable = true;
     tor-client.enable = true;
     qmk.enable = true;
+    jovian.enable = true;
   };
 
   clan.core.deployment.requireExplicitUpdate = true;

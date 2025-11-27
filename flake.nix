@@ -37,6 +37,12 @@
     # NixOS on the Android Virtualization Framework
     nixos-avf.url = "github:nix-community/nixos-avf";
 
+    # NixOS on the Steam Deck, or for a SteamOS-like experience on other devices
+    jovian = {
+      url = "github:Jovian-Experiments/Jovian-NixOS";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     ### Packages outside of nixpkgs
 
     zen-browser = {
