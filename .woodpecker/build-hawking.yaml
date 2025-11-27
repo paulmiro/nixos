@@ -1,5 +1,5 @@
 depends_on:
-  - build-hawking
+  - build-btr-wsl
 labels:
   backend: local
   platform: linux/amd64
@@ -21,17 +21,17 @@ steps:
     image: bash
     name: Setup Attic
   - commands:
-      - nix --show-trace build --print-out-paths '.#nixosConfigurations.morse.config.system.build.toplevel' -o 'result-morse'
+      - nix --show-trace build --print-out-paths '.#nixosConfigurations.hawking.config.system.build.toplevel' -o 'result-hawking'
     image: bash
-    name: Build morse
+    name: Build hawking
   - commands:
-      - nix --show-trace path-info --closure-size -h $(readlink -f 'result-morse')
+      - nix --show-trace path-info --closure-size -h $(readlink -f 'result-hawking')
     image: bash
-    name: Show morse info
+    name: Show hawking info
   - commands:
-      - attic push lounge-rocks:nix-cache 'result-morse'
+      - attic push lounge-rocks:nix-cache 'result-hawking'
     image: bash
-    name: Push morse to Attic
+    name: Push hawking to Attic
 when:
   branch:
     exclude:
