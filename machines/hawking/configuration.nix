@@ -4,6 +4,7 @@
 {
   paul = {
     common-desktop.enable = true;
+    dual-boot.enable = true;
     gnome.enable = true;
     nvidia.enable = true;
     grub.enable = true;
