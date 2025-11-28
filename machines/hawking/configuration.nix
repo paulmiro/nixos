@@ -13,6 +13,7 @@
     tor-client.enable = true;
     qmk.enable = true;
     jovian.enable = true;
+    home-manager.profile = "gaming";
   };
 
   clan.core.deployment.requireExplicitUpdate = true;

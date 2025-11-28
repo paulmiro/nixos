@@ -2,7 +2,6 @@
   config,
   jovian,
   lib,
-  pkgs,
   ...
 }:
 let

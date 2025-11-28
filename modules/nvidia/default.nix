@@ -30,7 +30,7 @@ in
         services.xserver.videoDrivers = [ "nvidia" ];
 
         environment.systemPackages = with pkgs; [
-          # nvtopPackages.full # TODO: broken (also: switch to .nvidia?)
+          nvitop
         ];
 
         hardware = {
@@ -42,9 +42,14 @@ in
 
           nvidia = {
             open = lib.mkDefault true;
+
+            # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
+            powerManagement.enable = false;
+
             # Fine-grained power management. Turns off GPU when not in use.
             # Experimental and only works on modern Nvidia GPUs (Turing or newer).
             powerManagement.finegrained = false;
+
             # Enable the Nvidia settings menu,
             # accessible via `nvidia-settings`.
             nvidiaSettings = true;
@@ -67,9 +72,6 @@ in
 
             # Modesetting is required for the unfree driver.
             modesetting.enable = true;
-
-            # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
-            powerManagement.enable = false;
 
             # Use the NVidia open source kernel module (not to be confused with the
             # independent third-party "nouveau" open source driver).
