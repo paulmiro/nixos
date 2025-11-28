@@ -55,6 +55,9 @@ in
       ];
     };
 
+    # fixes "can't find terminal definition for xterm-ghostty"
+    environment.enableAllTerminfo = true;
+
     systemd.services.NetworkManager-wait-online.enable = false;
     systemd.network.wait-online.enable = false;
 
