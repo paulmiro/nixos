@@ -14,7 +14,7 @@ in
   config = lib.mkIf cfg.enable {
     paul = {
       common.enable = true;
-      home-manager.profile = "server";
+      home-manager.profile = lib.mkDefault "server";
     };
 
     boot.tmp.cleanOnBoot = true;

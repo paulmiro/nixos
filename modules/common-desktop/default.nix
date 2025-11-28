@@ -14,7 +14,7 @@ in
   config = lib.mkIf cfg.enable {
     paul = {
       common.enable = true;
-      home-manager.profile = "desktop";
+      home-manager.profile = lib.mkDefault "desktop";
 
       sound.enable = true;
       fonts.enable = true;
