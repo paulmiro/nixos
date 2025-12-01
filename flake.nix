@@ -102,7 +102,7 @@
         system:
         import nixpkgs {
           inherit system;
-          overlays = [ ];
+          overlays = [ self.overlays.paulmiro-overlay ];
         }
       );
 
