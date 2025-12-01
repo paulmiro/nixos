@@ -270,6 +270,10 @@
               (pkgs.writeShellScriptBin "rollout" "${
                 clan-core.packages.${system}.clan-cli
               }/bin/clan machines update $@")
+              pkgs.paulmiro.create-nixos-module # mkmod
+              pkgs.paulmiro.create-home-manager-module # mkhmmod
+              pkgs.paulmiro.create-nix-package # mkpkg
+              pkgs.paulmiro.create-nix-package-script # mkscript
             ];
           };
         }
