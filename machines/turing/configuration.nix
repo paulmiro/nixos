@@ -83,5 +83,10 @@
       enable = true;
       enableNginx = true;
     };
+
+    outline = {
+      enable = true;
+      enableNginx = true;
+    };
   };
 }
