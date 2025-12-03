@@ -103,6 +103,7 @@ in
           pam_allowed_login_groups = [ "pam_${config.networking.hostName}_users" ];
           default_shell = "${pkgs.shadow}/bin/nologin";
           # home dir is created at /mnt/home_mount_prefix/{uuid}
+          # this directory must exist!
           home_mount_prefix = "/mnt/kanidm_home/";
           home_attr = "uuid";
           # and symlinked to /home/{name}
