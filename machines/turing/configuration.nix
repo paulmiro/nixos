@@ -23,7 +23,9 @@
     };
 
     kanidm = {
-      enable = true;
+      enableServer = true;
+      enablePam = true;
+      enablePamSsh = true;
     };
 
     immich = {

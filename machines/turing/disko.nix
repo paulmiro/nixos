@@ -351,6 +351,15 @@
             };
           };
 
+          kanidm_home = {
+            type = "zfs_fs";
+            mountpoint = "/mnt/kanidm_home";
+            options = {
+              compression = "zstd-5";
+              "com.sun:auto-snapshot" = "true";
+            };
+          };
+
         };
       };
     };

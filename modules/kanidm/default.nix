@@ -12,8 +12,11 @@ let
 in
 {
   options.paul.kanidm = {
-    enable = lib.mkEnableOption "enable kanidm server";
+    enableServer = lib.mkEnableOption "enable kanidm server";
     enableClient = lib.mkEnableOption "enable kanidm client";
+    enablePam = lib.mkEnableOption "enable kanidm PAM integration";
+    enablePamSsh = lib.mkEnableOption "enable ssh via kanidm PAM integration";
+
     disableLdaps = lib.mkEnableOption "disable ldaps in kandim";
     openHttpsFirewall = lib.mkEnableOption "open kanidm https port in the firewall";
     openLdapsFirewall = lib.mkEnableOption "open kanidm ldaps port in the firewall";
@@ -32,12 +35,14 @@ in
   };
 
   config = lib.mkMerge [
-    (lib.mkIf cfg.enable {
+    (lib.mkIf (cfg.enableServer || cfg.enableClient || cfg.enablePam) {
+      services.kanidm = {
+        inherit package;
+      };
+    })
+    (lib.mkIf cfg.enableServer {
       services.kanidm = {
         enableServer = true;
-
-        inherit package;
-
         serverSettings = {
           version = "2";
           inherit origin domain;
@@ -85,12 +90,65 @@ in
     (lib.mkIf cfg.enableClient {
       services.kanidm = {
         enableClient = true;
+        clientSettings = {
+          uri = origin;
+        };
+      };
+    })
 
-        inherit package;
+    (lib.mkIf cfg.enablePam {
+      services.kanidm = {
+        enablePam = true;
+        unixSettings = {
+          pam_allowed_login_groups = [ "pam_${config.networking.hostName}_users" ];
+          default_shell = "${pkgs.shadow}/bin/nologin";
+          # home dir is created at /mnt/home_mount_prefix/{uuid}
+          # this directory must exist!
+          home_mount_prefix = "/mnt/kanidm_home/";
+          home_attr = "uuid";
+          # and symlinked to /home/{name}
+          home_prefix = "/home/";
+          home_alias = "name";
+        };
 
         clientSettings = {
           uri = origin;
         };
+      };
+
+      # ensure home directory creation works (/home is included by default)
+      systemd.services.kanidm-unixd-tasks = {
+        serviceConfig = {
+          BindPaths = [
+            (lib.removeSuffix "/" config.services.kanidm.unixSettings.home_mount_prefix)
+          ];
+        };
+      };
+
+      # workaround for "/bin/bash does not exist" error
+      systemd.services.kanidm-unixd = {
+        serviceConfig = {
+          BindReadOnlyPaths = [
+            "/bin"
+          ];
+        };
+      };
+      system.activationScripts.link-shells-to-bin = ''
+        ln -sf ${pkgs.bash}/bin/bash /bin/bash
+        ln -sf ${pkgs.zsh}/bin/zsh /bin/zsh
+      ''; # we could add more here, but for now that would only hurt closure size
+    })
+
+    (lib.mkIf cfg.enablePamSsh {
+      # workaround for nixpkgs/issues/94653 (error: Unsafe AuthorizedKeysCommand "/nix/store/[...]": bad ownership or modes for directory /nix/store)
+      security.wrappers."kanidm_ssh_authorizedkeys" = {
+        source = "${package}/bin/kanidm_ssh_authorizedkeys";
+        owner = "root";
+        group = "root";
+      };
+      services.openssh = {
+        authorizedKeysCommand = "/run/wrappers/bin/kanidm_ssh_authorizedkeys %u";
+        authorizedKeysCommandUser = "nobody";
       };
     })
   ];
