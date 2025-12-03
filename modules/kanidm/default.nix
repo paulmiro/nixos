@@ -100,6 +100,13 @@ in
     (lib.mkIf cfg.enablePam {
       services.kanidm = {
         enablePam = true;
+
+        inherit package;
+
+        clientSettings = {
+          uri = origin;
+        };
+
         unixSettings = {
           pam_allowed_login_groups = [ "pam_${config.networking.hostname}_users" ];
           default_shell = "${pkgs.shadow}/bin/nologin";
