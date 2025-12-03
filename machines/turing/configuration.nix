@@ -24,6 +24,8 @@
 
     kanidm = {
       enableServer = true;
+      enablePam = true;
+      enablePamSsh = true;
     };
 
     immich = {
