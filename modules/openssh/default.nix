@@ -14,7 +14,7 @@ in
   config = lib.mkIf cfg.enable {
     services.openssh = {
       enable = true;
-      # startWhenNeeded = true;
+      startWhenNeeded = true;
       settings = {
         PasswordAuthentication = false;
         KbdInteractiveAuthentication = false;
