@@ -13,8 +13,16 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    services.flaresolverr = {
-      enable = true;
+    virtualisation.oci-containers.containers.flaresolverr = {
+      serviceName = "flaresolverr-docker";
+      autoStart = true;
+      image = "ghcr.io/flaresolverr/flaresolverr:latest";
+      ports = [ "8191:8191" ];
+      autoRemoveOnStop = false;
+      extraOptions = [ "--restart=unless-stopped" ];
+      environment = {
+        LOG_LEVEL = "info";
+      };
     };
 
     networking.firewall.interfaces."tailscale".allowedTCPPorts = lib.mkIf cfg.openTailscaleFirewall [
