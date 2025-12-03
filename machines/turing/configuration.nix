@@ -23,7 +23,7 @@
     };
 
     kanidm = {
-      enable = true;
+      enableServer = true;
     };
 
     immich = {
