@@ -102,10 +102,12 @@ in
         unixSettings = {
           pam_allowed_login_groups = [ "pam_${config.networking.hostName}_users" ];
           default_shell = "${pkgs.shadow}/bin/nologin";
-          home_prefix = "/home/";
-          home_attr = "uuid";
-          home_alias = "name";
+          # home dir is created at /mnt/home_mount_prefix/{uuid}
           home_mount_prefix = "/mnt/kanidm_home/";
+          home_attr = "uuid";
+          # and symlinked to /home/{name}
+          home_prefix = "/home/";
+          home_alias = "name";
         };
 
         clientSettings = {
