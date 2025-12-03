@@ -35,12 +35,14 @@ in
   };
 
   config = lib.mkMerge [
+    (lib.mkIf (cfg.enableServer || cfg.enableClient || cfg.enablePam) {
+      services.kanidm = {
+        inherit package;
+      };
+    })
     (lib.mkIf cfg.enableServer {
       services.kanidm = {
         enableServer = true;
-
-        inherit package;
-
         serverSettings = {
           version = "2";
           inherit origin domain;
@@ -88,9 +90,6 @@ in
     (lib.mkIf cfg.enableClient {
       services.kanidm = {
         enableClient = true;
-
-        inherit package;
-
         clientSettings = {
           uri = origin;
         };
@@ -100,13 +99,6 @@ in
     (lib.mkIf cfg.enablePam {
       services.kanidm = {
         enablePam = true;
-
-        inherit package;
-
-        clientSettings = {
-          uri = origin;
-        };
-
         unixSettings = {
           pam_allowed_login_groups = [ "pam_${config.networking.hostname}_users" ];
           default_shell = "${pkgs.shadow}/bin/nologin";
@@ -114,6 +106,10 @@ in
           home_attr = "uuid";
           home_alias = "name";
           home_mount_prefix = "/mnt/kanidm_home/";
+        };
+
+        clientSettings = {
+          uri = origin;
         };
       };
 
