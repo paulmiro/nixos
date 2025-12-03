@@ -10,7 +10,6 @@ in
 {
   options.paul.radarr = {
     enable = lib.mkEnableOption "activate radarr";
-    openTailscaleFirewall = lib.mkEnableOption "allow radarr port in firewall on tailscale interface";
     enableTailscaleService = lib.mkEnableOption "use tailscale serve to proxy radarr";
   };
 
@@ -21,10 +20,6 @@ in
       enable = true;
       group = "transmission";
     };
-
-    networking.firewall.interfaces."tailscale".allowedTCPPorts = lib.mkIf cfg.openTailscaleFirewall [
-      port
-    ];
 
     paul.tailscale.services = lib.mkIf cfg.enableTailscaleService { radarr.port = port; };
 

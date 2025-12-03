@@ -18,8 +18,6 @@ in
       description = "domain to run public uptime tracker under";
     };
 
-    openTailscaleFirewall = lib.mkEnableOption "open the firewall for uptime-kuma";
-
     port = lib.mkOption {
       type = lib.types.port;
       default = 19101; # 3001 by default, this is a random number
@@ -36,10 +34,6 @@ in
         HOST = "0.0.0.0";
       };
     };
-
-    networking.firewall.interfaces.tailscale0.allowedTCPPorts = lib.mkIf cfg.openTailscaleFirewall [
-      cfg.port
-    ];
 
     clan.core.state.uptime-kuma = {
       useZfsSnapshots = config.paul.zfs.enable;

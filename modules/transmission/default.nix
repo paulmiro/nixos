@@ -18,10 +18,7 @@ in
       description = "transmission container version";
     };
 
-    openTailscaleFirewall = lib.mkEnableOption "open firewall for transmission";
     enableTailscaleService = lib.mkEnableOption "enable tailscale service for transmission";
-
-    openTailscaleFirewallPrivoxy = lib.mkEnableOption "open firewall for privoxy (transmission)";
   };
 
   config = lib.mkIf cfg.enable {
@@ -77,10 +74,6 @@ in
         WEBPROXY_PORT = "8118";
       };
     };
-
-    networking.firewall.interfaces."tailscale".allowedTCPPorts =
-      (lib.optional cfg.openTailscaleFirewall port)
-      ++ (lib.optional cfg.openTailscaleFirewallPrivoxy privoxyPort);
 
     paul.tailscale.services = lib.mkIf cfg.enableTailscaleService {
       transmission.port = port;

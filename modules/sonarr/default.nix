@@ -10,7 +10,6 @@ in
 {
   options.paul.sonarr = {
     enable = lib.mkEnableOption "activate sonarr";
-    openTailscaleFirewall = lib.mkEnableOption "allow sonarr port in firewall on tailscale interface";
     enableTailscaleService = lib.mkEnableOption "use tailscale serve to proxy sonarr";
   };
 
@@ -21,10 +20,6 @@ in
       enable = true;
       group = "transmission";
     };
-
-    networking.firewall.interfaces."tailscale".allowedTCPPorts = lib.mkIf cfg.openTailscaleFirewall [
-      port
-    ];
 
     paul.tailscale.services = lib.mkIf cfg.enableTailscaleService { sonarr.port = port; };
 

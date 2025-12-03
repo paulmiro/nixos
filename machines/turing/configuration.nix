@@ -51,7 +51,6 @@
     transmission = {
       enable = true;
       enableTailscaleService = true;
-      openTailscaleFirewallPrivoxy = true;
     };
     radarr = {
       enable = true;

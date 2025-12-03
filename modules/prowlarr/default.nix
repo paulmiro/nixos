@@ -10,7 +10,6 @@ in
 {
   options.paul.prowlarr = {
     enable = lib.mkEnableOption "activate prowlarr";
-    openTailscaleFirewall = lib.mkEnableOption "allow prowlarr port in firewall on tailscale interface";
     enableTailscaleService = lib.mkEnableOption "use tailscale serve to proxy prowlarr";
   };
 
@@ -20,10 +19,6 @@ in
     services.prowlarr = {
       enable = true;
     };
-
-    networking.firewall.interfaces."tailscale".allowedTCPPorts = lib.mkIf cfg.openTailscaleFirewall [
-      port
-    ];
 
     paul.tailscale.services = lib.mkIf cfg.enableTailscaleService { prowlarr.port = port; };
 

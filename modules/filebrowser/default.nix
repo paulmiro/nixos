@@ -27,8 +27,6 @@ in
       default = { };
       description = "filebrowser config";
     };
-
-    openTailscaleFirewall = lib.mkEnableOption "open firewall for filebrowser";
   };
 
   config = lib.mkIf cfg.enable {
@@ -100,10 +98,6 @@ in
       ];
       servicesToStop = [ "${serviceName}.service" ];
     };
-
-    networking.firewall.interfaces."tailscale".allowedTCPPorts = lib.mkIf cfg.openTailscaleFirewall [
-      cfg.port
-    ];
   };
 
 }

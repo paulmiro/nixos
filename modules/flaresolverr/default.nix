@@ -9,7 +9,6 @@ in
 {
   options.paul.flaresolverr = {
     enable = lib.mkEnableOption "activate flaresolverr";
-    openTailscaleFirewall = lib.mkEnableOption "open the firewall for flaresolverr on tailscale interface";
   };
 
   config = lib.mkIf cfg.enable {
@@ -24,9 +23,5 @@ in
         LOG_LEVEL = "info";
       };
     };
-
-    networking.firewall.interfaces."tailscale".allowedTCPPorts = lib.mkIf cfg.openTailscaleFirewall [
-      config.services.flaresolverr.port
-    ];
   };
 }
