@@ -113,13 +113,38 @@ in
         };
       };
 
+      # ensure home directory creation works (/home is included by default)
       systemd.services.kanidm-unixd-tasks = {
-        serviceConfig.BindPaths = [
-          (lib.removeSuffix "/" config.services.kanidm.unixSettings.home_mount_prefix)
-        ];
+        serviceConfig = {
+          BindPaths = [
+            (lib.removeSuffix "/" config.services.kanidm.unixSettings.home_mount_prefix)
+          ];
+        };
       };
 
-      services.openssh.authorizedKeysCommand = lib.mkIf cfg.enablePamSsh "${package}/bin/kanidm_ssh_authorizedkeys %u";
+      # workaround for "/bin/bash does not exist" error
+      systemd.services.kanidm-unixd = {
+        serviceConfig = {
+          BindReadOnlyPaths = [
+            "/bin"
+          ];
+        };
+      };
+      system.activationScripts.link-shells-to-bin = ''
+        ln -sf ${pkgs.bash}/bin/bash /bin/bash
+        ln -sf ${pkgs.zsh}/bin/zsh /bin/zsh
+      '';
+
+      # workaround for nixpkgs/issues/94653 (error: Unsafe AuthorizedKeysCommand "/nix/store/[...]": bad ownership or modes for directory /nix/store)
+      security.wrappers."kanidm_ssh_authorizedkeys" = {
+        source = "${package}/bin/kanidm_ssh_authorizedkeys";
+        owner = "root";
+        group = "root";
+      };
+      services.openssh = {
+        authorizedKeysCommand = "/run/wrappers/bin/kanidm_ssh_authorizedkeys %u";
+        authorizedKeysCommandUser = "nobody";
+      };
     })
   ];
 }
