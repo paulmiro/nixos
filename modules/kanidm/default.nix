@@ -136,8 +136,10 @@ in
       system.activationScripts.link-shells-to-bin = ''
         ln -sf ${pkgs.bash}/bin/bash /bin/bash
         ln -sf ${pkgs.zsh}/bin/zsh /bin/zsh
-      '';
+      ''; # we could add more here, but for now that would only hurt closure size
+    })
 
+    (lib.mkIf cfg.enablePamSsh {
       # workaround for nixpkgs/issues/94653 (error: Unsafe AuthorizedKeysCommand "/nix/store/[...]": bad ownership or modes for directory /nix/store)
       security.wrappers."kanidm_ssh_authorizedkeys" = {
         source = "${package}/bin/kanidm_ssh_authorizedkeys";
