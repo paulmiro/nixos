@@ -12,8 +12,11 @@ let
 in
 {
   options.paul.kanidm = {
-    enable = lib.mkEnableOption "enable kanidm server";
+    enableServer = lib.mkEnableOption "enable kanidm server";
     enableClient = lib.mkEnableOption "enable kanidm client";
+    enablePam = lib.mkEnableOption "enable kanidm PAM integration";
+    enablePamSsh = lib.mkEnableOption "enable ssh via kanidm PAM integration";
+
     disableLdaps = lib.mkEnableOption "disable ldaps in kandim";
     openHttpsFirewall = lib.mkEnableOption "open kanidm https port in the firewall";
     openLdapsFirewall = lib.mkEnableOption "open kanidm ldaps port in the firewall";
@@ -32,7 +35,7 @@ in
   };
 
   config = lib.mkMerge [
-    (lib.mkIf cfg.enable {
+    (lib.mkIf cfg.enableServer {
       services.kanidm = {
         enableServer = true;
 
@@ -92,6 +95,28 @@ in
           uri = origin;
         };
       };
+    })
+
+    (lib.mkIf cfg.enablePam {
+      services.kanidm = {
+        enablePam = true;
+        unixSettings = {
+          pam_allowed_login_groups = [ "pam_${config.networking.hostname}_users" ];
+          default_shell = "${pkgs.shadow}/bin/nologin";
+          home_prefix = "/home/";
+          home_attr = "uuid";
+          home_alias = "name";
+          home_mount_prefix = "/mnt/kanidm_home/";
+        };
+      };
+
+      systemd.services.kanidm-unixd-tasks = {
+        serviceConfig.BindPaths = [
+          (lib.removeSuffix "/" config.services.kanidm.unixSettings.home_mount_prefix)
+        ];
+      };
+
+      services.openssh.authorizedKeysCommand = lib.mkIf cfg.enablePamSsh "${package}/bin/kanidm_ssh_authorizedkeys %u";
     })
   ];
 }
