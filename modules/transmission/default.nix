@@ -73,6 +73,10 @@ in
         WEBPROXY_ENABLED = "true";
         WEBPROXY_PORT = "8118";
       };
+
+      environmentFiles = [
+        config.clan.core.vars.generators.transmission.files.env.path
+      ];
     };
 
     paul.tailscale.services = lib.mkIf cfg.enableTailscaleService {
@@ -83,6 +87,23 @@ in
       useZfsSnapshots = true;
       folders = [ "/var/lib/transmission" ];
       servicesToStop = [ "${serviceName}.service" ];
+    };
+
+    clan.core.vars.generators.transmission = {
+      prompts.rpc-password.description = "Transmission RPC Password (see bw)";
+      prompts.rpc-password.type = "hidden";
+      prompts.rpc-password.persist = false;
+
+      files.env.secret = true;
+      files.env.owner = "transmission";
+
+      script = ''
+        echo "
+        TRANSMISSION_RPC_PASSWORD="$(cat $prompts/rpc-password)"
+        TRANSMISSION_RPC_USERNAME="admin"
+        TRANSMISSION_RPC_AUTHENTICATION_REQUIRED="true"
+        " > $out/env
+      '';
     };
   };
 
