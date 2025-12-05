@@ -23,6 +23,7 @@ in
       authKeyFile = config.clan.core.vars.generators.tailscale.files.auth-key.path;
       extraUpFlags = [
         "--operator=paulmiro"
+        "--accept-routes"
       ]
       ++ (lib.optional cfg.exitNode "--advertise-exit-node");
     };
