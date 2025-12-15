@@ -52,6 +52,10 @@
       enable = true;
       enableTailscaleService = true;
     };
+    sabnzbd = {
+      enable = true;
+      enableTailscaleService = true;
+    };
     radarr = {
       enable = true;
       enableTailscaleService = true;

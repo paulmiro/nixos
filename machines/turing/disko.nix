@@ -264,6 +264,10 @@
             type = "zfs_fs";
             mountpoint = "/var/lib/transmission";
           };
+          "apps/sabnzbd" = {
+            type = "zfs_fs";
+            mountpoint = "/var/lib/sabnzbd";
+          };
           "apps/sonarr" = {
             type = "zfs_fs";
             mountpoint = "/var/lib/sonarr";
