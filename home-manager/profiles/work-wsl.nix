@@ -1,0 +1,8 @@
+{
+  ...
+}:
+{
+  config = {
+    work.enable = true;
+  };
+}

@@ -20,7 +20,7 @@
 
   paul = {
     common.enable = true;
-    home-manager.profile = "wsl-work";
+    home-manager.profile = "work-wsl";
     kanidm.enableClient = true;
     docker.enable = true;
     tor-client.enable = true;

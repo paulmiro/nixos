@@ -1,8 +1,17 @@
 {
+  config,
+  lib,
   ...
 }:
+let
+  cfg = config.paul.work;
+in
 {
-  config = {
+  options.paul.work = {
+    enable = lib.mkEnableOption "enable work stuff";
+  };
+
+  config = lib.mkIf cfg.enable {
     programs.ssh.matchBlocks = {
       "build-nixos" = {
         hostname = "build-nixos";
