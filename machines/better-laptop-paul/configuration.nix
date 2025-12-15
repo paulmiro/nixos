@@ -15,6 +15,7 @@
   };
 
   clan.core.networking.targetHost = "better-laptop-paul";
+  clan.core.deployment.requireExplicitUpdate = true;
 
   networking = {
     networkmanager = {
