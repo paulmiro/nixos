@@ -3,6 +3,8 @@
 }:
 {
   config = {
-    work.enable = true;
+    paul = {
+      work.enable = true;
+    };
   };
 }
