@@ -19,6 +19,7 @@ in
     services.sonarr = {
       enable = true;
       group = "transmission";
+      settings.server.bindaddress = "127.0.0.1";
     };
 
     paul.tailscale.services = lib.mkIf cfg.enableTailscaleService { sonarr.port = port; };

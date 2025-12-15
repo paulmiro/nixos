@@ -18,6 +18,7 @@ in
 
     services.prowlarr = {
       enable = true;
+      settings.server.bindaddress = "127.0.0.1";
     };
 
     paul.tailscale.services = lib.mkIf cfg.enableTailscaleService { prowlarr.port = port; };
