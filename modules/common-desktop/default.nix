@@ -18,6 +18,7 @@ in
 
       sound.enable = true;
       fonts.enable = true;
+      tailscale.routingFeatures = "client";
     };
 
     time.hardwareClockInLocalTime = lib.mkDefault true;

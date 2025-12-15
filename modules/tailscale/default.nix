@@ -14,12 +14,16 @@ in
   options.paul.tailscale = {
     enable = lib.mkEnableOption "enable tailscale";
     exitNode = lib.mkEnableOption "enable exit node";
+    routingFeatures = lib.mkOption {
+      type = lib.types.enum [ "server" "client" "both" ];
+      default = "server";
+    };
   };
 
   config = lib.mkIf cfg.enable {
     services.tailscale = {
       enable = true;
-      useRoutingFeatures = "server";
+      useRoutingFeatures = cfg.routingFeatures;
       authKeyFile = config.clan.core.vars.generators.tailscale.files.auth-key.path;
       extraUpFlags = [
         "--operator=paulmiro"
