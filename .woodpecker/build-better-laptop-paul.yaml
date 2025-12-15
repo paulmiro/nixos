@@ -1,5 +1,5 @@
 depends_on:
-  - build-better-laptop-paul
+  - build-backus
 labels:
   backend: local
   platform: linux/amd64
@@ -21,17 +21,17 @@ steps:
     image: bash
     name: Setup Attic
   - commands:
-      - nix --show-trace build --print-out-paths '.#nixosConfigurations.btr-wsl.config.system.build.toplevel' -o 'result-btr-wsl'
+      - nix --show-trace build --print-out-paths '.#nixosConfigurations.better-laptop-paul.config.system.build.toplevel' -o 'result-better-laptop-paul'
     image: bash
-    name: Build btr-wsl
+    name: Build better-laptop-paul
   - commands:
-      - nix --show-trace path-info --closure-size -h $(readlink -f 'result-btr-wsl')
+      - nix --show-trace path-info --closure-size -h $(readlink -f 'result-better-laptop-paul')
     image: bash
-    name: Show btr-wsl info
+    name: Show better-laptop-paul info
   - commands:
-      - attic push lounge-rocks:nix-cache 'result-btr-wsl'
+      - attic push lounge-rocks:nix-cache 'result-better-laptop-paul'
     image: bash
-    name: Push btr-wsl to Attic
+    name: Push better-laptop-paul to Attic
 when:
   branch:
     exclude:
