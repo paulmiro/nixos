@@ -40,6 +40,11 @@
     ];
   };
 
+  fileSystems."/mnt/windows" = {
+    device = "/dev/disk/by-uuid/066A04256A041459";
+    fsType = "ntfs";
+  };
+
   # for the janky usb dock
   boot.extraModulePackages = [ config.boot.kernelPackages.evdi ];
   boot.initrd.kernelModules = [ "evdi" ];
