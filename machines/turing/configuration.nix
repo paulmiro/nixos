@@ -68,6 +68,9 @@
       enable = true;
       enableTailscaleService = true;
     };
+    umlautadaptarr = {
+      enable = true;
+    };
 
     hedgedoc = {
       enable = true;
