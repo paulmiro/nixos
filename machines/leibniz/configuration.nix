@@ -14,7 +14,7 @@
     home-manager.profile = "work-desktop";
   };
 
-  clan.core.networking.targetHost = "better-laptop-paul";
+  clan.core.networking.targetHost = "leibniz";
   clan.core.deployment.requireExplicitUpdate = true;
 
   networking = {
