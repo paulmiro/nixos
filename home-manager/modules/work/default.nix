@@ -20,6 +20,21 @@ in
   config = lib.mkIf cfg.enable {
     betternix.ssh.enable = true;
 
+    programs.zsh = {
+      shellAliases = {
+        checkout = "${pkgs.writeShellScript "checkout" ''
+          set -euo pipefail
+          repoName=$1
+          repoPath=~/source/''${repoName}
+          if [ -e ''${repoPath} ]; then
+            echo "Path already taken"
+            exit 1
+          fi
+          svn checkout svn://betterstorage/bettertec/''${repoName}/trunk ''${repoPath}
+        ''}";
+      };
+    };
+
     programs.ssh.matchBlocks = {
       "betterbuild" = {
         extraOptions = {
@@ -32,5 +47,18 @@ in
         };
       };
     };
+
+    home.packages = with pkgs; [
+      subversionClient
+      # rapidsvn
+
+      keepassxc
+
+      jetbrains.idea-community-bin
+      android-studio
+
+      nodePackages."@angular/cli"
+      nodejs
+    ];
   };
 }

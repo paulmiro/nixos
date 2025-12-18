@@ -30,7 +30,6 @@
       discord
       element-desktop
       gparted
-      keepassxc
       krita
       obs-studio
       obsidian
