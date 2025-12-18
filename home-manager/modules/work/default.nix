@@ -54,8 +54,9 @@ in
 
       keepassxc
 
-      jetbrains.idea-community-bin
       android-studio
+      dbeaver-bin
+      jetbrains.idea-community-bin
 
       nodePackages."@angular/cli"
       nodejs
