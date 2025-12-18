@@ -51,12 +51,13 @@ in
     dconf.settings = {
       "org/gnome/shell" = {
         favorite-apps = lib.mkForce [
+          "org.gnome.Console.desktop"
+          "org.gnome.Nautilus.desktop"
           "zen.desktop"
+          "chromium-browser.desktop"
           "code.desktop"
           "idea-community.desktop"
           "dbeaver.desktop"
-          "org.gnome.Console.desktop"
-          "org.gnome.Nautilus.desktop"
           "discord.desktop"
           "thunderbird.desktop"
         ];
