@@ -16,9 +16,12 @@ in
   config = lib.mkIf cfg.enable {
     services.sabnzbd = {
       enable = true;
+      group = "transmission";
+      # TODO move (parts of?) config here once it's done
     };
 
-    # TODO move (parts of?) config here once it's done
+    paul.group.transmission.enable = true;
+
     paul.tailscale.services = lib.mkIf cfg.enableTailscaleService {
       sabnzbd.port = 19106;
     };
