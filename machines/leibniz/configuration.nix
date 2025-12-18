@@ -1,8 +1,13 @@
 {
+  betternix,
   pkgs,
   ...
 }:
 {
+  imports = [
+    betternix.nixosModules.default
+  ];
+
   paul = {
     common-desktop.enable = true;
     gnome.enable = true;
@@ -12,6 +17,13 @@
     systemd-boot.enable = true;
 
     home-manager.profile = "work-desktop";
+  };
+
+  betternix = {
+    hosts.enable = true;
+    postgresql.enable = true;
+    rabbitmq.enable = true;
+    trusted-certificates.enable = true;
   };
 
   clan.core.networking.targetHost = "leibniz";

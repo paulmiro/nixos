@@ -1,5 +1,25 @@
 {
   "nodes": {
+    "betternix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1766053463,
+        "narHash": "sha256-5wha/jQBlMNzKwDpskk5cIGYqS4PNDwdVzZv/nNo0Tg=",
+        "owner": "paulmiro",
+        "repo": "betternix",
+        "rev": "8ec7c69131b4f0f4f95cc661bff4a151f442dc9f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "paulmiro",
+        "repo": "betternix",
+        "type": "github"
+      }
+    },
     "clan-core": {
       "inputs": {
         "data-mesher": "data-mesher",
@@ -573,6 +593,7 @@
     },
     "root": {
       "inputs": {
+        "betternix": "betternix",
         "clan-core": "clan-core",
         "direnv-instant": "direnv-instant",
         "git-agecrypt-armor": "git-agecrypt-armor",

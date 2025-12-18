@@ -43,6 +43,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Work stuff, needs sops-nix, but that is included in clan
+    betternix = {
+      url = "github:paulmiro/betternix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     ### Packages outside of nixpkgs
 
     zen-browser = {
