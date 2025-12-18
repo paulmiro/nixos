@@ -1,5 +1,5 @@
 depends_on:
-  - build-hawking
+  - build-leibniz
 labels:
   backend: local
   platform: linux/amd64

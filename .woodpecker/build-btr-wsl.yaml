@@ -1,5 +1,5 @@
 depends_on:
-  - build-leibniz
+  - build-backus
 labels:
   backend: local
   platform: linux/amd64
@@ -37,6 +37,6 @@ when:
     exclude:
       - no-private-data
     include:
-      - "**"
+      - '**'
   event:
     - push
