@@ -48,6 +48,20 @@ in
       };
     };
 
+    dconf.settings = {
+      "org/gnome/shell" = {
+        favorite-apps = lib.mkForce [
+          "zen.desktop"
+          "code.desktop"
+          "idea-community.desktop"
+          "dbeaver.desktop"
+          "org.gnome.Console.desktop"
+          "org.gnome.Nautilus.desktop"
+          "discord.desktop"
+          "thunderbird.desktop"
+        ];
+      };
+    };
     home.packages = with pkgs; [
       subversionClient
       # rapidsvn
