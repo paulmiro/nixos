@@ -19,15 +19,20 @@ in
       image = "pcjones/umlautadaptarr:latest";
       environment = {
         "SONARR__ENABLED" = "true";
-        "SONARR__HOST" = "http://localhost:8989";
+        "SONARR__HOST" = "http://${config.networking.hostName}:8989";
         "RADARR__ENABLED" = "true";
-        "RADARR__HOST" = "http://localhost:7878";
+        "RADARR__HOST" = "http://${config.networking.hostName}:7878";
       };
       environmentFiles = [ config.clan.core.vars.generators.umlautadaptarr.files.env.path ];
       ports = [
         "5006:5006"
       ];
     };
+
+    networking.firewall.interfaces.docker0.allowedTCPPorts = [
+      config.services.sonarr.settings.server.port
+      config.services.radarr.settings.server.port
+    ];
 
     clan.core.vars.generators.umlautadaptarr = {
       prompts.sonarr-api-key.description = "Sonarr API Key";
