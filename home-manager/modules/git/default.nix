@@ -24,8 +24,8 @@ in
         init.defaultBranch = "main";
 
         pull.rebase = true;
-        rebase.autostatsh = true;
-        merge.autostatsh = true;
+        rebase.autoStatsh = true;
+        merge.autoStatsh = true;
       };
     };
 
