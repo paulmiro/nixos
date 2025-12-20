@@ -27,6 +27,7 @@
     home.packages = with pkgs; [
       anki-bin
       audacity
+      cockatrice
       discord
       element-desktop
       freecad
