@@ -9,6 +9,7 @@
       vscode.enable = true;
       ghostty.enable = true;
       neovim.enableNeovide = true;
+      protonmail-bridge.enable = true;
 
       development = {
         android = true;
