@@ -71,7 +71,7 @@ in
 
       android-studio
       dbeaver-bin
-      jetbrains.idea-community-bin
+      jetbrains.idea
 
       nodePackages."@angular/cli"
       nodejs
