@@ -11,20 +11,39 @@ in
   options.paul.gnome-settings.enable = lib.mkEnableOption "enable custom gnome configuration and theme";
 
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; [
-      gnomeExtensions.activate_gnome
-      gnomeExtensions.blur-my-shell
-      gnomeExtensions.burn-my-windows
-      gnomeExtensions.caffeine
-      gnomeExtensions.clipboard-indicator
-      # gnomeExtensions.gesture-improvements # not yet compatible with gnome 45
-      gnomeExtensions.gsconnect
-      gnomeExtensions.just-perfection
-      gnomeExtensions.tailscale-qs
-      gnomeExtensions.vitals
-      gnomeExtensions.wifi-qrcode
-      gnomeExtensions.window-gestures
-    ];
+    home.packages =
+      let
+        # some plugins take ages to update to the latest GNOME version,
+        # but most of the time they don't actually need any code changes.
+        # this function simply patches the metadata file to allow running
+        # the plugin the current GNOME version.
+        # this will probably break stuff in the future, but it seems to work fine for now.
+        version = lib.versions.major pkgs.gnome-shell.version;
+        patchVersion =
+          package:
+          package.overrideAttrs (_: {
+            patchPhase = ''
+              ${pkgs.jq}/bin/jq 'if any(."shell-version"[]; . == "${version}") then . else ."shell-version" += ["${version}"] end' metadata.json > metadata.tmp.json
+              mv metadata.tmp.json metadata.json 
+            '';
+          });
+      in
+      with pkgs;
+      [
+        gnomeExtensions.activate_gnome
+        gnomeExtensions.blur-my-shell
+        gnomeExtensions.burn-my-windows
+        gnomeExtensions.caffeine
+        gnomeExtensions.clipboard-indicator
+        gnomeExtensions.gsconnect
+        gnomeExtensions.just-perfection
+        gnomeExtensions.vitals
+      ]
+      ++ map patchVersion [
+        gnomeExtensions.tailscale-qs
+        gnomeExtensions.wifi-qrcode
+        gnomeExtensions.window-gestures
+      ];
 
     gtk = {
       enable = true;
