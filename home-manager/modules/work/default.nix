@@ -56,7 +56,7 @@ in
           "zen.desktop"
           "chromium-browser.desktop"
           "code.desktop"
-          "idea-community.desktop"
+          "idea.desktop"
           "dbeaver.desktop"
           "discord.desktop"
           "thunderbird.desktop"
