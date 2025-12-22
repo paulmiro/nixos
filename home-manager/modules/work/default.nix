@@ -32,6 +32,21 @@ in
           fi
           svn checkout svn://betterstorage/bettertec/''${repoName}/trunk ''${repoPath}
         ''}";
+
+        nge = "ng extract-i18n";
+        n = "ng serve -c dev";
+        nde = "ng serve -c dev-de";
+        nt = "ng serve -c test";
+        ntde = "ng serve -c test-de";
+
+        cpr = "${pkgs.writeShellScript "copy-report-common" ''
+          cp ~/source/report-common/target/typescript-generator/report-common.d.ts ~/source/better-wms/src/app/common/report-common.d.ts
+          npx prettier --write ~/source/better-wms/src/app/common/report-common.d.ts
+        ''}";
+        cpw = "${pkgs.writeShellScript "copy-wms-backend" ''
+          cp ~/source/wms-backend/target/typescript-generator/wms-backend.d.ts ~/source/better-wms/src/app/common/wms-backend.d.ts
+          npx prettier --write ~/source/better-wms/src/app/common/wms-backend.d.ts
+        ''}";
       };
     };
 
