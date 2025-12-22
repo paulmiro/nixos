@@ -22,6 +22,17 @@
 
   clan.core.networking.targetHost = "newton";
 
+  clan.core.state.home = {
+    folders = map (path: "/home/paulmiro/" + path) [
+      "Documents"
+      "Downloads"
+      "Desktop"
+      "Pictures"
+      "Videos"
+      "Music"
+    ];
+  };
+
   networking = {
     networkmanager = {
       enable = true;
