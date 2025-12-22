@@ -90,6 +90,8 @@ in
 
       nodePackages."@angular/cli"
       nodejs
+
+      lemminx
     ];
   };
 }
