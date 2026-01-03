@@ -40,6 +40,7 @@ in
         "/var/lib/transmission/ovpn:/etc/openvpn/custom"
 
         "/mnt/arr/torrents:/data/torrents"
+        "/mnt/arr/torrents:/mnt/arr/torrents"
       ];
       ports = [
         "${toString port}:9091/tcp"
