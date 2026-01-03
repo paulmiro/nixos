@@ -268,6 +268,10 @@
             type = "zfs_fs";
             mountpoint = "/var/lib/sabnzbd";
           };
+          "apps/pyload" = {
+            type = "zfs_fs";
+            mountpoint = "/var/lib/pyload";
+          };
           "apps/sonarr" = {
             type = "zfs_fs";
             mountpoint = "/var/lib/sonarr";

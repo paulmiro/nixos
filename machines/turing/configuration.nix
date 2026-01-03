@@ -56,6 +56,10 @@
       enable = true;
       enableTailscaleService = true;
     };
+    pyload = {
+      enable = true;
+      enableTailscaleService = true;
+    };
     radarr = {
       enable = true;
       enableTailscaleService = true;
