@@ -264,6 +264,10 @@
             type = "zfs_fs";
             mountpoint = "/var/lib/transmission";
           };
+          "apps/qbittorrent" = {
+            type = "zfs_fs";
+            mountpoint = "/var/lib/qbittorrent";
+          };
           "apps/sabnzbd" = {
             type = "zfs_fs";
             mountpoint = "/var/lib/sabnzbd";
