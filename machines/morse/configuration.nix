@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  useful-api,
   ...
 }:
 {
@@ -52,6 +53,25 @@
     enableDyndns = true;
     locations."/" = {
       return = "301 https://github.com/paulmiro";
+    };
+  };
+
+  services.nginx.virtualHosts."api.${config.paul.private.domains.base}" = {
+    enableACME = true;
+    forceSSL = true;
+    enableDyndns = true;
+    locations."/" = {
+      proxyPass = "http://localhost:19190";
+    };
+  };
+
+  systemd.services.useful-api = {
+    description = "A very useful API";
+    after = [
+      "network.target"
+    ];
+    serviceConfig = {
+      ExecStart = "${useful-api.packages.x86_64-linux.default}/bin/useful-api";
     };
   };
 

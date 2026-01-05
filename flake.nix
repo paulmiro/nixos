@@ -82,6 +82,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    useful-api = {
+      url = "github:paulmiro/useful-api";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     ### Non-Flake Inputs
 
     immich-source = {
