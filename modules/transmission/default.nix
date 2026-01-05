@@ -39,8 +39,9 @@ in
         "/var/lib/transmission/data:/data"
         "/var/lib/transmission/ovpn:/etc/openvpn/custom"
 
-        "/mnt/arr/torrents:/data/torrents"
         "/mnt/arr/torrents:/mnt/arr/torrents"
+
+        "/mnt/arr/torrents:/data/torrents" # it shouldn't be putting anything in here anymore, but i'll keep it for now just in case
       ];
       ports = [
         "${toString port}:9091/tcp"
@@ -65,7 +66,7 @@ in
         OPENVPN_PASSWORD = "pass";
         HEALTH_CHECK_HOST = "google.com";
 
-        TRANSMISSION_DOWNLOAD_DIR = "/data/torrents";
+        TRANSMISSION_DOWNLOAD_DIR = "/mnt/arr/torrents";
         TRANSMISSION_WEB_UI = "transmissionic";
 
         GLOBAL_APPLY_PERMISSIONS = "false";
