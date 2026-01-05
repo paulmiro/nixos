@@ -46,15 +46,14 @@
     useDHCP = lib.mkDefault true;
   };
 
-  # TODO: disabled for now until I set up a blog or something like thats
-  # services.nginx.virtualHosts."paulmiro.de" = {
-  #   enableACME = true;
-  #   forceSSL = true;
-  #   enableDyndns = true;
-  #   locations."/" = {
-  #     return = "301 https://github.com/paulmiro";
-  #   };
-  # };
+  services.nginx.virtualHosts."paulmiro.de" = {
+    enableACME = true;
+    forceSSL = true;
+    enableDyndns = true;
+    locations."/" = {
+      return = "301 https://github.com/paulmiro";
+    };
+  };
 
   services.fstrim = {
     enable = true;
