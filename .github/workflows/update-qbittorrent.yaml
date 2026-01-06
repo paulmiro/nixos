@@ -1,0 +1,31 @@
+name: update-arch-qbittorrentvpn-container
+on:
+  schedule:
+    - cron: "30 0 * * *" # Triggers the workflow every day at 0:30 UTC
+  workflow_dispatch: # Allow manual trigger workflows
+
+jobs:
+  check:
+    name: Check Version
+    runs-on: ubuntu-latest
+    outputs:
+      # output as this job,
+      # see https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idoutputs
+      is_update: ${{ steps.check_ver.outputs.is_update }}
+      result: ${{ steps.check_ver.outputs.result }}
+      docker_tags: ${{ steps.check_ver.outputs.docker_tags }}
+    steps:
+      - uses: mogeko/latest-version@v1
+        id: check_ver
+        with:
+          repo: binhex/arch-qbittorrentvpn
+
+  print: # Just for show the output
+    name: Print the result from check
+    runs-on: ubuntu-latest
+    needs: check
+    steps:
+      - run: |
+          echo '${{ needs.check.outputs.is_update }}'
+          echo '${{ needs.check.outputs.result }}' | jq '.'
+          echo '${{ needs.check.outputs.docker_tags }}'
