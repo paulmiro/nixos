@@ -21,7 +21,7 @@ in
       group = "transmission";
     };
 
-    paul.tailscale.services = lib.mkIf cfg.enableTailscaleService { sonarr.port = port; };
+    paul.tailscale.services.sonarr.port = lib.mkIf cfg.enableTailscaleService port;
 
     clan.core.state.sonarr = {
       useZfsSnapshots = true;

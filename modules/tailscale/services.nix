@@ -19,7 +19,8 @@ in
               default = "127.0.0.1";
             };
             port = lib.mkOption {
-              type = lib.types.port;
+              type = lib.types.nullOr lib.types.port;
+              default = null;
             };
           };
         }
@@ -44,7 +45,7 @@ in
           Restart = "on-failure";
         };
       }
-    ) cfg.services;
+    ) (lib.filterAttrs (n: v: v.port != null) cfg.services);
 
     networking.firewall.interfaces = lib.mkIf hasAny {
       "tailscale".allowedTCPPorts = [ 443 ];

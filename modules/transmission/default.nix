@@ -77,9 +77,7 @@ in
       ];
     };
 
-    paul.tailscale.services = lib.mkIf cfg.enableTailscaleService {
-      transmission.port = port;
-    };
+    paul.tailscale.services.transmission.port = lib.mkIf cfg.enableTailscaleService port;
 
     clan.core.state.transmission = {
       useZfsSnapshots = true;

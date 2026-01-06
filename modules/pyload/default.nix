@@ -38,7 +38,7 @@ in
       '';
     };
 
-    paul.tailscale.services = lib.mkIf cfg.enableTailscaleService { pyload.port = port; };
+    paul.tailscale.services.pyload.port = lib.mkIf cfg.enableTailscaleService port;
 
     clan.core.state.pyload = {
       useZfsSnapshots = true;

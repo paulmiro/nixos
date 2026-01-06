@@ -21,7 +21,7 @@ in
       settings.server.bindaddress = "127.0.0.1";
     };
 
-    paul.tailscale.services = lib.mkIf cfg.enableTailscaleService { prowlarr.port = port; };
+    paul.tailscale.services.prowlarr.port = lib.mkIf cfg.enableTailscaleService port;
 
     clan.core.state.prowlarr = {
       useZfsSnapshots = true;

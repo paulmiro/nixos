@@ -22,9 +22,7 @@ in
 
     paul.group.transmission.enable = true;
 
-    paul.tailscale.services = lib.mkIf cfg.enableTailscaleService {
-      sabnzbd.port = 19106;
-    };
+    paul.tailscale.services.sab.port = lib.mkIf cfg.enableTailscaleService 19106;
 
     clan.core.state.sabnzbd = {
       useZfsSnapshots = true;
