@@ -47,7 +47,7 @@
       enable = true;
       enableNginx = true;
     };
-    transmission = {
+    qbittorrent = {
       enable = true;
       enableTailscaleService = true;
     };

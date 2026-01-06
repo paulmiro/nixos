@@ -57,7 +57,7 @@ in
         TZ = config.time.timeZone;
 
         OPENVPN_PROVIDER = "custom";
-        OPENVPN_CONFIG = "AirVPN_Europe_TCP-443-Entry3";
+        OPENVPN_CONFIG = "default";
         OPENVPN_USERNAME = "user";
         OPENVPN_PASSWORD = "pass";
         HEALTH_CHECK_HOST = "google.com";

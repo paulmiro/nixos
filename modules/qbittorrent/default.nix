@@ -123,6 +123,8 @@ in
     boot.kernelModules = [
       "iptable_filter"
       "ip6table_filter"
+      "iptable_mangle"
+      "ip6table_mangle"
     ];
 
     # TODO: add qui frontend
