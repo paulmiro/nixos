@@ -8,16 +8,11 @@ let
   port = 9091;
   privoxyPort = 8118;
   serviceName = "transmission-openvpn-docker";
+  containerVersion = "5.3.2";
 in
 {
   options.paul.transmission = {
     enable = lib.mkEnableOption "activate transmission";
-    containerVersion = lib.mkOption {
-      type = lib.types.str;
-      default = "5.3.2";
-      description = "transmission container version";
-    };
-
     enableTailscaleService = lib.mkEnableOption "enable tailscale service for transmission";
   };
 
@@ -33,7 +28,8 @@ in
 
     virtualisation.oci-containers.containers.transmission-openvpn = {
       inherit serviceName;
-      image = "haugene/transmission-openvpn:${cfg.containerVersion}";
+      image = "haugene/transmission-openvpn:${containerVersion}";
+
       volumes = [
         "/var/lib/transmission/config:/config"
         "/var/lib/transmission/data:/data"

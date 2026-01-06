@@ -9,16 +9,11 @@ let
   privoxyPort = 8118;
   socksPort = 9118;
   serviceName = "qbittorrent-vpn-docker";
+  containerVersion = "5.1.4-1-01";
 in
 {
   options.paul.qbittorrent = {
     enable = lib.mkEnableOption "activate qbittorrent";
-    containerVersion = lib.mkOption {
-      type = lib.types.str;
-      default = "5.1.4-1-01";
-      description = "qbittorrent container version";
-    };
-
     enableTailscaleService = lib.mkEnableOption "enable tailscale service for qbittorrent";
   };
 
@@ -35,7 +30,7 @@ in
 
     virtualisation.oci-containers.containers.qbittorrent-vpn = {
       inherit serviceName;
-      image = "binhex/arch-qbittorrentvpn:${cfg.containerVersion}";
+      image = "binhex/arch-qbittorrentvpn:${containerVersion}";
       volumes = [
         "/etc/localtime:/etc/localtime:ro"
 

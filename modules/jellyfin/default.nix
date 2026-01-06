@@ -6,16 +6,11 @@
 let
   cfg = config.paul.jellyfin;
   serviceName = "jellyfin-docker";
+  containerVersion = "10.11.5";
 in
 {
   options.paul.jellyfin = {
     enable = lib.mkEnableOption "activate jellyfin";
-    containerVersion = lib.mkOption {
-      type = lib.types.str;
-      default = "10.11.5";
-      description = "jellyfin version";
-    };
-
     openFirewall = lib.mkEnableOption "open firewall for jellyfin";
 
     enableNginx = lib.mkEnableOption "activate nginx proxy";
@@ -39,7 +34,7 @@ in
 
     virtualisation.oci-containers.containers.jellyfin = {
       inherit serviceName;
-      image = "jellyfin/jellyfin:${cfg.containerVersion}";
+      image = "jellyfin/jellyfin:${containerVersion}";
       volumes = [
         "/var/lib/jellyfin/config:/config"
         "/var/lib/jellyfin/cache:/cache"
