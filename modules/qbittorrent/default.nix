@@ -12,6 +12,10 @@ let
   containerVersion = "5.1.4-1-01";
 in
 {
+  imports = [
+    ./qui.nix
+  ];
+
   options.paul.qbittorrent = {
     enable = lib.mkEnableOption "activate qbittorrent";
     enableTailscaleService = lib.mkEnableOption "enable tailscale service for qbittorrent";
@@ -120,7 +124,5 @@ in
       "iptable_mangle"
       "ip6table_mangle"
     ];
-
-    # TODO: add qui frontend
   };
 }
