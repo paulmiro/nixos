@@ -20,13 +20,7 @@ in
   config = lib.mkIf cfg.enable {
     paul.docker.enable = true;
 
-    paul.group.transmission.enable = true;
-
-    users.users.transmission = {
-      description = "Transmission BitTorrent user";
-      uid = config.ids.uids.transmission; # 70
-      group = "transmission";
-    };
+    paul.user.transmission.enable = true;
 
     virtualisation.oci-containers.containers.qbittorrent-vpn = {
       inherit serviceName;
