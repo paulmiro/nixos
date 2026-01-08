@@ -27,6 +27,7 @@
 
     # Install these packages for my user
     home.packages = with pkgs; [
+      bruno
       discord
       element-desktop
       gparted
