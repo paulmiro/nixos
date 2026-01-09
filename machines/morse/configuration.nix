@@ -73,6 +73,9 @@
     serviceConfig = {
       ExecStart = "${useful-api.packages.x86_64-linux.default}/bin/useful-api";
     };
+    environment = {
+      USEFUL_API_PORT = "19190";
+    };
   };
 
   services.fstrim = {
