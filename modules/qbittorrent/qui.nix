@@ -7,6 +7,7 @@
 let
   cfg = config.paul.qbittorrent.qui;
   port = 7476;
+  serviceName = "qui";
 in
 {
   options.paul.qbittorrent.qui = {
@@ -36,7 +37,7 @@ in
       };
     };
 
-    systemd.services.qui = {
+    systemd.services.${serviceName} = {
       description = "qui qBittorrent frontend";
       after = [
         "network.target"
@@ -86,5 +87,11 @@ in
     };
 
     paul.tailscale.services.qui.port = lib.mkIf cfg.enableTailscaleService port;
+
+    clan.core.state.qbittorrent = {
+      useZfsSnapshots = true;
+      folders = [ "/var/lib/qui" ];
+      servicesToStop = [ "${serviceName}.service" ];
+    };
   };
 }
