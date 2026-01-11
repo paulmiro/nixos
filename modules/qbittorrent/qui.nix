@@ -28,7 +28,7 @@ in
       serviceConfig = {
         Type = "oneshot";
         # this skips generation if the file already exists, so we can safely run it on every boot
-        ExecStart = "${lib.getExe pkgs.qui} generate-config --config-dir /var/lib/qui";
+        ExecStart = "${lib.getExe pkgs.qui} generate-config --config-dir ${cfg.configDir}";
 
         StateDirectory = "qui";
 
@@ -45,7 +45,7 @@ in
       ];
       serviceConfig = {
         Type = "simple";
-        ExecStart = "${lib.getExe pkgs.qui} serve --config-dir /var/lib/qui";
+        ExecStart = "${lib.getExe pkgs.qui} serve --config-dir ${cfg.configDir}";
 
         StateDirectory = "qui";
 
@@ -90,7 +90,7 @@ in
 
     clan.core.state.qbittorrent = {
       useZfsSnapshots = true;
-      folders = [ "/var/lib/qui" ];
+      folders = [ cfg.configDir ];
       servicesToStop = [ "${serviceName}.service" ];
     };
   };
