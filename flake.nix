@@ -35,7 +35,8 @@
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
 
     # NixOS on the Android Virtualization Framework
-    nixos-avf.url = "github:nix-community/nixos-avf";
+    # TODO switch back to nixos-community/nixos-avf when #21 is merged
+    nixos-avf.url = "github:sysedwinistrator/nixos-avf/fix-libwebsockets-4.4.x";
 
     # NixOS on the Steam Deck, or for a SteamOS-like experience on other devices
     jovian = {

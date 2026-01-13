@@ -479,15 +479,16 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1763322257,
-        "narHash": "sha256-eiKNbZXvkB2p/YhM5ltK1CO1znm5Nn2aHLW3Awcqq9g=",
-        "owner": "nix-community",
+        "lastModified": 1766445237,
+        "narHash": "sha256-5LBOJ+1uudu/2YCI57rjBFMR5L1v44C5g4E9zjTI1+4=",
+        "owner": "sysedwinistrator",
         "repo": "nixos-avf",
-        "rev": "3fae0a3692b993bc0c40c61138a76fc1455d0b6e",
+        "rev": "b3aab6cd22db10526618d6916f8e2e8ff4a2af9d",
         "type": "github"
       },
       "original": {
-        "owner": "nix-community",
+        "owner": "sysedwinistrator",
+        "ref": "fix-libwebsockets-4.4.x",
         "repo": "nixos-avf",
         "type": "github"
       }
