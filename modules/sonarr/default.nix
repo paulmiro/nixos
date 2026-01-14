@@ -38,6 +38,7 @@ in
             fi
             echo "Sonarr is unresponsive, restarting it..."
             ${pkgs.systemd}/bin/systemctl restart sonarr
+            echo $(date) >> /var/lib/sonarr/restarter.log
           ''
         )}";
       };
