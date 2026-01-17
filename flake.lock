@@ -792,11 +792,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1768351612,
-        "narHash": "sha256-y0ssSirFHENOJc2eHN4aZLQtLTO8wo2rLmqwq7FviGA=",
+        "lastModified": 1768664717,
+        "narHash": "sha256-OMYPqt0NLfvh92V0+EhL02Wbozrm2Fq+Qn0rlC0urnQ=",
         "owner": "paulmiro",
         "repo": "useful-api",
-        "rev": "e96048aa9e2a6efd1457529c04be8415150dfc37",
+        "rev": "33246889c091c81ec2c990399e8e456efed3a6b0",
         "type": "github"
       },
       "original": {
