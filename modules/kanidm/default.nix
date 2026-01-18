@@ -100,7 +100,7 @@ in
       services.kanidm = {
         enablePam = true;
         unixSettings = {
-          pam_allowed_login_groups = [ "pam_${config.networking.hostName}_users" ];
+          kanidm.pam_allowed_login_groups = [ "pam_${config.networking.hostName}_users" ];
           default_shell = "${pkgs.shadow}/bin/nologin";
           # home dir is created at /mnt/home_mount_prefix/{uuid}
           # this directory must exist!
