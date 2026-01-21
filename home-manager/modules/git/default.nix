@@ -31,7 +31,7 @@ in
 
     home.packages = with pkgs; [
       pre-commit
-      git-agecrypt-armor.packages.${system}.default
+      git-agecrypt-armor.packages.${stdenv.hostPlatform.system}.default
     ];
 
   };
