@@ -37,7 +37,7 @@ in
     })
     (lib.mkIf cfg.zen {
       home.packages = with pkgs; [
-        zen-browser.packages.${system}.default
+        zen-browser.packages.${stdenv.hostPlatform.system}.default
       ];
     })
   ];
