@@ -33,6 +33,8 @@
       enable = true;
       openFirewall = true;
     };
+
+    hypermind.enable = true;
   };
 
   clan.core.networking.targetHost = "morse.${config.paul.private.domains.tailnet}";
