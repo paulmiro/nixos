@@ -31,12 +31,12 @@
       cockatrice
       discord
       element-desktop
-      # freecad # broken as of 20-01-2026
+      # freecad # broken as of 2026-01-20
       gnome-graphs
       gparted
       inkscape
       jellyfin-mpv-shim
-      keyguard
+      # keyguard # broken as of 2026-01-25
       krita
       libreoffice
       mattermost-desktop
