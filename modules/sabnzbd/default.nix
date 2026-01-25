@@ -17,8 +17,11 @@ in
     services.sabnzbd = {
       enable = true;
       group = "transmission";
-      allowConfigWrite = true; # allow imperative config
-      # TODO move (parts of?) config here once it's done
+    };
+
+    systemd.services.sabnzbd = {
+      preStart = lib.mkForce ""; # the config merger overrides the imperative config
+      # TODO move config into this repo instead
     };
 
     paul.group.transmission.enable = true;
