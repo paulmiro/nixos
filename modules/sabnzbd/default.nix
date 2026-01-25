@@ -17,6 +17,7 @@ in
     services.sabnzbd = {
       enable = true;
       group = "transmission";
+      allowConfigWrite = true; # allow imperative config
       # TODO move (parts of?) config here once it's done
     };
 
