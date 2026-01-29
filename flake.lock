@@ -339,11 +339,11 @@
     "immich-source": {
       "flake": false,
       "locked": {
-        "lastModified": 1769608585,
-        "narHash": "sha256-fH7FoyDu49Kxj53OQGXh8eMiD9Msyln1Ur8glRlYge4=",
+        "lastModified": 1769706884,
+        "narHash": "sha256-LsZ1KxZAAsuqg1t5i+YmUcJnOwH0QwMJ/1i1KNqgTWk=",
         "owner": "immich-app",
         "repo": "immich",
-        "rev": "0cb153a9716098e159b05c635de1861ad81130a9",
+        "rev": "3ace578fc0b3434aebc46544c1c5b9abecb00364",
         "type": "github"
       },
       "original": {
