@@ -28,6 +28,7 @@
     home.packages = with pkgs; [
       anki-bin
       audacity
+      bottles
       cockatrice
       discord
       element-desktop
