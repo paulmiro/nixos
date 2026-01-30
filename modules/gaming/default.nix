@@ -15,6 +15,7 @@ in
   config = lib.mkIf cfg.enable {
     programs.steam.enable = true;
     environment.systemPackages = with pkgs; [
+      bottles
       (lutris.override {
         extraPkgs = pkgs: [
           # List package dependencies here
