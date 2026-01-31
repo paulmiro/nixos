@@ -16,7 +16,7 @@ in
     programs.starship = {
       enable = true;
       settings =
-        (builtins.fromTOML (
+        (fromTOML (
           builtins.readFile (
             pkgs.fetchurl {
               url = "https://starship.rs/presets/toml/no-empty-icons.toml";

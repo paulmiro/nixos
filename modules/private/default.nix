@@ -4,7 +4,7 @@ let
   private = builtins.readFile ./private.toml;
   is_encrypted = lib.hasPrefix "-----BEGIN AGE ENCRYPTED FILE-----" private;
   allow_fake = import ./allow_fake.nix;
-  data = builtins.fromTOML (
+  data = fromTOML (
     if is_encrypted then
       lib.throwIfNot allow_fake ''
         Private data has not been decrypted.
