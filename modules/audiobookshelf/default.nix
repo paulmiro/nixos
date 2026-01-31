@@ -44,7 +44,7 @@ in
       enableDyndns = true;
       locations."/" = {
         proxyWebsockets = true;
-        geo-ip = true;
+        enableGeoIP = true;
         proxyPass = "http://127.0.0.1:${toString cfg.port}";
       };
     };

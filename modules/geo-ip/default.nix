@@ -5,34 +5,76 @@
   ...
 }:
 let
-  cfg = config.paul.nginx;
+  cfg = config.paul.geo-ip;
+  enabledVhosts = (
+    builtins.filter (vhost: vhost.value.enableGeoIP) (
+      lib.attrsToList config.services.nginx.virtualHosts
+    )
+  );
+  enabledLocations = (
+    builtins.concatMap (
+      vhost: builtins.filter (loc: loc.value.enableGeoIP) (lib.attrsToList vhost.value.locations)
+    ) (lib.attrsToList config.services.nginx.virtualHosts)
+  );
+  enable =
+    (!cfg.forceDisable)
+    # auto-enable when at least one vhost or location has the option set
+    && ((builtins.length enabledVhosts) != 0 || (builtins.length enabledLocations) != 0);
 in
 {
-  imports = [
-    ./locationOptions.nix
-    ./vhostOptions.nix
-  ];
-
-  options.paul.nginx = {
-    enableGeoIP = lib.mkEnableOption "enable GeoIP";
-
-    databaseDirectory = lib.mkOption {
-      type = lib.types.path;
-      default = "/var/lib/GeoIP";
-      description = "Directory where the GeoIP database is stored";
-    };
+  options.paul.geo-ip = {
+    forceDisable = lib.mkEnableOption "force disable geo-ip systemwide";
   };
 
-  config = lib.mkIf cfg.enableGeoIP {
-    # when Nginx is enabled, enable the GeoIP updater service
-    services.geoipupdate = lib.mkIf cfg.enable {
+  options.services.nginx.virtualHosts = lib.mkOption {
+    type = lib.types.attrsOf (
+      lib.types.submodule (
+        { config, ... }:
+        {
+          options = {
+            enableGeoIP = lib.mkEnableOption "enable geo-ip for this vhost";
+          };
+          config.extraConfig = toString [
+            (lib.optional (config.enableGeoIP && !cfg.forceDisable) ''
+              if ($allowed_country = no) {
+                return 444;
+              }
+            '')
+          ];
+
+          options.locations = lib.mkOption {
+            type = lib.types.attrsOf (
+              lib.types.submodule (
+                { config, ... }:
+                {
+                  options = {
+                    enableGeoIP = lib.mkEnableOption "enable geo-ip";
+                  };
+                  config.extraConfig = toString [
+                    (lib.optional (config.enableGeoIP && !cfg.forceDisable) ''
+                      if ($allowed_country = no) {
+                        return 444;
+                      }
+                    '')
+                  ];
+                }
+              )
+            );
+          };
+        }
+      )
+    );
+  };
+
+  config = lib.mkIf enable {
+
+    services.geoipupdate = {
       enable = true;
       interval = "weekly";
       settings = {
         EditionIDs = [ "GeoLite2-Country" ];
         AccountID = 767585;
         LicenseKey = config.clan.core.vars.generators.maxmind-license-key.files.key.path;
-        DatabaseDirectory = cfg.databaseDirectory;
       };
     };
 
@@ -54,9 +96,9 @@ in
         modules = with pkgs.nginxModules; [ geoip2 ];
         buildInputs = oldAttrs.buildInputs ++ [ pkgs.libmaxminddb ];
       });
-      appendHttpConfig = toString ([
+      appendHttpConfig = toString [
         # we want to load the geoip2 module in our http config, pointing to the database we are using
-        # country iso code is the only data we need
+        # the country iso code is the only data we need
         ''
           geoip2 ${config.services.geoipupdate.settings.DatabaseDirectory}/GeoLite2-Country.mmdb {
             $geoip2_data_country_iso_code country iso_code;
@@ -80,8 +122,7 @@ in
             AU yes;
           }
         ''
-      ]);
+      ];
     };
-
   };
 }

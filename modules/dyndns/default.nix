@@ -17,7 +17,7 @@ let
 in
 {
   options.paul.dyndns = {
-    forceDisable = lib.mkEnableOption "force disable dyndns";
+    forceDisable = lib.mkEnableOption "force disable dyndns systemwide";
 
     extraDomains = lib.mkOption {
       type = lib.types.listOf lib.types.str;

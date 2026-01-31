@@ -16,7 +16,6 @@
 
     nginx = {
       enable = true;
-      enableGeoIP = true;
     };
 
     uptime-kuma = {

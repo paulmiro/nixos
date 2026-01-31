@@ -29,7 +29,7 @@ in
       enableDyndns = cfg.enableDyndns;
       locations."/" = {
         proxyPass = "http://127.0.0.1:8100";
-        geo-ip = true;
+        enableGeoIP = true;
       };
     };
 

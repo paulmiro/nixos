@@ -18,7 +18,6 @@
 
     nginx = {
       enable = true;
-      enableGeoIP = true; # TODO: this should be enabled automatically, see dyndns
     };
 
     kanidm = {
