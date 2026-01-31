@@ -19,8 +19,7 @@ in
     };
 
     systemd.services.sabnzbd = {
-      preStart = lib.mkForce ""; # the config merger overrides the imperative config
-      # TODO move config into this repo instead
+      preStart = lib.mkForce ""; # the config merger is broken, pr: #482639
     };
 
     paul.group.transmission.enable = true;
