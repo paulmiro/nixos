@@ -77,7 +77,6 @@ in
       prompts.database-password.persist = false;
 
       files.env.secret = true;
-      files.env.owner = "root"; # TODO: make immich run under a different user?
 
       script = ''
         echo "
