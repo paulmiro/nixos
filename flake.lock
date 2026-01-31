@@ -478,16 +478,15 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1766445237,
-        "narHash": "sha256-5LBOJ+1uudu/2YCI57rjBFMR5L1v44C5g4E9zjTI1+4=",
-        "owner": "sysedwinistrator",
+        "lastModified": 1769132082,
+        "narHash": "sha256-cJVUBVP3qmRO2HGHqj18ChjOSztyo7eqElQJMRpWXw8=",
+        "owner": "nix-community",
         "repo": "nixos-avf",
-        "rev": "b3aab6cd22db10526618d6916f8e2e8ff4a2af9d",
+        "rev": "d0a62c3f64b45a39570fde31a3a490b214bf19ee",
         "type": "github"
       },
       "original": {
-        "owner": "sysedwinistrator",
-        "ref": "fix-libwebsockets-4.4.x",
+        "owner": "nix-community",
         "repo": "nixos-avf",
         "type": "github"
       }
@@ -561,16 +560,16 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1757545623,
-        "narHash": "sha256-mCxPABZ6jRjUQx3bPP4vjA68ETbPLNz9V2pk9tO7pRQ=",
+        "lastModified": 1765608474,
+        "narHash": "sha256-9Wx53UK0z8Di5iesJID0tS1dRKwGxI4i7tsSanOHhF0=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "8cd5ce828d5d1d16feff37340171a98fc3bf6526",
+        "rev": "28bb483c11a1214a73f9fd2d9928a6e2ea86ec71",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixos-25.05",
+        "ref": "nixos-25.11",
         "repo": "nixpkgs",
         "type": "github"
       }
