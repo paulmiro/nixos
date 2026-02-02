@@ -58,7 +58,6 @@
       textpieces
       thunderbird-bin
       wasistlos
-      vdhcoapp
       xournalpp
       zoom-us
 
