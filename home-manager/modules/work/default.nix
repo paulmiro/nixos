@@ -48,6 +48,10 @@ in
           cp ~/source/wms-backend/target/typescript-generator/wms-backend.d.ts ~/source/better-wms/src/app/common/wms-backend.d.ts
           npx prettier --write ~/source/better-wms/src/app/common/wms-backend.d.ts
         ''}";
+        cpt = "${pkgs.writeShellScript "copy-track-backend" ''
+          cp ~/source/track-backend/target/typescript-generator/track-backend.d.ts ~/source/better-track/src/app/common/track-backend.d.ts
+          npx prettier --write ~/source/better-track/src/app/common/track-backend.d.ts
+        ''}";
       };
     };
 
