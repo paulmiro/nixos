@@ -35,8 +35,8 @@ in
         ''}";
 
         nge = "ng extract-i18n";
-        n = "ng serve -c dev";
-        nde = "ng serve -c dev-de";
+        n = "ng serve -c local";
+        nde = "ng serve -c local-de";
         nt = "ng serve -c test";
         ntde = "ng serve -c test-de";
 
