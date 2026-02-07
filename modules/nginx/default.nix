@@ -35,6 +35,7 @@ in
     services.nginx = {
       enable = true;
       clientMaxBodySize = "8196m"; # 8GiB
+      logError = "syslog:server=unix:/dev/log warn";
 
       recommendedBrotliSettings = true;
       recommendedGzipSettings = true;
