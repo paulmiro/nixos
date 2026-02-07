@@ -1,4 +1,5 @@
 {
+  lib,
   ...
 }:
 {
@@ -16,7 +17,9 @@
     home-manager.profile = "gaming";
   };
 
-  clan.core.deployment.requireExplicitUpdate = true;
+  specialisation.desktop.configuration = {
+    paul.jovian.enable = lib.mkForce false;
+  };
 
-  networking.networkmanager.enable = true;
+  clan.core.deployment.requireExplicitUpdate = true;
 }
