@@ -30,6 +30,7 @@ in
     };
 
     home.packages = with pkgs; [
+      gh
       pre-commit
       git-agecrypt-armor.packages.${stdenv.hostPlatform.system}.default
     ];
