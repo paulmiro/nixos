@@ -125,9 +125,13 @@ in
         ## Systemd
 
         # show journalctl logs for a service
-        logs = "${pkgs.systemd}/bin/journalctl -fea -n 50 -u";
-        # list failed units
-        failed = "${pkgs.systemd}/bin/systemctl list-units --failed";
+        logs = "journalctl -fea -n 50 -u";
+        failed = "systemctl list-units --failed";
+
+        status = "sudo systemctl status";
+        start = "sudo systemctl start";
+        stop = "sudo systemctl stop";
+        restart = "sudo systemctl restart";
 
         ## lsd
 
