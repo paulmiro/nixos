@@ -24,6 +24,12 @@ in
       desktopSession = lib.mkIf config.paul.gnome.enable "gnome";
     };
 
+    nixpkgs.overlays = [
+      (final: prev: {
+        steam = prev.steam.override { platformArgs = "-steamos3 -steampal -gamepadui"; };
+      })
+    ];
+
     services.displayManager.gdm.enable = lib.mkIf config.paul.gnome.enable (lib.mkForce false);
   };
 }
