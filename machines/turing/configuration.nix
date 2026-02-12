@@ -13,7 +13,7 @@
 
     zfs = {
       enable = true;
-      maxArcGB = 96;
+      maxArcGB = 40;
     };
 
     nginx = {
