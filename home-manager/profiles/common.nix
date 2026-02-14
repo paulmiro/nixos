@@ -29,6 +29,7 @@
     home.packages = with pkgs; [
       croc
       dnsutils
+      gdu
       iputils
       jq
       nix-tree
