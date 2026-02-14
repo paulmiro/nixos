@@ -27,5 +27,7 @@ in
       enable = true;
       binfmt = true;
     };
+
+    zramSwap.enable = true;
   };
 }
