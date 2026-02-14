@@ -37,6 +37,11 @@
       enableQuickSync = true;
     };
 
+    tracearr = {
+      enable = true;
+      enableTailscaleService = true;
+    };
+
     audiobookshelf = {
       enable = true;
       enableNginx = true;

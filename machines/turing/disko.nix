@@ -288,6 +288,10 @@
             type = "zfs_fs";
             mountpoint = "/var/lib/hedgedoc";
           };
+          "apps/tracearr" = {
+            type = "zfs_fs";
+            mountpoint = "/var/lib/tracearr";
+          };
         };
       };
 
