@@ -50,4 +50,10 @@
       "--operator=paulmiro"
     ];
   };
+
+  specialisation = {
+    jovian.configuration = {
+      paul.jovian.enable = true;
+    };
+  };
 }
