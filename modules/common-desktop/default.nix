@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -26,6 +27,11 @@ in
     programs.appimage = {
       enable = true;
       binfmt = true;
+    };
+
+    programs.gnupg.agent = {
+      enable = true;
+      pinentryPackage = pkgs.pinentry-gnome3;
     };
 
     zramSwap.enable = true;
