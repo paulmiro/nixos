@@ -34,6 +34,7 @@ in
           svn checkout svn://betterstorage/bettertec/''${repoName}/trunk ''${repoPath}
         ''}";
 
+        ng = "npm run ng";
         nge = "ng extract-i18n";
         n = "ng serve -c local";
         nde = "ng serve -c local-de";
