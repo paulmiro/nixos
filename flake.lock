@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1770632778,
-        "narHash": "sha256-ojYJYsZqzrEXIM8Q12my/5YG58xZbJ+GLdFaZITfLr0=",
+        "lastModified": 1771411467,
+        "narHash": "sha256-VKfrza4eBrPegdrstxW/eaK3LrNIGa/SLNOXNMka3Mo=",
         "owner": "paulmiro",
         "repo": "betternix",
-        "rev": "8571d9d158e2b320b227605bc595ef312c009795",
+        "rev": "4828d9117baf45bbcfcd2fad999ca52b88c4c04b",
         "type": "github"
       },
       "original": {
