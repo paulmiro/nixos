@@ -94,7 +94,6 @@ in
       dbeaver-bin
       jetbrains.idea
 
-      # nodePackages."@angular/cli" // TODO: package removed, maybe manually re-add it? or try to use the one from npm
       nodejs
 
       lemminx
