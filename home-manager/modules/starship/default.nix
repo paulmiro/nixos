@@ -1,7 +1,7 @@
 {
   config,
   lib,
-  pkgs,
+  starship-no-empty-icons,
   ...
 }:
 let
@@ -15,30 +15,21 @@ in
   config = lib.mkIf cfg.enable {
     programs.starship = {
       enable = true;
-      settings =
-        (fromTOML (
-          builtins.readFile (
-            pkgs.fetchurl {
-              url = "https://starship.rs/presets/toml/no-empty-icons.toml";
-              hash = "sha256-PbPa6D93/D9UJOBKZ5tsCQZ/M9s5eGoAVceM0tAMs04=";
-            }
-          )
-        ))
-        // {
-          hostname = {
-            format = "[$hostname]($style) ";
-          };
-          username = {
-            format = "[$user]($style)@";
-          };
-          directory = {
-            truncation_length = 10;
-            truncation_symbol = "⋯/";
-            substitutions = {
-              "/run/media/${config.home.username}" = "󰕓";
-            };
+      settings = (fromTOML (builtins.readFile "${starship-no-empty-icons}")) // {
+        hostname = {
+          format = "[$hostname]($style) ";
+        };
+        username = {
+          format = "[$user]($style)@";
+        };
+        directory = {
+          truncation_length = 10;
+          truncation_symbol = "⋯/";
+          substitutions = {
+            "/run/media/${config.home.username}" = "󰕓";
           };
         };
+      };
     };
   };
 }
