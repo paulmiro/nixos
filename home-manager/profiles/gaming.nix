@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   lib,
   ...
@@ -6,8 +7,6 @@
 {
   config = {
     paul = {
-      gnome-settings.enable = true;
-
       browsers = {
         zen = true;
       };
@@ -22,7 +21,7 @@
       spotify
     ];
 
-    dconf.settings = {
+    dconf.settings = lib.mkIf config.paul.gnome-settings.enable {
       "org/gnome/shell" = {
         favorite-apps = lib.mkForce [
           "zen.desktop"

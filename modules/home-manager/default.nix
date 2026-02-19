@@ -14,6 +14,12 @@ in
     home-manager.nixosModules.home-manager
   ];
 
+  options.paul.hm = lib.mkOption {
+    description = "Config to pass to home-manager.users.paulmiro.config.paul";
+    type = lib.types.attrs;
+    default = { };
+  };
+
   options.paul.home-manager = {
     enable = lib.mkEnableOption "enable home-manager";
 
@@ -40,12 +46,14 @@ in
       extraSpecialArgs = {
         # Pass all flake inputs to home-manager modules aswell so we can use them there.
         inherit flake-self;
-        # Pass system configuration (top-level "config") to home-manager modules,
-        # so we can access it's values for conditional statements
-        system-config = config;
       }
       // flake-self.inputs;
-      users.paulmiro = flake-self.homeProfiles.${cfg.profile};
+      users.paulmiro = lib.mkMerge [
+        flake-self.homeProfiles.${cfg.profile}
+        {
+          imports = [ { config.paul = config.paul.hm; } ];
+        }
+      ];
       users.root = flake-self.homeProfiles.${cfg.rootProfile};
     };
   };

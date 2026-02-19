@@ -8,6 +8,7 @@ let
   cfg = config.paul.gnome-settings;
 in
 {
+  # auto-enabled by nixos module
   options.paul.gnome-settings.enable = lib.mkEnableOption "enable custom gnome configuration and theme";
 
   config = lib.mkIf cfg.enable {

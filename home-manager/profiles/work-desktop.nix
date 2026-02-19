@@ -7,7 +7,6 @@
     paul = {
       work.enable = true;
 
-      gnome-settings.enable = true;
       vscode.enable = true;
       ghostty.enable = true;
 

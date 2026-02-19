@@ -237,10 +237,6 @@
                 ];
                 extraSpecialArgs = {
                   flake-self = self;
-                  system-config = builtins.warn ''
-                    system-config is being accessed from standalone home-manager.
-                    This will fall back to an empty attribute set.
-                  '' { };
                 }
                 // inputs;
               };

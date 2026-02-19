@@ -5,7 +5,6 @@
 {
   config = {
     paul = {
-      gnome-settings.enable = true;
       vscode.enable = true;
       ghostty.enable = true;
       neovim.enableNeovide = true;
