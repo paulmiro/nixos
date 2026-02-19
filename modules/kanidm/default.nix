@@ -41,9 +41,9 @@ in
       };
     })
     (lib.mkIf cfg.enableServer {
-      services.kanidm = {
-        enableServer = true;
-        serverSettings = {
+      services.kanidm.server = {
+        enable = true;
+        settings = {
           version = "2";
           inherit origin domain;
           bindaddress = (if cfg.openHttpsFirewall then "[::]" else "[::1]") + ":" + toString cfg.httpsPort;
@@ -88,18 +88,18 @@ in
     })
 
     (lib.mkIf cfg.enableClient {
-      services.kanidm = {
-        enableClient = true;
-        clientSettings = {
+      services.kanidm.client = {
+        enable = true;
+        settings = {
           uri = origin;
         };
       };
     })
 
     (lib.mkIf cfg.enablePam {
-      services.kanidm = {
-        enablePam = true;
-        unixSettings = {
+      services.kanidm.unix = {
+        enable = true;
+        settings = {
           kanidm.pam_allowed_login_groups = [ "pam_${config.networking.hostName}_users" ];
           default_shell = "${pkgs.shadow}/bin/nologin";
           # home dir is created at /mnt/home_mount_prefix/{uuid}
@@ -110,10 +110,10 @@ in
           home_prefix = "/home/";
           home_alias = "name";
         };
+      };
 
-        clientSettings = {
-          uri = origin;
-        };
+      services.kanidm.client.settings = {
+        uri = origin;
       };
 
       # ensure home directory creation works (/home is included by default)
