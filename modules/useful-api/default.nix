@@ -18,9 +18,19 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    # TODO remove later
     services.nginx.virtualHosts."api.${config.paul.private.domains.base}" = {
       enableACME = true;
       forceSSL = true;
+      enableDyndns = true;
+      locations."/" = {
+        proxyPass = "http://localhost:${toString port}";
+      };
+    };
+
+    services.nginx.virtualHosts."useful-api.party" = {
+      # enableACME = true;
+      # forceSSL = true;
       enableDyndns = true;
       locations."/" = {
         proxyPass = "http://localhost:${toString port}";
