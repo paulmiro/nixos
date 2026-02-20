@@ -7,6 +7,7 @@
 let
   cfg = config.paul.useful-api;
   port = 19109;
+  bindAddress = "127.0.0.1";
 in
 {
   imports = [
@@ -40,6 +41,7 @@ in
     services.useful-api = {
       enable = true;
       inherit port;
+      inherit bindAddress;
     };
   };
 }
