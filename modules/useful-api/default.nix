@@ -24,13 +24,13 @@ in
       forceSSL = true;
       enableDyndns = true;
       locations."/" = {
-        proxyPass = "http://localhost:${toString port}";
+        return = "301 https://useful-api.party$request_uri";
       };
     };
 
     services.nginx.virtualHosts."useful-api.party" = {
-      # enableACME = true;
-      # forceSSL = true;
+      enableACME = true;
+      forceSSL = true;
       enableDyndns = true;
       locations."/" = {
         proxyPass = "http://localhost:${toString port}";
