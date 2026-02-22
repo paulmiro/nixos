@@ -156,7 +156,6 @@ in
         e = "xdg-open .";
         q = "exit";
         r = "${pkgs.trashy}/bin/trash";
-        y = "yazi";
 
         ## Important
 
@@ -267,6 +266,12 @@ in
           indicators = true;
           hyperlink = "auto";
         };
+      };
+
+      # terminal file explorer
+      yazi = {
+        enable = true;
+        shellWrapperName = "y";
       };
 
       # cooler cd
