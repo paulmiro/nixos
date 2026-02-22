@@ -44,23 +44,25 @@
   };
 
   # for the USB-A dock at work
-  boot.extraModulePackages = [ config.boot.kernelPackages.evdi ];
-  boot.initrd.kernelModules = [ "evdi" ];
-  services.xserver.videoDrivers = [ "displaylink" ];
-  environment.systemPackages = with pkgs; [ displaylink ];
-  systemd.services.dlm.wantedBy = [ "multi-user.target" ];
-  nixpkgs.overlays = [
-    (self: super: {
-      displaylink = super.displaylink.overrideAttrs {
-        src = pkgs.fetchurl {
-          name = "displaylink-620.zip";
-          # downloading this implicitly agrees with their EULA
-          url = "https://www.synaptics.com/sites/default/files/exe_files/2025-09/DisplayLink%20USB%20Graphics%20Software%20for%20Ubuntu6.2-EXE.zip";
-          hash = "sha256-JQO7eEz4pdoPkhcn9tIuy5R4KyfsCniuw6eXw/rLaYE=";
-        };
-      };
-    })
-  ];
+  # TODO
+  # broken, but fixed in 491981
+  # boot.extraModulePackages = [ config.boot.kernelPackages.evdi ];
+  # boot.initrd.kernelModules = [ "evdi" ];
+  # services.xserver.videoDrivers = [ "displaylink" ];
+  # environment.systemPackages = with pkgs; [ displaylink ];
+  # systemd.services.dlm.wantedBy = [ "multi-user.target" ];
+  # nixpkgs.overlays = [
+  #   (self: super: {
+  #     displaylink = super.displaylink.overrideAttrs {
+  #       src = pkgs.fetchurl {
+  #         name = "displaylink-620.zip";
+  #         # downloading this implicitly agrees with their EULA
+  #         url = "https://www.synaptics.com/sites/default/files/exe_files/2025-09/DisplayLink%20USB%20Graphics%20Software%20for%20Ubuntu6.2-EXE.zip";
+  #         hash = "sha256-JQO7eEz4pdoPkhcn9tIuy5R4KyfsCniuw6eXw/rLaYE=";
+  #       };
+  #     };
+  #   })
+  # ];
 
   swapDevices = [ ];
 
