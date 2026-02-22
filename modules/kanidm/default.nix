@@ -8,7 +8,7 @@ let
   cfg = config.paul.kanidm;
   domain = config.paul.private.domains.kanidm; # not set as an option because it should never be changed
   origin = "https://${domain}";
-  package = pkgs.kanidm_1_8;
+  package = pkgs.kanidm_1_9;
 in
 {
   options.paul.kanidm = {
