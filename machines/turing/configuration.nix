@@ -103,11 +103,6 @@
       enable = true;
       enableNginx = true;
     };
-
-    outline = {
-      enable = true;
-      enableNginx = true;
-    };
   };
 
   boot.kernelPackages = pkgs.linuxPackages_6_12;
