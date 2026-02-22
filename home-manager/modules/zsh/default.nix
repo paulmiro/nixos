@@ -156,6 +156,7 @@ in
         e = "xdg-open .";
         q = "exit";
         r = "${pkgs.trashy}/bin/trash";
+        y = "${pkgs.yazi}/bin/yazi";
 
         ## Important
 
@@ -271,7 +272,7 @@ in
       # terminal file explorer
       yazi = {
         enable = true;
-        shellWrapperName = "y";
+        shellWrapperName = "cdy";
       };
 
       # cooler cd
