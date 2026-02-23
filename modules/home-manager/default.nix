@@ -12,13 +12,8 @@ in
 {
   imports = [
     home-manager.nixosModules.home-manager
+    (lib.mkAliasOptionModule [ "hm" ] [ "home-manager" "users" "paulmiro" ])
   ];
-
-  options.paul.hm = lib.mkOption {
-    description = "Config to pass to home-manager.users.paulmiro.config.paul";
-    type = lib.types.attrs;
-    default = { };
-  };
 
   options.paul.home-manager = {
     enable = lib.mkEnableOption "enable home-manager";
@@ -48,12 +43,7 @@ in
         inherit flake-self;
       }
       // flake-self.inputs;
-      users.paulmiro = lib.mkMerge [
-        flake-self.homeProfiles.${cfg.profile}
-        {
-          imports = [ { config.paul = config.paul.hm; } ];
-        }
-      ];
+      users.paulmiro = flake-self.homeProfiles.${cfg.profile};
       users.root = flake-self.homeProfiles.${cfg.rootProfile};
     };
   };

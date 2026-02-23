@@ -13,7 +13,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    paul.hm.gnome-settings.enable = true;
+    hm.paul.gnome-settings.enable = true;
 
     # Enable the X11 windowing system.
     services.xserver.enable = true;
