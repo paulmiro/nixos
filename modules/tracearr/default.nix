@@ -34,7 +34,7 @@ in
             envFile = pkgs.writeText "tracearr.env" ''
               DATA_DIR=/var/lib/tracearr
 
-              TRACEARR_VERSION=v${version}
+              TRACEARR_VERSION=${version}
               PORT=${toString port}
               TZ=${config.time.timeZone}
               # LOG_LEVEL=info # (debug, info, warn, error)
