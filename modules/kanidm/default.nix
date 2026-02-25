@@ -120,7 +120,7 @@ in
       systemd.services.kanidm-unixd-tasks = {
         serviceConfig = {
           BindPaths = [
-            (lib.removeSuffix "/" config.services.kanidm.unixSettings.home_mount_prefix)
+            (lib.removeSuffix "/" config.services.kanidm.unix.settings.home_mount_prefix)
           ];
         };
       };
