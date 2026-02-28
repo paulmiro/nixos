@@ -103,6 +103,8 @@
       enable = true;
       enableNginx = true;
     };
+
+    filebrowser.enable = true;
   };
 
   boot.kernelPackages = pkgs.linuxPackages_6_12;
