@@ -30,7 +30,7 @@
       cockatrice
       discord
       element-desktop
-      # freecad # broken as of 2026-01-20
+      freecad
       gnome-graphs
       gparted
       inkscape
