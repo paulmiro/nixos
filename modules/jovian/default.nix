@@ -30,6 +30,9 @@ in
       })
     ];
 
+    services.displayManager.defaultSession = lib.mkIf config.paul.gnome.enable (
+      lib.mkForce "gamescope-wayland"
+    );
     services.displayManager.gdm.enable = lib.mkIf config.paul.gnome.enable (lib.mkForce false);
   };
 }
