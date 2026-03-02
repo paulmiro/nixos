@@ -35,7 +35,7 @@
       gparted
       inkscape
       jellyfin-mpv-shim
-      # keyguard # broken as of 2026-01-25
+      keyguard
       krita
       libreoffice
       mattermost-desktop
