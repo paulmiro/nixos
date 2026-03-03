@@ -30,7 +30,8 @@ in
       enable = true;
       environment = {
         SERVER_PORT = cfg.port;
-        INSTALL_BOOK_AND_ADVANCED_HTML_OPS = "true";
+        # TODO disabled until #493988 lands in unstable
+        # INSTALL_BOOK_AND_ADVANCED_HTML_OPS = "true";
       };
     };
 
