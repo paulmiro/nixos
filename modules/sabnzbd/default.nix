@@ -18,10 +18,6 @@ in
       group = "transmission";
     };
 
-    systemd.services.sabnzbd = {
-      preStart = lib.mkForce ""; # the config merger is broken, pr: #482639
-    };
-
     paul.group.transmission.enable = true;
 
     paul.tailscale.services.sab.port = lib.mkIf cfg.enableTailscaleService 19106;
