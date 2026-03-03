@@ -6,6 +6,7 @@
 }:
 let
   cfg = config.paul.gnome-settings;
+  version = lib.versions.major pkgs.gnome-shell.version;
 in
 {
   # auto-enabled by nixos module
@@ -19,7 +20,6 @@ in
         # this function simply patches the metadata file to allow running
         # the plugin the current GNOME version.
         # this will probably break stuff in the future, but it seems to work fine for now.
-        version = lib.versions.major pkgs.gnome-shell.version;
         patchVersion =
           package:
           package.overrideAttrs (_: {
@@ -29,21 +29,29 @@ in
             '';
           });
       in
-      with pkgs;
+      with pkgs.gnomeExtensions;
       [
-        gnomeExtensions.activate_gnome
-        gnomeExtensions.blur-my-shell
-        gnomeExtensions.burn-my-windows
-        gnomeExtensions.caffeine
-        gnomeExtensions.clipboard-indicator
-        gnomeExtensions.gsconnect
-        gnomeExtensions.just-perfection
-        gnomeExtensions.vitals
+        activate_gnome
+        blur-my-shell
+        burn-my-windows
+        caffeine
+        clipboard-indicator
+        gsconnect
+        just-perfection
+        vitals
+        wifi-qrcode
+
+        # TODO update to these once available
+        # tailscale-gnome-qs
+        # touchpad-gesture-customization
+
+        # TODO maybe add these later
+        # paperwm
+        # workspace-matrix
       ]
       ++ map patchVersion [
-        gnomeExtensions.tailscale-qs
-        gnomeExtensions.wifi-qrcode
-        gnomeExtensions.window-gestures
+        tailscale-qs
+        window-gestures
       ];
 
     gtk = {
