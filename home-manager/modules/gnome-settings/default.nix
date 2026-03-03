@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  tailscale-gnome-qs,
   ...
 }:
 let
