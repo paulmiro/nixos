@@ -27,7 +27,11 @@ let
       # Sort by length descending to get the most specific match first
       sorted = lib.sort (a: b: lib.stringLength a.mountPoint > lib.stringLength b.mountPoint) matching;
     in
-    if sorted != [ ] then lib.head sorted else null;
+    if sorted != [ ] then
+      lib.head sorted
+    else
+      # never happens because we assert so below
+      null;
 
   # Get all unique ZFS datasets used for backups
   allBackupDatasetsFor = folders: lib.unique (lib.filter (d: d != null) (map pathToDataset folders));
@@ -43,13 +47,13 @@ let
     ) (allBackupDatasetsFor folders);
 
   # Transform a backup path to use the snapshot directory
-  transformPathToZfsSnapshot =
+  pathToZfsSnapshotPath =
     name: path:
     let
       dataset = pathToDataset path;
     in
     if dataset != null then
-      # Replace the mount point with the .zfs/snapshot path
+      # Replace the mount point with the .borg-snapshots path
       let
         relativePath = lib.removePrefix dataset.mountPoint path;
         # Ensure we have a leading slash for non-empty relative paths
@@ -61,11 +65,11 @@ let
           else
             "/${relativePath}";
       in
-      "${dataset.mountPoint}/.zfs/snapshot/borg-${name}${relativePathWithSlash}"
+      "${dataset.mountPoint}/.borg-snapshots/${name}${relativePathWithSlash}"
     else
       path;
 
-  transformPathToRsyncCopyDir = path: "${path}/.borg-copy";
+  pathToRsyncCopyDirPath = path: "${path}/.borg-copy";
 in
 {
   options.clan.core.state = lib.mkOption {
@@ -112,6 +116,7 @@ in
                     [
                       system-config.systemd.package
                       pkgs.coreutils
+                      pkgs.util-linux
                     ]
                     ++ (lib.optional config.useRsyncCopy pkgs.rsync)
                     ++ (lib.optional config.useZfsSnapshots zfsPackage)
@@ -153,19 +158,33 @@ in
             {
               preBackupScript = lib.mkIf config.useZfsSnapshots (
                 lib.mkOrder 1300 ''
+                  echo "Cleaning up previous ZFS snapshot mounts for ${name}..."
+                  ${lib.concatMapStringsSep "\n" (fs: ''
+                    if mountpoint -q "${fs.mountPoint}/.borg-snapshots/${name}"; then
+                      echo "Unmounting ${fs.mountPoint}/.borg-snapshots/${name}"
+                      umount "${fs.mountPoint}/.borg-snapshots/${name}"
+                    fi
+
+                    # Technically not necessary, but it's a bit cleaner
+                    rm -rf "${fs.mountPoint}/.borg-snapshots/${name}"
+                  '') allBackupDatasets}
+
                   echo "Cleaning up previous ZFS snapshots for ${name}"
                   # Destroy recursive snapshots (only need to destroy root datasets)
                   ${lib.concatMapStringsSep "\n" (fs: ''
-                    if ${zfsPackage}/bin/zfs list -H -o name "${fs.device}@borg-${name}" >/dev/null 2>&1; then
-                      ${zfsPackage}/bin/zfs destroy -r "${fs.device}@borg-${name}" || echo "Warning: Failed to destroy recursive snapshot ${fs.device}@borg-${name}"
+                    if zfs list -H -o name "${fs.device}@borg-${name}" >/dev/null 2>&1; then
+                      zfs destroy -r "${fs.device}@borg-${name}" || {
+                        echo "Error: Failed to destroy recursive snapshot ${fs.device}@borg-${name}"
+                        exit 1
+                      }
                     fi
                   '') rootDatasets}
 
-                  echo "Creating ZFS snapshots for ${name}"
+                  echo "Creating ZFS snapshots for ${name}..."
                   # Create recursive snapshots for root datasets only
                   ${lib.concatMapStringsSep "\n" (fs: ''
-                    if ${zfsPackage}/bin/zfs list -H -o name "${fs.device}" >/dev/null 2>&1; then
-                      ${zfsPackage}/bin/zfs snapshot -r "${fs.device}@borg-${name}" || {
+                    if zfs list -H -o name "${fs.device}" >/dev/null 2>&1; then
+                      zfs snapshot -r "${fs.device}@borg-${name}" || {
                         echo "Failed to create recursive snapshot for ${fs.device}"
                         exit 1
                       }
@@ -173,21 +192,30 @@ in
                     fi
                   '') rootDatasets}
 
-                  # Ensure snapshot directories are accessible (trigger automount)
-                  echo "Ensuring snapshot directories are accessible..."
+                  # Manually mount the snapshots to avoid issues with automount (borgbackup/borg/issues/6652)
+                  echo "Mounting ZFS snapshots for ${name}..."
                   ${lib.concatMapStringsSep "\n" (fs: ''
-                    ls -A "${fs.mountPoint}/.zfs/snapshot/borg-${name}/" > /dev/null || {
-                      echo "Warning: Could not access snapshot directory ${fs.mountPoint}/.zfs/snapshot/borg-${name}/"
-                    }
+                    if zfs list -H -o name "${fs.device}@borg-${name}" >/dev/null 2>&1; then
+                      mkdir -p "${fs.mountPoint}/.borg-snapshots/${name}"
+                      mount -t zfs "${fs.device}@borg-${name}" "${fs.mountPoint}/.borg-snapshots/${name}" || {
+                        echo "Failed to mount ZFS snapshot ${fs.device}@borg-${name} to ${fs.mountPoint}/.borg-snapshots/${name}"
+                        exit 1
+                      }
+                      echo "Mounted ZFS snapshot: ${fs.device}@borg-${name} to ${fs.mountPoint}/.borg-snapshots/${name}"
+                    else
+                      echo "Error: ZFS snapshot ${fs.device}@borg-${name} does not exist"
+                      exit 1
+                    fi
                   '') allBackupDatasets}
 
                   # Ensure folders are accessible
                   echo "Ensuring folders are accessible..."
-                  ${lib.concatMapStringsSep "\n" (folder: ''
-                    ls -A "${folder}/" > /dev/null || {
-                      echo "Warning: Could not access folder ${folder}/"
+                  ${lib.concatMapStringsSep "\n" (fs: ''
+                    ls -A "${fs.mountPoint}/.borg-snapshots/${name}/" > /dev/null || {
+                      echo "Error: Could not access snapshot directory ${fs.mountPoint}/.borg-snapshots/${name}/"
+                      exit 1
                     }
-                  '') config.folders}
+                  '') allBackupDatasets}
                 ''
               );
             }
@@ -198,7 +226,7 @@ in
 
                   ${lib.concatMapStringsSep "\n" (folder: ''
                     echo "Copying folder ${folder}"
-                    rsync -avH --delete --numeric-ids --exclude ".borg-copy" "${folder}/" "${transformPathToRsyncCopyDir folder}/"
+                    rsync -avH --delete --numeric-ids --exclude ".borg-copy" "${folder}/" "${pathToRsyncCopyDirPath folder}/"
                   '') config.folders}
                 ''
               );
@@ -286,9 +314,9 @@ in
                   state = stateForPath path;
                 in
                 if state.useZfsSnapshots then
-                  (transformPathToZfsSnapshot state.name path)
+                  (pathToZfsSnapshotPath state.name path)
                 else if state.useRsyncCopy then
-                  (transformPathToRsyncCopyDir path)
+                  (pathToRsyncCopyDirPath path)
                 else
                   path
               ) paths;
@@ -318,8 +346,13 @@ in
       name: job:
       lib.nameValuePair "borgbackup-job-${name}" (
         lib.mkIf (job.includesZfsSnapshots or false) {
+          # we need to turn off anything that chroots, to allow mount/unmount from within the ExecPre
+          confinement.enable = lib.mkForce false;
           serviceConfig = {
             PrivateDevices = lib.mkForce false; # ZFS needs access to /dev/zfs
+            ProtectSystem = lib.mkForce false;
+            PrivateTmp = lib.mkForce false;
+            ReadWritePaths = lib.mkForce null;
           };
 
           path = [ zfsPackage ];
