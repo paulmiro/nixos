@@ -2,12 +2,11 @@
   config,
   lib,
   pkgs,
-  immich-source,
   ...
 }:
 let
   cfg = config.paul.immich;
-  version = (builtins.fromJSON (builtins.readFile "${immich-source}/server/package.json")).version;
+  version = config.paul.versions.immich;
   versionEnvFile =
     assert lib.strings.hasPrefix "2." version; # should only fail on major version releases
     pkgs.writeText "immich-version.env" ''

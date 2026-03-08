@@ -6,7 +6,7 @@
 let
   cfg = config.paul.jellyfin;
   serviceName = "jellyfin-docker";
-  containerVersion = "10.11.6";
+  containerVersion = config.paul.versions.jellyfin;
 in
 {
   options.paul.jellyfin = {

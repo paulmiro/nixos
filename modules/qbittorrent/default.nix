@@ -9,7 +9,7 @@ let
   privoxyPort = 8118;
   socksPort = 9118;
   serviceName = "qbittorrent-vpn-docker";
-  containerVersion = "5.1.4-1-01";
+  containerVersion = config.paul.versions.qbittorrent;
 in
 {
   imports = [

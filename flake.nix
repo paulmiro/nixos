@@ -89,11 +89,6 @@
 
     ### Non-Flake Inputs
 
-    immich-source = {
-      flake = false;
-      url = "github:immich-app/immich";
-    };
-
     starship-no-empty-icons = {
       url = "https://starship.rs/presets/toml/no-empty-icons.toml";
       flake = false;

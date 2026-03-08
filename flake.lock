@@ -318,22 +318,6 @@
         "type": "github"
       }
     },
-    "immich-source": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1772908843,
-        "narHash": "sha256-n8BotYDD4yrpxtce/kCTDNId21iGbKHE/cW70V4dMSw=",
-        "owner": "immich-app",
-        "repo": "immich",
-        "rev": "aaf34fa7d4fb2b47a9d29f53c2d41f40b2c13637",
-        "type": "github"
-      },
-      "original": {
-        "owner": "immich-app",
-        "repo": "immich",
-        "type": "github"
-      }
-    },
     "jovian": {
       "inputs": {
         "nix-github-actions": "nix-github-actions",
@@ -613,7 +597,6 @@
         "git-agecrypt-armor": "git-agecrypt-armor",
         "grub2-themes": "grub2-themes",
         "home-manager": "home-manager",
-        "immich-source": "immich-source",
         "jovian": "jovian",
         "nix-minecraft": "nix-minecraft",
         "nix4nvchad": "nix4nvchad",
