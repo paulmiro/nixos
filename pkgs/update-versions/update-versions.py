@@ -4,7 +4,7 @@ import re
 from github import Github
 from github import Auth
 
-TOML_PATH = "modules/versions/version.toml"
+TOML_PATH = "modules/versions/versions.toml"
 
 
 def fetch_latest_version(g, repo_name):
