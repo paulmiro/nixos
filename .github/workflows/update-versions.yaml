@@ -1,0 +1,56 @@
+name: Update Versions
+
+on:
+    schedule:
+        - cron: "0 0 * * 0" # Runs at 00:00 every Sunday
+    workflow_dispatch: # Allows you to trigger it manually from the UI for testing
+
+permissions:
+    contents: write
+    pull-requests: write
+
+jobs:
+    get-deps:
+        runs-on: ubuntu-latest
+        outputs:
+            deps: ${{ steps.parse.outputs.deps }}
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Parse versions.toml
+              id: parse
+              run: | # Cursed aah bash to get the keys from the toml file
+                  DEPS=$(awk '/^\[.*\]$/ {gsub(/^\[|\]$/, ""); print}' modules/versions/versions.toml | jq -R -s -c 'split("\n") | map(select(length > 0))')
+                  echo "Found dependencies: $DEPS"
+                  echo "deps=$DEPS" >> $GITHUB_OUTPUT
+
+    update-versions:
+        needs: get-deps
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                dep: ${{ fromJSON(needs.get-deps.outputs.deps) }}
+            fail-fast: false
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v6
+
+            - name: Install Nix
+              uses: cachix/install-nix-action@v31
+
+            - name: Update dependency
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              run: nix run .#update-versions -- ${{ matrix.dep }}
+
+            - name: Create Pull Request
+              uses: peter-evans/create-pull-request@v8
+              with:
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  commit-message: "chore(deps): update ${{ matrix.dep }}"
+                  title: "chore(deps): update ${{ matrix.dep }}"
+                  body: "Automated version update for `${{ matrix.dep }}`."
+                  branch: "bot/update-${{ matrix.dep }}"
+                  delete-branch: true
