@@ -9,6 +9,7 @@
     paul = {
       browsers = {
         zen = true;
+        chromium = true;
       };
     };
 
