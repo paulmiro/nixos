@@ -169,7 +169,6 @@
         rootFsOptions = {
           mountpoint = "none";
           atime = "off";
-          snapdir = "visible";
           acltype = "posix";
           "com.sun:auto-snapshot" = "false";
         };
@@ -326,7 +325,6 @@
         rootFsOptions = {
           mountpoint = "none";
           atime = "off";
-          snapdir = "visible";
           "com.sun:auto-snapshot" = "false";
         };
 
