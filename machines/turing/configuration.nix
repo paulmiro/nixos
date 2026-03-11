@@ -103,6 +103,11 @@
       enable = true;
       enableNginx = true;
     };
+
+    filebrowser-quantum = {
+      enable = true;
+      enableNginx = true;
+    };
   };
 
   boot.kernelPackages = pkgs.linuxPackages_6_12;

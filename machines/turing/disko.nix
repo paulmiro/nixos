@@ -292,6 +292,10 @@
             type = "zfs_fs";
             mountpoint = "/var/lib/tracearr";
           };
+          "apps/filebrowser-quantum" = {
+            type = "zfs_fs";
+            mountpoint = "/var/lib/filebrowser-quantum";
+          };
         };
       };
 
