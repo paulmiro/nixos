@@ -54,6 +54,10 @@ in
 
         Restart = "on-failure";
 
+        ReadOnlyDirectories = [
+          "/mnt/arr/torrents"
+        ];
+
         PrivateNetwork = false;
         RemoveIPC = true;
         NoNewPrivileges = true;
