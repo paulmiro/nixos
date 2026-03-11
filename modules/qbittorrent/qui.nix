@@ -88,7 +88,7 @@ in
 
     paul.tailscale.services.qui.port = lib.mkIf cfg.enableTailscaleService port;
 
-    clan.core.state.qbittorrent = {
+    clan.core.state.qui = {
       useZfsSnapshots = true;
       folders = [ cfg.configDir ];
       servicesToStop = [ "${serviceName}.service" ];
