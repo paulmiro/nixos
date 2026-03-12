@@ -11,6 +11,7 @@
       direnv.enable = true;
       git.enable = true;
       neovim.enable = true;
+      nix-index.enable = true;
       nixpkgs-config.enable = true;
       ssh.enable = true;
       zsh.enable = true;
