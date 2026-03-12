@@ -5,18 +5,32 @@
   ...
 }:
 let
-  cfg = config.paul.qbittorrent.qui;
+  cfg = config.paul.qui;
   port = 7476;
   serviceName = "qui";
+
+  # qui has premium themes, which are included in the official builds, but otherwise inaccessible.
+  # as a donor to the project, I was able to get a copy of the themes.
+  # the age key for the encrypted archive is stored in my "private" module to make sure I dont accidentally leak the themes.
+  # all I do here is patch the source for the nixpkgs package to include the themes.
+  package = pkgs.callPackage ./package.nix {
+    qui_theme_age_key = config.paul.private.misc.qui_theme_age_key;
+  };
 in
 {
-  options.paul.qbittorrent.qui = {
+  options.paul.qui = {
     enable = lib.mkEnableOption "activate qui (alternative frontend for qbittorrent)";
+    package = lib.mkOption {
+      description = "package to use for qui";
+      type = lib.types.package;
+      default = package;
+    };
     configDir = lib.mkOption {
       description = "config directory for qui";
       type = lib.types.path;
       default = "/var/lib/qui";
     };
+
     enableTailscaleService = lib.mkEnableOption "enable tailscale service for qui";
   };
 
@@ -28,7 +42,7 @@ in
       serviceConfig = {
         Type = "oneshot";
         # this skips generation if the file already exists, so we can safely run it on every boot
-        ExecStart = "${lib.getExe pkgs.qui} generate-config --config-dir ${cfg.configDir}";
+        ExecStart = "${lib.getExe cfg.package} generate-config --config-dir ${cfg.configDir}";
 
         StateDirectory = "qui";
 
@@ -45,7 +59,7 @@ in
       ];
       serviceConfig = {
         Type = "simple";
-        ExecStart = "${lib.getExe pkgs.qui} serve --config-dir ${cfg.configDir}";
+        ExecStart = "${lib.getExe cfg.package} serve --config-dir ${cfg.configDir}";
 
         StateDirectory = "qui";
 
@@ -54,7 +68,7 @@ in
 
         Restart = "on-failure";
 
-        ReadOnlyDirectories = [
+        ReadOnlyDirectories = lib.mkIf config.paul.qbittorrent.enable [
           "/mnt/arr/torrents"
         ];
 

@@ -21,3 +21,4 @@ gmail = "gmail@example.com"
 
 [misc]
 kanidm_display_name = "Example Kanidm Display Name"
+qui_theme_age_key = "INVALID-AGE-KEY"

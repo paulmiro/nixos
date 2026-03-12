@@ -12,10 +12,6 @@ let
   containerVersion = config.paul.versions.qbittorrent;
 in
 {
-  imports = [
-    ./qui.nix
-  ];
-
   options.paul.qbittorrent = {
     enable = lib.mkEnableOption "activate qbittorrent";
     enableTailscaleService = lib.mkEnableOption "enable tailscale service for qbittorrent";

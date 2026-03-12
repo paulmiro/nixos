@@ -55,10 +55,10 @@
     qbittorrent = {
       enable = true;
       enableTailscaleService = true;
-      qui = {
-        enable = true;
-        enableTailscaleService = true;
-      };
+    };
+    qui = {
+      enable = true;
+      enableTailscaleService = true;
     };
     sabnzbd = {
       enable = true;
