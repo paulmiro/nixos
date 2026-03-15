@@ -29,6 +29,7 @@
   # prevent error messages when offline
   clan.core.deployment.requireExplicitUpdate = true;
   clan.core.enableRecommendedDefaults = false; # this breaks networking
+  clan.core.settings.state-version.enable = true;
   clan.core.networking.targetHost = "btr-wsl";
 
   programs.nix-ld.enable = true; # to allow VSCode-server to run

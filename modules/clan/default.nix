@@ -29,8 +29,6 @@ in
 
     networking.hostName = lib.mkDefault config.clan.core.settings.machine.name;
 
-    clan.core.settings.state-version.enable = lib.mkDefault true; # TODO: only here because of btr-wsl, is included in enableRecommendedDefaults
-
     clan.core.networking.targetHost = lib.mkDefault "${config.networking.hostName}.${config.paul.private.domains.tailnet}";
   };
 }
