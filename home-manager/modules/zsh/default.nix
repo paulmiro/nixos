@@ -138,7 +138,7 @@ in
         l = "lsd -1";
         ll = "lsd -l";
         la = "lsd -lA";
-        lla = "lsd -lA";
+        laa = "lsd -la";
         lt = "lsd --tree";
         lta = "lsd -A --tree";
 
