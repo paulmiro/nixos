@@ -17,10 +17,6 @@ in
     services.xserver.videoDrivers = [ "displaylink" ];
     # auto-start the service
     systemd.services.dlm.wantedBy = [ "multi-user.target" ];
-
-    # TODO do we need this?
-    # environment.systemPackages = with pkgs; [ displaylink ];
-
     # downloading this means agreeing to their EULA
     nixpkgs.overlays = [
       (self: super: {
