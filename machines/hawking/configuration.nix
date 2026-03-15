@@ -17,6 +17,8 @@
     home-manager.profile = "gaming";
   };
 
+  hm.paul.gnome-settings.wallpaper = "zell-frieren.jpg";
+
   specialisation.desktop.configuration = {
     paul.jovian.enable = lib.mkForce false;
   };

@@ -10,7 +10,14 @@ let
 in
 {
   # auto-enabled by nixos module
-  options.paul.gnome-settings.enable = lib.mkEnableOption "enable custom gnome configuration and theme";
+  options.paul.gnome-settings = {
+    enable = lib.mkEnableOption "enable custom gnome configuration and theme";
+    wallpaper = lib.mkOption {
+      type = lib.types.str;
+      default = "dino-falin.jpg";
+      description = "wallpaper to use";
+    };
+  };
 
   config = lib.mkIf cfg.enable {
     home.packages =
@@ -126,8 +133,8 @@ in
       };
 
       "org/gnome/desktop/background" = {
-        picture-uri = "file://${./wallpapers/dino-falin.jpg}";
-        picture-uri-dark = "file://${./wallpapers/dino-falin.jpg}";
+        picture-uri = "file://${./wallpapers/${cfg.wallpaper}}";
+        picture-uri-dark = "file://${./wallpapers/${cfg.wallpaper}}";
       };
 
       "org/gnome/desktop/screensaver" = {
