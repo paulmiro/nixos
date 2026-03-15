@@ -25,7 +25,6 @@ in
           # - use Faustvil fork instead ( slightly worse results)
           # - build bookshelf from source (use other arrs as examples)
           # - use bookshelf container
-          # TODO override src
         };
       group = "transmission";
     };
