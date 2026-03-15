@@ -193,8 +193,6 @@ in
       # dir colors for ls and lsd
       dircolors.enable = true;
 
-      # TODO eza
-
       # cooler find
       fd = {
         enable = true;
