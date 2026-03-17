@@ -14,6 +14,7 @@
         android = true;
         go = true;
         javascript = true;
+        rust = true;
       };
 
       browsers = {

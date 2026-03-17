@@ -17,6 +17,7 @@ in
     javascript = lib.mkEnableOption "enable JavaScript";
     lua = lib.mkEnableOption "enable Lua";
     python = lib.mkEnableOption "enable Python";
+    rust = lib.mkEnableOption "enable Rust";
   };
 
   config = lib.mkMerge [
@@ -38,6 +39,11 @@ in
     (lib.mkIf cfg.godot {
       home.packages = with pkgs; [
         godot_4
+      ];
+    })
+    (lib.mkIf cfg.rust {
+      home.packages = with pkgs; [
+        rust-analyzer
       ];
     })
   ];
