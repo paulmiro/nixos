@@ -60,6 +60,8 @@ in
 
         log-lines = 25;
 
+        warn-dirty = false;
+
         # Save space by hardlinking store files
         auto-optimise-store = true;
 
