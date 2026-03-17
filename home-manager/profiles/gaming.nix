@@ -26,7 +26,7 @@
       "org/gnome/shell" = {
         favorite-apps = lib.mkForce [
           "zen.desktop"
-          "org.gnome.Console.desktop"
+          "com.mitchellh.ghostty.desktop"
           "org.gnome.Nautilus.desktop"
           "steam.desktop"
         ];

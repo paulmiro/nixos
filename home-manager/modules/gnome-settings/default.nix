@@ -87,7 +87,7 @@ in
         favorite-apps = [
           "zen.desktop"
           "code.desktop"
-          "org.gnome.Console.desktop"
+          "com.mitchellh.ghostty.desktop"
           "org.gnome.Nautilus.desktop"
         ];
         enabled-extensions = [

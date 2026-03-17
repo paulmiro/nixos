@@ -1,2 +1,4 @@
+maximize = true
 theme = Molokai
 font-family = MesloLGS NF
+font-size = 14
