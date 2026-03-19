@@ -41,6 +41,7 @@
       psmisc
       ripgrep
       sops
+      timg
       tmux
       unzip
       wget
