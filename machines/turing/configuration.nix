@@ -90,7 +90,7 @@
     };
 
     karakeep = {
-      # enable = true; # TODO: nixpkgs/issues/499893
+      enable = true;
       enableNginx = true;
     };
 
