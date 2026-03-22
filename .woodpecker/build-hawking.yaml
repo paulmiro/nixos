@@ -1,5 +1,5 @@
 depends_on:
-  - build-btr-wsl
+  - build-backus
 labels:
   backend: local
   platform: linux/amd64

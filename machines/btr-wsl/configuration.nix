@@ -24,6 +24,8 @@
     kanidm.enableClient = true;
     docker.enable = true;
     tor-client.enable = true;
+
+    ci.enable = false;
   };
 
   # prevent error messages when offline

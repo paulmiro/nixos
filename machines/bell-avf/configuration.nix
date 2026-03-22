@@ -16,6 +16,8 @@
     common.enable = true;
     clan.manageUserPasswords = false;
     kanidm.enableClient = true;
+
+    ci.enable = false;
   };
 
   boot.loader.systemd-boot.configurationLimit = 1;

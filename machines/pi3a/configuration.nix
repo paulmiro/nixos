@@ -7,6 +7,7 @@
 {
   paul = {
     common-server.enable = true;
+
     ci.enable = false;
   };
 
