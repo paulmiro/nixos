@@ -20,6 +20,10 @@ jobs:
       - name: Update flake.lock
         id: update
         uses: DeterminateSystems/update-flake-lock@v28
+        with:
+          branch: bot/update-flake-lock
+          commit-msg: "update flake.lock"
+          pr-title: "update flake.lock"
 
       - name: Print PR number
         run: echo Pull request number is ${{ steps.update.outputs.pull-request-number }}.

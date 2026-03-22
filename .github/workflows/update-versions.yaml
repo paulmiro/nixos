@@ -52,8 +52,8 @@ jobs:
               uses: peter-evans/create-pull-request@v8
               with:
                   token: ${{ secrets.GITHUB_TOKEN }}
-                  commit-message: "chore(deps): update ${{ matrix.dep }}: ${{ steps.update.outputs.version_change }}"
-                  title: "chore(deps): update ${{ matrix.dep }}: ${{ steps.update.outputs.version_change }}"
+                  commit-message: "update ${{ matrix.dep }}: ${{ steps.update.outputs.version_change }}"
+                  title: "update ${{ matrix.dep }}: ${{ steps.update.outputs.version_change }}"
                   body: "Automated version update for `${{ matrix.dep }}`: ${{ steps.update.outputs.version_change }}"
                   branch: "bot/update-${{ matrix.dep }}"
                   delete-branch: true
