@@ -174,7 +174,7 @@ let
     }
     // lib.mapAttrs' (
       system: platform:
-      lib.nameValuePair ".build-all-${system}" {
+      lib.nameValuePair "build-all-${system}" {
         labels = {
           backend = "local";
           platform = platform;
