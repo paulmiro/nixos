@@ -19,6 +19,7 @@
     qmk.enable = true;
   };
 
+  # TODO remove
   environment.systemPackages = [
     (pkgs.runCommand "failure" ''
       false
