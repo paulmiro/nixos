@@ -52,7 +52,7 @@ let
       commands = [
         # "${nix-fast-build} --flake \".#checks.${system}\""
         "echo 'skipping'"
-        # "false"
+        "false"
       ];
     };
 
@@ -118,29 +118,17 @@ let
                 ++ lib.optional (!prev.initial) prev.prevNames."${system}";
                 runs_on = [
                   "success"
+                  # individual builds are only needed when the combined build fails
+                  # we cannot just use runs_on = "faulure" because github doesn't understand the "skipped" status
+                  # there also seems to be no other way to send information from one workflow to another, so for now we just build everything again
                   "failure"
                 ];
-                steps =
-                  let
-                    onFailure = {
-                      # individual builds are only needed when the combined build fails
-                      # we cannot just use runs_on = "faulure" because github doesn't understand the "skipped" status
-                      when.status = "failure";
-                    };
-                  in
-                  [
-                    {
-                      name = "print env";
-                      image = "bash";
-                      commands = [
-                        "env"
-                      ];
-                    }
-                    (steps.decryptPrivateData // onFailure)
-                    (steps.atticSetup // onFailure)
-                    ((steps.buildMachine name) // onFailure)
-                    ((steps.showMachineInfo name) // onFailure)
-                  ];
+                steps = [
+                  steps.decryptPrivateData
+                  steps.atticSetup
+                  (steps.buildMachine name)
+                  (steps.showMachineInfo name)
+                ];
               };
             }
           ]
@@ -172,7 +160,7 @@ let
         ];
       };
     }
-    // lib.mapAttrs' (
+    // (lib.mapAttrs' (
       system: platform:
       lib.nameValuePair "build-all-${system}" {
         labels = {
@@ -187,7 +175,7 @@ let
           (steps.buildAllMachinesFor system)
         ];
       }
-    ) platforms;
+    ) platforms);
 in
 pkgs.writeShellScriptBin "woodpecker-pipeline" ''
   set -euo pipefail
