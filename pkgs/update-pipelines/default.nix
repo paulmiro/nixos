@@ -129,6 +129,13 @@ let
                     };
                   in
                   [
+                    {
+                      name = "print env";
+                      image = "bash";
+                      commands = [
+                        "env"
+                      ];
+                    }
                     (steps.decryptPrivateData // onFailure)
                     (steps.atticSetup // onFailure)
                     ((steps.buildMachine name) // onFailure)
