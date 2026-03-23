@@ -158,7 +158,7 @@ let
   pipelines =
     machinePipelines
     // {
-      # dots for alphabetical sorting
+      # dot for alphabetical sorting
       ".nix-flake-check" = {
         labels = {
           backend = "local";
