@@ -25,17 +25,14 @@ steps:
     name: Setup Attic
   - commands:
       - nix-fast-build --no-nom --skip-cached --attic-cache lounge-rocks:nix-cache --flake '.#nixosConfigurations.hawking.config.system.build.toplevel' --out-link 'result-hawking'
-    failure: ignore
     image: bash
     name: Build hawking
   - commands:
       - nix --show-trace path-info --closure-size -h $(readlink -f 'result-hawking')
-    failure: ignore
     image: bash
     name: Show hawking info
   - commands:
       - attic push lounge-rocks:nix-cache 'result-hawking'
-    failure: ignore
     image: bash
     name: Push hawking to Attic
 when:

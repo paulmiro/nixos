@@ -25,17 +25,14 @@ steps:
     name: Setup Attic
   - commands:
       - nix-fast-build --no-nom --skip-cached --attic-cache lounge-rocks:nix-cache --flake '.#nixosConfigurations.turing.config.system.build.toplevel' --out-link 'result-turing'
-    failure: ignore
     image: bash
     name: Build turing
   - commands:
       - nix --show-trace path-info --closure-size -h $(readlink -f 'result-turing')
-    failure: ignore
     image: bash
     name: Show turing info
   - commands:
       - attic push lounge-rocks:nix-cache 'result-turing'
-    failure: ignore
     image: bash
     name: Push turing to Attic
 when:

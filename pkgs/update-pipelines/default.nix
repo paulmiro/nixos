@@ -82,14 +82,13 @@ let
       };
       inherit when;
       depends_on = dependsOn;
-      runs_on = [ "failure" ];
+      runs_on = [ "failure" ]; # individual builds are only needed when the combined build fails
       steps = [
         steps.decryptPrivateData
         steps.atticSetup
         {
           name = "Build ${name}";
           image = "bash";
-          failure = "ignore";
           commands = [
             "${nix-fast-build} --flake '.#nixosConfigurations.${name}.config.system.build.toplevel' --out-link 'result-${name}'"
           ];
@@ -97,7 +96,6 @@ let
         {
           name = "Show ${name} info";
           image = "bash";
-          failure = "ignore";
           commands = [
             "${nix} path-info --closure-size -h $(readlink -f 'result-${name}')"
           ];
@@ -105,7 +103,6 @@ let
         {
           name = "Push ${name} to Attic";
           image = "bash";
-          failure = "ignore";
           commands = [ "attic push lounge-rocks:nix-cache 'result-${name}'" ];
         }
       ];

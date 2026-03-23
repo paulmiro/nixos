@@ -25,17 +25,14 @@ steps:
     name: Setup Attic
   - commands:
       - nix-fast-build --no-nom --skip-cached --attic-cache lounge-rocks:nix-cache --flake '.#nixosConfigurations.leibniz.config.system.build.toplevel' --out-link 'result-leibniz'
-    failure: ignore
     image: bash
     name: Build leibniz
   - commands:
       - nix --show-trace path-info --closure-size -h $(readlink -f 'result-leibniz')
-    failure: ignore
     image: bash
     name: Show leibniz info
   - commands:
       - attic push lounge-rocks:nix-cache 'result-leibniz'
-    failure: ignore
     image: bash
     name: Push leibniz to Attic
 when:
