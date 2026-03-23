@@ -78,9 +78,9 @@ let
     event = [ "push" ];
   };
 
-  toFile = pipeline: pkgs.writeText "pipeline.json" (builtins.toJSON pipeline);
+  toFile = workflow: pkgs.writeText "workflow.json" (builtins.toJSON workflow);
 
-  machinePipelines = builtins.listToAttrs (
+  machineWorkflows = builtins.listToAttrs (
     map (
       name:
       let
@@ -107,8 +107,8 @@ let
     ) machines
   );
 
-  pipelines =
-    machinePipelines
+  workflows =
+    machineWorkflows
     // (lib.mapAttrs' (
       system: platform:
       lib.nameValuePair ".build-all-${system}" {
@@ -127,7 +127,7 @@ let
       }
     ) platforms);
 in
-pkgs.writeShellScriptBin "woodpecker-pipeline" ''
+pkgs.writeShellScriptBin "update-pipelines" ''
   set -euo pipefail
   shopt -s dotglob
 
@@ -139,8 +139,8 @@ pkgs.writeShellScriptBin "woodpecker-pipeline" ''
     
   # copy pipelines to .woodpecker folder
   ${lib.concatStringsSep "\n" (
-    lib.mapAttrsToList (name: pipeline: ''
-      cat ${toFile pipeline} | ${pkgs.yq}/bin/yq -y -w 9999 > .woodpecker/${name}.yaml
-    '') pipelines
+    lib.mapAttrsToList (name: workflow: ''
+      cat ${toFile workflow} | ${pkgs.yq}/bin/yq -y -w 9999 > .woodpecker/${name}.yaml
+    '') workflows
   )}
 ''
