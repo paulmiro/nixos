@@ -86,7 +86,7 @@ let
       let
         system = systemFor name;
       in
-      lib.nameValuePair "build-${name}" {
+      lib.nameValuePair name {
         labels = {
           backend = "docker";
           platform = platforms."${system}";
