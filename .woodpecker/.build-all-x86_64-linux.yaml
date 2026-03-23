@@ -49,6 +49,11 @@ steps:
     image: bash
     name: check-output-newton
   - commands:
+      - test -L result-aarch64-linux.pi4b
+    failure: ignore
+    image: bash
+    name: check-output-pi4b
+  - commands:
       - test -L result-x86_64-linux.turing
     failure: ignore
     image: bash

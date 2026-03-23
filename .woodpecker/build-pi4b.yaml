@@ -1,0 +1,21 @@
+depends_on:
+  - build-all-aarch64-linux
+labels:
+  backend: docker
+  platform: linux/arm64
+runs_on:
+  - success
+  - failure
+steps:
+  - commands:
+      - test 'true' = $(curl -s https://build.lounge.rocks/api/repos/24/pipelines/$CI_PIPELINE_NUMBER | jq '.workflows[] | select(.name == "build-all-aarch64-linux") .children[] | select(.name == "check-output-pi4b") .state == "success"')
+    image: registry.gitlab.com/gitlab-ci-utils/curl-jq:latest
+    name: check-pi4b-status
+when:
+  branch:
+    exclude:
+      - no-private-data
+    include:
+      - '**'
+  event:
+    - push
