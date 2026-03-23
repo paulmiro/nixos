@@ -78,7 +78,7 @@ let
 
   toFile = pipeline: pkgs.writeText "pipeline.json" (builtins.toJSON pipeline);
 
-  machinePipelines = lib.mapAttrs (
+  machinePipelines = lib.mapAttrs' (
     name: _config:
     let
       system = systemFor name;
