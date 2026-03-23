@@ -110,20 +110,29 @@ let
                   backend = "local";
                   platform = platforms."${system}";
                 };
-                when = when // {
-                  status = [ "failure" ];
-                };
+                inherit when;
                 depends_on = [
                   "build-all-${system}"
                 ]
                 ++ lib.optional (!prev.initial) prev.prevNames."${system}";
-                runs_on = [ "failure" ]; # individual builds are only needed when the combined build fails
-                steps = [
-                  steps.decryptPrivateData
-                  steps.atticSetup
-                  (steps.buildMachine name)
-                  (steps.showMachineInfo name)
+                runs_on = [
+                  "success"
+                  "failure"
                 ];
+                steps =
+                  let
+                    onFailure = {
+                      # individual builds are only needed when the combined build fails
+                      # we cannot just use runs_on = "faulure" because github doesn't understand the "skipped" status
+                      when.status = "failure";
+                    };
+                  in
+                  [
+                    (steps.decryptPrivateData // onFailure)
+                    (steps.atticSetup // onFailure)
+                    ((steps.buildMachine name) // onFailure)
+                    ((steps.showMachineInfo name) // onFailure)
+                  ];
               };
             }
           ]
