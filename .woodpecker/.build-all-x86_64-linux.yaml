@@ -1,3 +1,5 @@
+depends_on:
+  - nix-flake-check
 labels:
   backend: local
   platform: linux/amd64

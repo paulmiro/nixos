@@ -180,6 +180,7 @@ let
           platform = platform;
         };
         inherit when;
+        depends_on = [ "nix-flake-check" ];
         steps = [
           steps.decryptPrivateData
           (steps.nixFastBuildChecks system)
