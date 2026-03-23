@@ -1,0 +1,64 @@
+depends_on: []
+labels:
+  backend: local
+  platform: linux/amd64
+steps:
+  - commands:
+      - cd modules/private
+      - echo $AGE_KEY_PRIVATE_DATA | nix shell nixpkgs#age --command age --decrypt -i - -o private.toml.decrypted private.toml
+      - mv private.toml.decrypted private.toml
+    environment:
+      AGE_KEY_PRIVATE_DATA:
+        from_secret: AGE_KEY_PRIVATE_DATA
+    image: bash
+    name: Decrypt Private Data
+  - commands:
+      - attic login lounge-rocks https://cache.lounge.rocks $ATTIC_KEY --set-default
+    environment:
+      ATTIC_KEY:
+        from_secret: attic_key
+    image: bash
+    name: Setup Attic
+  - commands:
+      - nix-fast-build --no-nom --skip-cached --attic-cache lounge-rocks:nix-cache --option warn-dirty false --flake ".#checks.x86_64-linux"
+    failure: ignore
+    image: bash
+    name: Build all x86_64-linux machines
+  - commands:
+      - test -L result-backus
+    failure: ignore
+    image: bash
+    name: check-output-backus
+  - commands:
+      - test -L result-hawking
+    failure: ignore
+    image: bash
+    name: check-output-hawking
+  - commands:
+      - test -L result-leibniz
+    failure: ignore
+    image: bash
+    name: check-output-leibniz
+  - commands:
+      - test -L result-morse
+    failure: ignore
+    image: bash
+    name: check-output-morse
+  - commands:
+      - test -L result-newton
+    failure: ignore
+    image: bash
+    name: check-output-newton
+  - commands:
+      - test -L result-turing
+    failure: ignore
+    image: bash
+    name: check-output-turing
+when:
+  branch:
+    exclude:
+      - no-private-data
+    include:
+      - '**'
+  event:
+    - push

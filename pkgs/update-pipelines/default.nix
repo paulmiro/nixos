@@ -1,4 +1,4 @@
-# nix run .\#woodpecker-pipeline
+# nix run .#update-pipelines
 {
   flake-self,
   lib,
@@ -12,21 +12,17 @@ let
     "x86_64-linux" = "linux/amd64";
   };
 
-  nix = "nix --show-trace";
+  machines = builtins.attrNames (
+    lib.filterAttrs (name: config: config.config.paul.ci.enable) flake-self.nixosConfigurations
+  );
+
+  systemFor = name: flake-self.nixosConfigurations.${name}.config.nixpkgs.hostPlatform.system;
+
+  machinesFor = system: builtins.filter (name: systemFor name == system) machines;
+
+  nix-fast-build = "nix-fast-build --no-nom --skip-cached --attic-cache lounge-rocks:nix-cache --option warn-dirty false";
 
   steps = {
-    nixFlakeShow = {
-      name = "Nix flake show";
-      image = "bash";
-      commands = [ "${nix} flake show" ];
-    };
-
-    nixFlakeCheck = {
-      name = "Nix flake check";
-      image = "bash";
-      commands = [ "${nix} flake check --show-trace" ];
-    };
-
     decryptPrivateData = {
       name = "Decrypt Private Data";
       image = "bash";
@@ -46,6 +42,37 @@ let
       ];
       environment.ATTIC_KEY.from_secret = "attic_key";
     };
+
+    buildAllMachinesFor = system: {
+      name = "Build all ${system} machines";
+      image = "bash";
+      # nix-fast-build is smart enough to keep other builds going when one machine fails
+      # ignoring here also means that failures won't show up on github,
+      # but the individual machine failures will still show up
+      failure = "ignore";
+      commands = [
+        "${nix-fast-build} --flake \".#checks.${system}\""
+      ];
+    };
+
+    checkMachineOutput = name: {
+      # this exists only for the api call below
+      name = "check-output-${name}";
+      image = "bash";
+      failure = "ignore";
+      commands = [
+        "test -L result-${name}"
+      ];
+    };
+
+    checkMachineBuildStatus = name: {
+      # direct api calls seem to be the only way to transfer information between workflows, thus this abomination was born
+      name = "check-${name}-status";
+      image = "registry.gitlab.com/gitlab-ci-utils/curl-jq:latest";
+      commands = [
+        "test 'true' = $(curl -s https://build.lounge.rocks/api/repos/24/pipelines/$CI_PIPELINE_NUMBER | jq '.workflows[] | select(.name == \"build-all-${systemFor name}\") .children[] | select(.name == \"check-output-${name}\") .state == \"success\"')"
+      ];
+    };
   };
 
   when = {
@@ -56,110 +83,57 @@ let
     event = [ "push" ];
   };
 
-  nixosConfigurations = lib.filterAttrs (
-    name: config: config.config.paul.ci.enable
-  ) flake-self.nixosConfigurations;
+  toFile = workflow: pkgs.writeText "workflow.json" (builtins.toJSON workflow);
 
-  systemFor = config: config.config.nixpkgs.hostPlatform.system;
+  machineWorkflows = builtins.listToAttrs (
+    map (
+      name:
+      let
+        system = systemFor name;
+      in
+      lib.nameValuePair name {
+        labels = {
+          backend = "docker";
+          platform = platforms."${system}";
+        };
+        skip_clone = true;
+        inherit when;
+        depends_on = [
+          "build-all-${system}"
+        ];
+        runs_on = [
+          "success"
+          "failure"
+        ];
+        steps = [
+          (steps.checkMachineBuildStatus name)
+        ];
+      }
 
-  toFile = pipeline: pkgs.writeText "pipeline.json" (builtins.toJSON pipeline);
-
-  mkMachinePipeline =
-    {
-      name,
-      config,
-      dependsOn,
-    }:
-    {
-      labels = {
-        backend = "local";
-        platform = platforms."${systemFor config}";
-      };
-      inherit when;
-      depends_on = dependsOn;
-      steps = [
-        steps.decryptPrivateData
-        steps.atticSetup
-        {
-          name = "Build ${name}";
-          image = "bash";
-          commands = [
-            "${nix} build --print-out-paths '.#nixosConfigurations.${name}.config.system.build.toplevel' -o 'result-${name}'"
-          ];
-        }
-        {
-          name = "Show ${name} info";
-          image = "bash";
-          commands = [
-            "${nix} path-info --closure-size -h $(readlink -f 'result-${name}')"
-          ];
-        }
-        {
-          name = "Push ${name} to Attic";
-          image = "bash";
-          commands = [ "attic push lounge-rocks:nix-cache 'result-${name}'" ];
-        }
-      ];
-    };
-
-  machinePipelines = builtins.listToAttrs (
-    lib.foldlAttrs
-      (
-        acc: name: value:
-        (
-          let
-            prev = lib.lists.last acc;
-            system = systemFor value;
-          in
-          (if prev.initial then [ ] else acc)
-          ++ [
-            {
-              initial = false;
-              prevNames = prev.prevNames // {
-                "${system}" = "build-${name}";
-              };
-              name = "build-${name}";
-              value = mkMachinePipeline {
-                config = value;
-                inherit name;
-                # we depend on the previous machine's pipeline to make sure we don't build shared packages twice
-                dependsOn = [ prev.prevNames."${system}" ];
-              };
-            }
-          ]
-        )
-      )
-      # initial accumulator
-      [
-        {
-          initial = true;
-          # the first pipeline on each system should depend on the nix-flake-check step
-          prevNames = {
-            "aarch64-linux" = "nix-flake-check";
-            "x86_64-linux" = "nix-flake-check";
-          };
-        }
-      ]
-      nixosConfigurations
+    ) machines
   );
 
-  pipelines = machinePipelines // {
-    # dot for alphabetical sorting
-    ".nix-flake-check" = {
-      labels = {
-        backend = "local";
-        platform = "linux/amd64";
-      };
-      inherit when;
-      steps = [
-        steps.decryptPrivateData
-        steps.nixFlakeShow
-        steps.nixFlakeCheck
-      ];
-    };
-  };
+  workflows =
+    machineWorkflows
+    // (lib.mapAttrs' (
+      system: platform:
+      lib.nameValuePair ".build-all-${system}" {
+        labels = {
+          backend = "local";
+          platform = platform;
+        };
+        inherit when;
+        depends_on = [ ];
+        steps = [
+          steps.decryptPrivateData
+          steps.atticSetup
+          (steps.buildAllMachinesFor system)
+        ]
+        ++ (map (name: (steps.checkMachineOutput name)) (machinesFor system));
+      }
+    ) platforms);
 in
-pkgs.writeShellScriptBin "woodpecker-pipeline" ''
+pkgs.writeShellScriptBin "update-pipelines" ''
   set -euo pipefail
   shopt -s dotglob
 
@@ -171,8 +145,8 @@ pkgs.writeShellScriptBin "woodpecker-pipeline" ''
     
   # copy pipelines to .woodpecker folder
   ${lib.concatStringsSep "\n" (
-    lib.mapAttrsToList (name: pipeline: ''
-      cat ${toFile pipeline} | ${pkgs.yq}/bin/yq -y -w 9999 > .woodpecker/${name}.yaml
-    '') pipelines
+    lib.mapAttrsToList (name: workflow: ''
+      cat ${toFile workflow} | ${pkgs.yq}/bin/yq -y -w 9999 > .woodpecker/${name}.yaml
+    '') workflows
   )}
 ''

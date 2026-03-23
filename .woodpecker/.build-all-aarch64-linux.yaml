@@ -1,8 +1,7 @@
-depends_on:
-  - build-hawking
+depends_on: []
 labels:
   backend: local
-  platform: linux/amd64
+  platform: linux/arm64
 steps:
   - commands:
       - cd modules/private
@@ -21,17 +20,10 @@ steps:
     image: bash
     name: Setup Attic
   - commands:
-      - nix --show-trace build --print-out-paths '.#nixosConfigurations.leibniz.config.system.build.toplevel' -o 'result-leibniz'
+      - nix-fast-build --no-nom --skip-cached --attic-cache lounge-rocks:nix-cache --option warn-dirty false --flake ".#checks.aarch64-linux"
+    failure: ignore
     image: bash
-    name: Build leibniz
-  - commands:
-      - nix --show-trace path-info --closure-size -h $(readlink -f 'result-leibniz')
-    image: bash
-    name: Show leibniz info
-  - commands:
-      - attic push lounge-rocks:nix-cache 'result-leibniz'
-    image: bash
-    name: Push leibniz to Attic
+    name: Build all aarch64-linux machines
 when:
   branch:
     exclude:
