@@ -20,7 +20,7 @@ let
 
   machinesFor = system: builtins.filter (name: systemFor name == system) machines;
 
-  nix-fast-build = "nix-fast-build --no-nom --skip-cached --attic-cache lounge-rocks:nix-cache";
+  nix-fast-build = "nix-fast-build --no-nom --skip-cached --attic-cache lounge-rocks:nix-cache --option warn-dirty false";
 
   steps = {
     decryptPrivateData = {
