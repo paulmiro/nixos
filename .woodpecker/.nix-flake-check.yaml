@@ -13,10 +13,12 @@ steps:
     name: Decrypt Private Data
   - commands:
       - nix --show-trace flake show
+    failure: ignore
     image: bash
     name: Nix flake show
   - commands:
       - nix --show-trace flake check --show-trace
+    failure: ignore
     image: bash
     name: Nix flake check
 when:

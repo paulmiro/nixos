@@ -159,7 +159,7 @@ let
     machinePipelines
     // {
       # dots for alphabetical sorting
-      "..nix-flake-check" = {
+      ".nix-flake-check" = {
         labels = {
           backend = "local";
           platform = "linux/amd64";

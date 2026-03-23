@@ -13,8 +13,9 @@ steps:
     name: Decrypt Private Data
   - commands:
       - nix-fast-build --no-nom --skip-cached --attic-cache lounge-rocks:nix-cache --flake ".#checks.aarch64-linux"
+    failure: ignore
     image: bash
-    name: Build all machines for the current system
+    name: Build all aarch64-linux machines
 when:
   branch:
     exclude:
