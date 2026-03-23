@@ -52,7 +52,7 @@ let
       commands = [
         # "${nix-fast-build} --flake \".#checks.${system}\""
         "echo 'skipping'"
-        "false"
+        # "false"
       ];
     };
 

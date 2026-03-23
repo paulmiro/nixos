@@ -22,7 +22,6 @@ steps:
     name: Setup Attic
   - commands:
       - echo 'skipping'
-      - 'false'
     image: bash
     name: Build all aarch64-linux machines
 when:
