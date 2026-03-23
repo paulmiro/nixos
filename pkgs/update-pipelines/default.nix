@@ -1,4 +1,4 @@
-# nix run .\#woodpecker-pipeline
+# nix run .#update-pipelines
 {
   flake-self,
   lib,
