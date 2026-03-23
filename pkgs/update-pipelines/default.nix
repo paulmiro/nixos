@@ -20,7 +20,9 @@ let
       name = "Nix flake check";
       image = "bash";
       failure = "ignore"; # don't abort all builds just because one machine failed a check
-      commands = [ "${nix} flake check --show-trace" ];
+      commands = [
+        "${nix} flake check --show-trace"
+      ];
     };
 
     decryptPrivateData = {
