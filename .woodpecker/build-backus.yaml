@@ -8,6 +8,10 @@ runs_on:
   - failure
 steps:
   - commands:
+      - env
+    image: bash
+    name: print env
+  - commands:
       - cd modules/private
       - echo $AGE_KEY_PRIVATE_DATA | nix shell nixpkgs#age --command age --decrypt -i - -o private.toml.decrypted private.toml
       - mv private.toml.decrypted private.toml
