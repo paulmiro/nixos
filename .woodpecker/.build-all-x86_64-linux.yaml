@@ -25,37 +25,37 @@ steps:
     name: Build all x86_64-linux machines
   - commands:
       - ls -lA
-      - test -L result-x86_64-linux.backus
+      - test -L result-backus
     failure: ignore
     image: bash
     name: check-output-backus
   - commands:
       - ls -lA
-      - test -L result-x86_64-linux.hawking
+      - test -L result-hawking
     failure: ignore
     image: bash
     name: check-output-hawking
   - commands:
       - ls -lA
-      - test -L result-x86_64-linux.leibniz
+      - test -L result-leibniz
     failure: ignore
     image: bash
     name: check-output-leibniz
   - commands:
       - ls -lA
-      - test -L result-x86_64-linux.morse
+      - test -L result-morse
     failure: ignore
     image: bash
     name: check-output-morse
   - commands:
       - ls -lA
-      - test -L result-x86_64-linux.newton
+      - test -L result-newton
     failure: ignore
     image: bash
     name: check-output-newton
   - commands:
       - ls -lA
-      - test -L result-x86_64-linux.turing
+      - test -L result-turing
     failure: ignore
     image: bash
     name: check-output-turing

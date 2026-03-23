@@ -6,6 +6,7 @@ labels:
 runs_on:
   - success
   - failure
+skip_clone: 'true'
 steps:
   - commands:
       - test 'true' = $(curl -s https://build.lounge.rocks/api/repos/24/pipelines/$CI_PIPELINE_NUMBER | jq '.workflows[] | select(.name == "build-all-x86_64-linux") .children[] | select(.name == "check-output-newton") .state == "success"')

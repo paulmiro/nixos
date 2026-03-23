@@ -57,7 +57,7 @@ let
       failure = "ignore";
       commands = [
         "ls -lA"
-        "test -L result-${systemFor name}.${name}"
+        "test -L result-${name}"
       ];
     };
 
@@ -91,6 +91,7 @@ let
           backend = "docker";
           platform = platforms."${system}";
         };
+        skip_clone = "true";
         inherit when;
         depends_on = [
           "build-all-${system}"
