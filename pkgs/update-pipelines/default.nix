@@ -12,20 +12,16 @@ let
     "x86_64-linux" = "linux/amd64";
   };
 
+  nixosConfigurations = lib.filterAttrs (
+    name: config: config.config.paul.ci.enable
+  ) flake-self.nixosConfigurations;
+
+  systemFor = name: nixosConfigurations.${name}.config.nixpkgs.hostPlatform.system;
+
   nix = "nix --show-trace";
   nix-fast-build = "nix-fast-build --no-nom --skip-cached --attic-cache lounge-rocks:nix-cache";
 
   steps = {
-    nixFlakeCheck = {
-      name = "Nix flake check";
-      image = "bash";
-      failure = "ignore"; # don't abort all builds just because one machine failed a check
-      commands = [
-        # "${nix} flake check --show-trace"
-        "echo 'skipping'"
-      ];
-    };
-
     decryptPrivateData = {
       name = "Decrypt Private Data";
       image = "bash";
@@ -50,27 +46,25 @@ let
       name = "Build all ${system} machines";
       image = "bash";
       commands = [
-        # "${nix-fast-build} --flake \".#checks.${system}\""
-        "echo 'skipping'"
-        "false"
+        "${nix-fast-build} --flake \".#checks.${system}\""
       ];
     };
 
-    buildMachine = name: {
-      name = "Build ${name}";
+    checkMachineOutput = name: {
+      name = "check-output-${name}";
       image = "bash";
+      depends_on = [ "build-all-${systemFor name}" ];
+      failure = "ignore";
       commands = [
-        # "${nix-fast-build} --flake '.#nixosConfigurations.${name}.config.system.build.toplevel' --out-link 'result-${name}'"
-        "echo 'skipping'"
+        "test -L result-${systemFor name}.${name}"
       ];
     };
 
-    showMachineInfo = name: {
-      name = "Show ${name} info";
-      image = "bash";
+    checkMachineBuildStatus = name: {
+      name = "check-${name}-status";
+      image = "registry.gitlab.com/gitlab-ci-utils/curl-jq:latest";
       commands = [
-        # "${nix} path-info --closure-size -h $(readlink -f 'result-${name}-')" # trailing "-" in the link because nix-fast-build adds it
-        "echo 'skipping'"
+        "test 'true' = $(curl -s https://build.lounge.rocks/api/repos/24/pipelines/$CI_PIPELINE_NUMBER | jq '.workflows[] | select(.name == \"build-all-${systemFor name}\") .children[] | select(.name == \"check-output-${name}\") .state == \"success\"')"
       ];
     };
   };
@@ -83,97 +77,50 @@ let
     event = [ "push" ];
   };
 
-  nixosConfigurations = lib.filterAttrs (
-    name: config: config.config.paul.ci.enable
-  ) flake-self.nixosConfigurations;
-
   toFile = pipeline: pkgs.writeText "pipeline.json" (builtins.toJSON pipeline);
 
-  machinePipelines = builtins.listToAttrs (
-    lib.foldlAttrs
-      (
-        acc: name: config:
-        (
-          let
-            prev = lib.lists.last acc;
-            system = config.config.nixpkgs.hostPlatform.system;
-          in
-          (if prev.initial then [ ] else acc)
-          ++ [
-            {
-              initial = false;
-              prevNames = prev.prevNames // {
-                "${system}" = "build-${name}";
-              };
-              name = "build-${name}";
-              value = {
-                labels = {
-                  backend = "local";
-                  platform = platforms."${system}";
-                };
-                inherit when;
-                depends_on = [
-                  "build-all-${system}"
-                ]
-                ++ lib.optional (!prev.initial) prev.prevNames."${system}";
-                runs_on = [
-                  "success"
-                  # individual builds are only needed when the combined build fails
-                  # we cannot just use runs_on = "faulure" because github doesn't understand the "skipped" status
-                  # there also seems to be no other way to send information from one workflow to another, so for now we just build everything again
-                  "failure"
-                ];
-                steps = [
-                  steps.decryptPrivateData
-                  steps.atticSetup
-                  (steps.buildMachine name)
-                  (steps.showMachineInfo name)
-                ];
-              };
-            }
-          ]
-        )
-      )
-      # initial accumulator
-      [
-        {
-          initial = true;
-          prevNames = { };
-        }
-      ]
-      nixosConfigurations
-  );
+  machinePipelines = lib.mapAttrs (
+    name: _config:
+    let
+      system = systemFor name;
+    in
+    lib.nameValuePair "build-${name}" {
+      labels = {
+        backend = "docker";
+        platform = platforms."${system}";
+      };
+      inherit when;
+      depends_on = [
+        "build-all-${system}"
+      ];
+      runs_on = [
+        "success"
+        "failure"
+      ];
+      steps = [
+        (steps.checkMachineBuildStatus name)
+      ];
+    }
+
+  ) nixosConfigurations;
 
   pipelines =
     machinePipelines
-    // {
-      # dot for alphabetical sorting
-      ".nix-flake-check" = {
-        labels = {
-          backend = "local";
-          platform = "linux/amd64";
-        };
-        inherit when;
-        steps = [
-          steps.decryptPrivateData
-          steps.nixFlakeCheck
-        ];
-      };
-    }
     // (lib.mapAttrs' (
       system: platform:
-      lib.nameValuePair "build-all-${system}" {
+      lib.nameValuePair ".build-all-${system}" {
         labels = {
           backend = "local";
           platform = platform;
         };
         inherit when;
-        depends_on = [ "nix-flake-check" ];
+        depends_on = [ ];
         steps = [
           steps.decryptPrivateData
           steps.atticSetup
           (steps.buildAllMachinesFor system)
-        ];
+        ]
+        ++ (lib.mapAttrsToList (name: _config: (steps.checkMachineOutput name)) nixosConfigurations);
       }
     ) platforms);
 in

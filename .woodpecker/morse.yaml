@@ -1,0 +1,23 @@
+name: build-morse
+value:
+  depends_on:
+    - build-all-x86_64-linux
+  labels:
+    backend: docker
+    platform: linux/amd64
+  runs_on:
+    - success
+    - failure
+  steps:
+    - commands:
+        - test 'true' = $(curl -s https://build.lounge.rocks/api/repos/24/pipelines/$CI_PIPELINE_NUMBER | jq '.workflows[] | select(.name == "build-all-x86_64-linux") .children[] | select(.name == "check-output-morse") .state == "success"')
+      image: registry.gitlab.com/gitlab-ci-utils/curl-jq:latest
+      name: check-morse-status
+  when:
+    branch:
+      exclude:
+        - no-private-data
+      include:
+        - '**'
+    event:
+      - push
