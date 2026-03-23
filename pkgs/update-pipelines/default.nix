@@ -104,7 +104,9 @@ let
                   backend = "local";
                   platform = platforms."${system}";
                 };
-                inherit when;
+                when = when // {
+                  status = [ "failure" ];
+                };
                 depends_on = [
                   "build-all-${system}"
                 ]
