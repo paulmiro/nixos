@@ -55,6 +55,10 @@ let
       name = "check-output-${name}";
       image = "bash";
       failure = "ignore";
+      when.status = [
+        "success"
+        "failure"
+      ];
       commands = [
         "ls -lA" # TODO remove
         "test -L result-${name}"

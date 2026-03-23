@@ -29,36 +29,60 @@ steps:
     failure: ignore
     image: bash
     name: check-output-backus
+    when:
+      status:
+        - success
+        - failure
   - commands:
       - ls -lA
       - test -L result-hawking
     failure: ignore
     image: bash
     name: check-output-hawking
+    when:
+      status:
+        - success
+        - failure
   - commands:
       - ls -lA
       - test -L result-leibniz
     failure: ignore
     image: bash
     name: check-output-leibniz
+    when:
+      status:
+        - success
+        - failure
   - commands:
       - ls -lA
       - test -L result-morse
     failure: ignore
     image: bash
     name: check-output-morse
+    when:
+      status:
+        - success
+        - failure
   - commands:
       - ls -lA
       - test -L result-newton
     failure: ignore
     image: bash
     name: check-output-newton
+    when:
+      status:
+        - success
+        - failure
   - commands:
       - ls -lA
       - test -L result-turing
     failure: ignore
     image: bash
     name: check-output-turing
+    when:
+      status:
+        - success
+        - failure
 when:
   branch:
     exclude:

@@ -29,6 +29,10 @@ steps:
     failure: ignore
     image: bash
     name: check-output-pi4b
+    when:
+      status:
+        - success
+        - failure
 when:
   branch:
     exclude:
