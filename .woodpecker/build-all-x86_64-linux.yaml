@@ -22,7 +22,6 @@ steps:
     name: Setup Attic
   - commands:
       - nix-fast-build --no-nom --skip-cached --attic-cache lounge-rocks:nix-cache --flake ".#checks.x86_64-linux"
-    failure: ignore
     image: bash
     name: Build all x86_64-linux machines
 when:

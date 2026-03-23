@@ -46,7 +46,6 @@ let
     nixFastBuildChecks = system: {
       name = "Build all ${system} machines";
       image = "bash";
-      failure = "ignore";
       commands = [
         "${nix-fast-build} --flake \".#checks.${system}\""
       ];
