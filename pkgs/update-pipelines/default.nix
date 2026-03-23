@@ -16,13 +16,6 @@ let
   nix-fast-build = "nix-fast-build --no-nom --skip-cached --attic-cache lounge-rocks:nix-cache";
 
   steps = {
-    nixFlakeShow = {
-      name = "Nix flake show";
-      image = "bash";
-      failure = "ignore";
-      commands = [ "${nix} flake show" ];
-    };
-
     nixFlakeCheck = {
       name = "Nix flake check";
       image = "bash";
@@ -167,7 +160,6 @@ let
         inherit when;
         steps = [
           steps.decryptPrivateData
-          steps.nixFlakeShow
           steps.nixFlakeCheck
         ];
       };
