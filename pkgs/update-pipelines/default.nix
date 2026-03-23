@@ -57,7 +57,6 @@ let
       image = "bash";
       failure = "ignore";
       commands = [
-        "ls -lA" # TODO remove
         "test -L result-${name}"
       ];
     };
