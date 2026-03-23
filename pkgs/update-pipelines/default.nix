@@ -99,11 +99,6 @@ let
             "${nix} path-info --closure-size -h $(readlink -f 'result-${name}-')"
           ];
         }
-        {
-          name = "Push ${name} to Attic";
-          image = "bash";
-          commands = [ "attic push lounge-rocks:nix-cache 'result-${name}-'" ];
-        }
       ];
     };
 

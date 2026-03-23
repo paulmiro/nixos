@@ -31,10 +31,6 @@ steps:
       - nix --show-trace path-info --closure-size -h $(readlink -f 'result-turing-')
     image: bash
     name: Show turing info
-  - commands:
-      - attic push lounge-rocks:nix-cache 'result-turing-'
-    image: bash
-    name: Push turing to Attic
 when:
   branch:
     exclude:

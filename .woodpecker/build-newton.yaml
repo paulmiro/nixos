@@ -31,10 +31,6 @@ steps:
       - nix --show-trace path-info --closure-size -h $(readlink -f 'result-newton-')
     image: bash
     name: Show newton info
-  - commands:
-      - attic push lounge-rocks:nix-cache 'result-newton-'
-    image: bash
-    name: Push newton to Attic
 when:
   branch:
     exclude:

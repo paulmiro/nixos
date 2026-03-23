@@ -31,10 +31,6 @@ steps:
       - nix --show-trace path-info --closure-size -h $(readlink -f 'result-morse-')
     image: bash
     name: Show morse info
-  - commands:
-      - attic push lounge-rocks:nix-cache 'result-morse-'
-    image: bash
-    name: Push morse to Attic
 when:
   branch:
     exclude:
