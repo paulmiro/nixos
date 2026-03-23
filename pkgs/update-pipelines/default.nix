@@ -175,6 +175,7 @@ let
         depends_on = [ "nix-flake-check" ];
         steps = [
           steps.decryptPrivateData
+          steps.atticSetup
           (steps.nixFastBuildChecks system)
         ];
       }
