@@ -8,7 +8,7 @@
   paul = {
     common-server.enable = true;
 
-    ci.enable = false;
+    # ci.enable = false; # TODO: disable after CI testing is done
   };
 
   imports = [
