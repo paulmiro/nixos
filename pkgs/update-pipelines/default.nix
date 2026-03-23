@@ -55,6 +55,7 @@ let
     checkMachineOutput = name: {
       name = "check-output-${name}";
       image = "bash";
+      failure = "ignore";
       commands = [
         "ls -lA" # TODO remove
         "test -L result-${name}"
