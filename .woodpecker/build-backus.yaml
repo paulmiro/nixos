@@ -8,10 +8,6 @@ runs_on:
   - failure
 steps:
   - commands:
-      - env
-    image: bash
-    name: print env
-  - commands:
       - cd modules/private
       - echo $AGE_KEY_PRIVATE_DATA | nix shell nixpkgs#age --command age --decrypt -i - -o private.toml.decrypted private.toml
       - mv private.toml.decrypted private.toml
@@ -20,8 +16,6 @@ steps:
         from_secret: AGE_KEY_PRIVATE_DATA
     image: bash
     name: Decrypt Private Data
-    when:
-      status: failure
   - commands:
       - attic login lounge-rocks https://cache.lounge.rocks $ATTIC_KEY --set-default
     environment:
@@ -29,20 +23,14 @@ steps:
         from_secret: attic_key
     image: bash
     name: Setup Attic
-    when:
-      status: failure
   - commands:
       - echo 'skipping'
     image: bash
     name: Build backus
-    when:
-      status: failure
   - commands:
       - echo 'skipping'
     image: bash
     name: Show backus info
-    when:
-      status: failure
 when:
   branch:
     exclude:
