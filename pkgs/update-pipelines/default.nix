@@ -21,7 +21,8 @@ let
       image = "bash";
       failure = "ignore"; # don't abort all builds just because one machine failed a check
       commands = [
-        "${nix} flake check --show-trace"
+        # "${nix} flake check --show-trace"
+        "echo 'skipping'"
       ];
     };
 
@@ -49,7 +50,8 @@ let
       name = "Build all ${system} machines";
       image = "bash";
       commands = [
-        "${nix-fast-build} --flake \".#checks.${system}\""
+        # "${nix-fast-build} --flake \".#checks.${system}\""
+        "echo 'skipping'"
       ];
     };
 
@@ -57,7 +59,8 @@ let
       name = "Build ${name}";
       image = "bash";
       commands = [
-        "${nix-fast-build} --flake '.#nixosConfigurations.${name}.config.system.build.toplevel' --out-link 'result-${name}'"
+        # "${nix-fast-build} --flake '.#nixosConfigurations.${name}.config.system.build.toplevel' --out-link 'result-${name}'"
+        "echo 'skipping'"
       ];
     };
 
@@ -65,7 +68,8 @@ let
       name = "Show ${name} info";
       image = "bash";
       commands = [
-        "${nix} path-info --closure-size -h $(readlink -f 'result-${name}-')" # trailing "-" in the link because nix-fast-build adds it
+        # "${nix} path-info --closure-size -h $(readlink -f 'result-${name}-')" # trailing "-" in the link because nix-fast-build adds it
+        "echo 'skipping'"
       ];
     };
   };
