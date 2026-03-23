@@ -56,6 +56,7 @@ let
       image = "bash";
       failure = "ignore";
       commands = [
+        "ls -lA"
         "test -L result-${systemFor name}.${name}"
       ];
     };

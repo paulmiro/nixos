@@ -24,6 +24,7 @@ steps:
     image: bash
     name: Build all aarch64-linux machines
   - commands:
+      - ls -lA
       - test -L result-aarch64-linux.pi4b
     failure: ignore
     image: bash
