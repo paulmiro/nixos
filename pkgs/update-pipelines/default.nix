@@ -46,6 +46,9 @@ let
     buildAllMachinesFor = system: {
       name = "Build all ${system} machines";
       image = "bash";
+      # nix-fast-build is smart enough to keep other builds going when one machine fails
+      # ignoring here also means that failures won't show up on github,
+      # but the individual machine failures will still show up
       failure = "ignore";
       commands = [
         "${nix-fast-build} --flake \".#checks.${system}\""
@@ -53,6 +56,7 @@ let
     };
 
     checkMachineOutput = name: {
+      # this exists only for the api call below
       name = "check-output-${name}";
       image = "bash";
       failure = "ignore";
@@ -62,6 +66,7 @@ let
     };
 
     checkMachineBuildStatus = name: {
+      # direct api calls seem to be the only way to transfer information between workflows, thus this abomination was born
       name = "check-${name}-status";
       image = "registry.gitlab.com/gitlab-ci-utils/curl-jq:latest";
       commands = [
