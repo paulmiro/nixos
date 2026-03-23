@@ -96,13 +96,13 @@ let
           name = "Show ${name} info";
           image = "bash";
           commands = [
-            "${nix} path-info --closure-size -h $(readlink -f 'result-${name}')"
+            "${nix} path-info --closure-size -h $(readlink -f 'result-${name}-')"
           ];
         }
         {
           name = "Push ${name} to Attic";
           image = "bash";
-          commands = [ "attic push lounge-rocks:nix-cache 'result-${name}'" ];
+          commands = [ "attic push lounge-rocks:nix-cache 'result-${name}-'" ];
         }
       ];
     };
