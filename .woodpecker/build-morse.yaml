@@ -1,6 +1,6 @@
 depends_on:
-  - build-leibniz
   - build-all-x86_64-linux
+  - build-leibniz
 labels:
   backend: local
   platform: linux/amd64

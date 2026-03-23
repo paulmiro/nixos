@@ -19,7 +19,7 @@ let
     nixFlakeCheck = {
       name = "Nix flake check";
       image = "bash";
-      failure = "ignore";
+      failure = "ignore"; # don't abort all builds just because one machine failed a check
       commands = [ "${nix} flake check --show-trace" ];
     };
 
@@ -64,52 +64,16 @@ let
     name: config: config.config.paul.ci.enable
   ) flake-self.nixosConfigurations;
 
-  systemFor = config: config.config.nixpkgs.hostPlatform.system;
-
   toFile = pipeline: pkgs.writeText "pipeline.json" (builtins.toJSON pipeline);
-
-  mkMachinePipeline =
-    {
-      name,
-      config,
-      dependsOn,
-    }:
-    {
-      labels = {
-        backend = "local";
-        platform = platforms."${systemFor config}";
-      };
-      inherit when;
-      depends_on = dependsOn;
-      runs_on = [ "failure" ]; # individual builds are only needed when the combined build fails
-      steps = [
-        steps.decryptPrivateData
-        steps.atticSetup
-        {
-          name = "Build ${name}";
-          image = "bash";
-          commands = [
-            "${nix-fast-build} --flake '.#nixosConfigurations.${name}.config.system.build.toplevel' --out-link 'result-${name}'"
-          ];
-        }
-        {
-          name = "Show ${name} info";
-          image = "bash";
-          commands = [
-            "${nix} path-info --closure-size -h $(readlink -f 'result-${name}-')"
-          ];
-        }
-      ];
-    };
 
   machinePipelines = builtins.listToAttrs (
     lib.foldlAttrs
       (
-        acc: name: value:
+        acc: name: config:
         (
           let
             prev = lib.lists.last acc;
-            system = systemFor value;
+            system = config.config.nixpkgs.hostPlatform.system;
           in
           (if prev.initial then [ ] else acc)
           ++ [
@@ -119,14 +83,35 @@ let
                 "${system}" = "build-${name}";
               };
               name = "build-${name}";
-              value = mkMachinePipeline {
-                config = value;
-                inherit name;
-                # we depend on the previous machine's pipeline to make sure we don't build shared packages twice
-                dependsOn = [
-                  prev.prevNames."${system}"
+              value = {
+                labels = {
+                  backend = "local";
+                  platform = platforms."${system}";
+                };
+                inherit when;
+                depends_on = [
+                  "build-all-${system}"
                 ]
-                ++ lib.optional (!prev.initial) "build-all-${system}";
+                ++ lib.optional (!prev.initial) prev.prevNames."${system}";
+                runs_on = [ "failure" ]; # individual builds are only needed when the combined build fails
+                steps = [
+                  steps.decryptPrivateData
+                  steps.atticSetup
+                  {
+                    name = "Build ${name}";
+                    image = "bash";
+                    commands = [
+                      "${nix-fast-build} --flake '.#nixosConfigurations.${name}.config.system.build.toplevel' --out-link 'result-${name}'"
+                    ];
+                  }
+                  {
+                    name = "Show ${name} info";
+                    image = "bash";
+                    commands = [
+                      "${nix} path-info --closure-size -h $(readlink -f 'result-${name}-')"
+                    ];
+                  }
+                ];
               };
             }
           ]
@@ -136,8 +121,7 @@ let
       [
         {
           initial = true;
-          # the first host for each system should depend on the build-all step for that system
-          prevNames = lib.mapAttrs (system: platform: "build-all-${system}") platforms;
+          prevNames = { };
         }
       ]
       nixosConfigurations

@@ -1,6 +1,6 @@
 depends_on:
-  - build-hawking
   - build-all-x86_64-linux
+  - build-hawking
 labels:
   backend: local
   platform: linux/amd64

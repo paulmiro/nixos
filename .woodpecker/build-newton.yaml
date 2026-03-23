@@ -1,6 +1,6 @@
 depends_on:
-  - build-morse
   - build-all-x86_64-linux
+  - build-morse
 labels:
   backend: local
   platform: linux/amd64

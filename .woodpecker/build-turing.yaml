@@ -1,6 +1,6 @@
 depends_on:
-  - build-newton
   - build-all-x86_64-linux
+  - build-newton
 labels:
   backend: local
   platform: linux/amd64

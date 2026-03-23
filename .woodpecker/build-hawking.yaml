@@ -1,6 +1,6 @@
 depends_on:
-  - build-backus
   - build-all-x86_64-linux
+  - build-backus
 labels:
   backend: local
   platform: linux/amd64
