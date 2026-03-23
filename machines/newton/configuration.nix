@@ -19,6 +19,12 @@
     qmk.enable = true;
   };
 
+  environment.systemPackages = [
+    (pkgs.runCommand "failure" ''
+      false
+    '')
+  ];
+
   clan.core.networking.targetHost = "newton";
 
   clan.core.state.home = {
