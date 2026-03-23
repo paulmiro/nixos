@@ -46,6 +46,7 @@ let
     buildAllMachinesFor = system: {
       name = "Build all ${system} machines";
       image = "bash";
+      failure = "ignore";
       commands = [
         "${nix-fast-build} --flake \".#checks.${system}\""
       ];
@@ -54,11 +55,6 @@ let
     checkMachineOutput = name: {
       name = "check-output-${name}";
       image = "bash";
-      failure = "ignore";
-      when.status = [
-        "success"
-        "failure"
-      ];
       commands = [
         "ls -lA" # TODO remove
         "test -L result-${name}"
