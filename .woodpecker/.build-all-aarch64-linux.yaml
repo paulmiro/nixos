@@ -24,40 +24,10 @@ steps:
     image: bash
     name: Build all aarch64-linux machines
   - commands:
-      - test -L result-x86_64-linux.backus
-    failure: ignore
-    image: bash
-    name: check-output-backus
-  - commands:
-      - test -L result-x86_64-linux.hawking
-    failure: ignore
-    image: bash
-    name: check-output-hawking
-  - commands:
-      - test -L result-x86_64-linux.leibniz
-    failure: ignore
-    image: bash
-    name: check-output-leibniz
-  - commands:
-      - test -L result-x86_64-linux.morse
-    failure: ignore
-    image: bash
-    name: check-output-morse
-  - commands:
-      - test -L result-x86_64-linux.newton
-    failure: ignore
-    image: bash
-    name: check-output-newton
-  - commands:
       - test -L result-aarch64-linux.pi4b
     failure: ignore
     image: bash
     name: check-output-pi4b
-  - commands:
-      - test -L result-x86_64-linux.turing
-    failure: ignore
-    image: bash
-    name: check-output-turing
 when:
   branch:
     exclude:

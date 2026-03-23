@@ -12,13 +12,14 @@ let
     "x86_64-linux" = "linux/amd64";
   };
 
-  nixosConfigurations = lib.filterAttrs (
-    name: config: config.config.paul.ci.enable
-  ) flake-self.nixosConfigurations;
+  machines = builtins.attrNames (
+    lib.filterAttrs (name: config: config.config.paul.ci.enable) flake-self.nixosConfigurations
+  );
 
-  systemFor = name: nixosConfigurations.${name}.config.nixpkgs.hostPlatform.system;
+  systemFor = name: flake-self.nixosConfigurations.${name}.config.nixpkgs.hostPlatform.system;
 
-  nix = "nix --show-trace";
+  machinesFor = system: builtins.filter (name: systemFor name == system) machines;
+
   nix-fast-build = "nix-fast-build --no-nom --skip-cached --attic-cache lounge-rocks:nix-cache";
 
   steps = {
@@ -78,30 +79,32 @@ let
 
   toFile = pipeline: pkgs.writeText "pipeline.json" (builtins.toJSON pipeline);
 
-  machinePipelines = lib.mapAttrs' (
-    name: _config:
-    let
-      system = systemFor name;
-    in
-    lib.nameValuePair "build-${name}" {
-      labels = {
-        backend = "docker";
-        platform = platforms."${system}";
-      };
-      inherit when;
-      depends_on = [
-        "build-all-${system}"
-      ];
-      runs_on = [
-        "success"
-        "failure"
-      ];
-      steps = [
-        (steps.checkMachineBuildStatus name)
-      ];
-    }
+  machinePipelines = builtins.listToAttrs (
+    map (
+      name:
+      let
+        system = systemFor name;
+      in
+      lib.nameValuePair "build-${name}" {
+        labels = {
+          backend = "docker";
+          platform = platforms."${system}";
+        };
+        inherit when;
+        depends_on = [
+          "build-all-${system}"
+        ];
+        runs_on = [
+          "success"
+          "failure"
+        ];
+        steps = [
+          (steps.checkMachineBuildStatus name)
+        ];
+      }
 
-  ) nixosConfigurations;
+    ) machines
+  );
 
   pipelines =
     machinePipelines
@@ -119,7 +122,7 @@ let
           steps.atticSetup
           (steps.buildAllMachinesFor system)
         ]
-        ++ (lib.mapAttrsToList (name: _config: (steps.checkMachineOutput name)) nixosConfigurations);
+        ++ (map (name: (steps.checkMachineOutput name)) (machinesFor system));
       }
     ) platforms);
 in
