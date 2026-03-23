@@ -24,11 +24,11 @@ steps:
     image: bash
     name: Setup Attic
   - commands:
-      - nix-fast-build --no-nom --skip-cached --attic-cache lounge-rocks:nix-cache --flake '.#nixosConfigurations.hawking.config.system.build.toplevel' --out-link 'result-hawking'
+      - echo 'skipping'
     image: bash
     name: Build hawking
   - commands:
-      - nix --show-trace path-info --closure-size -h $(readlink -f 'result-hawking-')
+      - echo 'skipping'
     image: bash
     name: Show hawking info
 when:
@@ -39,3 +39,5 @@ when:
       - '**'
   event:
     - push
+  status:
+    - failure

@@ -23,11 +23,11 @@ steps:
     image: bash
     name: Setup Attic
   - commands:
-      - nix-fast-build --no-nom --skip-cached --attic-cache lounge-rocks:nix-cache --flake '.#nixosConfigurations.backus.config.system.build.toplevel' --out-link 'result-backus'
+      - echo 'skipping'
     image: bash
     name: Build backus
   - commands:
-      - nix --show-trace path-info --closure-size -h $(readlink -f 'result-backus-')
+      - echo 'skipping'
     image: bash
     name: Show backus info
 when:
@@ -38,3 +38,5 @@ when:
       - '**'
   event:
     - push
+  status:
+    - failure

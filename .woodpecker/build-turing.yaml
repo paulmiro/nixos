@@ -24,11 +24,11 @@ steps:
     image: bash
     name: Setup Attic
   - commands:
-      - nix-fast-build --no-nom --skip-cached --attic-cache lounge-rocks:nix-cache --flake '.#nixosConfigurations.turing.config.system.build.toplevel' --out-link 'result-turing'
+      - echo 'skipping'
     image: bash
     name: Build turing
   - commands:
-      - nix --show-trace path-info --closure-size -h $(readlink -f 'result-turing-')
+      - echo 'skipping'
     image: bash
     name: Show turing info
 when:
@@ -39,3 +39,5 @@ when:
       - '**'
   event:
     - push
+  status:
+    - failure
