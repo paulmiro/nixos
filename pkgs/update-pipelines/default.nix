@@ -82,6 +82,7 @@ let
       };
       inherit when;
       depends_on = dependsOn;
+      runs_on = [ "failure" ];
       steps = [
         steps.decryptPrivateData
         steps.atticSetup
@@ -131,7 +132,10 @@ let
                 config = value;
                 inherit name;
                 # we depend on the previous machine's pipeline to make sure we don't build shared packages twice
-                dependsOn = [ prev.prevNames."${system}" ];
+                dependsOn = [
+                  prev.prevNames."${system}"
+                ]
+                ++ lib.optional (!prev.initial) "build-all-${system}";
               };
             }
           ]

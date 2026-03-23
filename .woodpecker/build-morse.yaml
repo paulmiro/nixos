@@ -1,8 +1,11 @@
 depends_on:
   - build-leibniz
+  - build-all-x86_64-linux
 labels:
   backend: local
   platform: linux/amd64
+runs_on:
+  - failure
 steps:
   - commands:
       - cd modules/private

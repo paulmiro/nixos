@@ -3,6 +3,8 @@ depends_on:
 labels:
   backend: local
   platform: linux/amd64
+runs_on:
+  - failure
 steps:
   - commands:
       - cd modules/private
