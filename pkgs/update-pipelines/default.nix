@@ -91,7 +91,7 @@ let
           backend = "docker";
           platform = platforms."${system}";
         };
-        skip_clone = "true";
+        skip_clone = true;
         inherit when;
         depends_on = [
           "build-all-${system}"
