@@ -28,11 +28,11 @@ steps:
     image: bash
     name: Build turing
   - commands:
-      - nix --show-trace path-info --closure-size -h $(readlink -f 'result-turing')
+      - nix --show-trace path-info --closure-size -h $(readlink -f 'result-turing-')
     image: bash
     name: Show turing info
   - commands:
-      - attic push lounge-rocks:nix-cache 'result-turing'
+      - attic push lounge-rocks:nix-cache 'result-turing-'
     image: bash
     name: Push turing to Attic
 when:

@@ -28,11 +28,11 @@ steps:
     image: bash
     name: Build hawking
   - commands:
-      - nix --show-trace path-info --closure-size -h $(readlink -f 'result-hawking')
+      - nix --show-trace path-info --closure-size -h $(readlink -f 'result-hawking-')
     image: bash
     name: Show hawking info
   - commands:
-      - attic push lounge-rocks:nix-cache 'result-hawking'
+      - attic push lounge-rocks:nix-cache 'result-hawking-'
     image: bash
     name: Push hawking to Attic
 when:

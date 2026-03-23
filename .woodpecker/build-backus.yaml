@@ -27,11 +27,11 @@ steps:
     image: bash
     name: Build backus
   - commands:
-      - nix --show-trace path-info --closure-size -h $(readlink -f 'result-backus')
+      - nix --show-trace path-info --closure-size -h $(readlink -f 'result-backus-')
     image: bash
     name: Show backus info
   - commands:
-      - attic push lounge-rocks:nix-cache 'result-backus'
+      - attic push lounge-rocks:nix-cache 'result-backus-'
     image: bash
     name: Push backus to Attic
 when:
