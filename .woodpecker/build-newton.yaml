@@ -21,15 +21,18 @@ steps:
     image: bash
     name: Setup Attic
   - commands:
-      - nix --show-trace build --print-out-paths '.#nixosConfigurations.newton.config.system.build.toplevel' -o 'result-newton'
+      - nix-fast-build --no-nom --skip-cached --attic-cache lounge-rocks:nix-cache --flake '.#nixosConfigurations.newton.config.system.build.toplevel' --out-link 'result-newton'
+    failure: ignore
     image: bash
     name: Build newton
   - commands:
       - nix --show-trace path-info --closure-size -h $(readlink -f 'result-newton')
+    failure: ignore
     image: bash
     name: Show newton info
   - commands:
       - attic push lounge-rocks:nix-cache 'result-newton'
+    failure: ignore
     image: bash
     name: Push newton to Attic
 when:

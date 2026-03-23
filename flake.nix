@@ -272,6 +272,17 @@
           private = import ./modules/private;
         };
 
+      checks =
+        let
+          ciHosts = nixpkgs.lib.filterAttrs (name: host: host.config.paul.ci.enable) self.nixosConfigurations;
+          ciHostsForSystem =
+            system:
+            nixpkgs.lib.filterAttrs (name: host: system == host.config.nixpkgs.hostPlatform.system) ciHosts;
+        in
+        nixpkgs.lib.genAttrs supportedSystems (
+          system: builtins.mapAttrs (name: host: host.config.system.build.toplevel) (ciHostsForSystem system)
+        );
+
       devShells = forAllSystems (
         system: with nixpkgsFor.${system}; {
           default = pkgs.mkShell {

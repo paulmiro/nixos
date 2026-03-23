@@ -13,17 +13,20 @@ let
   };
 
   nix = "nix --show-trace";
+  nix-fast-build = "nix-fast-build --no-nom --skip-cached --attic-cache lounge-rocks:nix-cache";
 
   steps = {
     nixFlakeShow = {
       name = "Nix flake show";
       image = "bash";
+      failure = "ignore";
       commands = [ "${nix} flake show" ];
     };
 
     nixFlakeCheck = {
       name = "Nix flake check";
       image = "bash";
+      failure = "ignore";
       commands = [ "${nix} flake check --show-trace" ];
     };
 
@@ -45,6 +48,15 @@ let
         "attic login lounge-rocks https://cache.lounge.rocks $ATTIC_KEY --set-default"
       ];
       environment.ATTIC_KEY.from_secret = "attic_key";
+    };
+
+    nixFastBuildChecks = system: {
+      name = "Build all ${system} machines";
+      image = "bash";
+      failure = "ignore";
+      commands = [
+        "${nix-fast-build} --flake \".#checks.${system}\""
+      ];
     };
   };
 
@@ -83,13 +95,15 @@ let
         {
           name = "Build ${name}";
           image = "bash";
+          failure = "ignore";
           commands = [
-            "${nix} build --print-out-paths '.#nixosConfigurations.${name}.config.system.build.toplevel' -o 'result-${name}'"
+            "${nix-fast-build} --flake '.#nixosConfigurations.${name}.config.system.build.toplevel' --out-link 'result-${name}'"
           ];
         }
         {
           name = "Show ${name} info";
           image = "bash";
+          failure = "ignore";
           commands = [
             "${nix} path-info --closure-size -h $(readlink -f 'result-${name}')"
           ];
@@ -97,6 +111,7 @@ let
         {
           name = "Push ${name} to Attic";
           image = "bash";
+          failure = "ignore";
           commands = [ "attic push lounge-rocks:nix-cache 'result-${name}'" ];
         }
       ];
@@ -133,31 +148,44 @@ let
       [
         {
           initial = true;
-          # the first pipeline on each system should depend on the nix-flake-check step
-          prevNames = {
-            "aarch64-linux" = "nix-flake-check";
-            "x86_64-linux" = "nix-flake-check";
-          };
+          # the first host for each system should depend on the build-all step for that system
+          prevNames = lib.mapAttrs (system: platform: "build-all-${system}") platforms;
         }
       ]
       nixosConfigurations
   );
 
-  pipelines = machinePipelines // {
-    # dot for alphabetical sorting
-    ".nix-flake-check" = {
-      labels = {
-        backend = "local";
-        platform = "linux/amd64";
+  pipelines =
+    machinePipelines
+    // {
+      # dots for alphabetical sorting
+      "..nix-flake-check" = {
+        labels = {
+          backend = "local";
+          platform = "linux/amd64";
+        };
+        inherit when;
+        steps = [
+          steps.decryptPrivateData
+          steps.nixFlakeShow
+          steps.nixFlakeCheck
+        ];
       };
-      inherit when;
-      steps = [
-        steps.decryptPrivateData
-        steps.nixFlakeShow
-        steps.nixFlakeCheck
-      ];
-    };
-  };
+    }
+    // lib.mapAttrs' (
+      system: platform:
+      lib.nameValuePair ".build-all-${system}" {
+        labels = {
+          backend = "local";
+          platform = platform;
+        };
+        inherit when;
+        steps = [
+          steps.decryptPrivateData
+          (steps.nixFastBuildChecks system)
+        ];
+      }
+    ) platforms;
 in
 pkgs.writeShellScriptBin "woodpecker-pipeline" ''
   set -euo pipefail

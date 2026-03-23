@@ -21,15 +21,18 @@ steps:
     image: bash
     name: Setup Attic
   - commands:
-      - nix --show-trace build --print-out-paths '.#nixosConfigurations.morse.config.system.build.toplevel' -o 'result-morse'
+      - nix-fast-build --no-nom --skip-cached --attic-cache lounge-rocks:nix-cache --flake '.#nixosConfigurations.morse.config.system.build.toplevel' --out-link 'result-morse'
+    failure: ignore
     image: bash
     name: Build morse
   - commands:
       - nix --show-trace path-info --closure-size -h $(readlink -f 'result-morse')
+    failure: ignore
     image: bash
     name: Show morse info
   - commands:
       - attic push lounge-rocks:nix-cache 'result-morse'
+    failure: ignore
     image: bash
     name: Push morse to Attic
 when:

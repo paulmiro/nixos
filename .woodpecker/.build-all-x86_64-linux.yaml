@@ -1,0 +1,25 @@
+labels:
+  backend: local
+  platform: linux/amd64
+steps:
+  - commands:
+      - cd modules/private
+      - echo $AGE_KEY_PRIVATE_DATA | nix shell nixpkgs#age --command age --decrypt -i - -o private.toml.decrypted private.toml
+      - mv private.toml.decrypted private.toml
+    environment:
+      AGE_KEY_PRIVATE_DATA:
+        from_secret: AGE_KEY_PRIVATE_DATA
+    image: bash
+    name: Decrypt Private Data
+  - commands:
+      - nix-fast-build --no-nom --skip-cached --attic-cache lounge-rocks:nix-cache --flake ".#checks.x86_64-linux"
+    image: bash
+    name: Build all machines for the current system
+when:
+  branch:
+    exclude:
+      - no-private-data
+    include:
+      - '**'
+  event:
+    - push

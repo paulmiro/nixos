@@ -1,5 +1,5 @@
 depends_on:
-  - nix-flake-check
+  - build-all-x86_64-linux
 labels:
   backend: local
   platform: linux/amd64
@@ -21,15 +21,18 @@ steps:
     image: bash
     name: Setup Attic
   - commands:
-      - nix --show-trace build --print-out-paths '.#nixosConfigurations.backus.config.system.build.toplevel' -o 'result-backus'
+      - nix-fast-build --no-nom --skip-cached --attic-cache lounge-rocks:nix-cache --flake '.#nixosConfigurations.backus.config.system.build.toplevel' --out-link 'result-backus'
+    failure: ignore
     image: bash
     name: Build backus
   - commands:
       - nix --show-trace path-info --closure-size -h $(readlink -f 'result-backus')
+    failure: ignore
     image: bash
     name: Show backus info
   - commands:
       - attic push lounge-rocks:nix-cache 'result-backus'
+    failure: ignore
     image: bash
     name: Push backus to Attic
 when:
