@@ -53,7 +53,6 @@ let
     checkMachineOutput = name: {
       name = "check-output-${name}";
       image = "bash";
-      depends_on = [ "build-all-${systemFor name}" ];
       failure = "ignore";
       commands = [
         "test -L result-${systemFor name}.${name}"
