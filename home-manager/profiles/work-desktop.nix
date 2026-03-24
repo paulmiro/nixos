@@ -10,6 +10,8 @@
       vscode.enable = true;
       ghostty.enable = true;
 
+      gnome-settings.wallpaper = "dino-frieren.jpg";
+
       browsers = {
         chromium = true;
         zen = true;
