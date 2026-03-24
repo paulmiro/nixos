@@ -10,10 +10,13 @@ in
 {
   options.paul.ghostty = {
     enable = lib.mkEnableOption "enable ghostty";
+    enableSshTerminfoFix = lib.mkEnableOption "force xterm-256color for ssh sessions";
   };
 
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [ ghostty ];
-    xdg.configFile."ghostty/config".source = ./config;
+    xdg.configFile."ghostty/config".text =
+      (builtins.readFile ./config)
+      + lib.optionalString cfg.enableSshTerminfoFix "\nshell-integration-features = ssh-env";
   };
 }

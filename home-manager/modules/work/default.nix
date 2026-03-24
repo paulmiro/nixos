@@ -21,6 +21,8 @@ in
     betternix.ssh.enable = true;
     betternix.packages.enable = true;
 
+    paul.ghostty.enableSshTerminfoFix = true;
+
     programs.zsh = {
       shellAliases = {
         checkout = "${pkgs.writeShellScript "checkout" ''
@@ -72,7 +74,7 @@ in
     dconf.settings = {
       "org/gnome/shell" = {
         favorite-apps = lib.mkForce [
-          "org.gnome.Console.desktop"
+          "com.mitchellh.ghostty.desktop"
           "org.gnome.Nautilus.desktop"
           "zen.desktop"
           "chromium-browser.desktop"
