@@ -57,6 +57,8 @@ in
               '';
             in
             "!${script}";
+          co = "checkout";
+          bs = "checkout -b";
           pop = "stash pop";
           undo = "reset --soft HEAD~1";
           unstage = "reset HEAD --";
