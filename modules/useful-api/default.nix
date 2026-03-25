@@ -31,6 +31,7 @@ in
 
     services.nginx.virtualHosts."useful-api.party" = {
       enableACME = true;
+      forceSSL = true;
       enableDyndns = true;
       locations."/" = {
         proxyPass = "http://localhost:${toString port}";
