@@ -63,18 +63,7 @@ in
 
     gtk = {
       enable = true;
-      /*
-        theme = {
-          name = "Orchis-Grey-Dark";
-          package = (pkgs.orchis-theme).override {
-            border-radius = 5;
-          };
-        };
-        iconTheme = {
-          name = "Tela-orange-dark";
-          package = pkgs.tela-icon-theme;
-        };
-      */
+      gtk4.theme = null;
       cursorTheme = {
         name = "capitaine-cursors";
         package = pkgs.capitaine-cursors;
