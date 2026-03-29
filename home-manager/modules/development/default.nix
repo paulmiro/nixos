@@ -38,7 +38,8 @@ in
     })
     (lib.mkIf cfg.godot {
       home.packages = with pkgs; [
-        godot_4
+        godot
+        (if config.nixpkgs.config.allowUnfree then steam-run else steam-run-free)
       ];
     })
     (lib.mkIf cfg.rust {

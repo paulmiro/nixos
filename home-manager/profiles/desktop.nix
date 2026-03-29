@@ -13,6 +13,7 @@
       development = {
         android = true;
         go = true;
+        godot = true;
         javascript = true;
         rust = true;
       };
