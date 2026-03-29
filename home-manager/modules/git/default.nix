@@ -17,6 +17,7 @@ in
     programs.git = {
       enable = true;
       lfs.enable = true;
+      signing.format = null;
       settings = {
         user.name = "Paul Mika Rohde";
         user.email = "git@paulmiro.de";
