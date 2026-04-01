@@ -23,6 +23,16 @@ in
 
     paul.ghostty.enableSshTerminfoFix = true;
 
+    programs.git.includes = [
+      {
+        condition = "gitdir:~/source/";
+        contents = {
+          user.name = "Paul Mika Rohde";
+          user.email = config.paul.private.emails.work;
+        };
+      }
+    ];
+
     programs.zsh = {
       shellAliases = {
         checkout = "${pkgs.writeShellScript "checkout" ''

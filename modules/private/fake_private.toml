@@ -18,6 +18,7 @@ tailnet = "example-tailnet.ts.net"
 [emails]
 proton = "proton@example.com"
 gmail = "gmail@example.com"
+work = "work@example.com"
 
 [misc]
 kanidm_display_name = "Example Kanidm Display Name"
