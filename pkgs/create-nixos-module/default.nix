@@ -20,6 +20,7 @@ writeShellScriptBin "mkmod" ''
   fi
 
   touch $file
+  git add --intent-to-add $file
   cat > $file <<EOF
   {
     config,
