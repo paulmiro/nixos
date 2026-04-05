@@ -1,13 +1,37 @@
 {
   "machines": {
-    "turing": {
-      "installedAt": 1759255365
-    },
     "backus": {
-      "installedAt": 1760553454
+      "installedAt": 1760553454,
+      "tags": [
+        "server"
+      ]
     },
     "hawking": {
-      "installedAt": 1764277347
+      "installedAt": 1764277347,
+      "tags": [
+        "dekstop"
+      ]
+    },
+    "leibniz": {
+      "tags": [
+        "dekstop"
+      ]
+    },
+    "morse": {
+      "tags": [
+        "server"
+      ]
+    },
+    "newton": {
+      "tags": [
+        "dekstop"
+      ]
+    },
+    "turing": {
+      "installedAt": 1759255365,
+      "tags": [
+        "server"
+      ]
     }
   }
 }
