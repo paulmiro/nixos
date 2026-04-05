@@ -4,12 +4,12 @@
   ...
 }:
 let
-  cfg = config.paul.jellyseerr;
+  cfg = config.paul.seerr;
 in
 {
-  options.paul.jellyseerr = {
-    enable = lib.mkEnableOption "activate jellyseerr";
-    openFirewall = lib.mkEnableOption "allow jellyseerr port in firewall";
+  options.paul.seerr = {
+    enable = lib.mkEnableOption "activate seerr";
+    openFirewall = lib.mkEnableOption "allow seerr port in firewall";
     enableNginx = lib.mkEnableOption "activate nginx proxy";
     enableDyndns = lib.mkOption {
       type = lib.types.bool;
@@ -25,23 +25,26 @@ in
 
     domain = lib.mkOption {
       type = lib.types.str;
-      default = config.paul.private.domains.jellyseerr;
-      description = "domain name for jellyseerr";
+      default = config.paul.private.domains.seerr;
+      description = "domain name for seerr";
     };
   };
 
   config = lib.mkIf cfg.enable {
-    services.jellyseerr = {
+    services.seerr = {
       enable = true;
       port = cfg.port;
       openFirewall = cfg.openFirewall;
+      configDir = "/var/lib/seerr";
     };
 
-    clan.core.state.jellyseerr = {
+    clan.core.state.seerr = {
       useZfsSnapshots = true;
-      folders = [ "/var/lib/private/jellyseerr" ];
-      servicesToStop = [ "jellyseerr.service" ];
+      folders = [ "/var/lib/private/seerr" ];
+      servicesToStop = [ "seerr.service" ];
     };
+
+    systemd.services.seerr.serviceConfig.StateDirectory = lib.mkForce "seerr";
 
     services.nginx.virtualHosts."${cfg.domain}" = lib.mkIf cfg.enableNginx {
       enableACME = true;

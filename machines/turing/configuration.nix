@@ -48,7 +48,7 @@
       enableNginx = true;
     };
 
-    jellyseerr = {
+    seerr = {
       enable = true;
       enableNginx = true;
     };
