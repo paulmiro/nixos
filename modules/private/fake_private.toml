@@ -1,7 +1,7 @@
 [domains]
 base = "example.com"
 jellyfin = "jellyfin.example.com"
-jellyseerr = "jellyseerr.example.com"
+seerr = "seerr.example.com"
 immich = "immich.example.com"
 filebrowser-quantum = "filebrowser-quantum.example.com"
 audiobookshelf = "audiobookshelf.example.com"
