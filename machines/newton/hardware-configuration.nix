@@ -15,7 +15,7 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable; # 580
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
 
   boot.initrd.availableKernelModules = [
     "xhci_pci"
