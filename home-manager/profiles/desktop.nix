@@ -25,6 +25,8 @@
       };
     };
 
+    services.easyeffects.enable = true;
+
     # Install these packages for my user
     home.packages = with pkgs; [
       anki-bin
