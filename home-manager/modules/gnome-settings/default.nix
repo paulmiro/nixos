@@ -161,6 +161,18 @@ in
         toggle-message-tray = [ "<Super>w" ]; # defaults to <Super>v, but i need that for the clipboard-indicator
       };
 
+      "org/gnome/settings-daemon/plugins/media-keys" = {
+        custom-keybindings = [
+          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
+        ];
+      };
+
+      "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
+        name = "LinkedIn";
+        binding = "<Shift><Control><Alt><Super>l";
+        command = "zen https://linkedin.com";
+      };
+
       # extension settings
 
       "org/gnome/shell/extensions/burn-my-windows" = {
