@@ -48,6 +48,17 @@ in
           svn checkout svn://betterstorage/bettertec/''${repoName}/trunk ''${repoPath}
         ''}";
 
+        clone = "${pkgs.writeShellScript "clone" ''
+          set -euo pipefail
+          repoName=$1
+          repoPath=~/source/''${repoName}
+          if [ -e ''${repoPath} ]; then
+            echo "Path already taken"
+            exit 1
+          fi
+          git clone "ssh://forgejo@git.bettertec.internal/bettertec/''${repoName}" "''${repoPath}"
+        ''}";
+
         ng = "npm run ng --";
         nge = "ng extract-i18n";
         n = "ng serve -c local";
