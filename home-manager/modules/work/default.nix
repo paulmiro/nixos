@@ -29,6 +29,8 @@ in
         contents = {
           user.name = "Paul Mika Rohde";
           user.email = config.paul.private.emails.work;
+
+          lfs."https://git.bettertec.internal".locksverify = false;
         };
       }
     ];
