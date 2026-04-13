@@ -39,6 +39,7 @@
       gparted
       inkscape
       jellyfin-mpv-shim
+      karere # whatsapp client
       keyguard
       krita
       libreoffice
@@ -60,7 +61,6 @@
       switcheroo
       textpieces
       thunderbird-bin
-      wasistlos
       xournalpp
       zoom-us
 

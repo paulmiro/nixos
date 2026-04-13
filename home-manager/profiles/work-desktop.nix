@@ -32,6 +32,7 @@
       discord
       element-desktop
       gparted
+      karere # whatsapp client
       krita
       obs-studio
       obsidian
@@ -45,7 +46,6 @@
       switcheroo
       textpieces
       thunderbird-bin
-      wasistlos
 
       paulmiro.nato
       paulmiro.vibe
