@@ -64,7 +64,9 @@ in
         n = "ng serve -c local";
         nde = "ng serve -c local-de";
         nt = "ng serve -c test";
+        ncet = "ng serve -c ncetest";
         ntde = "ng serve -c test-de";
+        ncetde = "ng serve -c ncetest-de";
 
         cpr = "${pkgs.writeShellScript "copy-report-common" ''
           cp ~/source/report-common/target/typescript-generator/report-common.d.ts ~/source/better-wms/src/app/common/report-common.d.ts
