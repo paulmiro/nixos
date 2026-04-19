@@ -2,8 +2,7 @@
   description = "My NixOS infrastructure";
 
   inputs = {
-
-    ### Essential inputs
+    ### Essentials
 
     # Nix Packages collection & NixOS
     # https://github.com/nixos/nixpkgs
@@ -15,20 +14,15 @@
 
     # Manage a user environment using Nix
     # https://github.com/nix-community/home-manager
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     ### Tools for managing NixOS infrastructure
 
     # Manage networks of machines
     # https://clan.lol
-    clan-core = {
-      url = "https://git.clan.lol/clan/clan-core/archive/main.tar.gz";
-      # Don't do this if your machines are on nixpkgs stable.
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    clan-core.url = "https://git.clan.lol/clan/clan-core/archive/main.tar.gz";
+    clan-core.inputs.nixpkgs.follows = "nixpkgs";
 
     # NixOS on the Windows Subsystem for Linux
     # https://github.com/nix-community/NixOS-WSL
@@ -38,67 +32,43 @@
     nixos-avf.url = "github:nix-community/nixos-avf";
 
     # NixOS on the Steam Deck, or for a SteamOS-like experience on other devices
-    jovian = {
-      url = "github:Jovian-Experiments/Jovian-NixOS";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    jovian.url = "github:Jovian-Experiments/Jovian-NixOS";
+    jovian.inputs.nixpkgs.follows = "nixpkgs";
 
     # Work stuff, needs sops-nix, but that is included in clan
-    betternix = {
-      url = "github:paulmiro/betternix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    betternix.url = "github:paulmiro/betternix";
+    betternix.inputs.nixpkgs.follows = "nixpkgs";
 
     ### Packages outside of nixpkgs
 
-    zen-browser = {
-      url = "github:youwen5/zen-browser-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    zen-browser.url = "github:youwen5/zen-browser-flake";
+    zen-browser.inputs.nixpkgs.follows = "nixpkgs";
 
-    grub2-themes = {
-      #url = "git+file:///home/paulmiro/repos/paulmiro/grub2-themes";
-      url = "github:paulmiro/grub2-themes";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    grub2-themes.url = "github:paulmiro/grub2-themes";
+    grub2-themes.inputs.nixpkgs.follows = "nixpkgs";
 
-    nix-minecraft = {
-      url = "github:Infinidoge/nix-minecraft";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nix-minecraft.url = "github:Infinidoge/nix-minecraft";
+    nix-minecraft.inputs.nixpkgs.follows = "nixpkgs";
 
-    nix4nvchad = {
-      url = "github:nix-community/nix4nvchad";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nix4nvchad.url = "github:nix-community/nix4nvchad";
+    nix4nvchad.inputs.nixpkgs.follows = "nixpkgs";
 
-    git-agecrypt-armor = {
-      url = "github:paulmiro/git-agecrypt-armor";
-      # inputs.nixpkgs.follows = "nixpkgs";
-    };
+    git-agecrypt-armor.url = "github:paulmiro/git-agecrypt-armor";
+    # git-agecrypt-armor.inputs.nixpkgs.follows = "nixpkgs";
 
-    direnv-instant = {
-      url = "github:Mic92/direnv-instant";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    direnv-instant.url = "github:Mic92/direnv-instant";
+    direnv-instant.inputs.nixpkgs.follows = "nixpkgs";
 
-    useful-api = {
-      url = "github:paulmiro/useful-api";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    useful-api.url = "github:paulmiro/useful-api";
+    useful-api.inputs.nixpkgs.follows = "nixpkgs";
 
-    nix-index-database = {
-      url = "github:nix-community/nix-index-database";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nix-index-database.url = "github:nix-community/nix-index-database";
+    nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
 
     ### Non-Flake Inputs
 
-    starship-no-empty-icons = {
-      url = "https://starship.rs/presets/toml/no-empty-icons.toml";
-      flake = false;
-    };
-
+    starship-no-empty-icons.url = "https://starship.rs/presets/toml/no-empty-icons.toml";
+    starship-no-empty-icons.flake = false;
   };
 
   outputs =
