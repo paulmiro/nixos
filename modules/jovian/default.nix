@@ -24,6 +24,8 @@ in
       desktopSession = lib.mkIf config.paul.gnome.enable "gnome";
     };
 
+    jovian.steamos.enableZram = false;
+
     nixpkgs.overlays = [
       (final: prev: {
         steam = prev.steam.override { platformArgs = "-steamos3 -steampal -gamepadui"; };

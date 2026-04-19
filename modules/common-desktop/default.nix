@@ -35,7 +35,5 @@ in
       enable = true;
       pinentryPackage = pkgs.pinentry-gnome3;
     };
-
-    zramSwap.enable = true;
   };
 }
