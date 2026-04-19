@@ -3,7 +3,7 @@ repo = "binhex/arch-qbittorrentvpn"
 version = "5.1.4-2-01"
 [immich]
 repo = "immich-app/immich"
-version = "2.7.4"
+version = "2.7.5"
 [jellyfin]
 repo = "jellyfin/jellyfin"
 version = "10.11.8"
