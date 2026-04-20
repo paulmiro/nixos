@@ -18,7 +18,7 @@ in
   config = lib.mkIf cfg.enable {
 
     nixpkgs = {
-      overlays = [ flake-self.overlays.paulmiro-overlay ];
+      overlays = [ flake-self.overlays.default ];
       # Allow unfree licenced packages
       config.allowUnfree = true;
     };

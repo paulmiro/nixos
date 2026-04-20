@@ -20,7 +20,7 @@
 
     # Home-manager nixpkgs config
     nixpkgs = {
-      overlays = [ flake-self.overlays.paulmiro-overlay ];
+      overlays = [ flake-self.overlays.default ];
     };
 
     # Include man-pages
