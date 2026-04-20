@@ -111,9 +111,8 @@
                 input = "clan-core";
               };
               roles.default.tags."all" = { };
-              # roles.default.extraModules = builtins.attrValues self.nixosModules; # TODO fix: this is broken but below works
-              roles.default.extraModules = map (name: import (./modules + "/${name}")) (
-                builtins.attrNames (builtins.readDir ./modules)
+              roles.default.extraModules = builtins.attrValues (
+                lib.filterAttrs (n: _v: !lib.strings.hasPrefix "clan-machine-" n) self.nixosModules
               );
             };
 
