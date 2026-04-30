@@ -105,13 +105,6 @@
             options."com.sun:auto-snapshot" = "false";
           };
 
-          dump = {
-            type = "zfs_fs";
-            mountpoint = "/mnt/dump";
-            options.mountpoint = "/mnt/dump";
-            options.compression = "zstd";
-          };
-
         };
       };
     };
