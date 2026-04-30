@@ -178,118 +178,119 @@
           root = {
             type = "zfs_fs";
             mountpoint = "/";
-            options = {
-              compression = "lz4";
-              "com.sun:auto-snapshot" = "false";
-            };
+            options.mountpoint = "/";
+            options.compression = "lz4";
+            options."com.sun:auto-snapshot" = "false";
           };
 
           home = {
             type = "zfs_fs";
             mountpoint = "/home";
-            options = {
-              compression = "zstd";
-              "com.sun:auto-snapshot" = "true";
-            };
+            options.mountpoint = "/home";
+            options.compression = "zstd";
+            options."com.sun:auto-snapshot" = "true";
           };
 
           nix = {
             type = "zfs_fs";
             mountpoint = "/nix";
-            options = {
-              compression = "zstd";
-              "com.sun:auto-snapshot" = "false";
-            };
+            options.mountpoint = "/nix";
+            options.compression = "zstd";
+            options."com.sun:auto-snapshot" = "false";
           };
 
           root_home = {
             type = "zfs_fs";
             mountpoint = "/root";
-            options = {
-              compression = "zstd";
-              "com.sun:auto-snapshot" = "true";
-            };
+            options.mountpoint = "/root";
+            options.compression = "zstd";
+            options."com.sun:auto-snapshot" = "true";
           };
 
           tmp = {
             type = "zfs_fs";
             mountpoint = "/tmp";
-            options = {
-              compression = "lz4";
-              "com.sun:auto-snapshot" = "false";
-            };
+            options.mountpoint = "/tmp";
+            options.compression = "lz4";
+            options."com.sun:auto-snapshot" = "false";
           };
 
           var = {
             type = "zfs_fs";
             mountpoint = "/var";
-            options = {
-              compression = "lz4";
-              "com.sun:auto-snapshot" = "true";
-            };
+            options.mountpoint = "/var";
+            options.compression = "lz4";
+            options."com.sun:auto-snapshot" = "true";
           };
 
           apps = {
             type = "zfs_fs";
-            # mountpoint = "none"; # can't be set explicitly in disko
-            options = {
-              compression = "lz4";
-              "com.sun:auto-snapshot" = "true";
-            };
+            # mountpoint = "none"; # can't / doesn't need to be set explicitly in disko
+            options.mountpoint = "none";
+            options.compression = "lz4";
+            options."com.sun:auto-snapshot" = "true";
           };
           "apps/immich" = {
             type = "zfs_fs";
             mountpoint = "/var/lib/immich";
+            options.mountpoint = "/var/lib/immich";
           };
           "apps/kanidm" = {
             type = "zfs_fs";
             mountpoint = "/var/lib/kanidm";
-            options = {
-              recordsize = "64K";
-            };
+            options.mountpoint = "/var/lib/kanidm";
+            options.recordsize = "64K";
           };
           "apps/jellyfin" = {
             type = "zfs_fs";
             mountpoint = "/var/lib/jellyfin";
-            options = {
-              compression = "zstd";
-            };
+            options.mountpoint = "/var/lib/jellyfin";
+            options.compression = "zstd";
           };
           "apps/audiobookshelf" = {
             type = "zfs_fs";
             mountpoint = "/var/lib/audiobookshelf";
+            options.mountpoint = "/var/lib/audiobookshelf";
           };
           "apps/transmission" = {
             type = "zfs_fs";
             mountpoint = "/var/lib/transmission";
+            options.mountpoint = "/var/lib/transmission";
           };
           "apps/qbittorrent" = {
             type = "zfs_fs";
             mountpoint = "/var/lib/qbittorrent";
+            options.mountpoint = "/var/lib/qbittorrent";
           };
           "apps/sabnzbd" = {
             type = "zfs_fs";
             mountpoint = "/var/lib/sabnzbd";
+            options.mountpoint = "/var/lib/sabnzbd";
           };
           "apps/sonarr" = {
             type = "zfs_fs";
             mountpoint = "/var/lib/sonarr";
+            options.mountpoint = "/var/lib/sonarr";
           };
           "apps/radarr" = {
             type = "zfs_fs";
             mountpoint = "/var/lib/radarr";
+            options.mountpoint = "/var/lib/radarr";
           };
           "apps/hedgedoc" = {
             type = "zfs_fs";
             mountpoint = "/var/lib/hedgedoc";
+            options.mountpoint = "/var/lib/hedgedoc";
           };
           "apps/tracearr" = {
             type = "zfs_fs";
             mountpoint = "/var/lib/tracearr";
+            options.mountpoint = "/var/lib/tracearr";
           };
           "apps/filebrowser-quantum" = {
             type = "zfs_fs";
             mountpoint = "/var/lib/filebrowser-quantum";
+            options.mountpoint = "/var/lib/filebrowser-quantum";
           };
         };
       };
@@ -329,49 +330,44 @@
           arr = {
             type = "zfs_fs";
             mountpoint = "/mnt/arr";
-            options = {
-              compression = "zstd-10";
-              recordsize = "1M";
-              "com.sun:auto-snapshot" = "true";
-            };
+            options.mountpoint = "/mnt/arr";
+            options.compression = "zstd-10";
+            options.recordsize = "1M";
+            options."com.sun:auto-snapshot" = "true";
           };
 
           photos = {
             type = "zfs_fs";
             mountpoint = "/mnt/photos";
-            options = {
-              compression = "zstd";
-              recordsize = "1M";
-              "com.sun:auto-snapshot" = "true";
-            };
+            options.mountpoint = "/mnt/photos";
+            options.compression = "zstd";
+            options.recordsize = "1M";
+            options."com.sun:auto-snapshot" = "true";
           };
 
           borg = {
             type = "zfs_fs";
             mountpoint = "/mnt/borg";
-            options = {
-              compression = "zstd-10";
-              recordsize = "1M";
-              "com.sun:auto-snapshot" = "false";
-            };
+            options.mountpoint = "/mnt/borg";
+            options.compression = "zstd-10";
+            options.recordsize = "1M";
+            options."com.sun:auto-snapshot" = "false";
           };
 
           dump = {
             type = "zfs_fs";
             mountpoint = "/mnt/dump";
-            options = {
-              compression = "zstd-5";
-              "com.sun:auto-snapshot" = "true";
-            };
+            options.mountpoint = "/mnt/dump";
+            options.compression = "zstd-5";
+            options."com.sun:auto-snapshot" = "true";
           };
 
           kanidm_home = {
             type = "zfs_fs";
             mountpoint = "/mnt/kanidm_home";
-            options = {
-              compression = "zstd-5";
-              "com.sun:auto-snapshot" = "true";
-            };
+            options.mountpoint = "/mnt/kanidm_home";
+            options.compression = "zstd-5";
+            options."com.sun:auto-snapshot" = "true";
           };
 
         };

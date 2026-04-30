@@ -98,19 +98,17 @@
           borg = {
             type = "zfs_fs";
             mountpoint = "/mnt/borg";
-            options = {
-              compression = "zstd-10";
-              recordsize = "1M";
-              "com.sun:auto-snapshot" = "false";
-            };
+            options.mountpoint = "/mnt/borg";
+            options.compression = "zstd-10";
+            options.recordsize = "1M";
+            options."com.sun:auto-snapshot" = "false";
           };
 
           dump = {
             type = "zfs_fs";
             mountpoint = "/mnt/dump";
-            options = {
-              compression = "zstd";
-            };
+            options.mountpoint = "/mnt/dump";
+            options.compression = "zstd";
           };
 
         };
