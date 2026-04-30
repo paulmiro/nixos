@@ -1,12 +1,17 @@
 {
   config,
   lib,
+  disko-zfs,
   ...
 }:
 let
   cfg = config.paul.zfs;
 in
 {
+  imports = [
+    disko-zfs.nixosModules.default
+  ];
+
   options.paul.zfs = {
     enable = lib.mkEnableOption "enable common zfs options";
     maxArcGB = lib.mkOption {
@@ -20,6 +25,9 @@ in
     boot.kernelParams = lib.mkIf (cfg.maxArcGB != null) [
       "zfs.zfs_arc_max=${toString (cfg.maxArcGB * 1024 * 1024 * 1024)}"
     ];
+
+    # activate numtide/disko-zfs
+    disko.zfs.enable = true;
 
     services.zfs = {
       autoScrub = {

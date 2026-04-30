@@ -24,6 +24,11 @@
     clan-core.url = "https://git.clan.lol/clan/clan-core/archive/main.tar.gz";
     clan-core.inputs.nixpkgs.follows = "nixpkgs";
 
+    disko-zfs.url = "github:numtide/disko-zfs";
+    disko-zfs.inputs.nixpkgs.follows = "nixpkgs";
+    disko-zfs.inputs.flake-parts.follows = "clan-core/flake-parts";
+    disko-zfs.inputs.disko.follows = "clan-core/disko";
+
     # NixOS on the Windows Subsystem for Linux
     # https://github.com/nix-community/NixOS-WSL
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";

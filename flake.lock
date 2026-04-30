@@ -131,6 +131,34 @@
         "type": "github"
       }
     },
+    "disko-zfs": {
+      "inputs": {
+        "disko": [
+          "clan-core",
+          "disko"
+        ],
+        "flake-parts": [
+          "clan-core",
+          "flake-parts"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1773422739,
+        "narHash": "sha256-nfl7tj3TN8MZI5JpidUjlqax+2ly2BHay3tpM/cc9ik=",
+        "owner": "numtide",
+        "repo": "disko-zfs",
+        "rev": "adaef72fba88b4f313fcb3f7cf02e24b2a09b648",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "disko-zfs",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -614,6 +642,7 @@
         "betternix": "betternix",
         "clan-core": "clan-core",
         "direnv-instant": "direnv-instant",
+        "disko-zfs": "disko-zfs",
         "git-agecrypt-armor": "git-agecrypt-armor",
         "grub2-themes": "grub2-themes",
         "home-manager": "home-manager",
