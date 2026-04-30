@@ -90,6 +90,7 @@
         rootFsOptions = {
           mountpoint = "none";
           atime = "off";
+          xattr = "sa";
           "com.sun:auto-snapshot" = "false";
         };
 

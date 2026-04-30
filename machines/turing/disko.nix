@@ -170,6 +170,7 @@
           mountpoint = "none";
           atime = "off";
           acltype = "posix";
+          xattr = "sa";
           "com.sun:auto-snapshot" = "false";
         };
 
@@ -322,6 +323,7 @@
         rootFsOptions = {
           mountpoint = "none";
           atime = "off";
+          xattr = "sa";
           "com.sun:auto-snapshot" = "false";
         };
 
