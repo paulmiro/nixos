@@ -154,6 +154,7 @@ in
 
         c = "code .";
         e = "xdg-open .";
+        o = "xdg-open";
         q = "exit";
         r = "${pkgs.trashy}/bin/trash";
         y = "${pkgs.yazi}/bin/yazi";
