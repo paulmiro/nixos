@@ -36,15 +36,11 @@ in
 
         trusted-public-keys = lib.mkIf (cfg.disable-cache != true) [
           "nix-cache:4FILs79Adxn/798F8qk2PC1U8HaTlaPqptwNJrXNA1g=" # lounge.rocks
-          "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-          "cache.clan.lol-1:3KztgSAB5R1M+Dz7vzkBGzXdodizbgLXGXKXlcQLA28="
         ];
 
         substituters = lib.mkIf (cfg.disable-cache != true) [
           "https://cache.lounge.rocks/nix-cache?priority=20"
           # chache.nixos.org has priority=40
-          "https://cache.clan.lol/?priority=60"
-          "https://nix-community.cachix.org/?priority=70"
         ];
 
         connect-timeout = 5;
