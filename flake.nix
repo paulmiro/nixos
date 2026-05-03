@@ -249,13 +249,14 @@
 
       checks =
         let
-          ciHosts = nixpkgs.lib.filterAttrs (name: host: host.config.paul.ci.enable) self.nixosConfigurations;
+          ciHosts = lib.filterAttrs (name: host: host.config.paul.ci.enable) self.nixosConfigurations;
           ciHostsForSystem =
-            system:
-            nixpkgs.lib.filterAttrs (name: host: system == host.config.nixpkgs.hostPlatform.system) ciHosts;
+            system: lib.filterAttrs (name: host: system == host.config.nixpkgs.hostPlatform.system) ciHosts;
         in
-        nixpkgs.lib.genAttrs supportedSystems (
-          system: builtins.mapAttrs (name: host: host.config.system.build.toplevel) (ciHostsForSystem system)
+        forAllSystems (
+          system:
+          (builtins.mapAttrs (name: host: host.config.system.build.toplevel) (ciHostsForSystem system))
+          // (lib.mapAttrs' (name: value: lib.nameValuePair "shell-${name}" value) self.devShells.${system})
         );
 
       devShells = forAllSystems (
