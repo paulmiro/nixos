@@ -26,6 +26,8 @@ in
       "zfs.zfs_arc_max=${toString (cfg.maxArcGB * 1024 * 1024 * 1024)}"
     ];
 
+    boot.zfs.forceImportRoot = false;
+
     # activate numtide/disko-zfs
     disko.zfs.enable = true;
 
