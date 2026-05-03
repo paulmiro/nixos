@@ -78,9 +78,8 @@
 
   outputs =
     { self, ... }@inputs:
-    with inputs;
     let
-      lib = nixpkgs.lib;
+      lib = inputs.nixpkgs.lib;
 
       supportedSystems = [
         "aarch64-linux"
@@ -91,7 +90,7 @@
 
       nixpkgsFor = forAllSystems (
         system:
-        import nixpkgs {
+        import inputs.nixpkgs {
           inherit system;
           overlays = [ self.overlays.paulmiro-overlay ];
         }
@@ -106,7 +105,7 @@
           }) (builtins.attrNames (builtins.readDir ./pkgs))
         ));
 
-      clan = clan-core.lib.clan {
+      clan = inputs.clan-core.lib.clan {
         inherit self; # this needs to point at the repository root
 
         # Make inputs and the flake itself accessible as module parameters.
@@ -201,7 +200,7 @@
           let
             configForUser =
               username:
-              home-manager.lib.homeManagerConfiguration {
+              inputs.home-manager.lib.homeManagerConfiguration {
                 pkgs = nixpkgsFor.${system};
                 modules = [
                   profile
@@ -260,14 +259,18 @@
         );
 
       devShells = forAllSystems (
-        system: with nixpkgsFor.${system}; {
+        system:
+        let
+          pkgs = nixpkgsFor.${system};
+        in
+        {
           default = pkgs.mkShell {
             packages = [
-              git-agecrypt-armor.packages.${system}.default
-              clan-core.packages.${system}.clan-cli
+              inputs.git-agecrypt-armor.packages.${system}.default
+              inputs.clan-core.packages.${system}.clan-cli
               (pkgs.writeShellScriptBin "rebuild" "${pkgs.nixos-rebuild}/bin/nixos-rebuild --sudo switch --flake . $@")
               (pkgs.writeShellScriptBin "rollout" "${
-                clan-core.packages.${system}.clan-cli
+                inputs.clan-core.packages.${system}.clan-cli
               }/bin/clan machines update $@")
               pkgs.paulmiro.create-nixos-module # mkmod
               pkgs.paulmiro.create-home-manager-module # mkhmmod
