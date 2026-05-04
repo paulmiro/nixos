@@ -14,6 +14,7 @@
 
       browsers = {
         chromium = true;
+        firefox = true;
         zen = true;
       };
     };
