@@ -67,6 +67,9 @@
     useful-api.url = "github:paulmiro/useful-api";
     useful-api.inputs.nixpkgs.follows = "nixpkgs";
 
+    friend-bet.url = "github:paulmiro/friend-bet";
+    friend-bet.inputs.nixpkgs.follows = "nixpkgs";
+
     nix-index-database.url = "github:nix-community/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
 

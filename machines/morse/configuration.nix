@@ -35,6 +35,11 @@
     hypermind.enable = true;
 
     useful-api.enable = true;
+
+    friend-bet = {
+      enable = true;
+      enableNginx = true;
+    };
   };
 
   clan.core.networking.targetHost = "morse.${config.paul.private.domains.tailnet}";
