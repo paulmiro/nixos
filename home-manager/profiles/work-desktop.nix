@@ -49,7 +49,6 @@
       thunderbird-bin
 
       paulmiro.nato
-      paulmiro.vibe
     ];
   };
 }

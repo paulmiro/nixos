@@ -65,7 +65,6 @@
       zoom-us
 
       paulmiro.nato
-      paulmiro.vibe
     ];
   };
 }
