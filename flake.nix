@@ -73,6 +73,9 @@
     nix-index-database.url = "github:nix-community/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
 
+    quickshell.url = "git+https://git.outfoxxed.me/quickshell/quickshell";
+    quickshell.inputs.nixpkgs.follows = "nixpkgs";
+
     ### Non-Flake Inputs
 
     starship-no-empty-icons.url = "https://starship.rs/presets/toml/no-empty-icons.toml";
