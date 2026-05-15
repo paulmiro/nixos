@@ -1,6 +1,6 @@
 [qbittorrent]
 repo = "binhex/arch-qbittorrentvpn"
-version = "5.2.0-1-05"
+version = "5.2.0-1-06"
 [immich]
 repo = "immich-app/immich"
 version = "2.7.5"
