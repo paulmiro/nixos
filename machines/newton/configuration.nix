@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   ...
 }:
 {
@@ -59,6 +60,11 @@
   specialisation = {
     jovian.configuration = {
       paul.jovian.enable = true;
+    };
+
+    niri.configuration = {
+      paul.gnome.enable = lib.mkForce false;
+      paul.niri.enable = true;
     };
   };
 }

@@ -785,6 +785,7 @@
         "nixpkgs": "nixpkgs_4",
         "starship-no-empty-icons": "starship-no-empty-icons",
         "useful-api": "useful-api",
+        "wrapper-modules": "wrapper-modules",
         "zen-browser": "zen-browser"
       }
     },
@@ -980,6 +981,26 @@
       "original": {
         "owner": "paulmiro",
         "repo": "useful-api",
+        "type": "github"
+      }
+    },
+    "wrapper-modules": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1778882590,
+        "narHash": "sha256-RpOTonvtj16N4Os15zengbtzHmQZ3kMAQMi2iMJrO3w=",
+        "owner": "BirdeeHub",
+        "repo": "nix-wrapper-modules",
+        "rev": "950d02a943df44ebc250c724de89dee95761789a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "BirdeeHub",
+        "repo": "nix-wrapper-modules",
         "type": "github"
       }
     },
