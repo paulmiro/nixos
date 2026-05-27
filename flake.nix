@@ -274,7 +274,7 @@
             packages = [
               inputs.git-agecrypt-armor.packages.${system}.default
               inputs.clan-core.packages.${system}.clan-cli
-              (pkgs.writeShellScriptBin "rebuild" "${pkgs.nixos-rebuild}/bin/nixos-rebuild --sudo switch --flake . $@")
+              (pkgs.writeShellScriptBin "rebuild" "${pkgs.nixos-rebuild-ng}/bin/nixos-rebuild --sudo switch --flake . $@")
               (pkgs.writeShellScriptBin "rollout" "${
                 inputs.clan-core.packages.${system}.clan-cli
               }/bin/clan machines update $@")
