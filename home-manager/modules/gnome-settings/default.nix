@@ -45,21 +45,16 @@ in
         clipboard-indicator
         gsconnect
         just-perfection
+        tailscale-qs
+        touchpad-gesture-customization
         vitals
         wifi-qrcode
-
-        # TODO update to these once available
-        # tailscale-gnome-qs
-        # touchpad-gesture-customization
 
         # TODO maybe add these later
         # paperwm
         # workspace-matrix
       ]
-      ++ map patchVersion [
-        tailscale-qs
-        window-gestures
-      ];
+      ++ map patchVersion [ ];
 
     gtk = {
       enable = true;
@@ -87,12 +82,11 @@ in
           "drive-menu@gnome-shell-extensions.gcampax.github.com"
           "gsconnect@andyholmes.github.io"
           "just-perfection-desktop@just-perfection"
-          # "native-window-placement@gnome-shell-extensions.gcampax.github.com" # is glitchy sometimes
           "status-icons@gnome-shell-extensions.gcampax.github.com"
-          "tailscale@joaophi.github.com"
+          "tailscale-gnome-qs@tailscale-qs.github.io"
+          "touchpad-gesture-customization@coooolapps.com"
           "Vitals@CoreCoding.com"
           "wifiqrcode@glerro.pm.me"
-          "windowgestures@extension.amarullz.com"
         ];
       };
 
