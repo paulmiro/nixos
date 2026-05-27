@@ -27,7 +27,7 @@
   boot.kernelModules = [ "kvm-intel" ];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/88b8e672-d27c-4cf6-8aeb-5ed4895b429e";
+    device = "/dev/mapper/luks-43c4b67b-f086-473d-ab86-c7ebea3d96e7";
     fsType = "btrfs";
     options = [ "subvol=@" ];
   };
