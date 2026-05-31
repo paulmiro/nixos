@@ -1,15 +1,15 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 let
   cfg = config.paul.qbittorrent;
   webuiPort = 8090;
   privoxyPort = 8118;
-  socksPort = 9118;
   serviceName = "qbittorrent-vpn-docker";
-  containerVersion = config.paul.versions.qbittorrent;
+  # containerVersion = config.paul.versions.qbittorrent;
 in
 {
   options.paul.qbittorrent = {
@@ -22,13 +22,16 @@ in
 
     paul.user.transmission.enable = true;
 
+    # HACK needed until we get a version with qbittorrent/qBittorrent#24218
+    systemd.services.${serviceName}.serviceConfig.ExecStartPre =
+      "${pkgs.coreutils}/bin/rm -f /var/lib/qbittorrent/config/config/lockfile";
+
     virtualisation.oci-containers.containers.qbittorrent-vpn = {
       inherit serviceName;
-      image = "binhex/arch-qbittorrentvpn:${containerVersion}";
+      image = "ghcr.io/hotio/qbittorrent:release-v5.2.1"; # TODO manage with versions module
       volumes = [
-        "/etc/localtime:/etc/localtime:ro"
-
         "/var/lib/qbittorrent/config:/config"
+        "${config.clan.core.vars.generators.qbittorrent.files.wg0.path}:/config/wireguard/wg0.conf:ro"
         "/var/lib/qbittorrent/data:/data"
 
         "/mnt/arr/torrents:/mnt/arr/torrents"
@@ -36,9 +39,6 @@ in
       ports = [
         "${toString webuiPort}:${toString webuiPort}"
         "${toString privoxyPort}:8118"
-        "${toString socksPort}:9118"
-        #"58946:58946"
-        #"58946:58946/udp"
       ];
       capabilities = {
         NET_ADMIN = true;
@@ -53,33 +53,13 @@ in
         PGID = toString config.users.groups.transmission.gid;
         UMASK = "000";
 
-        VPN_ENABLED = "yes";
-        VPN_USER = "user";
-        VPN_PASS = "pass";
-        VPN_PROV = "custom";
-        VPN_CLIENT = "openvpn";
+        TZ = config.time.timeZone;
 
-        LAN_NETWORK = "192.168.178.0/24,100.0.0.0/8,127.0.0.1/32";
-        NAME_SERVERS = "1.1.1.1,1.0.0.1";
-        WEBUI_PORT = toString webuiPort;
+        VPN_ENABLED = "true";
+        VPN_NAMESERVERS = "1.1.1.1@853#cloudflare-dns.com";
+        WEBUI_PORTS = "${toString webuiPort}/tcp,${toString privoxyPort}/tcp";
 
-        ENABLE_PRIVOXY = "yes";
-
-        ENABLE_SOCKS = "yes";
-        SOCKS_USER = "socks";
-        # SOCKS_PASS = "<socks password>"; # in env file
-
-        DEBUG = "false";
-        STRICT_PORT_FORWARD = "yes";
-        USERSPACE_WIREGUARD = "no";
-
-        # VPN_OPTIONS = "<additional openvpn cli options>";
-        # VPN_INPUT_PORTS = "<port number(s)>";
-        # VPN_OUTPUT_PORTS = "<port number(s)>";
-        # HEALTHCHECK_COMMAND = "<command>";
-        # HEALTHCHECK_ACTION = "<action>";
-        # HEALTHCHECK_HOSTNAME = "<hostname>";
-        # ENABLE_STARTUP_SCRIPTS = "no"; # default no
+        PRIVOXY_ENABLED = "true";
       };
 
       environmentFiles = [
@@ -96,29 +76,22 @@ in
     };
 
     clan.core.vars.generators.qbittorrent = {
-      prompts.socks-password.description = "Password for qbittorrent microsocks user (see bw)";
-      prompts.socks-password.type = "hidden";
-      prompts.socks-password.persist = false;
+      prompts.wg0.description = "Wireguard config file for qbittorrent";
+      prompts.wg0.type = "multiline";
+      prompts.wg0.persist = true;
+      files.wg0.owner = "transmission";
+
+      prompts.forwarded-port.description = "Port that is forwarded through the VPN";
+      prompts.forwarded-port.persist = false;
 
       files.env.secret = true;
       files.env.owner = "transmission";
 
       script = ''
         echo "
-        SOCKS_PASS="$(cat $prompts/socks-password)"
+        VPN_AUTO_PORT_FORWARD="$(cat $prompts/forwarded-port)"
         " > $out/env
       '';
     };
-
-    # fix for:
-    # iptables v1.8.11 (legacy): can't initialize iptables table `filter': Table does not exist (do you need to insmod?)
-    # Perhaps iptables or your kernel needs to be upgraded.
-    # [crit] iptables default policies not available, exiting script...
-    boot.kernelModules = [
-      "iptable_filter"
-      "ip6table_filter"
-      "iptable_mangle"
-      "ip6table_mangle"
-    ];
   };
 }
