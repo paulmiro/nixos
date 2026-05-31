@@ -105,6 +105,4 @@
       enableNginx = true;
     };
   };
-
-  boot.kernelPackages = pkgs.linuxPackages_6_12;
 }
