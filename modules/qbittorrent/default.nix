@@ -9,7 +9,7 @@ let
   webuiPort = 8090;
   privoxyPort = 8118;
   serviceName = "qbittorrent-vpn-docker";
-  # containerVersion = config.paul.versions.qbittorrent;
+  containerVersion = "release-v${config.paul.versions.qbittorrent}";
 in
 {
   options.paul.qbittorrent = {
@@ -28,7 +28,7 @@ in
 
     virtualisation.oci-containers.containers.qbittorrent-vpn = {
       inherit serviceName;
-      image = "ghcr.io/hotio/qbittorrent:release-v5.2.1"; # TODO manage with versions module
+      image = "ghcr.io/hotio/qbittorrent:${containerVersion}";
       volumes = [
         "/var/lib/qbittorrent/config:/config"
         "${config.clan.core.vars.generators.qbittorrent.files.wg0.path}:/config/wireguard/wg0.conf:ro"

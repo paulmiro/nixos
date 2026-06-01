@@ -5,33 +5,74 @@ from github import Github
 from github import Auth
 
 TOML_PATH = "modules/versions/versions.toml"
+GH = None
 
 
 def eprint(*args, **kwargs):
     print(*args, file=sys.stderr, **kwargs)
 
 
-def fetch_latest_version(g, repo_name):
-    """Fetches the latest release using PyGithub and strips the leading 'v'."""
+def fetch_latest_version(repo_name, repo_type):
     try:
-        repo = g.get_repo(repo_name)
-        release = repo.get_latest_release()
+        raw_version = None
+        match repo_type:
+            case "github":
+                raw_version = fetch_latest_version_github(repo_name)
+            case "ghcr":
+                raw_version = fetch_latest_version_ghcr(repo_name)
+            case _:
+                eprint(f"Error: Unknown repo type {repo_type}")
+                return None
 
-        # Prefer the git tag, fallback to the release title/name
-        raw_version = release.tag_name or release.title
-
-        if not raw_version:
-            eprint(
-                f"Error: Could not find tag or name in release data for {repo_name}"
-            )
-            return None
-
+        # Strip leading 'release-' if it exists
+        if raw_version and raw_version.startswith("release-"):
+            raw_version = raw_version[8:]
         # Strip leading 'v' if it exists
-        return raw_version[1:] if raw_version.startswith("v") else raw_version
+        if raw_version and raw_version.startswith("v"):
+            raw_version = raw_version[1:]
+        return raw_version
 
     except Exception as e:
         eprint(f"Failed to fetch release for {repo_name}: {e}")
         return None
+
+
+def fetch_latest_version_github(repo_name):
+    """Fetches the latest version from GitHub Releases."""
+    repo = GH.get_repo(repo_name)
+    release = repo.get_latest_release()
+
+    # Prefer the git tag, fallback to the release title/name
+    raw_version = release.tag_name or release.title
+
+    if not raw_version:
+        eprint(
+            f"Error: Could not find tag or name in release data for {repo_name}"
+        )
+        return None
+
+
+def fetch_latest_version_ghcr(repo_name):
+    """Fetches the latest version from the GitHub Container Registry."""
+    (org, repo) = repo_name.split("/")
+    response = GH.requester.requestJsonAndCheck(
+        "GET",
+        f"/orgs/{org}/packages/container/{repo}/versions",
+    )[1]
+    for release in response:
+        if "latest" in release["metadata"]["container"]["tags"]:
+            tags = release["metadata"]["container"]["tags"]
+            search_prefix = "release-v"
+            raw_version = None
+            for tag in tags:
+                if tag.startswith(search_prefix):
+                    raw_version = tag
+                    search_prefix = tag  # keep serching for a more specific version
+            break
+    if not raw_version:
+        eprint(f"Error: Could not find latest version for {repo_name}")
+        return None
+    return raw_version
 
 
 def main():
@@ -42,7 +83,8 @@ def main():
         sys.exit(1)
 
     auth = Auth.Token(token)
-    g = Github(auth=auth)
+    global GH
+    GH = Github(auth=auth)
 
     target_dep = sys.argv[1] if len(sys.argv) > 1 else None
 
@@ -55,6 +97,7 @@ def main():
 
     current_block = None
     repo_name = None
+    repo_type = None
     changes_made = False
 
     for i, line in enumerate(lines):
@@ -64,6 +107,7 @@ def main():
         if stripped.startswith("[") and stripped.endswith("]"):
             current_block = stripped[1:-1]
             repo_name = None
+            repo_type = None
             continue
 
         # Skip other dependencies if a specific target is provided
@@ -76,14 +120,20 @@ def main():
             if repo_match:
                 repo_name = repo_match.group(1)
 
+        # Extract the type string
+        if stripped.startswith("type"):
+            type_match = re.search(r'type\s*=\s*"([^"]+)"', stripped)
+            if type_match:
+                repo_type = type_match.group(1)
+
         # When we hit the version line, fetch and update
         elif stripped.startswith("version") and repo_name:
             version_match = re.search(r'version\s*=\s*"([^"]+)"', stripped)
             if version_match:
                 current_version = version_match.group(1)
-                eprint(f"Checking {current_block} ({repo_name})...")
+                eprint(f"Checking {current_block} ({repo_type}: {repo_name})...")
 
-                latest_version = fetch_latest_version(g, repo_name)
+                latest_version = fetch_latest_version(repo_name, repo_type)
 
                 if latest_version and latest_version != current_version:
                     print(f"{current_version} -> {latest_version}")
@@ -102,7 +152,7 @@ def main():
     if changes_made:
         with open(TOML_PATH, "w") as f:
             f.writelines(lines)
-        eprint("Successfully updated version.toml!")
+        eprint("Successfully updated versions.toml!")
     else:
         eprint("No updates needed.")
 
