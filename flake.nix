@@ -274,7 +274,15 @@
             packages = [
               inputs.git-agecrypt-armor.packages.${system}.default
               inputs.clan-core.packages.${system}.clan-cli
-              (pkgs.writeShellScriptBin "rebuild" "${pkgs.nixos-rebuild-ng}/bin/nixos-rebuild --sudo switch --flake . $@")
+              (pkgs.writeShellScriptBin "rebuild" ''
+                set -euo pipefail
+                hostname=''${1:-$(hostname)}
+                if [[ $hostname != $(hostname) ]]; then
+                  echo "WARNING: Rebuilding configuration for \"$hostname\" on \"$(hostname)\""
+                fi
+                ${pkgs.nix-output-monitor}/bin/nom  build .#nixosConfigurations.$hostname.config.system.build.toplevel
+                ${pkgs.nixos-rebuild-ng}/bin/nixos-rebuild --sudo switch --flake .#$hostname
+              '')
               (pkgs.writeShellScriptBin "rollout" "${
                 inputs.clan-core.packages.${system}.clan-cli
               }/bin/clan machines update $@")
