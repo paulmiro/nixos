@@ -83,16 +83,12 @@ in
       };
     };
 
-    programs.ssh.matchBlocks = {
+    programs.ssh.settings = {
       "betterbuild" = {
-        extraOptions = {
-          IdentityFile = "~/.ssh/id_ed25519_pr";
-        };
+        IdentityFile = "~/.ssh/id_ed25519_pr";
       };
       "git.bettertec.internal" = {
-        extraOptions = {
-          IdentityFile = "~/.ssh/id_ed25519_pr";
-        };
+        IdentityFile = "~/.ssh/id_ed25519_pr";
       };
     };
 
