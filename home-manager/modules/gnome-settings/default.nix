@@ -66,6 +66,7 @@ in
     };
 
     # Use `dconf watch /` to track stateful changes you are doing, then set them here.
+    # Or use `dconf dump / | dconf2nix` to convert the current settings to nix code
     dconf.settings = {
       "org/gnome/shell" = {
         favorite-apps = [
@@ -226,19 +227,14 @@ in
         position-in-panel = 0;
       };
 
-      "org/gnome/shell/extensions/windowgestures" = {
-        three-finger = true;
-        use-active-window = false;
-        swipe4-left = 9;
-        swipe4-right = 8;
-        swipe3-down = 0;
-        swipe3-left = 0;
-        swipe3-right = 0;
-        fn-resize = false;
-        fn-move = false;
-        fn-fullscreen = false;
-        fn-maximized-snap = false;
-        fn-move-snap = false;
+      "org/gnome/shell/extensions/touchpad-gesture-customization" = {
+        horizontal-swipe-3-fingers-gesture = "NONE";
+        horizontal-swipe-4-fingers-gesture = "WORKSPACE_SWITCHING";
+        pinch-3-finger-gesture = "NONE";
+        pinch-4-finger-gesture = "NONE";
+        vertical-swipe-3-fingers-gesture = "WINDOW_MANIPULATION";
+        vertical-swipe-4-fingers-gesture = "OVERVIEW_NAVIGATION";
+        enable-forward-back-gesture = true;
       };
 
       # app settings
