@@ -82,7 +82,7 @@ in
               chmod -R 0700 .
             fi
           }
-
+          alias cdt=cdtmp
         '';
 
       history = {
