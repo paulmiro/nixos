@@ -15,7 +15,7 @@ in
     programs.ssh = {
       enable = true;
       enableDefaultConfig = false; # the "*" match block currently contains these default values
-      matchBlocks = {
+      settings = {
         "*" = {
           forwardAgent = false;
           addKeysToAgent = "no";
