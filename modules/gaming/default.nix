@@ -23,7 +23,11 @@ in
       })
     ];
 
-    programs.steam.enable = true;
+    programs.steam = {
+      enable = true;
+      extraCompatPackages = [ (pkgs.proton-ge-bin.override { steamDisplayName = "GE-Proton-Nix"; }) ];
+    };
+
     environment.systemPackages = with pkgs; [
       bottles
       (lutris.override {
