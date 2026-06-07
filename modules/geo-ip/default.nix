@@ -116,6 +116,7 @@ in
             GB yes;
             IT yes;
             NL yes;
+            DK yes;
             JP yes;
             LU yes;
             US yes;
