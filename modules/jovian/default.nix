@@ -1,40 +1,43 @@
+{ inputs, ... }:
 {
-  config,
-  jovian,
-  lib,
-  ...
-}:
-let
-  cfg = config.paul.jovian;
-in
-{
-  imports = [
-    jovian.nixosModules.default
-  ];
+  flake.nixosModules.jovian =
+    {
+      config,
+      lib,
+      ...
+    }:
+    let
+      cfg = config.paul.jovian;
+    in
+    {
+      imports = [
+        inputs.jovian.nixosModules.default
+      ];
 
-  options.paul.jovian = {
-    enable = lib.mkEnableOption "activate jovian (steamos-like experience)";
-  };
+      options.paul.jovian = {
+        enable = lib.mkEnableOption "activate jovian (steamos-like experience)";
+      };
 
-  config = lib.mkIf cfg.enable {
-    jovian.steam = {
-      enable = true;
-      autoStart = true;
-      user = "paulmiro";
-      desktopSession = lib.mkIf config.paul.gnome.enable "gnome";
+      config = lib.mkIf cfg.enable {
+        jovian.steam = {
+          enable = true;
+          autoStart = true;
+          user = "paulmiro";
+          desktopSession = lib.mkIf config.paul.gnome.enable "gnome";
+        };
+
+        jovian.steamos.enableZram = false;
+
+        nixpkgs.overlays = [
+          (final: prev: {
+            steam = prev.steam.override { platformArgs = "-steamos3 -steampal -gamepadui"; };
+          })
+        ];
+
+        services.displayManager.defaultSession = lib.mkIf config.paul.gnome.enable (
+          lib.mkForce "gamescope-wayland"
+        );
+        services.displayManager.gdm.enable = lib.mkIf config.paul.gnome.enable (lib.mkForce false);
+      };
     };
-
-    jovian.steamos.enableZram = false;
-
-    nixpkgs.overlays = [
-      (final: prev: {
-        steam = prev.steam.override { platformArgs = "-steamos3 -steampal -gamepadui"; };
-      })
-    ];
-
-    services.displayManager.defaultSession = lib.mkIf config.paul.gnome.enable (
-      lib.mkForce "gamescope-wayland"
-    );
-    services.displayManager.gdm.enable = lib.mkIf config.paul.gnome.enable (lib.mkForce false);
-  };
 }

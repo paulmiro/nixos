@@ -1,125 +1,132 @@
+{ inputs, self, ... }:
 {
-  betternix,
-  config,
-  lib,
-  pkgs,
-  ...
-}:
-let
-  cfg = config.paul.work;
-in
-{
-  imports = [
-    betternix.homeModules.default
+  flake.nixosModules.work.imports = [
+    inputs.betternix.nixosModules.default
   ];
 
-  options.paul.work = {
-    enable = lib.mkEnableOption "enable work stuff";
-  };
+  flake.homeModules.work =
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
+    let
+      cfg = config.paul.work;
+    in
+    {
+      imports = [
+        inputs.betternix.homeModules.default
+      ];
 
-  config = lib.mkIf cfg.enable {
-    betternix.ssh.enable = true;
-    betternix.packages.enable = true;
+      options.paul.work = {
+        enable = lib.mkEnableOption "enable work stuff";
+      };
 
-    paul.ghostty.enableSshTerminfoFix = true;
+      config = lib.mkIf cfg.enable {
+        betternix.ssh.enable = true;
+        betternix.packages.enable = true;
 
-    programs.git.includes = [
-      {
-        condition = "gitdir:~/source/";
-        contents = {
-          user.name = "Paul Mika Rohde";
-          user.email = config.paul.private.emails.work;
+        paul.ghostty.enableSshTerminfoFix = true;
 
-          lfs."https://git.bettertec.internal".locksverify = false;
+        programs.git.includes = [
+          {
+            condition = "gitdir:~/source/";
+            contents = {
+              user.name = "Paul Mika Rohde";
+              user.email = self.private.emails.work;
+
+              lfs."https://git.bettertec.internal".locksverify = false;
+            };
+          }
+        ];
+
+        programs.zsh = {
+          shellAliases = {
+            checkout = "${pkgs.writeShellScript "checkout" ''
+              set -euo pipefail
+              repoName=$1
+              repoPath=~/source/''${repoName}
+              if [ -e ''${repoPath} ]; then
+                echo "Path already taken"
+                exit 1
+              fi
+              svn checkout svn://betterstorage/bettertec/''${repoName}/trunk ''${repoPath}
+            ''}";
+
+            clone = "${pkgs.writeShellScript "clone" ''
+              set -euo pipefail
+              repoName=$1
+              repoPath=~/source/''${repoName}
+              if [ -e ''${repoPath} ]; then
+                echo "Path already taken"
+                exit 1
+              fi
+              git clone "ssh://forgejo@git.bettertec.internal/bettertec/''${repoName}" "''${repoPath}"
+            ''}";
+
+            ng = "npm run ng --";
+            nge = "ng extract-i18n";
+            n = "ng serve -c local";
+            nde = "ng serve -c local-de";
+            nt = "ng serve -c test";
+            ncet = "ng serve -c ncetest";
+            ntde = "ng serve -c test-de";
+            ncetde = "ng serve -c ncetest-de";
+
+            cpr = "${pkgs.writeShellScript "copy-report-common" ''
+              cp ~/source/report-common/target/typescript-generator/report-common.d.ts ~/source/better-wms/src/app/common/report-common.d.ts
+              npx prettier --write ~/source/better-wms/src/app/common/report-common.d.ts
+            ''}";
+            cpw = "${pkgs.writeShellScript "copy-wms-backend" ''
+              cp ~/source/wms-backend/target/typescript-generator/wms-backend.d.ts ~/source/better-wms/src/app/common/wms-backend.d.ts
+              npx prettier --write ~/source/better-wms/src/app/common/wms-backend.d.ts
+            ''}";
+            cpt = "${pkgs.writeShellScript "copy-track-backend" ''
+              cp ~/source/track-backend/target/typescript-generator/track-backend.d.ts ~/source/better-track/src/app/common/track-backend.d.ts
+              npx prettier --write ~/source/better-track/src/app/common/track-backend.d.ts
+            ''}";
+          };
         };
-      }
-    ];
 
-    programs.zsh = {
-      shellAliases = {
-        checkout = "${pkgs.writeShellScript "checkout" ''
-          set -euo pipefail
-          repoName=$1
-          repoPath=~/source/''${repoName}
-          if [ -e ''${repoPath} ]; then
-            echo "Path already taken"
-            exit 1
-          fi
-          svn checkout svn://betterstorage/bettertec/''${repoName}/trunk ''${repoPath}
-        ''}";
+        programs.ssh.settings = {
+          "betterbuild" = {
+            IdentityFile = "~/.ssh/id_ed25519_pr";
+          };
+          "git.bettertec.internal" = {
+            IdentityFile = "~/.ssh/id_ed25519_pr";
+          };
+        };
 
-        clone = "${pkgs.writeShellScript "clone" ''
-          set -euo pipefail
-          repoName=$1
-          repoPath=~/source/''${repoName}
-          if [ -e ''${repoPath} ]; then
-            echo "Path already taken"
-            exit 1
-          fi
-          git clone "ssh://forgejo@git.bettertec.internal/bettertec/''${repoName}" "''${repoPath}"
-        ''}";
+        dconf.settings = {
+          "org/gnome/shell" = {
+            favorite-apps = lib.mkForce [
+              "com.mitchellh.ghostty.desktop"
+              "org.gnome.Nautilus.desktop"
+              "zen.desktop"
+              "chromium-browser.desktop"
+              "code.desktop"
+              "idea.desktop"
+              "dbeaver.desktop"
+              "discord.desktop"
+              "thunderbird.desktop"
+            ];
+          };
+        };
+        home.packages = with pkgs; [
+          subversionClient
+          # rapidsvn
 
-        ng = "npm run ng --";
-        nge = "ng extract-i18n";
-        n = "ng serve -c local";
-        nde = "ng serve -c local-de";
-        nt = "ng serve -c test";
-        ncet = "ng serve -c ncetest";
-        ntde = "ng serve -c test-de";
-        ncetde = "ng serve -c ncetest-de";
+          keepassxc
 
-        cpr = "${pkgs.writeShellScript "copy-report-common" ''
-          cp ~/source/report-common/target/typescript-generator/report-common.d.ts ~/source/better-wms/src/app/common/report-common.d.ts
-          npx prettier --write ~/source/better-wms/src/app/common/report-common.d.ts
-        ''}";
-        cpw = "${pkgs.writeShellScript "copy-wms-backend" ''
-          cp ~/source/wms-backend/target/typescript-generator/wms-backend.d.ts ~/source/better-wms/src/app/common/wms-backend.d.ts
-          npx prettier --write ~/source/better-wms/src/app/common/wms-backend.d.ts
-        ''}";
-        cpt = "${pkgs.writeShellScript "copy-track-backend" ''
-          cp ~/source/track-backend/target/typescript-generator/track-backend.d.ts ~/source/better-track/src/app/common/track-backend.d.ts
-          npx prettier --write ~/source/better-track/src/app/common/track-backend.d.ts
-        ''}";
-      };
-    };
+          android-studio
+          dbeaver-bin
+          jetbrains.idea
 
-    programs.ssh.settings = {
-      "betterbuild" = {
-        IdentityFile = "~/.ssh/id_ed25519_pr";
-      };
-      "git.bettertec.internal" = {
-        IdentityFile = "~/.ssh/id_ed25519_pr";
-      };
-    };
+          nodejs
 
-    dconf.settings = {
-      "org/gnome/shell" = {
-        favorite-apps = lib.mkForce [
-          "com.mitchellh.ghostty.desktop"
-          "org.gnome.Nautilus.desktop"
-          "zen.desktop"
-          "chromium-browser.desktop"
-          "code.desktop"
-          "idea.desktop"
-          "dbeaver.desktop"
-          "discord.desktop"
-          "thunderbird.desktop"
+          lemminx
         ];
       };
     };
-    home.packages = with pkgs; [
-      subversionClient
-      # rapidsvn
-
-      keepassxc
-
-      android-studio
-      dbeaver-bin
-      jetbrains.idea
-
-      nodejs
-
-      lemminx
-    ];
-  };
 }

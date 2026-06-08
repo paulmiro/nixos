@@ -1,32 +1,36 @@
+{ ... }:
 {
-  config,
-  lib,
-  ...
-}:
-let
-  cfg = config.paul.prowlarr;
-  port = config.services.prowlarr.settings.server.port;
-in
-{
-  options.paul.prowlarr = {
-    enable = lib.mkEnableOption "activate prowlarr";
-    enableTailscaleService = lib.mkEnableOption "use tailscale serve to proxy prowlarr";
-  };
+  flake.nixosModules.prowlarr =
+    {
+      config,
+      lib,
+      ...
+    }:
+    let
+      cfg = config.paul.prowlarr;
+      port = config.services.prowlarr.settings.server.port;
+    in
+    {
+      options.paul.prowlarr = {
+        enable = lib.mkEnableOption "activate prowlarr";
+        enableTailscaleService = lib.mkEnableOption "use tailscale serve to proxy prowlarr";
+      };
 
-  config = lib.mkIf cfg.enable {
-    paul.flaresolverr.enable = true;
+      config = lib.mkIf cfg.enable {
+        paul.flaresolverr.enable = true;
 
-    services.prowlarr = {
-      enable = true;
-      settings.server.bindaddress = "127.0.0.1";
+        services.prowlarr = {
+          enable = true;
+          settings.server.bindaddress = "127.0.0.1";
+        };
+
+        paul.tailscale.services.prowlarr.port = lib.mkIf cfg.enableTailscaleService port;
+
+        clan.core.state.prowlarr = {
+          useZfsSnapshots = true;
+          folders = [ "/var/lib/private/prowlarr" ];
+          servicesToStop = [ "prowlarr.service" ];
+        };
+      };
     };
-
-    paul.tailscale.services.prowlarr.port = lib.mkIf cfg.enableTailscaleService port;
-
-    clan.core.state.prowlarr = {
-      useZfsSnapshots = true;
-      folders = [ "/var/lib/private/prowlarr" ];
-      servicesToStop = [ "prowlarr.service" ];
-    };
-  };
 }

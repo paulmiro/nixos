@@ -1,38 +1,42 @@
+{ ... }:
 {
-  config,
-  lib,
-  pkgs,
-  ...
-}:
-let
-  cfg = config.paul.readarr;
-in
-{
-  options.paul.readarr = {
-    enable = lib.mkEnableOption "activate readarr";
-    openFirewall = lib.mkEnableOption "allow readarr port in firewall";
-  };
+  flake.nixosModules.readarr =
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
+    let
+      cfg = config.paul.readarr;
+    in
+    {
+      options.paul.readarr = {
+        enable = lib.mkEnableOption "activate readarr";
+        openFirewall = lib.mkEnableOption "allow readarr port in firewall";
+      };
 
-  config = lib.mkIf cfg.enable {
-    paul.group.transmission.enable = true;
+      config = lib.mkIf cfg.enable {
+        paul.group.transmission.enable = true;
 
-    services.readarr = {
-      enable = true;
-      package =
-        assert false;
-        pkgs.readarr.overrideAttrs {
-          # bookshelf fork does not do releases so here are the options:
-          # - use Faustvil fork instead ( slightly worse results)
-          # - build bookshelf from source (use other arrs as examples)
-          # - use bookshelf container
+        services.readarr = {
+          enable = true;
+          package =
+            assert false;
+            pkgs.readarr.overrideAttrs {
+              # bookshelf fork does not do releases so here are the options:
+              # - use Faustvil fork instead ( slightly worse results)
+              # - build bookshelf from source (use other arrs as examples)
+              # - use bookshelf container
+            };
+          group = "transmission";
         };
-      group = "transmission";
-    };
 
-    clan.core.state.readarr = {
-      useZfsSnapshots = true;
-      folders = [ "/var/lib/readarr" ];
-      servicesToStop = [ "readarr.service" ];
+        clan.core.state.readarr = {
+          useZfsSnapshots = true;
+          folders = [ "/var/lib/readarr" ];
+          servicesToStop = [ "readarr.service" ];
+        };
+      };
     };
-  };
 }

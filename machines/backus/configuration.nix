@@ -1,5 +1,4 @@
 {
-  config,
   ...
 }:
 {
@@ -16,6 +15,8 @@
       enable = true;
       maxArcGB = 1;
     };
+
+    clan.buildHost = "morse";
   };
 
   services.qemuGuest.enable = true;
@@ -23,6 +24,4 @@
     enable = true;
     interval = "weekly";
   };
-
-  clan.core.networking.buildHost = "paulmiro@morse.${config.paul.private.domains.tailnet}";
 }

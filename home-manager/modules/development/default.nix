@@ -1,52 +1,56 @@
+{ ... }:
 {
-  config,
-  lib,
-  pkgs,
-  ...
-}:
-let
-  cfg = config.paul.development;
-in
-{
-  options.paul.development = {
-    android = lib.mkEnableOption "enable Android";
-    c_cpp = lib.mkEnableOption "enable C/C++";
-    go = lib.mkEnableOption "enable Go";
-    godot = lib.mkEnableOption "enable Godot";
-    java = lib.mkEnableOption "enable Java";
-    javascript = lib.mkEnableOption "enable JavaScript";
-    lua = lib.mkEnableOption "enable Lua";
-    python = lib.mkEnableOption "enable Python";
-    rust = lib.mkEnableOption "enable Rust";
-  };
-
-  config = lib.mkMerge [
-    (lib.mkIf cfg.android {
-      home.sessionVariables = {
-        ANDROID_HOME = "~/.android/sdk"; # because fuck whoever decided to name that folder "Android" instead of ".android"
+  flake.homeModules.development =
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
+    let
+      cfg = config.paul.development;
+    in
+    {
+      options.paul.development = {
+        android = lib.mkEnableOption "enable Android";
+        c_cpp = lib.mkEnableOption "enable C/C++";
+        go = lib.mkEnableOption "enable Go";
+        godot = lib.mkEnableOption "enable Godot";
+        java = lib.mkEnableOption "enable Java";
+        javascript = lib.mkEnableOption "enable JavaScript";
+        lua = lib.mkEnableOption "enable Lua";
+        python = lib.mkEnableOption "enable Python";
+        rust = lib.mkEnableOption "enable Rust";
       };
 
-      home.packages = with pkgs; [
-        android-studio
-        android-tools
+      config = lib.mkMerge [
+        (lib.mkIf cfg.android {
+          home.sessionVariables = {
+            ANDROID_HOME = "~/.android/sdk"; # because fuck whoever decided to name that folder "Android" instead of ".android"
+          };
+
+          home.packages = with pkgs; [
+            android-studio
+            android-tools
+          ];
+        })
+        (lib.mkIf cfg.go {
+          programs.go = {
+            enable = true;
+          };
+        })
+        (lib.mkIf cfg.godot {
+          home.packages = with pkgs; [
+            godot
+            (if config.nixpkgs.config.allowUnfree then steam-run else steam-run-free)
+          ];
+        })
+        (lib.mkIf cfg.rust {
+          home.packages = with pkgs; [
+            rust-analyzer
+            bacon
+          ];
+        })
       ];
-    })
-    (lib.mkIf cfg.go {
-      programs.go = {
-        enable = true;
-      };
-    })
-    (lib.mkIf cfg.godot {
-      home.packages = with pkgs; [
-        godot
-        (if config.nixpkgs.config.allowUnfree then steam-run else steam-run-free)
-      ];
-    })
-    (lib.mkIf cfg.rust {
-      home.packages = with pkgs; [
-        rust-analyzer
-        bacon
-      ];
-    })
-  ];
+    };
 }

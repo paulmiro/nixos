@@ -1,13 +1,8 @@
 {
-  betternix,
   pkgs,
   ...
 }:
 {
-  imports = [
-    betternix.nixosModules.default
-  ];
-
   paul = {
     common-desktop.enable = true;
     gnome.enable = true;

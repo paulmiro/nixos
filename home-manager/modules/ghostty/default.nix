@@ -1,22 +1,33 @@
+{ ... }:
 {
-  config,
-  lib,
-  pkgs,
-  ...
-}:
-let
-  cfg = config.paul.ghostty;
-in
-{
-  options.paul.ghostty = {
-    enable = lib.mkEnableOption "enable ghostty";
-    enableSshTerminfoFix = lib.mkEnableOption "force xterm-256color for ssh sessions";
-  };
+  flake.homeModules.ghostty =
+    {
+      config,
+      lib,
+      ...
+    }:
+    let
+      cfg = config.paul.ghostty;
+    in
+    {
+      options.paul.ghostty = {
+        enable = lib.mkEnableOption "enable ghostty";
+        enableSshTerminfoFix = lib.mkEnableOption "force xterm-256color for ssh sessions";
+      };
 
-  config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; [ ghostty ];
-    xdg.configFile."ghostty/config".text =
-      (builtins.readFile ./config)
-      + lib.optionalString cfg.enableSshTerminfoFix "\nshell-integration-features = ssh-env";
-  };
+      config = lib.mkIf cfg.enable {
+        programs.ghostty = {
+          enable = true;
+          settings = {
+            maximize = true;
+            theme = "Molokai";
+            fontFamily = "MesloLGS NF";
+            fontSize = 14;
+            shellIntegrationFeatures = lib.mkIf cfg.enableSshTerminfoFix [
+              "ssh-env"
+            ];
+          };
+        };
+      };
+    };
 }

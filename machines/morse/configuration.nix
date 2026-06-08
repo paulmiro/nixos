@@ -42,8 +42,6 @@
     };
   };
 
-  clan.core.networking.targetHost = "morse.${config.paul.private.domains.tailnet}";
-
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
   networking = {

@@ -1,66 +1,69 @@
+{ inputs, self, ... }:
 {
-  config,
-  lib,
-  nix-minecraft,
-  pkgs,
-  ...
-}:
-let
-  cfg = config.paul.minecraft-servers.vanilla;
-in
-{
-  options.paul.minecraft-servers.vanilla = {
-    enable = lib.mkEnableOption "activate Vanilla Minecraft Server";
-    enableDyndns = lib.mkEnableOption "enable dyndns";
-    domain = lib.mkOption {
-      type = lib.types.str;
-      default = "mc.${config.paul.private.domains.base}";
-      description = "domain name for Vanilla Minecraft Server";
-    };
-  };
-
-  config = lib.mkIf cfg.enable {
-    users.users.paulmiro.extraGroups = [ "minecraft" ];
-    nixpkgs.overlays = [ nix-minecraft.overlay ];
-
-    services.nginx.virtualHosts."${cfg.domain}" = {
-      enableACME = true;
-      forceSSL = true;
-      enableDyndns = cfg.enableDyndns;
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:8100";
-        enableGeoIP = true;
+  flake.nixosModules.minecraft-servers =
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
+    let
+      cfg = config.paul.minecraft-servers.vanilla;
+    in
+    {
+      options.paul.minecraft-servers.vanilla = {
+        enable = lib.mkEnableOption "activate Vanilla Minecraft Server";
+        enableDyndns = lib.mkEnableOption "enable dyndns";
+        domain = lib.mkOption {
+          type = lib.types.str;
+          default = "mc.${self.private.domains.base}";
+          description = "domain name for Vanilla Minecraft Server";
+        };
       };
-    };
 
-    services.minecraft-servers = {
-      enable = true;
-      eula = true;
-      dataDir = "/var/lib/minecraft-servers";
+      config = lib.mkIf cfg.enable {
+        users.users.paulmiro.extraGroups = [ "minecraft" ];
+        nixpkgs.overlays = [ inputs.nix-minecraft.overlay ];
 
-      servers = {
-        vanilla = {
+        services.nginx.virtualHosts."${cfg.domain}" = {
+          enableACME = true;
+          forceSSL = true;
+          enableDyndns = cfg.enableDyndns;
+          locations."/" = {
+            proxyPass = "http://127.0.0.1:8100";
+            enableGeoIP = true;
+          };
+        };
+
+        services.minecraft-servers = {
           enable = true;
-          package = pkgs.paperServers.paper-1_21_4;
-          openFirewall = true;
-          autoStart = true;
-          jvmOpts = "-Xms4G -Xmx5G";
+          eula = true;
+          dataDir = "/var/lib/minecraft-servers";
 
-          symlinks = {
-            "plugins/bluemap-5.5-paper.jar" = pkgs.fetchurl {
-              url = "https://cdn.modrinth.com/data/swbUV1cr/versions/KDFOHrSO/bluemap-5.5-paper.jar";
-              sha512 = "858805ca7187216b82817fb3e697a9d5bfb8d215f399dee653f9152bea4b6292d1d271c6287195cafa53cdec774e964e8a6d6a7ed018e397e72525d102c4dc0c";
+          servers = {
+            vanilla = {
+              enable = true;
+              package = pkgs.paperServers.paper-1_21_4;
+              openFirewall = true;
+              autoStart = true;
+              jvmOpts = "-Xms4G -Xmx5G";
+
+              symlinks = {
+                "plugins/bluemap-5.5-paper.jar" = pkgs.fetchurl {
+                  url = "https://cdn.modrinth.com/data/swbUV1cr/versions/KDFOHrSO/bluemap-5.5-paper.jar";
+                  sha512 = "858805ca7187216b82817fb3e697a9d5bfb8d215f399dee653f9152bea4b6292d1d271c6287195cafa53cdec774e964e8a6d6a7ed018e397e72525d102c4dc0c";
+                };
+              };
             };
           };
         };
+
+        clan.core.state.minecraft-vanilla = {
+          useZfsSnapshots = true;
+          folders = [ "/var/lib/minecraft-servers/vanilla" ];
+          servicesToStop = [ "minecraft-vanilla.service" ];
+        };
+
       };
     };
-
-    clan.core.state.minecraft-vanilla = {
-      useZfsSnapshots = true;
-      folders = [ "/var/lib/minecraft-servers/vanilla" ];
-      servicesToStop = [ "minecraft-vanilla.service" ];
-    };
-
-  };
 }

@@ -1,84 +1,88 @@
+{ ... }:
 {
-  config,
-  git-agecrypt-armor,
-  lib,
-  pkgs,
-  ...
-}:
-let
-  cfg = config.paul.git;
-in
-{
-  options.paul.git = {
-    enable = lib.mkEnableOption "enable git";
-  };
+  flake.homeModules.git =
+    {
+      config,
+      lib,
+      pkgs,
+      inputs',
+      ...
+    }:
+    let
+      cfg = config.paul.git;
+    in
+    {
+      options.paul.git = {
+        enable = lib.mkEnableOption "enable git";
+      };
 
-  config = lib.mkIf cfg.enable {
-    programs.git = {
-      enable = true;
-      lfs.enable = true;
-      signing.format = null;
-      settings = {
-        user.name = "Paul Mika Rohde";
-        user.email = "git@paulmiro.de";
+      config = lib.mkIf cfg.enable {
+        programs.git = {
+          enable = true;
+          lfs.enable = true;
+          signing.format = null;
+          settings = {
+            user.name = "Paul Mika Rohde";
+            user.email = "git@paulmiro.de";
 
-        init.defaultBranch = "main";
+            init.defaultBranch = "main";
 
-        pull.rebase = true;
-        rebase.autoStatsh = true;
-        merge.autoStatsh = true;
+            pull.rebase = true;
+            rebase.autoStatsh = true;
+            merge.autoStatsh = true;
 
-        alias = {
-          ac =
-            let
-              script = pkgs.writeShellScript "git-ac" ''
-                set -euo pipefail
-                if [[ -z "''${1+x}" ]]; then
-                  read -p "Commit message: " message
-                else
-                  message="$1"
-                fi
-                git add .
-                git commit -m "$message"
-              '';
-            in
-            "!${script}";
-          acp =
-            let
-              script = pkgs.writeShellScript "git-acp" ''
-                set -euo pipefail
-                if [[ -z "''${1+x}" ]]; then
-                  read -p "Commit message: " message
-                else
-                  message="$1"
-                fi
-                git add .
-                git commit -m "$message"
-                git push
-              '';
-            in
-            "!${script}";
-          co = "checkout";
-          bs = "checkout -b";
-          pop = "stash pop";
-          undo = "reset --soft HEAD~1";
-          unstage = "reset HEAD --";
-          # typos i tend to do
-          statsh = "stash";
+            alias = {
+              ac =
+                let
+                  script = pkgs.writeShellScript "git-ac" ''
+                    set -euo pipefail
+                    if [[ -z "''${1+x}" ]]; then
+                      read -p "Commit message: " message
+                    else
+                      message="$1"
+                    fi
+                    git add .
+                    git commit -m "$message"
+                  '';
+                in
+                "!${script}";
+              acp =
+                let
+                  script = pkgs.writeShellScript "git-acp" ''
+                    set -euo pipefail
+                    if [[ -z "''${1+x}" ]]; then
+                      read -p "Commit message: " message
+                    else
+                      message="$1"
+                    fi
+                    git add .
+                    git commit -m "$message"
+                    git push
+                  '';
+                in
+                "!${script}";
+              co = "checkout";
+              bs = "checkout -b";
+              pop = "stash pop";
+              undo = "reset --soft HEAD~1";
+              unstage = "reset HEAD --";
+              # typos i tend to do
+              statsh = "stash";
+            };
+          };
         };
+
+        programs.delta = {
+          enable = true;
+          enableGitIntegration = true;
+        };
+
+        home.packages = with pkgs; [
+          gh
+          pre-commit
+          inputs'.git-agecrypt-armor.packages.default
+        ];
+
       };
     };
-
-    programs.delta = {
-      enable = true;
-      enableGitIntegration = true;
-    };
-
-    home.packages = with pkgs; [
-      gh
-      pre-commit
-      git-agecrypt-armor.packages.${stdenv.hostPlatform.system}.default
-    ];
-
-  };
 }

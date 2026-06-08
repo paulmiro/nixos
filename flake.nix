@@ -11,6 +11,7 @@
     # A collection of NixOS modules covering hardware quirks.
     # https://github.com/NixOS/nixos-hardware
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nixos-hardware.inputs.nixpkgs.follows = "nixpkgs";
 
     # Manage a user environment using Nix
     # https://github.com/nix-community/home-manager
@@ -19,22 +20,34 @@
 
     ### Tools for managing NixOS infrastructure
 
+    # Modular flake attributes
+    # https://github.com/hercules-ci/flake-parts
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
+
+    import-tree.url = "github:vic/import-tree";
+
+    pkgs-by-name-for-flake-parts.url = "github:drupol/pkgs-by-name-for-flake-parts";
+
     # Manage networks of machines
     # https://clan.lol
     clan-core.url = "https://git.clan.lol/clan/clan-core/archive/main.tar.gz";
     clan-core.inputs.nixpkgs.follows = "nixpkgs";
+    clan-core.inputs.flake-parts.follows = "flake-parts";
 
     disko-zfs.url = "github:numtide/disko-zfs";
     disko-zfs.inputs.nixpkgs.follows = "nixpkgs";
-    disko-zfs.inputs.flake-parts.follows = "clan-core/flake-parts";
+    disko-zfs.inputs.flake-parts.follows = "flake-parts";
     disko-zfs.inputs.disko.follows = "clan-core/disko";
 
     # NixOS on the Windows Subsystem for Linux
     # https://github.com/nix-community/NixOS-WSL
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
+    nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
 
     # NixOS on the Android Virtualization Framework
     nixos-avf.url = "github:nix-community/nixos-avf";
+    nixos-avf.inputs.nixpkgs.follows = "nixpkgs";
 
     # NixOS on the Steam Deck, or for a SteamOS-like experience on other devices
     jovian.url = "github:Jovian-Experiments/Jovian-NixOS";
@@ -83,58 +96,53 @@
   };
 
   outputs =
-    { self, ... }@inputs:
-    let
-      lib = inputs.nixpkgs.lib;
+    inputs@{ flake-parts, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; } (
+      {
+        config,
+        lib,
+        self,
+        withSystem,
+        ...
+      }:
+      {
+        systems = [
+          "x86_64-linux"
+          "aarch64-linux"
+        ];
 
-      supportedSystems = [
-        "aarch64-linux"
-        "x86_64-linux"
-      ];
+        imports = [
+          inputs.clan-core.flakeModules.default
+          inputs.home-manager.flakeModules.home-manager
+          inputs.pkgs-by-name-for-flake-parts.flakeModule
+          (inputs.import-tree [
+            ./home-manager
+            ./modules
+          ])
+        ];
 
-      forAllSystems = lib.genAttrs supportedSystems;
-
-      nixpkgsFor = forAllSystems (
-        system:
-        import inputs.nixpkgs {
-          inherit system;
-          overlays = [ self.overlays.paulmiro-overlay ];
-        }
-      );
-
-      flakePkgs =
-        pkgs:
-        (builtins.listToAttrs (
-          map (name: {
-            inherit name;
-            value = pkgs.callPackage (./pkgs + "/${name}") { flake-self = self; };
-          }) (builtins.attrNames (builtins.readDir ./pkgs))
-        ));
-
-      clan = inputs.clan-core.lib.clan {
-        inherit self; # this needs to point at the repository root
-
-        # Make inputs and the flake itself accessible as module parameters.
-        # Technically, adding the inputs is redundant as they can be also
-        # accessed with flake-self.inputs.X, but adding them individually
-        # allows to only pass what is needed to each module.
-        specialArgs = {
-          flake-self = self;
-        }
-        // inputs;
-
-        inventory = {
-
+        clan = {
           meta.name = "paulmiro-clan";
 
-          instances = {
+          # we only pass the few inputs that are needed by machine configs directly
+          specialArgs = {
+            inherit (inputs)
+              nixos-hardware
+              nixos-wsl
+              nixos-avf
+              ;
+          };
+
+          inventory.instances = {
             importer-modules-dir = {
               module = {
                 name = "importer";
                 input = "clan-core";
               };
               roles.default.tags."all" = { };
-              roles.default.extraModules = builtins.attrValues self.nixosModules;
+              roles.default.extraModules = builtins.attrValues (
+                lib.filterAttrs (n: _v: !lib.strings.hasPrefix "clan-machine-" n) self.nixosModules
+              );
             };
 
             "borgbackup-turing" = {
@@ -170,130 +178,92 @@
 
         };
 
-      };
-    in
-    {
-      formatter = forAllSystems (system: nixpkgsFor.${system}.nixfmt-tree);
+        flake.overlays.default =
+          final: prev:
+          withSystem prev.stdenv.hostPlatform.system (
+            { config, ... }:
+            {
+              paulmiro = config.packages;
+            }
+          );
 
-      packages = forAllSystems (system: flakePkgs nixpkgsFor.${system});
-
-      overlays = {
-        paulmiro-overlay = final: prev: {
-          paulmiro = flakePkgs prev;
-        };
-      };
-
-      # Output all modules in ./modules to flake. Modules should be in
-      # individual subdirectories and contain a default.nix file
-      nixosModules = builtins.listToAttrs (
-        map (name: {
-          inherit name;
-          value = import (./modules + "/${name}");
-        }) (builtins.attrNames (builtins.readDir ./modules))
-      );
-
-      # Each subdirectory in ./machines is a host. Add them all to
-      # nixosConfiguratons. Host configurations need a file called
-      # configuration.nix that will be read first
-
-      inherit (clan.config) nixosConfigurations clanInternals;
-      clan = clan.config;
-
-      homeConfigurations = forAllSystems (
-        system:
-        (lib.concatMapAttrs (
-          profileName: profile:
-          let
-            configForUser =
-              username:
-              inputs.home-manager.lib.homeManagerConfiguration {
-                pkgs = nixpkgsFor.${system};
-                modules = [
-                  profile
-                  {
-                    home.username = lib.mkDefault username;
-                    home.homeDirectory = lib.mkDefault (if username == "root" then "/root" else "/home/${username}");
-                  }
-                ];
-                extraSpecialArgs = {
-                  flake-self = self;
-                }
-                // inputs;
-              };
-          in
-          {
-            "${profileName}" = configForUser "paulmiro";
-            "${profileName}-root" = configForUser "root";
-          }
-        ) self.homeProfiles)
-      );
-
-      homeProfiles = builtins.listToAttrs (
-        map (filename: {
-          name = builtins.substring 0 ((builtins.stringLength filename) - 4) filename;
-          value = {
-            imports = [
-              ./home-manager/profiles/common.nix
-              (./home-manager/profiles + "/${filename}")
-            ]
-            ++ (builtins.attrValues self.homeModules);
-          };
-        }) (builtins.attrNames (builtins.readDir ./home-manager/profiles))
-      );
-
-      homeModules =
-        builtins.listToAttrs (
-          map (name: {
-            inherit name;
-            value = import (./home-manager/modules + "/${name}");
-          }) (builtins.attrNames (builtins.readDir ./home-manager/modules))
-        )
-        // {
-          private = import ./modules/private;
-        };
-
-      checks =
-        let
-          ciHosts = lib.filterAttrs (name: host: host.config.paul.ci.enable) self.nixosConfigurations;
-          ciHostsForSystem =
-            system: lib.filterAttrs (name: host: system == host.config.nixpkgs.hostPlatform.system) ciHosts;
-        in
-        forAllSystems (
+        flake.homeConfigurations = lib.genAttrs config.systems (
           system:
-          (builtins.mapAttrs (name: host: host.config.system.build.toplevel) (ciHostsForSystem system))
-          // (lib.mapAttrs' (name: value: lib.nameValuePair "shell-${name}" value) self.devShells.${system})
+          (lib.concatMapAttrs (
+            profileName: profile:
+            let
+              configForUser =
+                username:
+                inputs.home-manager.lib.homeManagerConfiguration {
+                  pkgs = inputs.nixpkgs.legacyPackages.${system};
+                  extraSpecialArgs = {
+                    # allow access to packags from external flakes without the ${pkgs.stdenv.hostPlatform.system} shenanigans
+                    inputs' = (withSystem system ({ inputs', ... }: inputs'));
+                  };
+                  modules = [
+                    profile
+                    {
+                      home.username = lib.mkDefault username;
+                      home.homeDirectory = lib.mkDefault (if username == "root" then "/root" else "/home/${username}");
+                    }
+                  ];
+                };
+            in
+            {
+              "${profileName}" = configForUser "paulmiro";
+              "${profileName}-root" = configForUser "root";
+            }
+          ) self.homeProfiles)
         );
 
-      devShells = forAllSystems (
-        system:
-        let
-          pkgs = nixpkgsFor.${system};
-        in
-        {
-          default = pkgs.mkShell {
-            packages = [
-              inputs.git-agecrypt-armor.packages.${system}.default
-              inputs.clan-core.packages.${system}.clan-cli
-              (pkgs.writeShellScriptBin "rebuild" ''
-                set -euo pipefail
-                hostname=''${1:-$(hostname)}
-                if [[ $hostname != $(hostname) ]]; then
-                  echo "WARNING: Rebuilding configuration for \"$hostname\" on \"$(hostname)\""
-                fi
-                ${pkgs.nix-output-monitor}/bin/nom  build .#nixosConfigurations.$hostname.config.system.build.toplevel
-                ${pkgs.nixos-rebuild-ng}/bin/nixos-rebuild --sudo switch --flake .#$hostname
-              '')
-              (pkgs.writeShellScriptBin "rollout" "${
-                inputs.clan-core.packages.${system}.clan-cli
-              }/bin/clan machines update $@")
-              pkgs.paulmiro.create-nixos-module # mkmod
-              pkgs.paulmiro.create-home-manager-module # mkhmmod
-              pkgs.paulmiro.create-nix-package # mkpkg
-              pkgs.paulmiro.create-nix-package-script # mkscript
-            ];
-          };
-        }
-      );
+        perSystem =
+          {
+            self',
+            pkgs,
+            lib,
+            system,
+            ...
+          }:
+          {
+            formatter = pkgs.nixfmt-tree;
 
-    };
+            pkgsDirectory = ./pkgs;
+
+            checks =
+              let
+                ciHosts = lib.filterAttrs (_name: host: host.config.paul.ci.enable) self.nixosConfigurations;
+                ciHostsForSystem = lib.filterAttrs (
+                  _name: host: system == host.config.nixpkgs.hostPlatform.system
+                ) ciHosts;
+                toplevelsForSystem = builtins.mapAttrs (
+                  _name: host: host.config.system.build.toplevel
+                ) ciHostsForSystem;
+              in
+              toplevelsForSystem // { devShell = self'.devShells.default; };
+
+            devShells.default = pkgs.mkShell {
+              packages = [
+                inputs.git-agecrypt-armor.packages.${system}.default
+                inputs.clan-core.packages.${system}.clan-cli
+                (pkgs.writeShellScriptBin "rebuild" ''
+                  set -euo pipefail
+                  hostname=''${1:-$(hostname)}
+                  if [[ $hostname != $(hostname) ]]; then
+                    echo "WARNING: Rebuilding configuration for \"$hostname\" on \"$(hostname)\""
+                  fi
+                  ${pkgs.nix-output-monitor}/bin/nom  build .#nixosConfigurations.$hostname.config.system.build.toplevel
+                  ${pkgs.nixos-rebuild}/bin/nixos-rebuild --sudo switch --flake .#$hostname
+                '')
+                (pkgs.writeShellScriptBin "rollout" "${
+                  inputs.clan-core.packages.${system}.clan-cli
+                }/bin/clan machines update $@")
+                self'.packages.create-nixos-module # mkmod
+                self'.packages.create-home-manager-module # mkhmmod
+                self'.packages.create-nix-package # mkpkg
+                self'.packages.create-nix-package-script # mkscript
+              ];
+            };
+          };
+      }
+    );
 }
