@@ -4,13 +4,14 @@
   pkgs,
 
   private,
+  versions,
   ...
 }:
 let
   cfg = config.paul.kanidm;
   domain = private.domains.kanidm; # not set as an option because it should never be changed
   origin = "https://${domain}";
-  version = config.paul.versions.kanidm;
+  version = versions.kanidm;
   package = pkgs."kanidm_${lib.versions.major version}_${lib.versions.minor version}";
 in
 {

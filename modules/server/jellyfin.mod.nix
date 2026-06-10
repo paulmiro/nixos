@@ -3,12 +3,13 @@
   lib,
 
   private,
+  versions,
   ...
 }:
 let
   cfg = config.paul.jellyfin;
   serviceName = "jellyfin-docker";
-  containerVersion = config.paul.versions.jellyfin;
+  containerVersion = versions.jellyfin;
 in
 {
   options.paul.jellyfin = {

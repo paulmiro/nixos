@@ -22,7 +22,7 @@ in
 
     specialArgs = {
       inherit inputs;
-      inherit (self) private;
+      inherit (self) private versions;
     };
 
     inventory.instances = {

@@ -2,11 +2,13 @@
   config,
   lib,
   pkgs,
+
+  versions,
   ...
 }:
 let
   cfg = config.paul.tracearr;
-  version = config.paul.versions.tracearr;
+  version = versions.tracearr;
   serviceName = "tracearr-docker-compose";
   port = 19110;
 in

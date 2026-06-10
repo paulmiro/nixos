@@ -27,7 +27,7 @@ in
             };
             extraSpecialArgs = {
               inherit self inputs;
-              inherit (self) private;
+              inherit (self) private versions;
             };
             modules = [
               profile

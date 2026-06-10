@@ -4,11 +4,12 @@
   pkgs,
 
   private,
+  versions,
   ...
 }:
 let
   cfg = config.paul.immich;
-  version = config.paul.versions.immich;
+  version = versions.immich;
   versionEnvFile =
     assert lib.strings.hasPrefix "2." version; # should only fail on major version releases
     pkgs.writeText "immich-version.env" ''

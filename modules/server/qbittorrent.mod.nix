@@ -2,6 +2,8 @@
   config,
   lib,
   pkgs,
+
+  versions,
   ...
 }:
 let
@@ -9,7 +11,7 @@ let
   webuiPort = 8090;
   privoxyPort = 8118;
   serviceName = "qbittorrent-vpn-docker";
-  containerVersion = "release-v${config.paul.versions.qbittorrent}";
+  containerVersion = "release-v${versions.qbittorrent}";
 in
 {
   options.paul.qbittorrent = {

@@ -5,6 +5,7 @@
   self,
   inputs,
   private,
+  versions,
   ...
 }:
 let
@@ -42,7 +43,12 @@ in
       useUserPackages = true;
       backupFileExtension = "hm-backup";
       extraSpecialArgs = {
-        inherit self inputs private;
+        inherit
+          self
+          inputs
+          private
+          versions
+          ;
       };
       users.paulmiro = self.homeProfiles.${cfg.profile};
       users.root = self.homeProfiles.${cfg.rootProfile};
