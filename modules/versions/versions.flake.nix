@@ -12,6 +12,6 @@
         flakeIgnore = [
           "E501"
         ];
-      } (builtins.readFile ./main.py);
+      } (builtins.readFile ./update-versions.py);
     };
 }
