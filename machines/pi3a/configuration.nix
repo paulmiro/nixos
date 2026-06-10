@@ -1,7 +1,8 @@
 {
   lib,
   modulesPath,
-  nixos-hardware,
+
+  inputs,
   ...
 }:
 {
@@ -16,7 +17,7 @@
     "${modulesPath}/installer/sd-card/sd-image-aarch64.nix"
 
     # https://github.com/NixOS/nixos-hardware/tree/master/raspberry-pi/3
-    nixos-hardware.nixosModules.raspberry-pi-3
+    inputs.nixos-hardware.nixosModules.raspberry-pi-3
   ];
 
   # nix build .\#nixosConfigurations.pi3a.config.system.build.sdImage
