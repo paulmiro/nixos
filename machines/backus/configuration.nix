@@ -1,5 +1,5 @@
 {
-  config,
+  private,
   ...
 }:
 {
@@ -24,5 +24,5 @@
     interval = "weekly";
   };
 
-  clan.core.networking.buildHost = "paulmiro@morse.${config.paul.private.domains.tailnet}";
+  clan.core.networking.buildHost = "paulmiro@morse.${private.domains.tailnet}";
 }

@@ -1,11 +1,12 @@
 {
-  betternix,
   pkgs,
+
+  inputs,
   ...
 }:
 {
   imports = [
-    betternix.nixosModules.default
+    inputs.betternix.nixosModules.default
   ];
 
   paul = {

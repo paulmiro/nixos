@@ -1,11 +1,12 @@
 {
   lib,
-  nixos-avf,
+
+  inputs,
   ...
 }:
 {
   imports = [
-    nixos-avf.nixosModules.avf
+    inputs.nixos-avf.nixosModules.avf
   ];
 
   avf = {

@@ -1,6 +1,7 @@
 {
   lib,
-  nixos-wsl,
+
+  inputs,
   ...
 }:
 
@@ -9,7 +10,7 @@
   # https://github.com/nix-community/NixOS-WSL
 
   imports = [
-    nixos-wsl.nixosModules.default
+    inputs.nixos-wsl.nixosModules.default
   ];
 
   wsl = {
