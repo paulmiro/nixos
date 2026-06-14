@@ -57,9 +57,11 @@ in
 
         VPN_ENABLED = "true";
         VPN_NAMESERVERS = "1.1.1.1@853#cloudflare-dns.com";
-        WEBUI_PORTS = "${toString webuiPort}/tcp,${toString privoxyPort}/tcp";
+        WEBUI_PORTS = "${toString webuiPort}/tcp";
 
         PRIVOXY_ENABLED = "true";
+        VPN_EXPOSE_PORTS_ON_LAN = "${toString privoxyPort}/tcp";
+        VPN_LAN_NETWORK = "100.0.0.0/8"; # tailscale
       };
 
       environmentFiles = [
