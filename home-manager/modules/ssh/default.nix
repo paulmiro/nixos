@@ -46,5 +46,24 @@ in
         };
       };
     };
+
+    home.activation = {
+      # nix-community/home-manager#322
+      # ssh has a check to enforce proper permissions of the ~/.ssh/config file
+      # fhs environments break this, so we copy the file instead of symlinking it
+      # original snippet uses 0600, but i don't want the file to be editable
+      fixSshPermissions = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+        run install -d -m 0700 "$HOME/.ssh"
+        if [ -L "$HOME/.ssh/config" ]; then
+          src="$(readlink -f "$HOME/.ssh/config")"
+          run rm -f "$HOME/.ssh/config"
+          run install -m 0400 "$src" "$HOME/.ssh/config"
+        fi
+      '';
+    };
+    home.file = {
+      # home-manager wrongly thinks it doesn't manage (and thus shouldn't clobber) this file due to the activation script
+      ".ssh/config".force = true;
+    };
   };
 }
