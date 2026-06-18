@@ -137,7 +137,6 @@
 
         perSystem =
           {
-            self',
             pkgs,
             system,
             ...
@@ -164,10 +163,6 @@
                 (pkgs.writeShellScriptBin "rollout" "${
                   inputs.clan-core.packages.${system}.clan-cli
                 }/bin/clan machines update $@")
-                self'.packages.create-nixos-module # mkmod
-                self'.packages.create-home-manager-module # mkhmmod
-                self'.packages.create-nix-package # mkpkg
-                self'.packages.create-nix-package-script # mkscript
               ];
             };
           };
