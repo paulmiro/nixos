@@ -24,12 +24,19 @@ def fetch_latest_version(repo_name, repo_type):
                 eprint(f"Error: Unknown repo type {repo_type}")
                 return None
 
+        if not raw_version:
+            return None
+
+        eprint(f"Found newest version: {raw_version}")
+
         # Strip leading 'release-' if it exists
         if raw_version and raw_version.startswith("release-"):
             raw_version = raw_version[8:]
         # Strip leading 'v' if it exists
         if raw_version and raw_version.startswith("v"):
             raw_version = raw_version[1:]
+
+        eprint(f"Stripped version: {raw_version}")
         return raw_version
 
     except Exception as e:
@@ -43,12 +50,14 @@ def fetch_latest_version_github(repo_name):
     release = repo.get_latest_release()
 
     # Prefer the git tag, fallback to the release title/name
-    raw_version = release.tag_name or release.title
-
-    if not raw_version:
-        eprint(
-            f"Error: Could not find tag or name in release data for {repo_name}"
-        )
+    if release.tag_name:
+        eprint(f"Found version in release tag: {release.tag_name}")
+        return release.tag_name
+    elif release.title:
+        eprint(f"Found version in release title: {release.title}")
+        return release.title
+    else:
+        eprint(f"Error: Could not find tag or name in release data for {repo_name}")
         return None
 
 
@@ -68,11 +77,13 @@ def fetch_latest_version_ghcr(repo_name):
                 if tag.startswith(search_prefix):
                     raw_version = tag
                     search_prefix = tag  # keep serching for a more specific version
-            break
-    if not raw_version:
-        eprint(f"Error: Could not find latest version for {repo_name}")
-        return None
-    return raw_version
+            if not raw_version:
+                eprint(f"Error: Could not find any 'release-v*' tags for {repo_name}")
+                return None
+            return raw_version
+        else:
+            eprint(f"Error: Could not find 'latest' tag for {repo_name}")
+            return None
 
 
 def main():
@@ -132,6 +143,7 @@ def main():
             if version_match:
                 current_version = version_match.group(1)
                 eprint(f"Checking {current_block} ({repo_type}: {repo_name})...")
+                eprint(f"Current version: {current_version}")
 
                 latest_version = fetch_latest_version(repo_name, repo_type)
 
