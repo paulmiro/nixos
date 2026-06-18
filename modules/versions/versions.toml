@@ -9,7 +9,7 @@ version = "2.7.5"
 [jellyfin]
 repo = "jellyfin/jellyfin"
 type = "github"
-version = "10.11.10"
+version = "10.11.11"
 [kanidm]
 repo = "kanidm/kanidm"
 type = "github"
