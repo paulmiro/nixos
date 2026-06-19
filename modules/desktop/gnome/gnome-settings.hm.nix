@@ -6,6 +6,25 @@
 }:
 let
   cfg = config.paul.gnome-settings;
+  extensions = with pkgs.gnomeExtensions; [
+    blur-my-shell
+    burn-my-windows
+    caffeine
+    clipboard-indicator
+    gsconnect
+    just-perfection
+    tailscale-qs
+    touchpad-gesture-customization
+    vitals
+    wifi-qrcode
+
+    # TODO maybe add these later
+    # paperwm
+    # workspace-matrix
+  ];
+  disabledExtensions = with pkgs.gnomeExtensions; [
+    activate_gnome
+  ];
 in
 {
   # auto-enabled by nixos module
@@ -19,23 +38,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs.gnomeExtensions; [
-      activate_gnome
-      blur-my-shell
-      burn-my-windows
-      caffeine
-      clipboard-indicator
-      gsconnect
-      just-perfection
-      tailscale-qs
-      touchpad-gesture-customization
-      vitals
-      wifi-qrcode
-
-      # TODO maybe add these later
-      # paperwm
-      # workspace-matrix
-    ];
+    home.packages = extensions ++ disabledExtensions;
 
     gtk = {
       enable = true;
@@ -56,20 +59,7 @@ in
           "com.mitchellh.ghostty.desktop"
           "org.gnome.Nautilus.desktop"
         ];
-        enabled-extensions = [
-          "blur-my-shell@aunetx"
-          "burn-my-windows@schneegans.github.com"
-          "caffeine@patapon.info"
-          "clipboard-indicator@tudmotu.com"
-          "drive-menu@gnome-shell-extensions.gcampax.github.com"
-          "gsconnect@andyholmes.github.io"
-          "just-perfection-desktop@just-perfection"
-          "status-icons@gnome-shell-extensions.gcampax.github.com"
-          "tailscale-gnome-qs@tailscale-qs.github.io"
-          "touchpad-gesture-customization@coooolapps.com"
-          "Vitals@CoreCoding.com"
-          "wifiqrcode@glerro.pm.me"
-        ];
+        enabled-extensions = map (x: x.extensionUuid) extensions;
       };
 
       "org/gnome/desktop/interface" = {
