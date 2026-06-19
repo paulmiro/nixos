@@ -6,22 +6,25 @@
 }:
 let
   cfg = config.paul.gnome-settings;
-  extensions = with pkgs.gnomeExtensions; [
-    blur-my-shell
-    burn-my-windows
-    caffeine
-    clipboard-indicator
-    gsconnect
-    just-perfection
-    tailscale-qs
-    touchpad-gesture-customization
-    vitals
-    wifi-qrcode
+  extensions =
+    with pkgs.gnomeExtensions;
+    [
+      blur-my-shell
+      burn-my-windows
+      caffeine
+      clipboard-indicator
+      gsconnect
+      just-perfection
+      tailscale-qs
+      touchpad-gesture-customization
+      vitals
+      wifi-qrcode
 
-    # TODO maybe add these later
-    # paperwm
-    # workspace-matrix
-  ];
+      # TODO maybe add these later
+      # paperwm
+      # workspace-matrix
+    ]
+    ++ lib.optional (config.services.easyeffects.enable) easyeffects-preset-selector;
   disabledExtensions = with pkgs.gnomeExtensions; [
     activate_gnome
   ];
