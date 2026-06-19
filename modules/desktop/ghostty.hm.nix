@@ -19,8 +19,8 @@ in
       settings = {
         maximize = true;
         theme = "Molokai";
-        fontFamily = "MesloLGS NF";
-        fontSize = 14;
+        font-family = "MesloLGS NF";
+        font-size = 14;
         shellIntegrationFeatures = lib.mkIf cfg.enableSshTerminfoFix [
           "ssh-env"
         ];
