@@ -119,7 +119,7 @@
               lib.nameValuePair ".build-all-${system}" {
                 labels = {
                   backend = "local";
-                  platform = platform;
+                  inherit platform;
                 };
                 inherit when;
                 depends_on = [ ];

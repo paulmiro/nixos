@@ -28,14 +28,11 @@ in
 
   options.services.nginx.virtualHosts = lib.mkOption {
     type = lib.types.attrsOf (
-      lib.types.submodule (
-        { ... }:
-        {
-          options = {
-            enableDyndns = lib.mkEnableOption "enable dyndns";
-          };
-        }
-      )
+      lib.types.submodule {
+        options = {
+          enableDyndns = lib.mkEnableOption "enable dyndns";
+        };
+      }
     );
   };
 
@@ -45,7 +42,7 @@ in
       apiTokenFile = config.clan.core.vars.generators.cloudflare-dyndns.files.api-token.path;
       ipv4 = true;
       ipv6 = false;
-      domains = domains;
+      inherit domains;
     };
 
     systemd.services = lib.mkMerge (

@@ -6,16 +6,12 @@
 }:
 let
   cfg = config.paul.geo-ip;
-  enabledVhosts = (
-    builtins.filter (vhost: vhost.value.enableGeoIP) (
-      lib.attrsToList config.services.nginx.virtualHosts
-    )
+  enabledVhosts = builtins.filter (vhost: vhost.value.enableGeoIP) (
+    lib.attrsToList config.services.nginx.virtualHosts
   );
-  enabledLocations = (
-    builtins.concatMap (
-      vhost: builtins.filter (loc: loc.value.enableGeoIP) (lib.attrsToList vhost.value.locations)
-    ) (lib.attrsToList config.services.nginx.virtualHosts)
-  );
+  enabledLocations = builtins.concatMap (
+    vhost: builtins.filter (loc: loc.value.enableGeoIP) (lib.attrsToList vhost.value.locations)
+  ) (lib.attrsToList config.services.nginx.virtualHosts);
   enable =
     (!cfg.forceDisable)
     # auto-enable when at least one vhost or location has the option set

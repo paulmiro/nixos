@@ -1,7 +1,4 @@
 {
-  ...
-}:
-{
   paul = {
     common-server.enable = true;
     systemd-boot.enable = true;

@@ -46,12 +46,12 @@ in
       extraOptions = [
         "--network=host"
       ]
-      ++ lib.optionals (cfg.enableQuickSync) [
+      ++ lib.optionals cfg.enableQuickSync [
         # get group ID with: `getent group render | cut -d: -f3`
         "--group-add=303"
         "--device=/dev/dri/renderD129:/dev/dri/renderD129"
       ]
-      ++ lib.optionals (config.paul.nvidia.enable) [
+      ++ lib.optionals config.paul.nvidia.enable [
         "--gpus"
         "all"
       ];

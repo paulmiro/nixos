@@ -63,20 +63,18 @@ in
     # fixes "can't find terminal definition for xterm-ghostty"
     # taken and edited from https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/config/terminfo.nix
     # some packages in there break, so i just include the ones i need
-    environment.systemPackages = (
-      map (x: x.terminfo) (
-        with pkgs.pkgsBuildBuild;
-        [
-          alacritty
-          foot
-          ghostty
-          kitty
-          rio
-          tmux
-          wezterm
-          yaft
-        ]
-      )
+    environment.systemPackages = map (x: x.terminfo) (
+      with pkgs.pkgsBuildBuild;
+      [
+        alacritty
+        foot
+        ghostty
+        kitty
+        rio
+        tmux
+        wezterm
+        yaft
+      ]
     );
 
     systemd.services.NetworkManager-wait-online.enable = false;

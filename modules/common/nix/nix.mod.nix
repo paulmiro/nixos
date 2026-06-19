@@ -63,8 +63,8 @@ in
         # Save space by hardlinking store files
         auto-optimise-store = true;
 
-        min-free = (512 * 1024 * 1024);
-        max-free = (2048 * 1024 * 1024);
+        min-free = 512 * 1024 * 1024;
+        max-free = 2048 * 1024 * 1024;
       };
 
       # Clean up old generations after 30 days

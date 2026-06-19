@@ -51,7 +51,7 @@ in
         "docker.service"
         "docker.socket"
       ]
-      ++ lib.optionals (config.paul.zfs.enable) [
+      ++ lib.optionals config.paul.zfs.enable [
         "zfs.target"
       ];
       serviceConfig = {

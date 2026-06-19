@@ -188,11 +188,11 @@ in
         confirm-clear = false;
         enable-keybindings = true;
         # this seems to be the only way to disable the keybindings individually
-        private-mode-binding = lib.gvariant.mkEmptyArray (lib.gvariant.type.string);
+        private-mode-binding = lib.gvariant.mkEmptyArray lib.gvariant.type.string;
         toggle-menu = [ "<Super>v" ];
-        clear-history = lib.gvariant.mkEmptyArray (lib.gvariant.type.string);
-        next-entry = lib.gvariant.mkEmptyArray (lib.gvariant.type.string);
-        prev-entry = lib.gvariant.mkEmptyArray (lib.gvariant.type.string);
+        clear-history = lib.gvariant.mkEmptyArray lib.gvariant.type.string;
+        next-entry = lib.gvariant.mkEmptyArray lib.gvariant.type.string;
+        prev-entry = lib.gvariant.mkEmptyArray lib.gvariant.type.string;
       };
 
       "org/gnome/shell/extensions/just-perfection" = {

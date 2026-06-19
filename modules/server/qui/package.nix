@@ -8,8 +8,8 @@
 }:
 qui.overrideAttrs (old: {
   src = stdenvNoCC.mkDerivation rec {
-    src = old.src;
-    name = src.name;
+    inherit (old) src;
+    inherit (src) name;
     nativeBuildInputs = [
       age
       gnutar

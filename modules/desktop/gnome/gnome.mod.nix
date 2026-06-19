@@ -24,8 +24,7 @@ in
     # services.xserver.displayManager.sddm.enable = true;
 
     services.desktopManager.gnome.enable = true;
-    environment.gnome.excludePackages = (
-      with pkgs;
+    environment.gnome.excludePackages = with pkgs;
       [
         atomix # puzzle game
         epiphany
@@ -38,8 +37,7 @@ in
         iagno # go game
         tali # poker game
         yelp
-      ]
-    );
+      ];
 
     programs.dconf.enable = true;
 
