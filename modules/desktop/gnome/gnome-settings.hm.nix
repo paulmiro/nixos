@@ -6,7 +6,6 @@
 }:
 let
   cfg = config.paul.gnome-settings;
-  version = lib.versions.major pkgs.gnome-shell.version;
 in
 {
   # auto-enabled by nixos module
@@ -20,41 +19,23 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages =
-      let
-        # some plugins take ages to update to the latest GNOME version,
-        # but most of the time they don't actually need any code changes.
-        # this function simply patches the metadata file to allow running
-        # the plugin the current GNOME version.
-        # this will probably break stuff in the future, but it seems to work fine for now.
-        patchVersion =
-          package:
-          package.overrideAttrs (_: {
-            patchPhase = ''
-              ${pkgs.jq}/bin/jq 'if any(."shell-version"[]; . == "${version}") then . else ."shell-version" += ["${version}"] end' metadata.json > metadata.tmp.json
-              mv metadata.tmp.json metadata.json 
-            '';
-          });
-      in
-      with pkgs.gnomeExtensions;
-      [
-        activate_gnome
-        blur-my-shell
-        burn-my-windows
-        caffeine
-        clipboard-indicator
-        gsconnect
-        just-perfection
-        tailscale-qs
-        touchpad-gesture-customization
-        vitals
-        wifi-qrcode
+    home.packages = with pkgs.gnomeExtensions; [
+      activate_gnome
+      blur-my-shell
+      burn-my-windows
+      caffeine
+      clipboard-indicator
+      gsconnect
+      just-perfection
+      tailscale-qs
+      touchpad-gesture-customization
+      vitals
+      wifi-qrcode
 
-        # TODO maybe add these later
-        # paperwm
-        # workspace-matrix
-      ]
-      ++ map patchVersion [ ];
+      # TODO maybe add these later
+      # paperwm
+      # workspace-matrix
+    ];
 
     gtk = {
       enable = true;
