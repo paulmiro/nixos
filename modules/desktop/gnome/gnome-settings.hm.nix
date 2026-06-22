@@ -6,9 +6,31 @@
 }:
 let
   cfg = config.paul.gnome-settings;
-  extensions =
-    with pkgs.gnomeExtensions;
-    [
+in
+{
+  # auto-enabled by nixos module
+  options.paul.gnome-settings = {
+    enable = lib.mkEnableOption "enable custom gnome configuration and theme";
+    enabledExtensions = lib.mkOption {
+      description = "enabled gnome extensions";
+      type = lib.types.listOf lib.types.package;
+      default = [ ];
+    };
+    disabledExtensions = lib.mkOption {
+      description = "disabled gnome extensions";
+      type = lib.types.listOf lib.types.package;
+      default = [ ];
+    };
+    wallpaper = lib.mkOption {
+      type = lib.types.str;
+      default = "dino-falin.jpg";
+      description = "wallpaper to use";
+    };
+  };
+
+  config = lib.mkIf cfg.enable {
+    # extensions
+    paul.gnome-settings.enabledExtensions = with pkgs.gnomeExtensions; [
       blur-my-shell
       burn-my-windows
       caffeine
@@ -23,25 +45,13 @@ let
       # TODO maybe add these later
       # paperwm
       # workspace-matrix
-    ]
-    ++ lib.optional (config.services.easyeffects.enable) easyeffects-preset-selector;
-  disabledExtensions = with pkgs.gnomeExtensions; [
-    activate_gnome
-  ];
-in
-{
-  # auto-enabled by nixos module
-  options.paul.gnome-settings = {
-    enable = lib.mkEnableOption "enable custom gnome configuration and theme";
-    wallpaper = lib.mkOption {
-      type = lib.types.str;
-      default = "dino-falin.jpg";
-      description = "wallpaper to use";
-    };
-  };
+    ];
 
-  config = lib.mkIf cfg.enable {
-    home.packages = extensions ++ disabledExtensions;
+    paul.gnome-settings.disabledExtensions = with pkgs.gnomeExtensions; [
+      activate_gnome
+    ];
+
+    home.packages = cfg.enabledExtensions ++ cfg.disabledExtensions;
 
     gtk = {
       enable = true;
@@ -62,7 +72,7 @@ in
           "com.mitchellh.ghostty.desktop"
           "org.gnome.Nautilus.desktop"
         ];
-        enabled-extensions = map (x: x.extensionUuid) extensions;
+        enabled-extensions = map (x: x.extensionUuid) cfg.enabledExtensions;
       };
 
       "org/gnome/desktop/interface" = {
