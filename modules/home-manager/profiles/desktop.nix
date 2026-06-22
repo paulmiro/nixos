@@ -9,6 +9,7 @@
       ghostty.enable = true;
       neovim.enableNeovide = true;
       protonmail-bridge.enable = true;
+      easyeffects.enable = true;
 
       dev = {
         go = true;
@@ -22,8 +23,6 @@
         zen = true;
       };
     };
-
-    services.easyeffects.enable = true;
 
     # Install these packages for my user
     home.packages = with pkgs; [
