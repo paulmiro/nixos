@@ -357,11 +357,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1778278804,
-        "narHash": "sha256-MvkSWiUpJUX3h24I2Z6PkqpgM7CkklGJgk+K8HnG+kY=",
+        "lastModified": 1782145438,
+        "narHash": "sha256-E+5nJTdHgELER40TTZ9ZlbHlLywGik6g3l9AHdFEXQM=",
         "owner": "paulmiro",
         "repo": "friend-bet",
-        "rev": "12a713415da5871f2a1d52515757549f16369219",
+        "rev": "e078375e755fae70e5cf04072b2cbcb0799386c4",
         "type": "github"
       },
       "original": {
