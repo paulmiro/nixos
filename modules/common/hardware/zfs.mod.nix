@@ -3,6 +3,7 @@
   lib,
 
   inputs,
+  private,
   ...
 }:
 let
@@ -50,7 +51,18 @@ in
       trim = {
         enable = true;
       };
-      zed = { }; # TODO
+      zed.settings = {
+        # these values end up in an rc file, so we can just cat secrets
+        ZED_GOTIFY_URL = "https://${private.domains.gotify}";
+        ZED_GOTIFY_APPTOKEN = "$(cat ${config.clan.core.vars.generators.zfs-zed.files.gotify-apptoken.path})";
+      };
+    };
+
+    clan.core.vars.generators.zfs-zed = {
+      prompts.gotify-apptoken.description = "Gotify App Token for ZFS ZED";
+      prompts.gotify-apptoken.type = "hidden";
+      prompts.gotify-apptoken.persist = true;
+      files.gotify-apptoken.secret = true;
     };
   };
 }
