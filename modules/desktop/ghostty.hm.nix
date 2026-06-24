@@ -20,7 +20,7 @@ in
         theme = "Molokai";
         font-family = "MesloLGS NF";
         font-size = 14;
-        shellIntegrationFeatures = lib.mkIf cfg.enableSshTerminfoFix [
+        shell-integration-features = lib.mkIf cfg.enableSshTerminfoFix [
           "ssh-env"
         ];
       };
