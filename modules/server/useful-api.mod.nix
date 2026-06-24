@@ -3,7 +3,6 @@
   lib,
 
   inputs,
-  private,
   ...
 }:
 let
@@ -21,16 +20,6 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    # TODO remove later
-    services.nginx.virtualHosts."api.${private.domains.base}" = {
-      enableACME = true;
-      forceSSL = true;
-      enableDyndns = true;
-      locations."/" = {
-        return = "301 https://useful-api.party$request_uri";
-      };
-    };
-
     services.nginx.virtualHosts."useful-api.party" = {
       enableACME = true;
       forceSSL = true;
