@@ -64,6 +64,11 @@ in
 
     };
 
+    home.packages = with pkgs; [
+      tinymist
+      rust-analyzer
+    ];
+
     programs.git.ignores = [
       ".vscode/"
     ];
