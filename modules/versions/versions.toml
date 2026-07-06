@@ -18,4 +18,4 @@ version = "1.10.3"
 [tracearr]
 repo = "connorgallopo/Tracearr"
 type = "github"
-version = "1.4.28"
+version = "1.4.30"
