@@ -3,6 +3,7 @@ import os
 import re
 from github import Github
 from github import Auth
+import semver
 
 TOML_PATH = "modules/versions/versions.toml"
 GH = None
@@ -28,16 +29,7 @@ def fetch_latest_version(repo_name, repo_type):
             return None
 
         eprint(f"Found newest version: {raw_version}")
-
-        # Strip leading 'release-' if it exists
-        if raw_version and raw_version.startswith("release-"):
-            raw_version = raw_version[8:]
-        # Strip leading 'v' if it exists
-        if raw_version and raw_version.startswith("v"):
-            raw_version = raw_version[1:]
-
-        eprint(f"Stripped version: {raw_version}")
-        return raw_version
+        return clean(raw_version)
 
     except Exception as e:
         eprint(f"Failed to fetch release for {repo_name}: {e}")
@@ -86,6 +78,38 @@ def fetch_latest_version_ghcr(repo_name):
             return None
 
 
+def clean(version):
+    """Cleans a version string by removing leading 'v' and 'release-'."""
+    if version and version.startswith("release-"):
+        version = version[8:]
+    if version and version.startswith("v"):
+        version = version[1:]
+
+    eprint(f"Stripped version: {version}")
+    return version
+
+
+def semver_same_up_to(a, b, level):
+    """Compares two semantic versions and returns false if the difference is at or above the specified level."""
+    semver_a = semver.Version.parse(clean(a))
+    semver_b = semver.Version.parse(clean(b))
+
+    if level == "patch" and semver_a == semver_b:
+        return True
+
+    semver_a = semver_a.replace(patch=0)
+    semver_b = semver_b.replace(patch=0)
+    if level == "minor" and semver_a == semver_b:
+        return True
+
+    semver_a = semver_a.replace(minor=0)
+    semver_b = semver_b.replace(minor=0)
+    if level == "major" and semver_a == semver_b:
+        return True
+
+    return False
+
+
 def main():
     # Authenticate via GitHub token (Highly recommended for CI environments)
     token = os.environ.get("GITHUB_TOKEN")
@@ -109,6 +133,7 @@ def main():
     current_block = None
     repo_name = None
     repo_type = None
+    repo_level = None
     changes_made = False
 
     for i, line in enumerate(lines):
@@ -119,6 +144,7 @@ def main():
             current_block = stripped[1:-1]
             repo_name = None
             repo_type = None
+            repo_level = None
             continue
 
         # Skip other dependencies if a specific target is provided
@@ -137,6 +163,12 @@ def main():
             if type_match:
                 repo_type = type_match.group(1)
 
+        # Extract the level string
+        if stripped.startswith("level"):
+            level_match = re.search(r'level\s*=\s*"([^"]+)"', stripped)
+            if level_match:
+                repo_level = level_match.group(1)
+
         # When we hit the version line, fetch and update
         elif stripped.startswith("version") and repo_name:
             version_match = re.search(r'version\s*=\s*"([^"]+)"', stripped)
@@ -147,19 +179,27 @@ def main():
 
                 latest_version = fetch_latest_version(repo_name, repo_type)
 
-                if latest_version and latest_version != current_version:
-                    print(f"{current_version} -> {latest_version}")
-                    eprint(
-                        f" -> Updating from {current_version} to {latest_version}"
-                    )
-                    lines[i] = re.sub(
-                        r'(version\s*=\s*)"[^"]+"',
-                        f'\\g<1>"{latest_version}"',
-                        line,
-                    )
-                    changes_made = True
-                elif latest_version == current_version:
+                if not latest_version:
+                    continue
+
+                if latest_version == current_version:
                     eprint(f" -> Already up to date ({current_version})")
+                    continue
+
+                if repo_level and semver_same_up_to(current_version, latest_version, repo_level):
+                    eprint(f" -> Version is already at the same {repo_level} level ({current_version} -> {latest_version})")
+                    continue
+
+                print(f"{current_version} -> {latest_version}")
+                eprint(
+                    f" -> Updating from {current_version} to {latest_version}"
+                )
+                lines[i] = re.sub(
+                    r'(version\s*=\s*)"[^"]+"',
+                    f'\\g<1>"{latest_version}"',
+                    line,
+                )
+                changes_made = True
 
     if changes_made:
         with open(TOML_PATH, "w") as f:

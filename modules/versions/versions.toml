@@ -13,6 +13,7 @@ version = "10.11.11"
 [kanidm]
 repo = "kanidm/kanidm"
 type = "github"
+level = "minor"
 version = "1.10.3"
 [tracearr]
 repo = "connorgallopo/Tracearr"
