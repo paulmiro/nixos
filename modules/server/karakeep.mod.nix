@@ -30,6 +30,13 @@ in
   config = lib.mkIf cfg.enable {
     paul.meilisearch.enable = true;
 
+    # TODO: temp fix for NixOS/nixpkgs/529285
+    # pnpm_9 is EOL
+
+    nixpkgs.config.permittedInsecurePackages = [
+      "pnpm-9.15.9"
+    ];
+
     services.karakeep = {
       enable = true;
       extraEnvironment = {
