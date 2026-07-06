@@ -33,6 +33,7 @@
       element-desktop
       freecad
       gnome-graphs
+      gnome-solanum # pomodoro timer
       gparted
       inkscape
       jellyfin-mpv-shim
@@ -47,7 +48,6 @@
       obsidian
       oneko
       onlyoffice-desktopeditors
-      pomodoro-gtk
       prusa-slicer
       orca-slicer
       qrtool
