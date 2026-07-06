@@ -212,19 +212,19 @@ in
           "--height 40%"
           "--border"
         ];
-        changeDirWidgetCommand = "fd --type d";
-        changeDirWidgetOptions = [
+        changeDirWidget.command = "fd --type d";
+        changeDirWidget.options = [
           "--preview 'tree -C {} | head -200'"
           "--height 40%"
           "--border"
         ];
-        fileWidgetCommand = "fd --type f";
-        fileWidgetOptions = [
+        fileWidget.command = "fd --type f";
+        fileWidget.options = [
           "--preview 'bat --color=always --line-range=:500 {}'"
           "--height 40%"
           "--border"
         ];
-        historyWidgetOptions = [
+        historyWidget.options = [
           "--sort"
           "--height 40%"
           "--border"
