@@ -73,7 +73,7 @@ in
                 error_page 452 =403 @geoblocked;
               '';
               locations."@geoblocked" = {
-                root = ./.;
+                root = ./static;
                 tryFiles = "/geoblocked.html =404";
                 extraConfig = ''
                   internal;
