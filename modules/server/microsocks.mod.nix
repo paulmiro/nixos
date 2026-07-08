@@ -31,12 +31,9 @@ in
     clan.core.vars.generators.microsocks = {
       prompts.auth-password.description = "MicroSocks Auth Password (see bw)";
       prompts.auth-password.type = "hidden";
-      prompts.auth-password.persist = false;
+      prompts.auth-password.persist = true;
 
-      files.auth-password.secret = true;
       files.auth-password.owner = "microsocks";
-
-      script = "cp $prompts/auth-password $out/auth-password";
     };
   };
 }

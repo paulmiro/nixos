@@ -62,7 +62,6 @@ in
       prompts.gotify-apptoken.description = "Gotify App Token for ZFS ZED";
       prompts.gotify-apptoken.type = "hidden";
       prompts.gotify-apptoken.persist = true;
-      files.gotify-apptoken.secret = true;
     };
   };
 }

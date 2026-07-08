@@ -39,13 +39,7 @@ in
     clan.core.vars.generators.tailscale = {
       prompts.auth-key.description = "Tailscale Auth Key";
       prompts.auth-key.type = "hidden";
-      prompts.auth-key.persist = false;
-
-      files.auth-key.secret = true;
-
-      script = ''
-        cat $prompts/auth-key > $out/auth-key
-      '';
+      prompts.auth-key.persist = true;
     };
   };
 }

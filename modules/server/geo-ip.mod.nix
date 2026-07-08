@@ -140,13 +140,9 @@ in
       clan.core.vars.generators.maxmind-license-key = {
         prompts.key.description = "MaxMind License Key (see bw)";
         prompts.key.type = "hidden";
-        prompts.key.persist = false;
-
-        files.key.secret = true;
+        prompts.key.persist = true;
 
         share = true;
-
-        script = "cp $prompts/key $out/key";
       };
 
       # build nginx with geoip2 module

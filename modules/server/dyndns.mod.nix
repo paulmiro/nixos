@@ -57,13 +57,9 @@ in
     clan.core.vars.generators.cloudflare-dyndns = {
       prompts.api-token.description = "Cloudflare API Token with permissions to edit DNS (see bw)";
       prompts.api-token.type = "hidden";
-      prompts.api-token.persist = false;
-
-      files.api-token.secret = true;
+      prompts.api-token.persist = true;
 
       share = true;
-
-      script = "cp $prompts/api-token $out/api-token";
     };
   };
 }

@@ -58,21 +58,18 @@ in
     clan.core.vars.generators.outline = {
       prompts.oidc-client-secret.description = "Outline OIDC Client Secret";
       prompts.oidc-client-secret.type = "hidden";
-      prompts.oidc-client-secret.persist = false;
+      prompts.oidc-client-secret.persist = true;
+      files.oidc-client-secret.owner = "outline";
+      files.oidc-client-secret.group = "outline";
 
       files.secret-key.secret = true;
       files.secret-key.owner = "outline";
       files.secret-key.group = "outline";
 
-      files.oidc-client-secret.secret = true;
-      files.oidc-client-secret.owner = "outline";
-      files.oidc-client-secret.group = "outline";
-
       runtimeInputs = [ pkgs.openssl ];
 
       script = ''
         openssl rand -hex 32 > $out/secret-key
-        cp $prompts/oidc-client-secret $out/oidc-client-secret
       '';
     };
 
