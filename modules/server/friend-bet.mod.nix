@@ -45,6 +45,7 @@ in
       locations."/" = {
         proxyPass = "http://127.0.0.1:${toString port}";
         enableGeoIP = true;
+        geoIpCountries = [ "DE" ];
         proxyWebsockets = true;
       };
     };
