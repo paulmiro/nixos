@@ -67,6 +67,7 @@ in
     home.packages = with pkgs; [
       tinymist
       rust-analyzer
+      ltex-ls-plus
     ];
 
     programs.git.ignores = [
