@@ -15,6 +15,7 @@
         go = true;
         godot = true;
         rust = true;
+        adb = true;
       };
 
       browsers = {
