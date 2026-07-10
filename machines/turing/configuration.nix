@@ -1,4 +1,8 @@
 {
+  pkgs,
+  ...
+}:
+{
   paul = {
     common-server.enable = true;
     systemd-boot.enable = true;
@@ -101,4 +105,8 @@
       enableNginx = true;
     };
   };
+
+  environment.systemPackages = with pkgs; [
+    intel-gpu-tools
+  ];
 }
