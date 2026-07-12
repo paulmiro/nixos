@@ -1,7 +1,7 @@
 [qbittorrent]
 repo = "hotio/qbittorrent"
 type = "ghcr"
-version = "5.2.2"
+version = "5.2.3"
 [immich]
 repo = "immich-app/immich"
 type = "github"
