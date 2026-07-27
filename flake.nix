@@ -68,9 +68,6 @@
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
     nix-minecraft.inputs.nixpkgs.follows = "nixpkgs";
 
-    nix4nvchad.url = "github:nix-community/nix4nvchad";
-    nix4nvchad.inputs.nixpkgs.follows = "nixpkgs";
-
     git-agecrypt-armor.url = "github:paulmiro/git-agecrypt-armor";
     # git-agecrypt-armor.inputs.nixpkgs.follows = "nixpkgs";
 
