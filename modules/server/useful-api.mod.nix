@@ -12,7 +12,7 @@ let
 in
 {
   imports = [
-    inputs.useful-api.nixosModules.useful-api-auto-update
+    inputs.useful-api.nixosModules.default
   ];
 
   options.paul.useful-api = {
