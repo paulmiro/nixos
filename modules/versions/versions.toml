@@ -5,7 +5,7 @@ version = "5.2.3"
 [immich]
 repo = "immich-app/immich"
 type = "github"
-version = "3.0.2"
+version = "3.0.3"
 [jellyfin]
 repo = "jellyfin/jellyfin"
 type = "github"
