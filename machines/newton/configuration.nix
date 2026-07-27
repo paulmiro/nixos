@@ -62,9 +62,10 @@
       paul.jovian.enable = true;
     };
 
-    niri.configuration = {
-      paul.gnome.enable = lib.mkForce false;
-      paul.niri.enable = true;
-    };
+    # TODO: temp fix for https://nixpk.gs/pr-tracker.html?pr=546004
+    # niri.configuration = {
+    #   paul.gnome.enable = lib.mkForce false;
+    #   paul.niri.enable = true;
+    # };
   };
 }
