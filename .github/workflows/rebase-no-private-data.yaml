@@ -1,4 +1,4 @@
-name: rebase
+name: Rebase no-private-data branch
 
 on:
   push:
