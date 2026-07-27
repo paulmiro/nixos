@@ -29,6 +29,14 @@ Please refer to the documantation of git-agecrypt to see how to set it up.
 
 If you used nix to install `git-agecrypt` or `git-agecrypt-armor`, make sure to remove the hardcoded store path in .git/config after, to avoid having it break on update
 
+TLDR:
+```sh
+git-agecrypt config add -p modules/private/private.json -i ~/.ssh/id_ed25519
+git-agecrypt init
+git reset --hard
+sed -i -E 's|/nix/store/[^/]*/bin/git-agecrypt|git-agecrypt|g' .git/config
+```
+
 ## Jank
 
 git-agecrypt can be pretty weird about changing `git-agecrypt.toml` without also changing `private.toml`.
