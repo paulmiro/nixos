@@ -122,6 +122,8 @@ in
       nodejs
 
       lemminx
+
+      steam-run-free
     ];
   };
 }
