@@ -1,0 +1,68 @@
+window-rule {
+    match is-floating=true
+    baba-is-float true
+}
+
+prefer-no-csd
+
+layout  {
+    gaps  5
+    focus-ring  {
+        width  2
+    }
+}
+
+input {
+    focus-follows-mouse
+
+    keyboard {
+        xkb {
+            layout "de,us"
+        }
+    }
+
+    touchpad {
+        natural-scroll
+        tap
+    }
+
+    mouse {
+        accel-profile "flat"
+    }
+}
+
+binds {
+    "Mod+Q" { close-window; }
+    "Mod+F" { maximize-column; }
+    "Mod+G" { fullscreen-window; }
+    "Mod+Shift+F" { toggle-window-floating; }
+    "Mod+C" { center-column; }
+
+    "Mod+H" { focus-column-left; }
+    "Mod+L" { focus-column-right; }
+    "Mod+K" { focus-window-up; }
+    "Mod+J" { focus-window-down; }
+
+    "Mod+Left" { focus-column-left; }
+    "Mod+Right" { focus-column-right; }
+    "Mod+Up" { focus-window-up; }
+    "Mod+Down" { focus-window-down; }
+
+    "Mod+Shift+H" { move-column-left; }
+    "Mod+Shift+L" { move-column-right; }
+    "Mod+Shift+K" { move-window-up; }
+    "Mod+Shift+J" { move-window-down; }
+
+    "XF86AudioRaiseVolume" { spawn-sh "wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%+"; }
+    "XF86AudioLowerVolume" { spawn-sh "wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%-"; }
+
+    "Mod+Ctrl+H" { set-column-width "-5%"; }
+    "Mod+Ctrl+L" { set-column-width "+5%"; }
+    "Mod+Ctrl+J" { set-window-height "-5%"; }
+    "Mod+Ctrl+K" { set-window-height "+5%"; }
+
+    "Mod+WheelScrollDown" { focus-column-left; }
+    "Mod+WheelScrollUp" { focus-column-right; }
+    "Mod+Ctrl+WheelScrollDown" { focus-workspace-down; }
+    "Mod+Ctrl+WheelScrollUp" { focus-workspace-up; }
+}

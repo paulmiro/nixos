@@ -1,6 +1,5 @@
 {
   pkgs,
-  lib,
   ...
 }:
 {
@@ -57,15 +56,15 @@
     ];
   };
 
-  specialisation = {
-    jovian.configuration = {
-      paul.jovian.enable = true;
-    };
+  # disabled for closure size
+  # specialisation = {
+  #   jovian.configuration = {
+  #     paul.jovian.enable = true;
+  #   };
 
-    # TODO: temp fix for https://nixpk.gs/pr-tracker.html?pr=546004
-    # niri.configuration = {
-    #   paul.gnome.enable = lib.mkForce false;
-    #   paul.niri.enable = true;
-    # };
-  };
+  #   niri.configuration = {
+  #     paul.gnome.enable = pkgs.lib.mkForce false;
+  #     paul.niri.enable = true;
+  #   };
+  # };
 }
