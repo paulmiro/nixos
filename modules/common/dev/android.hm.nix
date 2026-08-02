@@ -5,7 +5,8 @@
   ...
 }:
 let
-  enable = config.paul.dev.android;
+  cfg = config.paul.dev;
+  enable = cfg.android || cfg.adb;
 in
 {
   options.paul.dev.android = lib.mkEnableOption "enable android";
@@ -17,10 +18,6 @@ in
     };
 
     home.packages =
-      with pkgs;
-      [
-        android-tools
-      ]
-      ++ lib.optional cfg.android android-studio;
+      (lib.optional cfg.adb pkgs.android-tools) ++ (lib.optional cfg.android pkgs.android-studio);
   };
 }
