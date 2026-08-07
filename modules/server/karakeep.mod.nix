@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
 
   private,
   ...
@@ -51,8 +52,14 @@ in
       environmentFile = config.clan.core.vars.generators.karakeep.files.env.path;
     };
 
+    services.meilisearch.settings.upgrade_db = true;
+
     # surrealdb/surrealdb/issues/6153#issuecomment-3135333587
     systemd.services.meilisearch.serviceConfig.ProcSubset = lib.mkForce "all";
+    systemd.services.meilisearch.preStart = lib.mkAfter ''
+      ${lib.getExe pkgs.gnugrep} -v '^experimental_dumpless_upgrade' "$RUNTIME_DIRECTORY/config.toml" > "$RUNTIME_DIRECTORY/config.toml.new"
+      mv "$RUNTIME_DIRECTORY/config.toml.new" "$RUNTIME_DIRECTORY/config.toml"
+    '';
 
     clan.core.vars.generators.karakeep = {
       prompts.oauth-client-secret.description = "Karakeep OAuth2 Client Secret";
