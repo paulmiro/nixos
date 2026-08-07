@@ -13,7 +13,10 @@ hedgedoc = "hedgedoc.example.com"
 karakeep = "karakeep.example.com"
 egg = "egg.example.com"
 kanidm = "kanidm.example.com"
+garage-s3 = "s3.garage.example.com"
+garage-web = "web.garage.example.com"
 tailnet = "example-tailnet.ts.net"
+friend-bet = "friend-bet.example.com"
 
 [emails]
 proton = "proton@example.com"

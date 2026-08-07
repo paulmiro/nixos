@@ -12,6 +12,13 @@ let
         lib.attrsToList config.services.nginx.virtualHosts
       )
     ))
+    ++ (lib.flatten (
+      map (vhost: (if vhost.value.serverAliases != null then vhost.value.serverAliases else [ ])) (
+        builtins.filter (vhost: vhost.value.enableDyndns) (
+          lib.attrsToList config.services.nginx.virtualHosts
+        )
+      )
+    ))
     ++ cfg.extraDomains;
   enable = (!cfg.forceDisable) && ((builtins.length domains) != 0);
 in
@@ -59,7 +66,16 @@ in
       prompts.api-token.type = "hidden";
       prompts.api-token.persist = true;
 
+      # env file for acme, not cloudflare-dyndns
+      files.env.secret = true;
+
       share = true;
+
+      script = ''
+        echo "
+        CLOUDFLARE_DNS_API_TOKEN=$(cat $prompts/api-token)
+        " > $out/env
+      '';
     };
   };
 }

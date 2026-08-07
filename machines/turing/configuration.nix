@@ -104,6 +104,10 @@
       enable = true;
       enableNginx = true;
     };
+
+    garage = {
+      enable = true;
+    };
   };
 
   environment.systemPackages = with pkgs; [
