@@ -85,11 +85,6 @@
       enableNginx = true;
     };
 
-    karakeep = {
-      enable = true;
-      enableNginx = true;
-    };
-
     stirling-pdf = {
       enable = true;
       enableNginx = true;
