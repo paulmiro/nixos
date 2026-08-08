@@ -56,7 +56,7 @@ in
         admin = {
           api_bind_addr = "[::1]:${toString ports.admin}";
           metrics_require_token = true;
-          admin_token = "dummy";
+          admin_token = "dummy"; # garage-ui requires this to exist in the config file. gets overwritten by env
         };
       };
 
