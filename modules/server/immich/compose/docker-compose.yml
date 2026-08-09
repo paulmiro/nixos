@@ -23,7 +23,7 @@ services:
     env_file:
       - .env
       - /etc/immich/version.env
-      - /run/secrets/vars/immich/env
+      - /run/secrets/vars/per-machine/turing/immich/env
     ports:
       - "2283:2283"
     depends_on:
@@ -46,7 +46,7 @@ services:
     env_file:
       - .env
       - /etc/immich/version.env
-      - /run/secrets/vars/immich/env
+      - /run/secrets/vars/per-machine/turing/immich/env
     restart: always
     healthcheck:
       disable: false
@@ -64,7 +64,7 @@ services:
     env_file:
       - .env
       - /etc/immich/version.env
-      - /run/secrets/vars/immich/env
+      - /run/secrets/vars/per-machine/turing/immich/env
     environment:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_USER: ${DB_USERNAME}
