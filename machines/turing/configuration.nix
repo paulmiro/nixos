@@ -102,6 +102,7 @@
 
     garage = {
       enable = true;
+      enableAdminUI = true;
     };
   };
 

@@ -39,6 +39,8 @@
       enable = true;
       enableNginx = true;
     };
+
+    garage.enableWebProxy = true;
   };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
@@ -49,15 +51,6 @@
       allowedTCPPorts = [ ];
     };
     useDHCP = lib.mkDefault true;
-  };
-
-  services.nginx.virtualHosts."paulmiro.de" = {
-    enableACME = true;
-    forceSSL = true;
-    enableDyndns = true;
-    locations."/" = {
-      return = "301 https://github.com/paulmiro";
-    };
   };
 
   services.fstrim = {
