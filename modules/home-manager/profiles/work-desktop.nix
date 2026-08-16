@@ -22,8 +22,8 @@
     xdg.autostart = {
       enable = true;
       entries = with pkgs; [
-        "${discord.desktopItem}/share/applications/discord.desktop"
-        "${thunderbird-bin.desktopItem}/share/applications/thunderbird.desktop"
+        "${discord}/share/applications/discord.desktop"
+        "${thunderbird-bin}/share/applications/thunderbird.desktop"
       ];
     };
 
