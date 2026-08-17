@@ -25,7 +25,7 @@ in
         efiSupport = true;
         efiInstallAsRemovable = true;
         useOSProber = true;
-        configurationLimit = lib.mkDefault 100;
+        configurationLimit = lib.mkDefault 5;
 
         memtest86 = {
           enable = true;

@@ -56,6 +56,8 @@
     ];
   };
 
+  boot.loader.grub.configurationLimit = 25;
+
   # disabled for closure size
   # specialisation = {
   #   jovian.configuration = {

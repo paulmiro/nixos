@@ -38,6 +38,8 @@
     };
   };
 
+  boot.loader.systemd-boot.configurationLimit = 3;
+
   # being able to build aarm64 stuff
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 }
