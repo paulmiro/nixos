@@ -26,6 +26,8 @@
     postgresql.enable = true;
     rabbitmq.enable = true;
     trusted-certificates.enable = true;
+    azure-vpn.enable = true;
+    username = "paulmiro";
   };
 
   clan.core.networking.targetHost = "leibniz";
