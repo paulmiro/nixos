@@ -20,6 +20,7 @@ in
 
     environment.systemPackages = with pkgs; [
       bottles
+      prismlauncher
       (lutris.override {
         extraPkgs = pkgs: [
           # List package dependencies here
