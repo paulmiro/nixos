@@ -104,6 +104,12 @@
       enable = true;
       enableAdminUI = true;
     };
+
+    minecraft-servers = {
+      ftb-skies-2 = {
+        enable = true;
+      };
+    };
   };
 
   environment.systemPackages = with pkgs; [
