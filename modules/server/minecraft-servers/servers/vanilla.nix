@@ -3,7 +3,6 @@
   lib,
   pkgs,
 
-  inputs,
   private,
   ...
 }:
@@ -22,9 +21,6 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    users.users.paulmiro.extraGroups = [ "minecraft" ];
-    nixpkgs.overlays = [ inputs.nix-minecraft.overlay ];
-
     services.nginx.virtualHosts."${cfg.domain}" = {
       enableACME = true;
       forceSSL = true;
@@ -37,8 +33,6 @@ in
 
     services.minecraft-servers = {
       enable = true;
-      eula = true;
-      dataDir = "/var/lib/minecraft-servers";
 
       servers = {
         vanilla = {
