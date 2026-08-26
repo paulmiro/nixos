@@ -48,6 +48,12 @@ in
             fi
           '';
 
+          serverProperties = {
+            allow-flight = true;
+            difficulty = "hard";
+            white-list = true;
+          };
+
           whitelist = {
             "Powlcopter" = "67fe19ee-2203-4c5d-8f5e-94c43583afa6";
           };
