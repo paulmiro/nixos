@@ -85,11 +85,6 @@
       enableNginx = true;
     };
 
-    stirling-pdf = {
-      enable = true;
-      enableNginx = true;
-    };
-
     librespeedtest = {
       enable = true;
       enableNginx = true;
