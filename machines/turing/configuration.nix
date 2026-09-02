@@ -105,6 +105,8 @@
         enable = true;
       };
     };
+
+    bentopdf.enable = true;
   };
 
   environment.systemPackages = with pkgs; [

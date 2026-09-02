@@ -41,8 +41,6 @@
     };
 
     garage.enableWebProxy = true;
-
-    bentopdf.enable = true;
   };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
