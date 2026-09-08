@@ -28,6 +28,7 @@ in
     services.friend-bet = {
       enable = true;
       inherit port name;
+      adminName = "Paul";
     };
 
     clan.core.state.friend-bet = {
