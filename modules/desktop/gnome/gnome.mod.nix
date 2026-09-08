@@ -24,20 +24,18 @@ in
     # services.xserver.displayManager.sddm.enable = true;
 
     services.desktopManager.gnome.enable = true;
-    environment.gnome.excludePackages = with pkgs;
-      [
-        atomix # puzzle game
-        epiphany
-        geary
-        gnome-initial-setup
-        gnome-music
-        gnome-photos
-        gnome-tour
-        hitori # sudoku game
-        iagno # go game
-        tali # poker game
-        yelp
-      ];
+    environment.gnome.excludePackages = with pkgs; [
+      atomix # puzzle game
+      epiphany
+      geary
+      gnome-initial-setup
+      gnome-music
+      gnome-tour
+      hitori # sudoku game
+      iagno # go game
+      tali # poker game
+      yelp
+    ];
 
     programs.dconf.enable = true;
 
