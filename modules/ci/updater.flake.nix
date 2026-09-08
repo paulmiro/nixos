@@ -50,7 +50,7 @@
               # but the individual machine failures will still show up
               failure = "ignore";
               commands = [
-                "${nix-fast-build} --flake \".#checks.${system}\""
+                "${nix-fast-build} --flake \".#ci.${system}\""
               ];
             };
 

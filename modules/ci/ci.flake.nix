@@ -1,15 +1,32 @@
 {
   self,
   lib,
+  flake-parts-lib,
   ...
 }:
 let
   inherit (lib)
     filterAttrs
     mapAttrs
+    mkOption
+    types
+    ;
+  inherit (flake-parts-lib)
+    mkTransposedPerSystemModule
     ;
 in
 {
+  imports = [
+    (mkTransposedPerSystemModule {
+      name = "ci";
+      option = mkOption {
+        type = types.lazyAttrsOf types.package;
+        default = { };
+        description = "derivations to be built on CI";
+      };
+      file = ./ci.flake.nix;
+    })
+  ];
   perSystem =
     {
       self',
@@ -17,7 +34,7 @@ in
       ...
     }:
     {
-      checks =
+      ci =
         let
           ciHosts = filterAttrs (_name: host: host.config.paul.ci.enable) self.nixosConfigurations;
           ciHostsForSystem = filterAttrs (

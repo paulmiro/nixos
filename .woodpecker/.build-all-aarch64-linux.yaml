@@ -20,7 +20,7 @@ steps:
     image: bash
     name: Setup Attic
   - commands:
-      - nix-fast-build --no-nom --skip-cached --attic-cache lounge-rocks:nix-cache --option warn-dirty false --flake ".#checks.aarch64-linux"
+      - nix-fast-build --no-nom --skip-cached --attic-cache lounge-rocks:nix-cache --option warn-dirty false --flake ".#ci.aarch64-linux"
     failure: ignore
     image: bash
     name: Build all aarch64-linux machines
