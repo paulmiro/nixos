@@ -15,7 +15,9 @@ in
   config = lib.mkIf cfg.enable {
     programs.steam = {
       enable = true;
-      extraCompatPackages = [ (pkgs.proton-ge-bin.override { steamDisplayName = "GE-Proton-Nix"; }) ];
+      extraCompatPackages = [
+        (pkgs.proton-ge-bin.overrideAttrs { steamDisplayName = "GE-Proton-Nix"; })
+      ];
     };
 
     environment.systemPackages = with pkgs; [
