@@ -154,8 +154,8 @@
                   if [[ $hostname != $(hostname) ]]; then
                     echo "WARNING: Rebuilding configuration for \"$hostname\" on \"$(hostname)\""
                   fi
-                  ${pkgs.nix-output-monitor}/bin/nom  build .#nixosConfigurations.$hostname.config.system.build.toplevel
-                  ${pkgs.nixos-rebuild}/bin/nixos-rebuild --sudo switch --flake .#$hostname
+                  ${pkgs.nix-output-monitor}/bin/nom build .#nixosConfigurations.$hostname.config.system.build.toplevel -o result-rebuild
+                  ${pkgs.nixos-rebuild}/bin/nixos-rebuild --sudo --no-reexec switch --store-path $(readlink -e result-rebuild)
                 '')
                 (pkgs.writeShellScriptBin "rollout" "${
                   inputs.clan-core.packages.${system}.clan-cli
