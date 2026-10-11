@@ -80,6 +80,9 @@
     friend-bet.url = "github:paulmiro/friend-bet";
     friend-bet.inputs.nixpkgs.follows = "nixpkgs";
 
+    ifah.url = "github:paulmiro/immich-federation-at-home";
+    ifah.inputs.nixpkgs.follows = "nixpkgs";
+
     nix-index-database.url = "github:nix-community/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
 
