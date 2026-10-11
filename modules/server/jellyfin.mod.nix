@@ -8,7 +8,7 @@
 }:
 let
   cfg = config.paul.jellyfin;
-  serviceName = "jellyfin-docker";
+  serviceName = "jellyfin";
   containerVersion = versions.jellyfin;
 in
 {
@@ -57,7 +57,7 @@ in
       ];
     };
 
-    systemd.services.jellyfin-docker = {
+    systemd.services.${serviceName} = {
       after = lib.mkIf config.paul.zfs.enable [
         "zfs.target"
       ];

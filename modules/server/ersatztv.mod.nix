@@ -12,7 +12,7 @@ let
       "-nvidia"
     else
       "";
-  serviceName = "ersatztv-docker";
+  serviceName = "ersatztv";
 in
 {
   options.paul.ersatztv = {

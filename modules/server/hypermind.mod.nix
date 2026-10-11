@@ -16,7 +16,7 @@ in
     paul.docker.enable = true;
 
     virtualisation.oci-containers.containers.hypermind = {
-      serviceName = "hypermind-docker";
+      serviceName = "hypermind";
       autoStart = true;
       image = "ghcr.io/lklynet/hypermind";
       environment = {

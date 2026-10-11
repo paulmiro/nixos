@@ -15,7 +15,7 @@ let
     pkgs.writeText "immich-version.env" ''
       IMMICH_VERSION=v${version}
     '';
-  serviceName = "immich-docker-compose";
+  serviceName = "immich";
 in
 {
   options.paul.immich = {

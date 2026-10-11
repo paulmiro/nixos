@@ -7,7 +7,7 @@ let
   cfg = config.paul.transmission;
   port = 9091;
   privoxyPort = 8118;
-  serviceName = "transmission-openvpn-docker";
+  serviceName = "transmission";
   containerVersion = "5.3.2";
 in
 {

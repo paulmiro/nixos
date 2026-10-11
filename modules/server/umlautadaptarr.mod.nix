@@ -5,7 +5,7 @@
 }:
 let
   cfg = config.paul.umlautadaptarr;
-  serviceName = "umlautadaptarr-docker";
+  serviceName = "umlautadaptarr";
 in
 {
   options.paul.umlautadaptarr = {

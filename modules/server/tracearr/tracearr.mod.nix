@@ -9,7 +9,7 @@
 let
   cfg = config.paul.tracearr;
   version = versions.tracearr;
-  serviceName = "tracearr-docker-compose";
+  serviceName = "tracearr";
   port = 19110;
 in
 {

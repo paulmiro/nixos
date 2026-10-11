@@ -13,7 +13,7 @@ in
 
   config = lib.mkIf cfg.enable {
     virtualisation.oci-containers.containers.flaresolverr = {
-      serviceName = "flaresolverr-docker";
+      serviceName = "flaresolverr";
       autoStart = true;
       image = "ghcr.io/flaresolverr/flaresolverr:latest";
       ports = [ "8191:8191" ];

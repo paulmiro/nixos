@@ -16,7 +16,7 @@ in
   config = lib.mkIf cfg.enableAdminUI {
 
     virtualisation.oci-containers.containers.garage-ui = {
-      serviceName = "garage-ui-docker";
+      serviceName = "garage-ui";
       image = "noooste/garage-ui:latest";
       volumes = [
         "/etc/garage.toml:/etc/garage.toml:ro"

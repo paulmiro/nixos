@@ -10,7 +10,7 @@ let
   cfg = config.paul.qbittorrent;
   webuiPort = 8090;
   privoxyPort = 8118;
-  serviceName = "qbittorrent-vpn-docker";
+  serviceName = "qbittorrent";
   containerVersion = "release-v${versions.qbittorrent}";
 in
 {
