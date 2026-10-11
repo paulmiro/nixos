@@ -28,7 +28,7 @@ in
         noto-fonts-color-emoji
         corefonts
         recursive
-        ttf_bitstream_vera
+        ttf-bitstream-vera
       ];
 
       fontconfig = {
