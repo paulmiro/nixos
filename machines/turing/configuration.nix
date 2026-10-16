@@ -30,7 +30,6 @@
     immich = {
       enable = true;
       enableNginx = true;
-      ifah.enable = true;
     };
 
     jellyfin = {
