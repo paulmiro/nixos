@@ -149,22 +149,30 @@
             pkgsDirectory = ./pkgs;
 
             devShells.default = pkgs.mkShell {
-              packages = [
-                inputs.git-agecrypt-armor.packages.${system}.default
-                inputs.clan-core.packages.${system}.clan-cli
-                (pkgs.writeShellScriptBin "rebuild" ''
-                  set -euo pipefail
-                  hostname=''${1:-$(hostname)}
-                  if [[ $hostname != $(hostname) ]]; then
-                    echo "WARNING: Rebuilding configuration for \"$hostname\" on \"$(hostname)\""
-                  fi
-                  ${pkgs.nix-output-monitor}/bin/nom build .#nixosConfigurations.$hostname.config.system.build.toplevel -o result-rebuild
-                  ${pkgs.nixos-rebuild}/bin/nixos-rebuild --sudo --no-reexec switch --store-path $(readlink -e result-rebuild)
-                '')
-                (pkgs.writeShellScriptBin "rollout" "${
+              packages =
+                let
+                  mkRebuildScript =
+                    name: operation:
+                    (pkgs.writeShellScriptBin name ''
+                      set -euo pipefail
+                      hostname=''${1:-$(hostname)}
+                      if [[ $hostname != $(hostname) ]]; then
+                        echo "WARNING: Rebuilding configuration for \"$hostname\" on \"$(hostname)\""
+                      fi
+                      ${pkgs.nix-output-monitor}/bin/nom build .#nixosConfigurations.$hostname.config.system.build.toplevel -o result-rebuild
+                      ${pkgs.nixos-rebuild}/bin/nixos-rebuild --sudo --no-reexec ${operation} --store-path $(readlink -e result-rebuild)
+                    '');
+                in
+                [
+                  (mkRebuildScript "rebuild" "switch")
+                  (mkRebuildScript "rebuild-boot" "boot")
+
+                  inputs.git-agecrypt-armor.packages.${system}.default
                   inputs.clan-core.packages.${system}.clan-cli
-                }/bin/clan machines update $@")
-              ];
+                  (pkgs.writeShellScriptBin "rollout" "${
+                    inputs.clan-core.packages.${system}.clan-cli
+                  }/bin/clan machines update $@")
+                ];
             };
           };
       }
