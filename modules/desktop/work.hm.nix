@@ -102,7 +102,7 @@ in
           "zen.desktop"
           "chromium-browser.desktop"
           "code.desktop"
-          "idea.desktop"
+          "intellij-idea.desktop"
           "dbeaver.desktop"
           "discord.desktop"
           "thunderbird.desktop"
