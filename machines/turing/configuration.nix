@@ -102,7 +102,7 @@
 
     minecraft-servers = {
       ftb-skies-2 = {
-        enable = true;
+        # enable = true;
       };
     };
 
