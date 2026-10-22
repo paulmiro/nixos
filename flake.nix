@@ -59,8 +59,7 @@
 
     ### Packages outside of nixpkgs
 
-    # TODO temp fix for youwen5/zen-browser-flake/issues/22
-    zen-browser.url = "github:youwen5/zen-browser-flake/6ca1a282fa32f47cd9fd15ad8592e09558600da8";
+    zen-browser.url = "github:youwen5/zen-browser-flake";
     zen-browser.inputs.nixpkgs.follows = "nixpkgs";
 
     grub2-themes.url = "github:paulmiro/grub2-themes";
