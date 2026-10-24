@@ -19,6 +19,11 @@ in
       enable = true;
       lfs.enable = true;
       signing.format = null;
+      ignores = [
+        "*~"
+        ".DS_Store"
+        "__pycache__"
+      ];
       settings = {
         user.name = "Paul Mika Rohde";
         user.email = "git@paulmiro.de";
