@@ -29,6 +29,5 @@ in
     };
 
     users.extraGroups.docker.members = lib.mkIf config.paul.user.paulmiro.enable [ "paulmiro" ];
-
   };
 }

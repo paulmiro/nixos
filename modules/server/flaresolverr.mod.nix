@@ -14,8 +14,8 @@ in
   config = lib.mkIf cfg.enable {
     virtualisation.oci-containers.containers.flaresolverr = {
       serviceName = "flaresolverr";
-      autoStart = true;
       image = "ghcr.io/flaresolverr/flaresolverr:latest";
+      autoUpdate = "daily";
       ports = [ "8191:8191" ];
       autoRemoveOnStop = false;
       extraOptions = [ "--restart=unless-stopped" ];

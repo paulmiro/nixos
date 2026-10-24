@@ -18,6 +18,7 @@ in
     virtualisation.oci-containers.containers.garage-ui = {
       serviceName = "garage-ui";
       image = "noooste/garage-ui:latest";
+      autoUpdate = "weekly";
       volumes = [
         "/etc/garage.toml:/etc/garage.toml:ro"
       ];

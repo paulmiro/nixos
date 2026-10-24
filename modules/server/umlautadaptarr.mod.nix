@@ -16,6 +16,7 @@ in
     virtualisation.oci-containers.containers."umlautadaptarr" = {
       inherit serviceName;
       image = "pcjones/umlautadaptarr:latest";
+      autoUpdate = "weekly";
       environment = {
         "SONARR__ENABLED" = "true";
         "SONARR__HOST" = "http://${config.networking.hostName}:8989";
