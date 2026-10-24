@@ -3,6 +3,7 @@ import os
 import re
 from github import Github
 from github import Auth
+import requests
 import semver
 
 TOML_PATH = "modules/versions/versions.toml"
@@ -21,6 +22,8 @@ def fetch_latest_version(repo_name, repo_type):
                 raw_version = fetch_latest_version_github(repo_name)
             case "ghcr":
                 raw_version = fetch_latest_version_ghcr(repo_name)
+            case "docker":
+                raw_version = fetch_latest_version_dockerhub(repo_name)
             case _:
                 eprint(f"Error: Unknown repo type {repo_type}")
                 return None
@@ -76,6 +79,39 @@ def fetch_latest_version_ghcr(repo_name):
         else:
             eprint(f"Error: Could not find 'latest' tag for {repo_name}")
             return None
+
+
+def fetch_latest_version_dockerhub(repo_name):
+    """Fetches the latest version from Docker Hub."""
+    if "/" not in repo_name:
+        repo_name = f"library/{repo_name}"  # official images
+    (namespace, repo) = repo_name.split("/")
+    base_url = f"https://hub.docker.com/v2/namespaces/{namespace}/repositories/{repo}/tags"
+
+    response = requests.get(f"{base_url}/latest", timeout=30)
+    response.raise_for_status()
+    latest_digest = response.json()["digest"]
+
+    raw_version = None
+    url = f"{base_url}?page_size=100"
+    while url:
+        response = requests.get(url, timeout=30)
+        response.raise_for_status()
+        page = response.json()
+        for tag in page["results"]:
+            name = tag["name"]
+            if tag.get("digest") != latest_digest or not re.fullmatch(r"v?\d+(\.\d+)*", name):
+                continue
+            # keep searching for a more specific version
+            if not raw_version or name.count(".") > raw_version.count("."):
+                raw_version = name
+        # tags are sorted by last update, so once a page had a match, older pages won't be relevant
+        url = None if raw_version else page.get("next")
+
+    if not raw_version:
+        eprint(f"Error: Could not find any version tag matching 'latest' for {repo_name}")
+        return None
+    return raw_version
 
 
 def clean(version):

@@ -10,6 +10,7 @@
       packages.update-versions = pkgs.writers.writePython3Bin "update-versions" {
         libraries = with pkgs.python3Packages; [
           pygithub
+          requests
           semver
         ];
         flakeIgnore = [
