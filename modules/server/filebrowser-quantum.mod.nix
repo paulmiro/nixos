@@ -81,7 +81,9 @@ in
         CacheDirectory = "filebrowser-quantum";
         StateDirectory = "filebrowser-quantum";
         WorkingDirectory = "/var/lib/filebrowser-quantum";
-        ExecStart = "${lib.getExe cfg.package} -c ${configFile}";
+        ExecStart =
+          assert lib.hasPrefix "1." cfg.package.version;
+          "${lib.getExe cfg.package} -c ${configFile}";
 
         EnvironmentFile = config.clan.core.vars.generators.filebrowser-quantum.files.env.path;
 
