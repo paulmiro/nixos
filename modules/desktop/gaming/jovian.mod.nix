@@ -27,11 +27,18 @@ in
 
     jovian.steamos.enableZram = false;
 
-    nixpkgs.overlays = [
-      (final: prev: {
-        steam = prev.steam.override { platformArgs = "-steamos3 -steampal -gamepadui"; };
-      })
-    ];
+    # TODO: temp fix for Jovian-Experiments/Jovian-NixOS/issues/600
+    # nixpkgs.overlays = [
+    #   (final: prev: {
+    #     jovianPackages = prev.jovianPackages.overrideScope (
+    #       jfinal: jprev: {
+    #         steam = jprev.steam.override {
+    #           platformArgs = "-steamos3 -steampal -gamepadui -pipewire";
+    #         };
+    #       }
+    #     );
+    #   })
+    # ];
 
     services.displayManager.defaultSession = lib.mkIf config.paul.gnome.enable (
       lib.mkForce "gamescope-wayland"
