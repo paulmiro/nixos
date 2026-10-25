@@ -47,6 +47,10 @@ in
             name = "Arr";
             path = "/mnt/arr";
           }
+          {
+            name = "Dump";
+            path = "/mnt/dump";
+          }
         ];
       };
 
@@ -58,12 +62,15 @@ in
       };
     };
 
+    paul.group.dump-dir.enable = true;
+
     users.users.filebrowser-quantum = {
       description = "Filebrowser Quantum";
       isSystemUser = true;
       group = "filebrowser-quantum";
       extraGroups = lib.mkIf config.paul.group.transmission.enable [
         config.users.groups.transmission.name
+        "dump-dir"
       ];
     };
 
