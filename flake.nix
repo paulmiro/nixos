@@ -31,7 +31,8 @@
 
     # Manage networks of machines
     # https://clan.lol
-    clan-core.url = "https://git.clan.lol/clan/clan-core/archive/main.tar.gz";
+    # TODO: temp fix for clan/clan-core/issues/8284
+    clan-core.url = "https://git.clan.lol/nim65s/clan-core/archive/nix_2_34.tar.gz";
     clan-core.inputs.nixpkgs.follows = "nixpkgs";
     clan-core.inputs.flake-parts.follows = "flake-parts";
 
