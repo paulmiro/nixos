@@ -3,9 +3,6 @@ depends_on:
 labels:
   backend: docker
   platform: linux/amd64
-runs_on:
-  - success
-  - failure
 skip_clone: true
 steps:
   - commands:
@@ -20,3 +17,6 @@ when:
       - '**'
   event:
     - push
+  status:
+    - success
+    - failure
