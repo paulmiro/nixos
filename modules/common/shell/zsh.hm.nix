@@ -271,7 +271,13 @@ in
       # terminal file explorer
       yazi = {
         enable = true;
-        shellWrapperName = "cdy";
+        shellWrapperName = "yy";
+        settings.opener.edit = [
+          {
+            run = "nano %s";
+            block = true;
+          }
+        ];
       };
 
       # cooler cd
