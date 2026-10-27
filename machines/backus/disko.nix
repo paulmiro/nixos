@@ -3,10 +3,14 @@
     disk = {
       main = {
         type = "disk";
-        device = "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0";
+        device = "/dev/vda";
         content = {
           type = "gpt";
           partitions = {
+            boot = {
+              size = "1M";
+              type = "EF02"; # for grub MBR
+            };
             ESP = {
               size = "1G";
               type = "EF00";
@@ -32,7 +36,7 @@
       tank_a_1 = {
         # HDD 1
         type = "disk";
-        device = "/dev/disk/by-id/ata-WDC_WD80EZAZ-11TDBA0_7SJ4SK7W";
+        device = "/dev/disk/by-id/virtio-7SJ4SK7W";
         content = {
           type = "gpt";
           partitions = {
@@ -49,7 +53,7 @@
       tank_a_2 = {
         # HDD 2
         type = "disk";
-        device = "/dev/disk/by-id/ata-WDC_WD80EZAZ-11TDBA0_7SJ5X27W";
+        device = "/dev/disk/by-id/virtio-7SJ5X27W";
         content = {
           type = "gpt";
           partitions = {

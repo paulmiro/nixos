@@ -5,7 +5,7 @@
 {
   paul = {
     common-server.enable = true;
-    systemd-boot.enable = true;
+    grub.enable = true;
 
     tailscale = {
       enable = true;
