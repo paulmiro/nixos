@@ -29,7 +29,7 @@ Please refer to the documantation of git-agecrypt to see how to set it up.
 
 If you used nix to install `git-agecrypt` or `git-agecrypt-armor`, make sure to remove the hardcoded store path in .git/config after, to avoid having it break on update
 
-TLDR:
+TLDR: run the `init-git-agecrypt` command from the dev shell, or paste this:
 ```sh
 git-agecrypt config add -p modules/private/private.json -i ~/.ssh/id_ed25519
 git-agecrypt init

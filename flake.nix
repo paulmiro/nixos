@@ -168,6 +168,18 @@
                   (mkRebuildScript "rebuild-boot" "boot")
 
                   inputs.git-agecrypt-armor.packages.${system}.default
+                  (pkgs.writeShellScriptBin "init-git-agecrypt" ''
+                    set -euo pipefail
+                    if [[ ! -e ~/.ssh/id_ed25519 ]]; then
+                      echo ~/.ssh/id_ed25519 not found
+                      exit 1
+                    fi
+                    git-agecrypt config add -p modules/private/private.json -i ~/.ssh/id_ed25519
+                    git-agecrypt init
+                    git reset --hard
+                    sed -i -E 's|/nix/store/[^/]*/bin/git-agecrypt|git-agecrypt|g' .git/config
+                  '')
+
                   inputs.clan-core.packages.${system}.clan-cli
                   (pkgs.writeShellScriptBin "rollout" "${
                     inputs.clan-core.packages.${system}.clan-cli
