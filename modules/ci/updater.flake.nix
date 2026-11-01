@@ -69,7 +69,7 @@
               name = "check-${name}-status";
               image = "registry.gitlab.com/gitlab-ci-utils/curl-jq:latest";
               commands = [
-                "curl -s $CI_SYSTEM_URL/api/repos/$CI_REPO_ID/pipelines/$CI_PIPELINE_NUMBER | jq -e '.workflows[] | select(.name == \"build-all-${systemFor name}\") .children[] | select(.name == \"check-output-${name}\") .state == \"success\"'"
+                "curl -sv $CI_SYSTEM_URL/api/repos/$CI_REPO_ID/pipelines/$CI_PIPELINE_NUMBER | jq -e '.workflows[] | select(.name == \"build-all-${systemFor name}\") .children[] | select(.name == \"check-output-${name}\") .state == \"success\"'"
               ];
             };
           };
