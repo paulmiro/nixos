@@ -20,40 +20,39 @@ steps:
     image: bash
     name: Setup Attic
   - commands:
-      - nix-fast-build --no-nom --skip-cached --attic-cache lounge-rocks:nix-cache --option warn-dirty false --out-link result --result-file result.json --flake ".#ci.x86_64-linux"
-      - cat result.json
+      - nix-fast-build --no-nom --skip-cached --attic-cache lounge-rocks:nix-cache --option warn-dirty false --result-file result.json --flake ".#ci.x86_64-linux"
     failure: ignore
     image: bash
     name: Build all x86_64-linux machines
   - commands:
       - cat result.json | jq -e '.results | map(select(.attr == "backus")) | all(.success)'
     failure: ignore
-    image: bash
+    image: registry.gitlab.com/gitlab-ci-utils/curl-jq:latest
     name: check-output-backus
   - commands:
       - cat result.json | jq -e '.results | map(select(.attr == "hawking")) | all(.success)'
     failure: ignore
-    image: bash
+    image: registry.gitlab.com/gitlab-ci-utils/curl-jq:latest
     name: check-output-hawking
   - commands:
       - cat result.json | jq -e '.results | map(select(.attr == "leibniz")) | all(.success)'
     failure: ignore
-    image: bash
+    image: registry.gitlab.com/gitlab-ci-utils/curl-jq:latest
     name: check-output-leibniz
   - commands:
       - cat result.json | jq -e '.results | map(select(.attr == "morse")) | all(.success)'
     failure: ignore
-    image: bash
+    image: registry.gitlab.com/gitlab-ci-utils/curl-jq:latest
     name: check-output-morse
   - commands:
       - cat result.json | jq -e '.results | map(select(.attr == "newton")) | all(.success)'
     failure: ignore
-    image: bash
+    image: registry.gitlab.com/gitlab-ci-utils/curl-jq:latest
     name: check-output-newton
   - commands:
       - cat result.json | jq -e '.results | map(select(.attr == "turing")) | all(.success)'
     failure: ignore
-    image: bash
+    image: registry.gitlab.com/gitlab-ci-utils/curl-jq:latest
     name: check-output-turing
 when:
   branch:
