@@ -19,7 +19,7 @@
 
           machinesFor = system: builtins.filter (name: systemFor name == system) machines;
 
-          nix-fast-build = "nix-fast-build --no-nom --skip-cached --attic-cache lounge-rocks:nix-cache --option warn-dirty false --out-link result";
+          nix-fast-build = "nix-fast-build --no-nom --skip-cached --attic-cache lounge-rocks:nix-cache --option warn-dirty false --out-link result --result-file result.json";
 
           steps = {
             decryptPrivateData = {
@@ -51,6 +51,7 @@
               failure = "ignore";
               commands = [
                 "${nix-fast-build} --flake \".#ci.${system}\""
+                "cat result.json"
               ];
             };
 

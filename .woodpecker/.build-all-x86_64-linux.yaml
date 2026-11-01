@@ -20,7 +20,8 @@ steps:
     image: bash
     name: Setup Attic
   - commands:
-      - nix-fast-build --no-nom --skip-cached --attic-cache lounge-rocks:nix-cache --option warn-dirty false --out-link result --flake ".#ci.x86_64-linux"
+      - nix-fast-build --no-nom --skip-cached --attic-cache lounge-rocks:nix-cache --option warn-dirty false --out-link result --result-file result.json --flake ".#ci.x86_64-linux"
+      - cat result.json
     failure: ignore
     image: bash
     name: Build all x86_64-linux machines
