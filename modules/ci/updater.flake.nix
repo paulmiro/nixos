@@ -57,10 +57,10 @@
             checkMachineOutput = name: {
               # this exists only for the api call below
               name = "check-output-${name}";
-              image = "registry.gitlab.com/gitlab-ci-utils/curl-jq:latest";
+              image = "bash";
               failure = "ignore";
               commands = [
-                "cat result.json | jq -e '.results | map(select(.attr == \"${name}\")) | all(.success)'"
+                "cat result.json | nix run nixpkgs#jq -- -e '.results | map(select(.attr == \"${name}\")) | all(.success)'"
               ];
             };
 

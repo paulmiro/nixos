@@ -25,34 +25,34 @@ steps:
     image: bash
     name: Build all x86_64-linux machines
   - commands:
-      - cat result.json | jq -e '.results | map(select(.attr == "backus")) | all(.success)'
+      - cat result.json | nix run nixpkgs#jq -- -e '.results | map(select(.attr == "backus")) | all(.success)'
     failure: ignore
-    image: registry.gitlab.com/gitlab-ci-utils/curl-jq:latest
+    image: bash
     name: check-output-backus
   - commands:
-      - cat result.json | jq -e '.results | map(select(.attr == "hawking")) | all(.success)'
+      - cat result.json | nix run nixpkgs#jq -- -e '.results | map(select(.attr == "hawking")) | all(.success)'
     failure: ignore
-    image: registry.gitlab.com/gitlab-ci-utils/curl-jq:latest
+    image: bash
     name: check-output-hawking
   - commands:
-      - cat result.json | jq -e '.results | map(select(.attr == "leibniz")) | all(.success)'
+      - cat result.json | nix run nixpkgs#jq -- -e '.results | map(select(.attr == "leibniz")) | all(.success)'
     failure: ignore
-    image: registry.gitlab.com/gitlab-ci-utils/curl-jq:latest
+    image: bash
     name: check-output-leibniz
   - commands:
-      - cat result.json | jq -e '.results | map(select(.attr == "morse")) | all(.success)'
+      - cat result.json | nix run nixpkgs#jq -- -e '.results | map(select(.attr == "morse")) | all(.success)'
     failure: ignore
-    image: registry.gitlab.com/gitlab-ci-utils/curl-jq:latest
+    image: bash
     name: check-output-morse
   - commands:
-      - cat result.json | jq -e '.results | map(select(.attr == "newton")) | all(.success)'
+      - cat result.json | nix run nixpkgs#jq -- -e '.results | map(select(.attr == "newton")) | all(.success)'
     failure: ignore
-    image: registry.gitlab.com/gitlab-ci-utils/curl-jq:latest
+    image: bash
     name: check-output-newton
   - commands:
-      - cat result.json | jq -e '.results | map(select(.attr == "turing")) | all(.success)'
+      - cat result.json | nix run nixpkgs#jq -- -e '.results | map(select(.attr == "turing")) | all(.success)'
     failure: ignore
-    image: registry.gitlab.com/gitlab-ci-utils/curl-jq:latest
+    image: bash
     name: check-output-turing
 when:
   branch:
