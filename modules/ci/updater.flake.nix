@@ -51,7 +51,6 @@
               failure = "ignore";
               commands = [
                 "${nix-fast-build} --flake \".#ci.${system}\""
-                "cat result.json"
               ];
             };
 
