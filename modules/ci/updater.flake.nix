@@ -61,7 +61,7 @@
               image = "bash";
               failure = "ignore";
               commands = [
-                "test -L result-${name}"
+                "cat result.json | jq -e '.results | map(select(.attr == \"${name}\")) | all(.success)'"
               ];
             };
 
@@ -70,7 +70,7 @@
               name = "check-${name}-status";
               image = "registry.gitlab.com/gitlab-ci-utils/curl-jq:latest";
               commands = [
-                "test 'true' = $(curl -s https://build.lounge.rocks/api/repos/24/pipelines/$CI_PIPELINE_NUMBER | jq '.workflows[] | select(.name == \"build-all-${systemFor name}\") .children[] | select(.name == \"check-output-${name}\") .state == \"success\"')"
+                "curl -s https://build.lounge.rocks/api/repos/24/pipelines/$CI_PIPELINE_NUMBER | jq -e '.workflows[] | select(.name == \"build-all-${systemFor name}\") .children[] | select(.name == \"check-output-${name}\") .state == \"success\"'"
               ];
             };
           };
