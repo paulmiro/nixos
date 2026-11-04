@@ -19,8 +19,6 @@
 
           machinesFor = system: builtins.filter (name: systemFor name == system) machines;
 
-          nix-fast-build = "nix-fast-build --no-nom --skip-cached --attic-cache lounge-rocks:nix-cache --option warn-dirty false --result-file result.json";
-
           steps = {
             decryptPrivateData = {
               name = "Decrypt Private Data";
@@ -50,7 +48,7 @@
               # but the individual machine failures will still show up
               failure = "ignore";
               commands = [
-                "${nix-fast-build} --flake \".#ci.${system}\""
+                "nix-fast-build --skip-cached --attic-cache lounge-rocks:nix-cache --option warn-dirty false --result-file result.json --flake \".#ci.${system}\""
               ];
             };
 
@@ -60,14 +58,14 @@
               image = "bash";
               failure = "ignore";
               commands = [
-                "cat result.json | nix run nixpkgs#jq -- -e '.results | map(select(.attr == \"${name}\")) | all(.success)'"
+                "cat result.json | jq -e '.results | map(select(.attr == \"${name}\")) | all(.success)'"
               ];
             };
 
             checkMachineBuildStatus = name: {
               # direct api calls seem to be the only way to transfer information between workflows, thus this abomination was born
               name = "check-${name}-status";
-              image = "registry.gitlab.com/gitlab-ci-utils/curl-jq:latest";
+              image = "bash";
               commands = [
                 "curl -sv $CI_SYSTEM_URL/api/repos/$CI_REPO_ID/pipelines/$CI_PIPELINE_NUMBER | jq -e '.workflows[] | select(.name == \"build-all-${systemFor name}\") .children[] | select(.name == \"check-output-${name}\") .state == \"success\"'"
               ];
@@ -92,7 +90,7 @@
               in
               lib.nameValuePair name {
                 labels = {
-                  backend = "docker";
+                  backend = "local";
                   platform = platforms."${system}";
                 };
                 skip_clone = true;
