@@ -48,7 +48,16 @@
               # but the individual machine failures will still show up
               failure = "ignore";
               commands = [
-                "nix-fast-build --skip-cached --attic-cache lounge-rocks:nix-cache --option warn-dirty false --result-file result.json --flake \".#ci.${system}\""
+                (lib.concatStringsSep " " [
+                  "nix-fast-build"
+                  "--flake \".#ci.${system}\""
+                  "--skip-cached"
+                  "--attic-cache lounge-rocks:nix-cache"
+                  "--option warn-dirty false"
+                  "--result-file result.json"
+                  # nix-fast-build currently forces -v on nix build, this filters that out
+                  "| rg -v '^[a-zA-Z0-9-]+> '"
+                ])
               ];
             };
 
