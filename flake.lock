@@ -778,7 +778,6 @@
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_2",
         "pkgs-by-name-for-flake-parts": "pkgs-by-name-for-flake-parts",
-        "starship-no-empty-icons": "starship-no-empty-icons",
         "useful-api": "useful-api",
         "wrapper-modules": "wrapper-modules",
         "zen-browser": "zen-browser"
@@ -803,18 +802,6 @@
         "owner": "Mic92",
         "repo": "sops-nix",
         "type": "github"
-      }
-    },
-    "starship-no-empty-icons": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-Rn8ExD+11iJ/nmYOocdwp1OsDEvy4HBJnFSvarRpsnU=",
-        "type": "file",
-        "url": "https://starship.rs/presets/toml/no-empty-icons.toml"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://starship.rs/presets/toml/no-empty-icons.toml"
       }
     },
     "systems": {

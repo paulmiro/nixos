@@ -1,8 +1,6 @@
 {
   config,
   lib,
-
-  inputs,
   ...
 }:
 let
@@ -16,7 +14,10 @@ in
   config = lib.mkIf cfg.enable {
     programs.starship = {
       enable = true;
-      settings = (fromTOML (builtins.readFile "${inputs.starship-no-empty-icons}")) // {
+      presets = [
+        "no-runtime-versions"
+      ];
+      settings = {
         hostname = {
           format = "[$hostname]($style) ";
         };

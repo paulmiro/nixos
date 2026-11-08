@@ -88,11 +88,6 @@
 
     wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
     wrapper-modules.inputs.nixpkgs.follows = "nixpkgs";
-
-    ### Non-Flake Inputs
-
-    starship-no-empty-icons.url = "https://starship.rs/presets/toml/no-empty-icons.toml";
-    starship-no-empty-icons.flake = false;
   };
 
   outputs =
