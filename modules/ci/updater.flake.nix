@@ -79,7 +79,8 @@
               name = "check-${name}-status";
               image = "bash";
               commands = [
-                "curl -sv $CI_SYSTEM_URL/api/repos/$CI_REPO_ID/pipelines/$CI_PIPELINE_NUMBER | jq -e '.workflows[] | select(.name == \"build-all-${systemFor name}\") .children[] | select(.name == \"check-output-${name}\") .state == \"success\"'"
+                # TODO use $CI_REPO_ID instead of hard-coding 24
+                "curl -sv $CI_SYSTEM_URL/api/repos/24/pipelines/$CI_PIPELINE_NUMBER | jq -e '.workflows[] | select(.name == \"build-all-${systemFor name}\") .children[] | select(.name == \"check-output-${name}\") .state == \"success\"'"
               ];
             };
           };
