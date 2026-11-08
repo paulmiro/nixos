@@ -23,7 +23,7 @@ in
     enable = lib.mkEnableOption "enable home-manager";
 
     profile = lib.mkOption {
-      description = "which home-mamager profile to use for user paulmiro";
+      description = "which home-manager profile to use for user paulmiro";
       type = profileType;
       default = "common";
     };

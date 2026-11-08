@@ -290,7 +290,7 @@ in
         options = {
           includesZfsSnapshots = lib.mkOption {
             type = lib.types.bool;
-            # this assumes all paths get backet up to all destinations. this is currently true.
+            # this assumes all paths get backed up to all destinations. this is currently true.
             default = lib.any (state: state.useZfsSnapshots) (
               builtins.attrValues system-config.clan.core.state
             );
@@ -299,7 +299,7 @@ in
 
           includesRsyncCopies = lib.mkOption {
             type = lib.types.bool;
-            # this assumes all paths get backet up to all destinations. this is currently true.
+            # this assumes all paths get backed up to all destinations. this is currently true.
             default = lib.any (state: state.useRsyncCopy) (builtins.attrValues system-config.clan.core.state);
             description = "Use rsync copies for this backup job";
           };

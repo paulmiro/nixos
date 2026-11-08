@@ -1,6 +1,6 @@
 # nixos
 
-## Ressources
+## Resources
 
 - [NixOS manual](https://nixos.org/nixos/manual/)
 - [NixOS search options](https://search.nixos.org/options)

@@ -9,7 +9,7 @@ This will replace the private data with fake data, allowing you to evaluate the 
 The `private.toml` file contains private data, such as:
 
 - usernames
-- email adresses
+- email addresses
 - domain names
 
 It does not contain "real" secrets, such as:
@@ -25,7 +25,7 @@ In order to build configurations that use this private data, you need to decrypt
 
 Files encrypted by `git-agecrypt-armor` can still be decrypted with `git-agecrypt`. `git-agecrypt-armor` is only needed if you want to push changes to the file.
 
-Please refer to the documantation of git-agecrypt to see how to set it up.
+Please refer to the documentation of git-agecrypt to see how to set it up.
 
 If you used nix to install `git-agecrypt` or `git-agecrypt-armor`, make sure to remove the hardcoded store path in .git/config after, to avoid having it break on update
 

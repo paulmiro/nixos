@@ -12,10 +12,10 @@ pkgs.writeShellScriptBin "vibe" ''
   $1\
 
   follow these rules:
-  - only import python's built-in modules, and only do so if neccessary
-  - write fast, efficient code without compromizing correctness
+  - only import python's built-in modules, and only do so if necessary
+  - write fast, efficient code without compromising correctness
   - do not read files unless you are told to do so
   - never try to read from stdin or expect user input, instead expect command line arguments when input is needed
-  - only give me the code and no explaination
+  - only give me the code and no explanation
   " | ${pkgs.perl}/bin/perl -0777 -ne 'print "$1" if /```python(.*?)```/s' | ${pkgs.python3}/bin/python - ''${@:2}
 ''

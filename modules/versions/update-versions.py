@@ -71,7 +71,7 @@ def fetch_latest_version_ghcr(repo_name):
             for tag in tags:
                 if tag.startswith(search_prefix):
                     raw_version = tag
-                    search_prefix = tag  # keep serching for a more specific version
+                    search_prefix = tag  # keep searching for a more specific version
             if not raw_version:
                 eprint(f"Error: Could not find any 'release-v*' tags for {repo_name}")
                 return None
