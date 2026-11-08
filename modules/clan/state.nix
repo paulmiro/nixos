@@ -2,12 +2,16 @@
   config,
   lib,
   pkgs,
+
+  private,
   ...
 }:
 let
   system-config = config;
 
   zfsPackage = config.boot.zfs.package;
+
+  hasState = config.clan.core.state != { };
 
   stateForPath =
     path:
@@ -340,55 +344,91 @@ in
     );
   };
 
-  config = {
-    # Extend systemd services for borgbackup jobs that use ZFS snapshots
-    systemd.services = lib.mapAttrs' (
-      name: job:
-      lib.nameValuePair "borgbackup-job-${name}" (
-        lib.mkIf (job.includesZfsSnapshots or false) {
-          # we need to turn off anything that chroots, to allow mount/unmount from within the ExecPre
-          confinement.enable = lib.mkForce false;
+  config = lib.mkMerge [
+    {
+      # Extend systemd services for borgbackup jobs that use ZFS snapshots
+      systemd.services = lib.concatMapAttrs (name: job: {
+        "borgbackup-job-${name}" = lib.mkMerge [
+          {
+            onFailure = [ "borgbackup-failure-notification-${name}.service" ];
+          }
+          (lib.mkIf (job.includesZfsSnapshots or false) {
+            # we need to turn off anything that chroots, to allow mount/unmount from within the ExecPre
+            confinement.enable = lib.mkForce false;
+            serviceConfig = {
+              PrivateDevices = lib.mkForce false; # ZFS needs access to /dev/zfs
+              ProtectSystem = lib.mkForce false;
+              PrivateTmp = lib.mkForce false;
+              ReadWritePaths = lib.mkForce null;
+            };
+
+            path = [ zfsPackage ];
+          })
+        ];
+        "borgbackup-failure-notification-${name}" = {
+          script = ''
+            # path to cli.json cannot be passed by argument, but gets searched at ./.
+            cd $CREDENTIALS_DIRECTORY
+            ${lib.getExe pkgs.gotify-cli} push "Backup failed from ${config.networking.hostName} to ${name}"
+          '';
           serviceConfig = {
-            PrivateDevices = lib.mkForce false; # ZFS needs access to /dev/zfs
-            ProtectSystem = lib.mkForce false;
-            PrivateTmp = lib.mkForce false;
-            ReadWritePaths = lib.mkForce null;
+            Type = "oneshot";
+            DynamicUser = true;
+            LoadCredential = "cli.json:${
+              config.clan.core.vars.generators.gotify-cli-borgbackup.files."cli.json".path
+            }";
           };
+        };
+      }) config.services.borgbackup.jobs;
+    }
+    (lib.mkIf hasState {
+      clan.core.vars.generators.gotify-cli-borgbackup = {
+        prompts.token.description = "Borgbackup Gotify Token";
 
-          path = [ zfsPackage ];
-        }
-      )
-    ) config.services.borgbackup.jobs;
+        files."cli.json".secret = true;
 
-    assertions =
-      (lib.concatMap (state: [
-        {
-          assertion = !(state.useZfsSnapshots && state.useRsyncCopy);
-          message = "State ${state.name}: ZFS snapshots and rsync copies cannot be used at the same time";
-        }
-        {
-          assertion = state.useZfsSnapshots -> lib.all (folder: pathToDataset folder != null) state.folders;
-          message = "State ${state.name}: ZFS snapshots can only be used if all folders are in ZFS datasets. Make sure the disko config is up to date.";
-        }
-        {
-          assertion = lib.all (
-            serviceName:
-            lib.filterAttrs (name: value: value.name == serviceName) system-config.systemd.services != { }
-          ) state.servicesToStop;
-          message = "State ${state.name} is configured to stop services that don't exist: [ ${lib.concatStringsSep ", " state.servicesToStop} ]";
-        }
-        {
-          assertion = !lib.strings.hasInfix "/" state.name;
-          message = "State names cannot contain '/': ${state.name}";
-        }
-      ]) (builtins.attrValues config.clan.core.state))
-      ++ [
-        {
-          assertion = lib.allUnique (
-            lib.flatten (map (state: state.folders) (builtins.attrValues config.clan.core.state))
-          );
-          message = "State paths must be unique";
-        }
-      ];
-  };
+        script = ''
+          cat << EOF > $out/cli.json
+          {
+            "token": "$(cat $prompts/token)",
+            "url": "https://${private.domains.gotify}",
+            "defaultPriority": 5
+          }
+          EOF
+        '';
+      };
+    })
+    {
+      assertions =
+        (lib.concatMap (state: [
+          {
+            assertion = !(state.useZfsSnapshots && state.useRsyncCopy);
+            message = "State ${state.name}: ZFS snapshots and rsync copies cannot be used at the same time";
+          }
+          {
+            assertion = state.useZfsSnapshots -> lib.all (folder: pathToDataset folder != null) state.folders;
+            message = "State ${state.name}: ZFS snapshots can only be used if all folders are in ZFS datasets. Make sure the disko config is up to date.";
+          }
+          {
+            assertion = lib.all (
+              serviceName:
+              lib.filterAttrs (name: value: value.name == serviceName) system-config.systemd.services != { }
+            ) state.servicesToStop;
+            message = "State ${state.name} is configured to stop services that don't exist: [ ${lib.concatStringsSep ", " state.servicesToStop} ]";
+          }
+          {
+            assertion = !lib.strings.hasInfix "/" state.name;
+            message = "State names cannot contain '/': ${state.name}";
+          }
+        ]) (builtins.attrValues config.clan.core.state))
+        ++ [
+          {
+            assertion = lib.allUnique (
+              lib.flatten (map (state: state.folders) (builtins.attrValues config.clan.core.state))
+            );
+            message = "State paths must be unique";
+          }
+        ];
+    }
+  ];
 }
