@@ -20,7 +20,7 @@ steps:
     image: bash
     name: Setup Attic
   - commands:
-      - nix-fast-build --flake ".#ci.aarch64-linux" --skip-cached --attic-cache lounge-rocks:nix-cache --option warn-dirty false --result-file result.json 2>&1 | rg -v '^[a-zA-Z0-9-]+> '
+      - nix-fast-build --flake ".#ci.aarch64-linux" --skip-cached --attic-cache lounge-rocks:nix-cache --option warn-dirty false --result-file result.json 2>&1  | rg -v '^[a-zA-Z0-9-]+> ' | rg -v '^waiting for another Nix process to finish fetching input'
     failure: ignore
     image: bash
     name: Build all aarch64-linux machines
