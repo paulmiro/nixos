@@ -146,6 +146,14 @@ def semver_same_up_to(a, b, level):
     return False
 
 
+def truncate_to_level(version, level):
+    """Truncates a version string to the components relevant for the specified level."""
+    parts = {"major": 1, "minor": 2}.get(level)
+    if parts is None:
+        return version
+    return ".".join(version.split(".")[:parts])
+
+
 def main():
     # Authenticate via GitHub token (Highly recommended for CI environments)
     token = os.environ.get("GITHUB_TOKEN")
@@ -226,7 +234,7 @@ def main():
                     eprint(f" -> Version is already at the same {repo_level} level ({current_version} -> {latest_version})")
                     continue
 
-                print(f"{current_version} -> {latest_version}")
+                print(f"{truncate_to_level(current_version, repo_level)} -> {truncate_to_level(latest_version, repo_level)}")
                 eprint(
                     f" -> Updating from {current_version} to {latest_version}"
                 )
