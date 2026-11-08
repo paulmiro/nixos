@@ -55,8 +55,11 @@
                   "--attic-cache lounge-rocks:nix-cache"
                   "--option warn-dirty false"
                   "--result-file result.json"
+                  "2>&1 "
                   # nix-fast-build currently forces -v on nix build, this filters that out
-                  "2>&1 | rg -v '^[a-zA-Z0-9-]+> '"
+                  "| rg -v '^[a-zA-Z0-9-]+> '"
+                  # parallel eval means lots of these meaningless warnings
+                  "| rg -v '^waiting for another Nix process to finish fetching input'"
                 ])
               ];
             };
