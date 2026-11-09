@@ -23,6 +23,7 @@
 
     kanidm = {
       enableServer = true;
+      enableMailSender = true;
       enablePam = true;
       enablePamSsh = true;
     };

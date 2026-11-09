@@ -23,6 +23,7 @@ couchdb = "couchdb.example.com"
 proton = "proton@example.com"
 gmail = "gmail@example.com"
 work = "work@example.com"
+kanidm = "account@example.com"
 
 [misc]
 kanidm_display_name = "Example Kanidm Display Name"

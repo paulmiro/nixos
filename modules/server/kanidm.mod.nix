@@ -17,6 +17,7 @@ in
 {
   options.paul.kanidm = {
     enableServer = lib.mkEnableOption "enable kanidm server";
+    enableMailSender = lib.mkEnableOption "enable kanidm mail sender";
     enableClient = lib.mkEnableOption "enable kanidm client";
     enablePam = lib.mkEnableOption "enable kanidm PAM integration";
     enablePamSsh = lib.mkEnableOption "enable ssh via kanidm PAM integration";
@@ -39,7 +40,7 @@ in
   };
 
   config = lib.mkMerge [
-    (lib.mkIf (cfg.enableServer || cfg.enableClient || cfg.enablePam) {
+    (lib.mkIf (cfg.enableServer || cfg.enableClient || cfg.enablePam || cfg.enableMailSender) {
       services.kanidm = {
         inherit package;
       };
@@ -88,6 +89,50 @@ in
         useZfsSnapshots = true;
         folders = [ "/var/lib/kanidm" ];
         servicesToStop = [ "kanidm.service" ];
+      };
+    })
+
+    (lib.mkIf cfg.enableMailSender {
+      systemd.services.kanidm-mail-sender = {
+        description = "kanidm mail sender";
+        wantedBy = [ "multi-user.target" ];
+        after = [ "network.target" ] ++ lib.optional cfg.enableServer "kanidm.service";
+        serviceConfig = {
+          Restart = "on-failure";
+          RestartSec = "30s";
+          DynamicUser = true;
+          ProtectSystem = "strict";
+          PrivateTmp = true;
+          ExecStart = "${package}/bin/kanidm-mail-sender -m \${CREDENTIALS_DIRECTORY}/config.toml";
+          LoadCredential = [
+            "config.toml:${config.clan.core.vars.generators.kanidm-mail-sender.files."config.toml".path}"
+          ];
+        };
+      };
+
+      clan.core.vars.generators.kanidm-mail-sender = {
+        prompts.token.description = "kanidm mail sender service account token";
+        prompts.token.persist = true;
+        prompts.mail_password.description = "kanidm mail sender smtp password";
+        prompts.mail_password.persist = true;
+
+        files."config.toml".secret = true;
+
+        script = ''
+          cat << EOF > $out/config.toml
+          token = "$(cat $prompts/token)"
+
+          instance_display_name = "${private.misc.kanidm_display_name}"
+
+          instance_url = "https://${domain}"
+
+          mail_from_address = "${private.emails.kanidm}"
+          mail_reply_to_address = "${private.emails.kanidm}"
+          mail_relay = "smtps://mail-eu.smtp2go.com"
+          mail_username = "kanidm"
+          mail_password = "$(cat $prompts/mail_password)"
+          EOF
+        '';
       };
     })
 
