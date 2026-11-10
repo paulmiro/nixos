@@ -1,15 +1,17 @@
 {
   pkgs,
+
+  inputs,
   ...
 }:
 {
+  imports = [
+    inputs.nixos-hardware.nixosModules.framework-intel-core-ultra-series3
+  ];
+
   paul = {
     common-desktop.enable = true;
     gnome.enable = true;
-    nvidia = {
-      enable = true;
-      laptop = true;
-    };
     grub.enable = true;
     syncthing.enable = true;
     docker.enable = true;
@@ -52,6 +54,14 @@
   };
 
   boot.loader.grub.configurationLimit = 25;
+
+  boot.zswap.enable = true;
+  swapDevices = [
+    {
+      device = "/var/lib/swapfile";
+      size = 32 * 1024;
+    }
+  ];
 
   # disabled for closure size
   # specialisation = {

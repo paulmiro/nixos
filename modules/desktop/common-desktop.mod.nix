@@ -24,6 +24,8 @@ in
 
     time.hardwareClockInLocalTime = lib.mkDefault true;
 
+    networking.useDHCP = lib.mkDefault true;
+
     programs.appimage = {
       enable = true;
       binfmt = true;
