@@ -16,6 +16,7 @@
     qmk.enable = true;
     tailscale.enable = true;
     systemd-boot.enable = true;
+    docker.enable = true;
 
     home-manager.profile = "work-desktop";
   };
