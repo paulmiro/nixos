@@ -56,10 +56,14 @@ in
     gtk = {
       enable = true;
       gtk4.theme = null;
-      cursorTheme = {
-        name = "capitaine-cursors";
-        package = pkgs.capitaine-cursors;
-      };
+    };
+
+    home.pointerCursor = {
+      name = "capitaine-cursors";
+      package = pkgs.capitaine-cursors;
+      size = 32;
+      gtk.enable = true;
+      x11.enable = true;
     };
 
     # Use `dconf watch /` to track stateful changes you are doing, then set them here.
@@ -77,6 +81,8 @@ in
 
       "org/gnome/desktop/interface" = {
         accent-color = "yellow";
+        cursor-theme = "capitaine-cursors";
+        cursor-size = 32;
         gtk-enable-primary-paste = false;
         monospace-font-name = "MesloLGS NF 10";
         show-battery-percentage = true;
