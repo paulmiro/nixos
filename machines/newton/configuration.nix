@@ -11,6 +11,7 @@
 
   paul = {
     common-desktop.enable = true;
+    laptop.enable = true;
     gnome.enable = true;
     grub.enable = true;
     syncthing.enable = true;
@@ -58,10 +59,12 @@
   boot.zswap.enable = true;
   swapDevices = [
     {
-      device = "/var/lib/swapfile";
+      device = "/swap/swapfile";
       size = 32 * 1024;
     }
   ];
+  boot.kernelParams = [ "resume_offset=116663552" ];
+  boot.resumeDevice = "/dev/mapper/luks-43c4b67b-f086-473d-ab86-c7ebea3d96e7";
 
   # disabled for closure size
   # specialisation = {

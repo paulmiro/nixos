@@ -50,5 +50,13 @@ in
 
     # Enable touchpad support (enabled default in most desktopManager).
     # services.xserver.libinput.enable = true;
+
+    # gnome-keyring cannot be unlocked with the fingerprint, so we force the initial login to be done with the password
+    # later unlocks can still be done with the fingerprint
+    programs.dconf.profiles.gdm.databases = [
+      {
+        settings."org/gnome/login-screen".enable-fingerprint-authentication = false;
+      }
+    ];
   };
 }
