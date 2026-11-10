@@ -1,4 +1,4 @@
-name: Rebase no-private-data branch
+name: Update no-private-data branch
 
 on:
   push:
@@ -9,11 +9,11 @@ permissions:
   contents: write
 
 jobs:
-  rebase:
+  update:
     runs-on: [ubuntu-latest]
 
     concurrency:
-      group: "rebase-no-private-data"
+      group: "update-no-private-data"
       cancel-in-progress: false
 
     steps:
@@ -27,11 +27,10 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Update np-private-data Branch
+      - name: Update no-private-data Branch
         run: |
-          git checkout main
-          git fetch origin
-          git checkout no-private-data
-          git pull
-          git rebase origin/main
+          git checkout -B no-private-data origin/main
+          echo true > modules/private/allow_fake.nix
+          git add modules/private/allow_fake.nix
+          git commit -m "allow fake private data"
           git push origin no-private-data --force
