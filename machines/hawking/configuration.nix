@@ -1,30 +1,22 @@
 {
-  lib,
   ...
 }:
 {
   paul = {
-    common-desktop.enable = true;
+    common-server.enable = true;
     dual-boot.enable = true;
-    gnome.enable = true;
-    nvidia.enable = true;
-    nvidia.driverVersion = "latest";
     grub.enable = true;
-    gaming.enable = true;
+
+    nvidia.enable = true;
+    nvidia.driverVersion = "stable";
+
     tailscale.enable = true;
     tor-client.enable = true;
-    qmk.enable = true;
-    jovian.enable = true;
-    home-manager.profile = "gaming";
+
+    docker.enable = true;
   };
 
-  hm.paul.gnome-settings.wallpaper = "zell-frieren.jpg";
-
-  specialisation.desktop.configuration = {
-    paul.jovian.enable = lib.mkForce false;
-  };
-
-  clan.core.deployment.requireExplicitUpdate = true;
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   fileSystems."/mnt/windows/C" = {
     device = "/dev/disk/by-id/wwn-0x5002538d422793ef-part4";
