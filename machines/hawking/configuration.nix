@@ -1,5 +1,4 @@
 {
-  config,
   lib,
   ...
 }:
@@ -9,6 +8,7 @@
     dual-boot.enable = true;
     gnome.enable = true;
     nvidia.enable = true;
+    nvidia.driverVersion = "latest";
     grub.enable = true;
     gaming.enable = true;
     tailscale.enable = true;
@@ -20,9 +20,6 @@
 
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.nvidia.acceptLicense = true;
-
-  # todo maybe use stable? is a few days newer than be as of writing
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.latest;
 
   hm.paul.gnome-settings.wallpaper = "zell-frieren.jpg";
 
