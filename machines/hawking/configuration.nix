@@ -18,9 +18,6 @@
     home-manager.profile = "gaming";
   };
 
-  nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.nvidia.acceptLicense = true;
-
   hm.paul.gnome-settings.wallpaper = "zell-frieren.jpg";
 
   specialisation.desktop.configuration = {

@@ -24,6 +24,8 @@ in
       nvitop
     ];
 
+    nixpkgs.config.nvidia.acceptLicense = true;
+
     hardware = {
       # Enable OpenGL
       graphics = {
