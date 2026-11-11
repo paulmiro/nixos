@@ -11,6 +11,7 @@
 
   paul = {
     common-desktop.enable = true;
+    dual-boot.enable = true;
     gnome.enable = true;
     tor-client.enable = true;
     qmk.enable = true;

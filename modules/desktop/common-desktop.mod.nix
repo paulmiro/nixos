@@ -22,8 +22,6 @@ in
       tailscale.routingFeatures = "client";
     };
 
-    time.hardwareClockInLocalTime = lib.mkDefault true;
-
     networking.useDHCP = lib.mkDefault true;
 
     programs.appimage = {
