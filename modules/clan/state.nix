@@ -369,7 +369,7 @@ in
           script = ''
             # path to cli.json cannot be passed by argument, but gets searched at ./.
             cd $CREDENTIALS_DIRECTORY
-            ${lib.getExe pkgs.gotify-cli} push "Backup failed from ${config.networking.hostName} to ${name}"
+            ${lib.getExe pkgs.gotify-cli} push "Backup failed: ${config.networking.hostName} -> ${name}"
           '';
           serviceConfig = {
             Type = "oneshot";
@@ -386,6 +386,8 @@ in
         prompts.token.description = "Borgbackup Gotify Token";
 
         files."cli.json".secret = true;
+
+        share = true;
 
         script = ''
           cat << EOF > $out/cli.json
