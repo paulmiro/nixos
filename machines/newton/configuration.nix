@@ -66,6 +66,8 @@
   boot.kernelParams = [ "resume_offset=116663552" ];
   boot.resumeDevice = "/dev/mapper/luks-43c4b67b-f086-473d-ab86-c7ebea3d96e7";
 
+  boot.loader.grub2-theme.screenSize = "tall2.8k";
+
   # disabled for closure size
   # specialisation = {
   #   jovian.configuration = {

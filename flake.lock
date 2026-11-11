@@ -414,11 +414,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1743084188,
-        "narHash": "sha256-OV6MvUTLbcmwEvGxobuA6ld4abQu18FHSgLlyF26jFg=",
+        "lastModified": 1794417301,
+        "narHash": "sha256-t5+LREeYNWad8ogF8jFQPzT2BGrw3dkfrFew3e+NFjU=",
         "owner": "paulmiro",
         "repo": "grub2-themes",
-        "rev": "9951f8a16c07e0729fd61f4667b1e6250054a211",
+        "rev": "f17aa8d9d142c2227fd3182ed741d8260ca85c6f",
         "type": "github"
       },
       "original": {
