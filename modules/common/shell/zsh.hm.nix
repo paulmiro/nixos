@@ -156,6 +156,7 @@ in
         e = "xdg-open .";
         o = "xdg-open";
         q = "exit";
+        ":q" = "exit";
         r = "${pkgs.trashy}/bin/trash";
         y = "${pkgs.yazi}/bin/yazi";
 
