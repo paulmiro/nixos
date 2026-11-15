@@ -16,6 +16,8 @@
       enable = true;
       maxArcGB = 1;
     };
+
+    home-manager.profile = "minimal";
   };
 
   services.qemuGuest.enable = true;

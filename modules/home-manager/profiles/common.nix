@@ -16,6 +16,7 @@
       ssh.enable = true;
       zsh.enable = true;
       zellij.enable = true;
+      claude.enable = true;
     };
 
     # Home-manager nixpkgs config
