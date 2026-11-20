@@ -168,6 +168,7 @@ in
         suod = "sudo";
         cope = "code";
         "ßh" = "ssh";
+        "$" = "";
       };
     };
 
