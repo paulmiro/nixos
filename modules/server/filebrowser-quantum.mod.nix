@@ -35,12 +35,14 @@ in
 
   config = lib.mkIf cfg.enable {
     paul.filebrowser-quantum.config = {
-      server = {
+      http = {
         externalUrl = "https://${private.domains.filebrowser-quantum}";
         port = 19111;
+      };
+      server = {
 
         cacheDir = "/var/cache/filebrowser-quantum";
-        database = "database.db";
+        database.path = "database.sqlite";
 
         sources = [
           {
@@ -89,7 +91,7 @@ in
         StateDirectory = "filebrowser-quantum";
         WorkingDirectory = "/var/lib/filebrowser-quantum";
         ExecStart =
-          assert lib.hasPrefix "1." cfg.package.version;
+          assert lib.hasPrefix "2." cfg.package.version;
           "${lib.getExe cfg.package} -c ${configFile}";
 
         EnvironmentFile = config.clan.core.vars.generators.filebrowser-quantum.files.env.path;
@@ -149,7 +151,7 @@ in
       forceSSL = true;
       enableDyndns = true;
       locations."/" = {
-        proxyPass = "http://127.0.0.1:${toString cfg.config.server.port}";
+        proxyPass = "http://127.0.0.1:${toString cfg.config.http.port}";
         enableGeoIP = true;
         proxyWebsockets = true;
       };
