@@ -88,6 +88,9 @@
 
     wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
     wrapper-modules.inputs.nixpkgs.follows = "nixpkgs";
+
+    decky-store-proxy.url = "github:paulmiro/decky-store-proxy";
+    decky-store-proxy.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =

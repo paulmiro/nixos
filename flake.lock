@@ -22,7 +22,7 @@
     },
     "bun2nix": {
       "inputs": {
-        "flake-parts": "flake-parts_3",
+        "flake-parts": "flake-parts_4",
         "nixpkgs": [
           "friend-bet",
           "nixpkgs"
@@ -129,9 +129,30 @@
         "url": "https://git.clan.lol/clan/data-mesher/archive/main.tar.gz"
       }
     },
-    "direnv-instant": {
+    "decky-store-proxy": {
       "inputs": {
         "flake-parts": "flake-parts",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1795221758,
+        "narHash": "sha256-msx/KbgccEruK+lT4odlv+ajcaC9p9kjTbBWEOnffbQ=",
+        "owner": "paulmiro",
+        "repo": "decky-store-proxy",
+        "rev": "79acd23cca25086b63737e30ff5e2e0687e94bc9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "paulmiro",
+        "repo": "decky-store-proxy",
+        "type": "github"
+      }
+    },
+    "direnv-instant": {
+      "inputs": {
+        "flake-parts": "flake-parts_2",
         "nixpkgs": [
           "nixpkgs"
         ],
@@ -234,7 +255,7 @@
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": [
-          "direnv-instant",
+          "decky-store-proxy",
           "nixpkgs"
         ]
       },
@@ -255,6 +276,7 @@
     "flake-parts_2": {
       "inputs": {
         "nixpkgs-lib": [
+          "direnv-instant",
           "nixpkgs"
         ]
       },
@@ -273,6 +295,26 @@
       }
     },
     "flake-parts_3": {
+      "inputs": {
+        "nixpkgs-lib": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1793576659,
+        "narHash": "sha256-V1h85lUaJBQoHFrB2vpXZOE0Ju1MYSnIpsehoVZYlDo=",
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "rev": "ea2630b7470978622c7689a1ff75d2b389175399",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "type": "github"
+      }
+    },
+    "flake-parts_4": {
       "inputs": {
         "nixpkgs-lib": [
           "friend-bet",
@@ -294,7 +336,7 @@
         "type": "github"
       }
     },
-    "flake-parts_4": {
+    "flake-parts_5": {
       "inputs": {
         "nixpkgs-lib": "nixpkgs-lib"
       },
@@ -312,7 +354,7 @@
         "type": "github"
       }
     },
-    "flake-parts_5": {
+    "flake-parts_6": {
       "inputs": {
         "nixpkgs-lib": "nixpkgs-lib_2"
       },
@@ -330,7 +372,7 @@
         "type": "github"
       }
     },
-    "flake-parts_6": {
+    "flake-parts_7": {
       "inputs": {
         "nixpkgs-lib": "nixpkgs-lib_3"
       },
@@ -369,7 +411,7 @@
     "friend-bet": {
       "inputs": {
         "bun2nix": "bun2nix",
-        "flake-parts": "flake-parts_4",
+        "flake-parts": "flake-parts_5",
         "nixpkgs": [
           "nixpkgs"
         ]
@@ -450,7 +492,7 @@
     "ifah": {
       "inputs": {
         "crane": "crane",
-        "flake-parts": "flake-parts_5",
+        "flake-parts": "flake-parts_6",
         "nixpkgs": [
           "nixpkgs"
         ]
@@ -761,9 +803,10 @@
       "inputs": {
         "betternix": "betternix",
         "clan-core": "clan-core",
+        "decky-store-proxy": "decky-store-proxy",
         "direnv-instant": "direnv-instant",
         "disko-zfs": "disko-zfs",
-        "flake-parts": "flake-parts_2",
+        "flake-parts": "flake-parts_3",
         "friend-bet": "friend-bet",
         "git-agecrypt-armor": "git-agecrypt-armor",
         "grub2-themes": "grub2-themes",
@@ -932,7 +975,7 @@
     "useful-api": {
       "inputs": {
         "crane": "crane_2",
-        "flake-parts": "flake-parts_6",
+        "flake-parts": "flake-parts_7",
         "nixpkgs": [
           "nixpkgs"
         ]
