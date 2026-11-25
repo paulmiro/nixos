@@ -13,6 +13,9 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = [ pkgs.claude-code ];
+    home.packages = with pkgs; [
+      claude-code
+      claude-agent-acp
+    ];
   };
 }
