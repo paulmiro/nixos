@@ -18,6 +18,9 @@
     };
 
     home-manager.profile = "minimal";
+
+    ramdash.client.enable = true;
+    ramdash.client.memoryType = "ddr4";
   };
 
   services.qemuGuest.enable = true;

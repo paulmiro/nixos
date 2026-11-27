@@ -20,6 +20,9 @@
     docker.enable = true;
 
     home-manager.profile = "work-desktop";
+
+    ramdash.client.enable = true;
+    ramdash.client.memoryType = "ddr4";
   };
 
   betternix = {

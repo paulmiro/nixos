@@ -112,6 +112,9 @@
     };
 
     bentopdf.enable = true;
+
+    ramdash.client.enable = true;
+    ramdash.client.memoryType = "ddr5";
   };
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];

@@ -16,6 +16,9 @@
     qmk.enable = true;
     jovian.enable = true;
     home-manager.profile = "gaming";
+
+    ramdash.client.enable = true;
+    ramdash.client.memoryType = "ddr5";
   };
 
   hm.paul.gnome-settings.wallpaper = "zell-frieren.jpg";

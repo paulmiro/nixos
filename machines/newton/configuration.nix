@@ -20,6 +20,9 @@
     kanidm.enableClient = true;
     tor-client.enable = true;
     qmk.enable = true;
+
+    ramdash.client.enable = true;
+    ramdash.client.memoryType = "lpddr5";
   };
 
   clan.core.networking.targetHost = "newton";

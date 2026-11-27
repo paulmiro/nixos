@@ -41,6 +41,11 @@
     };
 
     garage.enableWebProxy = true;
+
+    ramdash.server.enable = true;
+
+    ramdash.client.enable = true;
+    ramdash.client.memoryType = "ddr4";
   };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";

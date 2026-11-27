@@ -18,6 +18,7 @@ garage-web = "web.garage.example.com"
 tailnet = "example-tailnet.ts.net"
 friend-bet = "friend-bet.example.com"
 couchdb = "couchdb.example.com"
+ramdash = "ram.example.com"
 
 [emails]
 proton = "proton@example.com"
@@ -28,3 +29,4 @@ kanidm = "account@example.com"
 [misc]
 kanidm_display_name = "Example Kanidm Display Name"
 qui_theme_age_key = "INVALID-AGE-KEY"
+ramdash-keys = ["key1", "key2"]
