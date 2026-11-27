@@ -30,6 +30,7 @@
       "Downloads"
       "Desktop"
       "Pictures"
+      "Projects"
       "Videos"
       "Music"
     ];
