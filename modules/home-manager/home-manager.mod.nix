@@ -31,7 +31,7 @@ in
     rootProfile = lib.mkOption {
       description = "which home-manager profile to use for user root";
       type = profileType;
-      default = "common";
+      default = "minimal";
     };
   };
 
