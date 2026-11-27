@@ -69,8 +69,6 @@
 
   boot.loader.grub2-theme.screenSize = "tall2.8k";
 
-  services.intel-lpmd.enable = true;
-
   # disabled for closure size
   # specialisation = {
   #   jovian.configuration = {
